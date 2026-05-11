@@ -120,13 +120,13 @@ export default function ListNotification({ notifications }: Props) {
                 className="animate-fade-in-up mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center"
                 style={{ animationDelay: '100ms' }}
             >
-                <div className="flex w-fit space-x-2 rounded-lg border border-[#EADFD2] bg-white p-1 shadow-sm">
+                <div className="flex w-fit space-x-2 rounded-lg border border-[#e7e2de] bg-white p-1 shadow-sm">
                     <button
                         onClick={() => setActiveTab('all')}
                         className={`rounded-md px-4 py-2 text-[13px] font-medium transition-all ${
                             activeTab === 'all'
-                                ? 'bg-[#E8D6C1] text-[#B98B63] shadow-sm'
-                                : 'text-[#7A6A5D] hover:text-[#B98B63]'
+                                ? 'bg-[#E8D6C1] text-[#151515] shadow-sm'
+                                : 'text-[#6f6f6f] hover:text-[#151515]'
                         }`}
                     >
                         All
@@ -135,8 +135,8 @@ export default function ListNotification({ notifications }: Props) {
                         onClick={() => setActiveTab('unread')}
                         className={`flex items-center rounded-md px-4 py-2 text-[13px] font-medium transition-all ${
                             activeTab === 'unread'
-                                ? 'bg-[#E8D6C1] text-[#B98B63] shadow-sm'
-                                : 'text-[#7A6A5D] hover:text-[#B98B63]'
+                                ? 'bg-[#E8D6C1] text-[#151515] shadow-sm'
+                                : 'text-[#6f6f6f] hover:text-[#151515]'
                         }`}
                     >
                         Unread
@@ -151,7 +151,7 @@ export default function ListNotification({ notifications }: Props) {
                 {unreadCount > 0 && (
                     <button
                         onClick={markAllAsRead}
-                        className="flex items-center text-[12px] font-semibold text-[#B98B63] transition-colors hover:text-[#9A6B45]"
+                        className="flex items-center text-[12px] font-semibold text-[#151515] transition-colors hover:text-[#9A6B45]"
                     >
                         <Check size={14} className="mr-1.5" /> Mark all as read
                     </button>
@@ -161,25 +161,25 @@ export default function ListNotification({ notifications }: Props) {
             {/* --- Empty State --- */}
             {filteredNotifications.length === 0 ? (
                 <div
-                    className="animate-fade-in-up flex flex-col items-center justify-center rounded-2xl border border-[#EADFD2] bg-white px-6 py-20 text-center"
+                    className="animate-fade-in-up flex flex-col items-center justify-center rounded-2xl border border-[#e7e2de] bg-white px-6 py-20 text-center"
                     style={{ animationDelay: '150ms' }}
                 >
                     <div className="relative mb-6 flex h-24 w-24 items-center justify-center">
                         <div className="absolute inset-0 rounded-full bg-[#E8D6C1] opacity-60 blur-xl"></div>
-                        <div className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full border border-[#EADFD2] bg-[#FFFDF8] shadow-sm">
-                            <Bell size={28} className="text-[#D1B08A]" />
+                        <div className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full border border-[#e7e2de] bg-[#ffffff] shadow-sm">
+                            <Bell size={28} className="text-[#e7e2de]" />
                         </div>
                     </div>
-                    <h2 className="mb-2 font-serif text-xl text-[#B98B63]">
+                    <h2 className="mb-2 font-serif text-xl text-[#151515]">
                         No notifications yet
                     </h2>
-                    <p className="mb-8 max-w-[280px] text-[13px] text-[#7A6A5D]">
+                    <p className="mb-8 max-w-[280px] text-[13px] text-[#6f6f6f]">
                         {activeTab === 'unread'
                             ? "You've read all your notifications."
                             : "When you get updates on your orders or exclusive offers, they'll show up here."}
                     </p>
                     <Link href="/">
-                        <button className="rounded-lg bg-[#B98B63] px-8 py-3 text-[12px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg active:scale-[0.98]">
+                        <button className="rounded-lg bg-[#151515] px-8 py-3 text-[12px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg active:scale-[0.98]">
                             Continue Shopping
                         </button>
                     </Link>
@@ -187,10 +187,10 @@ export default function ListNotification({ notifications }: Props) {
             ) : (
                 /* --- Notification List --- */
                 <div
-                    className="animate-fade-in-up overflow-hidden rounded-2xl border border-[#EADFD2] bg-white shadow-sm"
+                    className="animate-fade-in-up overflow-hidden rounded-2xl border border-[#e7e2de] bg-white shadow-sm"
                     style={{ animationDelay: '150ms' }}
                 >
-                    <div className="divide-y divide-[#EADFD2]">
+                    <div className="divide-y divide-[#e7e2de]">
                         {filteredNotifications.map((notification) => {
                             const IconComponent = notification.icon;
 
@@ -199,7 +199,7 @@ export default function ListNotification({ notifications }: Props) {
                                     key={notification.id}
                                     href={`/notifications/${notification.id}`}
                                     onClick={() => markAsRead(notification.id)}
-                                    className={`group relative flex items-start gap-4 p-5 transition-all duration-300 hover:bg-[#FFFDF8] md:p-6 ${!notification.isRead ? 'bg-[#FFFDF8]/50' : 'bg-white'}`}
+                                    className={`group relative flex items-start gap-4 p-5 transition-all duration-300 hover:bg-[#ffffff] md:p-6 ${!notification.isRead ? 'bg-[#ffffff]/50' : 'bg-white'}`}
                                 >
                                     {/* Unread indicator line */}
                                     {!notification.isRead && (
@@ -218,16 +218,16 @@ export default function ListNotification({ notifications }: Props) {
                                     <div className="min-w-0 flex-1 pr-4">
                                         <div className="mb-1 flex flex-col sm:flex-row sm:items-start sm:justify-between">
                                             <h3
-                                                className={`truncate text-[14px] font-bold md:text-[15px] ${!notification.isRead ? 'text-[#B98B63]' : 'text-[#7A6A5D]'}`}
+                                                className={`truncate text-[14px] font-bold md:text-[15px] ${!notification.isRead ? 'text-[#151515]' : 'text-[#6f6f6f]'}`}
                                             >
                                                 {notification.title}
                                             </h3>
-                                            <span className="mt-1 flex-shrink-0 text-[11px] whitespace-nowrap text-[#7A6A5D] sm:mt-0">
+                                            <span className="mt-1 flex-shrink-0 text-[11px] whitespace-nowrap text-[#6f6f6f] sm:mt-0">
                                                 {notification.time}
                                             </span>
                                         </div>
                                         <p
-                                            className={`text-[12px] leading-relaxed md:text-[13px] ${!notification.isRead ? 'font-medium text-[#7A6A5D]' : 'text-[#7A6A5D]'}`}
+                                            className={`text-[12px] leading-relaxed md:text-[13px] ${!notification.isRead ? 'font-medium text-[#6f6f6f]' : 'text-[#6f6f6f]'}`}
                                         >
                                             {notification.message}
                                         </p>

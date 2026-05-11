@@ -330,7 +330,7 @@ function SectionCard({
     noPad?: boolean;
 }) {
     return (
-        <div className="overflow-hidden rounded-2xl border border-[#EADFD2] bg-white shadow-sm">
+        <div className="overflow-hidden rounded-2xl border border-[#e7e2de] bg-white shadow-sm">
             <div className="border-b border-[#f0ebe4] px-5 py-4 sm:px-6">
                 <h2 className="font-serif text-lg text-[#2d2119] sm:text-xl">
                     {title}
@@ -533,7 +533,7 @@ export default function DetailOrder({ order }: Props) {
                 {/* Left column */}
                 <div className="space-y-5">
                     {/* Order Header */}
-                    <div className="overflow-hidden rounded-2xl border border-[#EADFD2] bg-white shadow-sm">
+                    <div className="overflow-hidden rounded-2xl border border-[#e7e2de] bg-white shadow-sm">
                         <div className="p-5 sm:p-6">
                             <div className="flex flex-wrap items-start justify-between gap-3">
                                 <div>
@@ -588,21 +588,27 @@ export default function DetailOrder({ order }: Props) {
                                         : undefined
                                 }
                                 disabled={isCancelling}
-                                icon={canCancelOrder ? ClipboardList : RefreshCcw}
+                                icon={
+                                    canCancelOrder ? ClipboardList : RefreshCcw
+                                }
                                 tone={canCancelOrder ? 'danger' : 'default'}
                                 label={
                                     isCancelling
                                         ? 'Membatalkan...'
                                         : canCancelOrder
-                                           ? 'Batalkan Pesanan'
-                                           : 'Beli Lagi'
+                                          ? 'Batalkan Pesanan'
+                                          : 'Beli Lagi'
                                 }
                             />
                             <ActionButton
                                 href={paymentReceiptUrl}
                                 external
                                 icon={ReceiptText}
-                                label={canPay ? 'Bayar Sekarang' : 'Bukti Pembayaran'}
+                                label={
+                                    canPay
+                                        ? 'Bayar Sekarang'
+                                        : 'Bukti Pembayaran'
+                                }
                             />
                             <ActionButton
                                 href="/notifications"
@@ -664,7 +670,7 @@ export default function DetailOrder({ order }: Props) {
                                                 Harga Satuan
                                             </th>
                                             <th className="px-4 py-3 text-center font-semibold">
-                                                 Jumlah
+                                                Jumlah
                                             </th>
                                             <th className="px-5 py-3 text-right font-semibold sm:px-6">
                                                 Subtotal
@@ -729,21 +735,21 @@ export default function DetailOrder({ order }: Props) {
                                                     <td className="px-4 py-4">
                                                         <div className="space-y-1 text-[12px] text-[#6d5c50]">
                                                             <p>
-                                                                 Warna:{' '}
+                                                                Warna:{' '}
                                                                 <span className="font-semibold text-[#3d3027]">
                                                                     {item.color_name ??
                                                                         '-'}
                                                                 </span>
                                                             </p>
                                                             <p>
-                                                                 Ukuran:{' '}
+                                                                Ukuran:{' '}
                                                                 <span className="font-semibold text-[#3d3027]">
                                                                     {item.size ??
                                                                         '-'}
                                                                 </span>
                                                             </p>
                                                             <p>
-                                                                 Berat:{' '}
+                                                                Berat:{' '}
                                                                 <span className="font-semibold text-[#3d3027]">
                                                                     {item.weight
                                                                         ? `${item.weight} gr`
@@ -811,7 +817,7 @@ export default function DetailOrder({ order }: Props) {
                                             <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-0.5 text-[11px] text-[#9a8575]">
                                                 {item.color_name && (
                                                     <span>
-                                                         Warna:{' '}
+                                                        Warna:{' '}
                                                         <strong className="text-[#4a392c]">
                                                             {item.color_name}
                                                         </strong>
@@ -819,7 +825,7 @@ export default function DetailOrder({ order }: Props) {
                                                 )}
                                                 {item.size && (
                                                     <span>
-                                                         Ukuran:{' '}
+                                                        Ukuran:{' '}
                                                         <strong className="text-[#4a392c]">
                                                             {item.size}
                                                         </strong>
@@ -827,7 +833,7 @@ export default function DetailOrder({ order }: Props) {
                                                 )}
                                                 {item.weight && (
                                                     <span>
-                                                         Berat:{' '}
+                                                        Berat:{' '}
                                                         <strong className="text-[#4a392c]">
                                                             {item.weight} gr
                                                         </strong>
@@ -842,7 +848,7 @@ export default function DetailOrder({ order }: Props) {
                                             </p>
                                             <div className="mt-2.5 flex items-center justify-between">
                                                 <span className="text-xs text-[#9a8575]">
-                                                     Jumlah:{' '}
+                                                    Jumlah:{' '}
                                                     <strong className="text-[#4a392c]">
                                                         {item.quantity}
                                                     </strong>
@@ -989,7 +995,8 @@ export default function DetailOrder({ order }: Props) {
                     {/* Order Notes */}
                     <SectionCard title="Catatan Pesanan">
                         <p className="border-l-2 border-[#e5d7ca] pl-3 text-sm leading-relaxed text-[#716155] italic">
-                            {order.notes ?? 'Tidak ada catatan untuk pesanan ini.'}
+                            {order.notes ??
+                                'Tidak ada catatan untuk pesanan ini.'}
                         </p>
                     </SectionCard>
                 </aside>
@@ -1001,7 +1008,10 @@ export default function DetailOrder({ order }: Props) {
                         <div className="border-b border-red-100 bg-red-50 px-6 py-5">
                             <div className="flex items-start gap-4">
                                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-700">
-                                    <ClipboardList size={22} strokeWidth={1.8} />
+                                    <ClipboardList
+                                        size={22}
+                                        strokeWidth={1.8}
+                                    />
                                 </div>
                                 <div>
                                     <p className="text-[10px] font-semibold tracking-[0.2em] text-red-500 uppercase">

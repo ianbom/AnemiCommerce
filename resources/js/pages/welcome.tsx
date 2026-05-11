@@ -206,7 +206,7 @@ function CtaSection({ ctaBanner }: { ctaBanner: BannerCard }) {
     return (
         <FadeInOnScroll>
             <section className="mx-auto mt-6 mb-12 max-w-[1500px] px-4 md:mt-10 md:mb-20 md:px-10">
-                <div className="group relative min-h-[280px] overflow-hidden rounded-2xl md:min-h-[500px]">
+                <div className="group relative min-h-[280px] overflow-hidden md:min-h-[500px]">
                     <img
                         src={bannerImage(
                             ctaBanner,

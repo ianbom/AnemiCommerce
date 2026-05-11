@@ -272,7 +272,13 @@ export default function ShipmentShow({ shipment, shippingStatuses }: Props) {
                             </Button>
                             <Button
                                 type="button"
-                                onClick={() => router.post(`/admin/shipments/${shipment.id}/refresh-tracking`, {}, { preserveScroll: true })}
+                                onClick={() =>
+                                    router.post(
+                                        `/admin/shipments/${shipment.id}/refresh-tracking`,
+                                        {},
+                                        { preserveScroll: true },
+                                    )
+                                }
                             >
                                 <RefreshCw /> Refresh Tracking
                             </Button>
@@ -303,11 +309,13 @@ export default function ShipmentShow({ shipment, shippingStatuses }: Props) {
                     <Card className="border-amber-200 bg-amber-50/60 dark:border-amber-900 dark:bg-amber-950/20">
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
-                                <PackagePlus className="size-5" /> Create Biteship Order
+                                <PackagePlus className="size-5" /> Create
+                                Biteship Order
                             </CardTitle>
                             <CardDescription>
-                                Shipment ini belum punya Biteship order ID. Submit
-                                form ini untuk membuat order pickup ke Biteship API.
+                                Shipment ini belum punya Biteship order ID.
+                                Submit form ini untuk membuat order pickup ke
+                                Biteship API.
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -460,7 +468,8 @@ export default function ShipmentShow({ shipment, shippingStatuses }: Props) {
                                     rel="noreferrer"
                                     className="inline-flex items-center gap-2 text-sm font-medium text-primary underline"
                                 >
-                                    <Printer className="size-4" /> Cetak Resi Biteship
+                                    <Printer className="size-4" /> Cetak Resi
+                                    Biteship
                                 </a>
                             ) : null}
                             <button

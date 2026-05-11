@@ -27,7 +27,11 @@ import type { LucideIcon } from 'lucide-react';
 
 const sidebarItems = [
     { id: 'introduction', icon: CheckCircle2, label: '1. Pendahuluan' },
-    { id: 'info-collect', icon: User, label: '2. Informasi yang Kami Kumpulkan' },
+    {
+        id: 'info-collect',
+        icon: User,
+        label: '2. Informasi yang Kami Kumpulkan',
+    },
     { id: 'use-info', icon: Box, label: '3. Cara Kami Menggunakan Informasi' },
     { id: 'payment', icon: CreditCard, label: '4. Informasi Pembayaran' },
     { id: 'shipping', icon: Truck, label: '5. Data Pengiriman & Pengantaran' },
@@ -151,13 +155,13 @@ function FeatureBox({
     title: string;
 }) {
     return (
-        <div className="flex items-center gap-3 border-b border-[#EADFD2] py-4 transition duration-300 hover:border-[#cdb5a4]">
+        <div className="flex items-center gap-3 border-b border-[#e7e2de] py-4 transition duration-300 hover:border-[#cdb5a4]">
             <Icon
                 size={22}
                 strokeWidth={1.4}
                 className="shrink-0 text-[#9A6B45]"
             />
-            <span className="text-sm leading-snug font-medium text-[#2F241D] sm:text-base">
+            <span className="text-sm leading-snug font-medium text-[#272727] sm:text-base">
                 {title}
             </span>
         </div>
@@ -178,7 +182,7 @@ function AccordionItem({
     return (
         <section
             id={item.id}
-            className={`${isLast ? '' : 'border-b border-[#EADFD2]'} scroll-mt-28 py-6`}
+            className={`${isLast ? '' : 'border-b border-[#e7e2de]'} scroll-mt-28 py-6`}
         >
             <button
                 type="button"
@@ -192,7 +196,7 @@ function AccordionItem({
                         {String(index + 1).padStart(2, '0')}
                     </span>
                     <span>
-                        <span className="block text-base font-semibold text-[#2F241D] sm:text-lg">
+                        <span className="block text-base font-semibold text-[#272727] sm:text-lg">
                             {item.title}
                         </span>
                         <div
@@ -200,7 +204,7 @@ function AccordionItem({
                             className={`grid transition-all duration-300 ease-out ${isOpen ? 'mt-2 grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
                         >
                             <div className="overflow-hidden">
-                                <p className="max-w-3xl text-sm leading-7 text-[#7A6A5D] sm:text-base">
+                                <p className="max-w-3xl text-sm leading-7 text-[#6f6f6f] sm:text-base">
                                     {item.content}
                                 </p>
                             </div>
@@ -228,13 +232,13 @@ export default function PrivacyPolicy() {
             <Head title="Kebijakan Privasi" />
 
             {/* Hero Section */}
-            <div className="relative w-full overflow-hidden border-b border-[#EADFD2] bg-[#FFFDF8] pt-8 pb-14 sm:pt-10 lg:pb-20">
+            <div className="relative w-full overflow-hidden border-b border-[#e7e2de] bg-[#ffffff] pt-8 pb-14 sm:pt-10 lg:pb-20">
                 <div className="pointer-events-none absolute top-0 right-0 h-full w-1/3 bg-[#f6eee7]"></div>
 
                 <div className="relative mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
                     <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)]">
                         <div className="max-w-2xl">
-                            <div className="mb-8 flex items-center text-sm font-medium text-[#7A6A5D]">
+                            <div className="mb-8 flex items-center text-sm font-medium text-[#6f6f6f]">
                                 <Link
                                     href="/"
                                     className="transition-colors hover:text-[#9A6B45]"
@@ -242,29 +246,29 @@ export default function PrivacyPolicy() {
                                     Beranda
                                 </Link>
                                 <span className="mx-2 text-[#bc9e90]">/</span>
-                                <span className="text-[#2F241D]">
+                                <span className="text-[#272727]">
                                     Kebijakan Privasi
                                 </span>
                             </div>
                             <p className="mb-4 inline-flex border-l border-[#9A6B45] pl-3 text-xs font-semibold tracking-[0.22em] text-[#9A6B45] uppercase">
                                 Kebijakan Data Pelanggan
                             </p>
-                            <h1 className="mb-5 max-w-xl font-serif text-4xl leading-tight text-[#2F241D] md:text-5xl lg:text-6xl">
+                            <h1 className="mb-5 max-w-xl font-serif text-4xl leading-tight text-[#272727] md:text-5xl lg:text-6xl">
                                 Kebijakan Privasi
                             </h1>
-                            <p className="max-w-xl text-base leading-8 text-[#7A6A5D] sm:text-lg">
+                            <p className="max-w-xl text-base leading-8 text-[#6f6f6f] sm:text-lg">
                                 Pelajari cara kami mengumpulkan, menggunakan,
-                                melindungi, dan mengelola informasi pribadimu saat berbelanja di
-                                Auréa Syar'i.
+                                melindungi, dan mengelola informasi pribadimu
+                                saat berbelanja di Auréa Syar'i.
                             </p>
-                            <div className="mt-8 flex flex-wrap items-center gap-3 text-sm text-[#7A6A5D]">
+                            <div className="mt-8 flex flex-wrap items-center gap-3 text-sm text-[#6f6f6f]">
                                 <span className="border-b border-[#dcc8b8] pb-1">
                                     Terakhir diperbarui: 28 April 2026
                                 </span>
                                 <button
                                     type="button"
                                     onClick={() => scrollToSection('contact')}
-                                    className="border-b border-[#2F241D] pb-1 font-medium text-[#2F241D] transition hover:text-[#9A6B45] active:scale-[0.98]"
+                                    className="border-b border-[#272727] pb-1 font-medium text-[#272727] transition hover:text-[#9A6B45] active:scale-[0.98]"
                                 >
                                     Hubungi tim privasi
                                 </button>
@@ -293,8 +297,8 @@ export default function PrivacyPolicy() {
                 <div className="grid gap-8 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-12">
                     {/* Sidebar */}
                     <div className="hidden lg:block">
-                        <div className="sticky top-24 border-l border-[#EADFD2] pl-5">
-                            <div className="mb-5 flex items-center gap-3 text-base text-[#2F241D]">
+                        <div className="sticky top-24 border-l border-[#e7e2de] pl-5">
+                            <div className="mb-5 flex items-center gap-3 text-base text-[#272727]">
                                 <FileText
                                     size={20}
                                     strokeWidth={1.5}
@@ -311,7 +315,7 @@ export default function PrivacyPolicy() {
                                                 onClick={() =>
                                                     scrollToSection(item.id)
                                                 }
-                                                className="flex w-full items-center gap-3 py-2.5 text-left text-sm font-medium text-[#7A6A5D] transition duration-300 hover:translate-x-1 hover:text-[#2F241D] active:scale-[0.98]"
+                                                className="flex w-full items-center gap-3 py-2.5 text-left text-sm font-medium text-[#6f6f6f] transition duration-300 hover:translate-x-1 hover:text-[#272727] active:scale-[0.98]"
                                             >
                                                 <item.icon
                                                     size={18}
@@ -329,7 +333,7 @@ export default function PrivacyPolicy() {
 
                     {/* Content Area */}
                     <div className="min-w-0">
-                        <div className="mb-10 border-b border-[#EADFD2] pb-8">
+                        <div className="mb-10 border-b border-[#e7e2de] pb-8">
                             <div className="flex flex-col items-start gap-4 sm:flex-row sm:gap-5">
                                 <ShieldCheck
                                     size={28}
@@ -337,10 +341,10 @@ export default function PrivacyPolicy() {
                                     className="mt-1 shrink-0 text-[#9A6B45]"
                                 />
                                 <div>
-                                    <h3 className="mb-2 text-xl font-semibold text-[#2F241D]">
+                                    <h3 className="mb-2 text-xl font-semibold text-[#272727]">
                                         Privasimu Penting
                                     </h3>
-                                    <p className="max-w-3xl leading-7 text-[#7A6A5D]">
+                                    <p className="max-w-3xl leading-7 text-[#6f6f6f]">
                                         Kami hanya mengumpulkan informasi yang
                                         diperlukan untuk memproses pesanan,
                                         mengirim pembelian, meningkatkan
@@ -366,7 +370,7 @@ export default function PrivacyPolicy() {
                         </div>
 
                         {/* Accordion List */}
-                        <div className="mb-10 border-y border-[#EADFD2]">
+                        <div className="mb-10 border-y border-[#e7e2de]">
                             {sections.map((section, index) => (
                                 <AccordionItem
                                     key={section.id}
@@ -378,21 +382,21 @@ export default function PrivacyPolicy() {
                         </div>
 
                         {/* Contact Information */}
-                        <div className="grid gap-5 border-t border-[#EADFD2] pt-8 md:grid-cols-3">
+                        <div className="grid gap-5 border-t border-[#e7e2de] pt-8 md:grid-cols-3">
                             <div className="flex items-center gap-4">
                                 <div className="shrink-0 text-[#9A6B45]">
                                     <Mail size={22} strokeWidth={1.5} />
                                 </div>
                                 <div>
-                                    <div className="mb-0.5 text-sm font-medium text-[#2F241D]">
+                                    <div className="mb-0.5 text-sm font-medium text-[#272727]">
                                         Email
                                     </div>
-                                    <div className="text-sm text-[#7A6A5D]">
+                                    <div className="text-sm text-[#6f6f6f]">
                                         privacy@aureasyari.com
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-4 border-t border-[#EADFD2] pt-5 md:border-t-0 md:border-l md:pt-0 md:pl-5">
+                            <div className="flex items-center gap-4 border-t border-[#e7e2de] pt-5 md:border-t-0 md:border-l md:pt-0 md:pl-5">
                                 <div className="shrink-0 text-[#9A6B45]">
                                     <MessageCircle
                                         size={22}
@@ -400,23 +404,23 @@ export default function PrivacyPolicy() {
                                     />
                                 </div>
                                 <div>
-                                    <div className="mb-0.5 text-sm font-medium text-[#2F241D]">
+                                    <div className="mb-0.5 text-sm font-medium text-[#272727]">
                                         WhatsApp
                                     </div>
-                                    <div className="text-sm text-[#7A6A5D]">
+                                    <div className="text-sm text-[#6f6f6f]">
                                         +62 812-0000-0000
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-4 border-t border-[#EADFD2] pt-5 md:border-t-0 md:border-l md:pt-0 md:pl-5">
+                            <div className="flex items-center gap-4 border-t border-[#e7e2de] pt-5 md:border-t-0 md:border-l md:pt-0 md:pl-5">
                                 <div className="shrink-0 text-[#9A6B45]">
                                     <Clock size={22} strokeWidth={1.5} />
                                 </div>
                                 <div>
-                                    <div className="mb-0.5 text-sm font-medium text-[#2F241D]">
+                                    <div className="mb-0.5 text-sm font-medium text-[#272727]">
                                         Jam operasional
                                     </div>
-                                    <div className="text-sm text-[#7A6A5D]">
+                                    <div className="text-sm text-[#6f6f6f]">
                                         Senin - Sabtu, 09:00 - 17:00
                                     </div>
                                 </div>

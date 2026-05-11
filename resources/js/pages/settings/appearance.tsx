@@ -15,8 +15,9 @@ export default function Appearance() {
                     title="Pengaturan tampilan"
                     description="Tampilan dikunci ke mode terang untuk seluruh situs"
                 />
-                <div className="rounded-xl border border-[#EADFD2] bg-[#F8F0E5] p-4 text-sm leading-relaxed text-[#7A6A5D]">
-                    Situs ini sekarang hanya memakai mode terang. Mode gelap dan pengalihan tema sistem telah dinonaktifkan secara global.
+                <div className="rounded-xl border border-[#e7e2de] bg-[#F8F0E5] p-4 text-sm leading-relaxed text-[#6f6f6f]">
+                    Situs ini sekarang hanya memakai mode terang. Mode gelap dan
+                    pengalihan tema sistem telah dinonaktifkan secara global.
                 </div>
             </div>
         </>

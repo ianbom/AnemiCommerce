@@ -68,12 +68,6 @@ export default function Navbar({
                     >
                         ALL PRODUCT
                     </Link>
-                    <Link
-                        href="/list?sort=newest"
-                        className="border-b border-transparent pb-1 hover:border-[#151515]"
-                    >
-                        NEW ARRIVALS
-                    </Link>
                     {collections.map((collection) => (
                         <Link
                             key={collection.id}
@@ -86,13 +80,6 @@ export default function Navbar({
                 </div>
 
                 <div className="flex items-center gap-6 text-[#151515]">
-                    <Link href="/list" aria-label="Cari produk">
-                        <Search
-                            strokeWidth={1.4}
-                            size={20}
-                            className="cursor-pointer transition-opacity hover:opacity-60"
-                        />
-                    </Link>
                     <Link href="/my-profile" aria-label="Buka profil">
                         <User
                             strokeWidth={1.4}

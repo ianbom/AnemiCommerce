@@ -132,7 +132,8 @@ const orderStatusActions = [
     {
         status: 'ready_to_ship',
         label: 'Ready to ship',
-        description: 'Barang sudah siap diserahkan ke kurir atau dibuat shipment.',
+        description:
+            'Barang sudah siap diserahkan ke kurir atau dibuat shipment.',
     },
     {
         status: 'completed',
@@ -484,7 +485,10 @@ export default function OrderShow({ order }: Props) {
                             <ActionLink href={`mailto:${order.customer_email}`}>
                                 <MessageCircle size={14} /> Contact customer
                             </ActionLink>
-                            <label className="sr-only" htmlFor="order-status-action">
+                            <label
+                                className="sr-only"
+                                htmlFor="order-status-action"
+                            >
                                 Change order status
                             </label>
                             <select
@@ -887,7 +891,7 @@ export default function OrderShow({ order }: Props) {
                                                             </Link>
                                                         ) : (
                                                             (item.variant_sku ??
-                                                                '—')
+                                                            '—')
                                                         )}
                                                     </td>
                                                     <td className="px-4 py-4 break-words text-zinc-600">
@@ -1150,7 +1154,7 @@ export default function OrderShow({ order }: Props) {
                                                         )}
                                                     />
                                                 </DetailList>
-                                                 <div className="grid gap-2 sm:grid-cols-2">
+                                                <div className="grid gap-2 sm:grid-cols-2">
                                                     {shipmentLabelUrl && (
                                                         <ActionLink
                                                             href={
@@ -1164,8 +1168,8 @@ export default function OrderShow({ order }: Props) {
                                                             Print resi
                                                         </ActionLink>
                                                     )}
-                                                     {order.shipment
-                                                         .tracking_url && (
+                                                    {order.shipment
+                                                        .tracking_url && (
                                                         <ActionLink
                                                             href={String(
                                                                 order.shipment
@@ -1202,7 +1206,6 @@ export default function OrderShow({ order }: Props) {
                                     </div>
                                 </Card>
                             </section>
-
                         </div>
 
                         <aside className="flex min-w-0 flex-col gap-5 xl:sticky xl:top-5 xl:self-start">

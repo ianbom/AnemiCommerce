@@ -269,9 +269,8 @@ export default function ProductForm({ mode, product, options }: Props) {
     const [editingVariantIndex, setEditingVariantIndex] = useState<
         number | null
     >(null);
-    const [variantDraft, setVariantDraft] = useState<ProductVariantRow>(
-        blankVariant(),
-    );
+    const [variantDraft, setVariantDraft] =
+        useState<ProductVariantRow>(blankVariant());
     const [variantDraftPreview, setVariantDraftPreview] = useState<
         string | null
     >(null);
@@ -309,7 +308,8 @@ export default function ProductForm({ mode, product, options }: Props) {
 
     const openVariantModal = (index: number | null = null) => {
         setEditingVariantIndex(index);
-        const draft = index === null ? blankVariant() : { ...data.variants[index] };
+        const draft =
+            index === null ? blankVariant() : { ...data.variants[index] };
         setVariantDraft(draft);
         setVariantDraftPreview(draft.image_url || null);
         setVariantModalOpen(true);
@@ -476,7 +476,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         }
                                                     }}
                                                     placeholder="e.g. Gamis Syar'i Pita"
-                                                    className="h-9 border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                    className="h-9 border-zinc-200 text-sm focus:border-[#151515] focus:ring-[#151515]"
                                                 />
                                             </FieldGroup>
                                             <FieldGroup
@@ -494,7 +494,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         )
                                                     }
                                                     placeholder="e.g. GMS-001"
-                                                    className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                    className="h-9 border-zinc-200 font-mono text-sm focus:border-[#151515] focus:ring-[#151515]"
                                                 />
                                             </FieldGroup>
                                         </FieldRow>
@@ -517,7 +517,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         )
                                                     }
                                                     placeholder="e.g. gamis-syari-pita"
-                                                    className="h-9 flex-1 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                    className="h-9 flex-1 border-zinc-200 font-mono text-sm focus:border-[#151515] focus:ring-[#151515]"
                                                 />
                                                 <Button
                                                     type="button"
@@ -549,7 +549,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                             e.target.value,
                                                         )
                                                     }
-                                                    className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 shadow-sm focus:border-[#B98B63] focus:ring-1 focus:ring-[#B98B63] focus:outline-none"
+                                                    className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 shadow-sm focus:border-[#151515] focus:ring-1 focus:ring-[#151515] focus:outline-none"
                                                 >
                                                     <option value="">
                                                         No category
@@ -578,7 +578,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                             e.target.value,
                                                         )
                                                     }
-                                                    className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 shadow-sm focus:border-[#B98B63] focus:ring-1 focus:ring-[#B98B63] focus:outline-none"
+                                                    className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 shadow-sm focus:border-[#151515] focus:ring-1 focus:ring-[#151515] focus:outline-none"
                                                 >
                                                     <option value="">
                                                         No collection
@@ -615,7 +615,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="Brief product summary for listings"
-                                                className="h-9 border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                className="h-9 border-zinc-200 text-sm focus:border-[#151515] focus:ring-[#151515]"
                                             />
                                         </FieldGroup>
 
@@ -633,7 +633,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="Detailed product description..."
-                                                className="min-h-[120px] resize-y border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                className="min-h-[120px] resize-y border-zinc-200 text-sm focus:border-[#151515] focus:ring-[#151515]"
                                             />
                                         </FieldGroup>
                                     </div>
@@ -663,7 +663,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="Describe material composition..."
-                                                className="min-h-[90px] resize-y border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                className="min-h-[90px] resize-y border-zinc-200 text-sm focus:border-[#151515] focus:ring-[#151515]"
                                             />
                                         </FieldGroup>
                                         <FieldGroup
@@ -681,7 +681,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="Washing and care instructions..."
-                                                className="min-h-[90px] resize-y border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                className="min-h-[90px] resize-y border-zinc-200 text-sm focus:border-[#151515] focus:ring-[#151515]"
                                             />
                                         </FieldGroup>
                                     </FieldRow>
@@ -713,7 +713,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         )
                                                     }
                                                     placeholder="0"
-                                                    className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                    className="h-9 border-zinc-200 font-mono text-sm focus:border-[#151515] focus:ring-[#151515]"
                                                 />
                                             </FieldGroup>
                                             <FieldGroup
@@ -732,7 +732,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         )
                                                     }
                                                     placeholder="Leave empty for no discount"
-                                                    className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                    className="h-9 border-zinc-200 font-mono text-sm focus:border-[#151515] focus:ring-[#151515]"
                                                 />
                                             </FieldGroup>
                                         </div>
@@ -776,7 +776,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         <span className="text-sm font-semibold text-zinc-900">
                                                             Final
                                                         </span>
-                                                        <span className="font-mono text-base font-bold text-[#B98B63]">
+                                                        <span className="font-mono text-base font-bold text-[#151515]">
                                                             IDR{' '}
                                                             {Number(
                                                                 data.sale_price ||
@@ -839,7 +839,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="0"
-                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#151515] focus:ring-[#151515]"
                                             />
                                         </FieldGroup>
                                         <FieldGroup
@@ -858,7 +858,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="0"
-                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#151515] focus:ring-[#151515]"
                                             />
                                         </FieldGroup>
                                         <FieldGroup
@@ -877,7 +877,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="0"
-                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#151515] focus:ring-[#151515]"
                                             />
                                         </FieldGroup>
                                         <FieldGroup
@@ -896,7 +896,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="0"
-                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#151515] focus:ring-[#151515]"
                                             />
                                         </FieldGroup>
                                     </FieldRow>
@@ -916,7 +916,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                 key={index}
                                                 className={`group relative overflow-hidden rounded-lg border-2 transition-all ${
                                                     image.is_primary
-                                                        ? 'border-[#B98B63] ring-2 ring-[#B98B63]/20'
+                                                        ? 'border-[#151515] ring-2 ring-[#151515]/20'
                                                         : 'border-zinc-200 hover:border-zinc-300'
                                                 }`}
                                             >
@@ -1023,7 +1023,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     </button>
                                                     {/* Primary badge */}
                                                     {image.is_primary && (
-                                                        <div className="absolute bottom-1.5 left-1.5 z-10 rounded bg-[#B98B63] px-1.5 py-0.5 text-[9px] font-bold tracking-wider text-white uppercase">
+                                                        <div className="absolute bottom-1.5 left-1.5 z-10 rounded bg-[#151515] px-1.5 py-0.5 text-[9px] font-bold tracking-wider text-white uppercase">
                                                             Primary
                                                         </div>
                                                     )}
@@ -1056,7 +1056,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                                         index,
                                                                     )
                                                                 }
-                                                                className="h-3 w-3 accent-[#B98B63]"
+                                                                className="h-3 w-3 accent-[#151515]"
                                                             />
                                                             <span className="text-[10px] text-zinc-500">
                                                                 Primary
@@ -1197,7 +1197,8 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                                 </td>
                                                                 <td className="px-3 py-2">
                                                                     <span className="rounded bg-zinc-100 px-2 py-0.5 text-[11px] font-medium text-zinc-700">
-                                                                        {variant.size || '—'}
+                                                                        {variant.size ||
+                                                                            '—'}
                                                                     </span>
                                                                 </td>
                                                                 <td className="px-3 py-2 text-center">
@@ -1224,10 +1225,14 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                                     )}
                                                                 </td>
                                                                 <td className="px-3 py-2 text-right font-mono text-zinc-700">
-                                                                    {variant.stock}
+                                                                    {
+                                                                        variant.stock
+                                                                    }
                                                                 </td>
                                                                 <td className="px-3 py-2 text-right font-mono text-zinc-500">
-                                                                    {variant.reserved_stock}
+                                                                    {
+                                                                        variant.reserved_stock
+                                                                    }
                                                                 </td>
                                                                 <td className="px-3 py-2 text-center">
                                                                     <Switch
@@ -1243,7 +1248,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                                                 v,
                                                                             )
                                                                         }
-                                                                        className="scale-[0.8] data-[state=checked]:bg-[#B98B63]"
+                                                                        className="scale-[0.8] data-[state=checked]:bg-[#151515]"
                                                                     />
                                                                 </td>
                                                                 <td className="px-3 py-2 text-center">
@@ -1305,7 +1310,9 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                 type="button"
                                                 variant="outline"
                                                 size="sm"
-                                                onClick={() => openVariantModal()}
+                                                onClick={() =>
+                                                    openVariantModal()
+                                                }
                                                 className="h-7 gap-1.5 border-zinc-200 bg-white text-xs text-zinc-700"
                                             >
                                                 <Plus className="h-3.5 w-3.5" />
@@ -1371,7 +1378,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         data.name ||
                                                         'Product title for search results'
                                                     }
-                                                    className="h-9 border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                    className="h-9 border-zinc-200 text-sm focus:border-[#151515] focus:ring-[#151515]"
                                                 />
                                             </FieldGroup>
                                             <FieldGroup
@@ -1398,7 +1405,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         data.short_description ||
                                                         'Brief description for search results...'
                                                     }
-                                                    className="min-h-[80px] resize-y border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                    className="min-h-[80px] resize-y border-zinc-200 text-sm focus:border-[#151515] focus:ring-[#151515]"
                                                 />
                                             </FieldGroup>
                                         </div>
@@ -1474,7 +1481,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         </Button> */}
                                         <Button
                                             type="submit"
-                                            className="h-10 bg-[#B98B63] px-6 font-medium text-white shadow-sm hover:bg-[#9A6B45]"
+                                            className="h-10 bg-[#151515] px-6 font-medium text-white shadow-sm hover:bg-[#9A6B45]"
                                             disabled={processing}
                                         >
                                             {processing ? (
@@ -1538,7 +1545,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         e.target.value,
                                                     )
                                                 }
-                                                className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 shadow-sm focus:border-[#B98B63] focus:ring-1 focus:ring-[#B98B63] focus:outline-none"
+                                                className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 shadow-sm focus:border-[#151515] focus:ring-1 focus:ring-[#151515] focus:outline-none"
                                             >
                                                 {options.statuses.map((s) => (
                                                     <option key={s} value={s}>
@@ -1599,7 +1606,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                             v,
                                                         )
                                                     }
-                                                    className="scale-90 data-[state=checked]:bg-[#B98B63]"
+                                                    className="scale-90 data-[state=checked]:bg-[#151515]"
                                                 />
                                             </div>
                                             <div className="flex items-center justify-between">
@@ -1625,7 +1632,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                             v,
                                                         )
                                                     }
-                                                    className="scale-90 data-[state=checked]:bg-[#B98B63]"
+                                                    className="scale-90 data-[state=checked]:bg-[#151515]"
                                                 />
                                             </div>
                                             <div className="flex items-center justify-between">
@@ -1651,7 +1658,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                             v,
                                                         )
                                                     }
-                                                    className="scale-90 data-[state=checked]:bg-[#B98B63]"
+                                                    className="scale-90 data-[state=checked]:bg-[#151515]"
                                                 />
                                             </div>
                                         </div>
@@ -1708,7 +1715,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                                     'id-ID',
                                                                 )}
                                                             </span>
-                                                            <span className="text-sm font-bold text-[#B98B63]">
+                                                            <span className="text-sm font-bold text-[#151515]">
                                                                 IDR{' '}
                                                                 {Number(
                                                                     data.sale_price,
@@ -1836,7 +1843,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                     {/* <Button
                                         type="submit"
                                         form="product-form"
-                                        className="w-full h-10 bg-[#B98B63] hover:bg-[#9A6B45] text-white font-medium shadow-sm"
+                                        className="w-full h-10 bg-[#151515] hover:bg-[#9A6B45] text-white font-medium shadow-sm"
                                         disabled={processing}
                                         onClick={() => submit({ preventDefault: () => {} } as any)}
                                     >
@@ -1879,7 +1886,8 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         : 'Edit Variant'}
                                 </h2>
                                 <p className="mt-0.5 text-xs text-zinc-500">
-                                    Input size, color, stock, price, and image file.
+                                    Input size, color, stock, price, and image
+                                    file.
                                 </p>
                             </div>
                             <button
@@ -1903,7 +1911,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             })
                                         }
                                         placeholder="e.g. GMS-001-S"
-                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#151515] focus:ring-[#151515]"
                                     />
                                 </FieldGroup>
                                 <FieldGroup label="Size">
@@ -1916,7 +1924,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             })
                                         }
                                         placeholder="e.g. S, M, L, XL"
-                                        className="h-9 border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                        className="h-9 border-zinc-200 text-sm focus:border-[#151515] focus:ring-[#151515]"
                                     />
                                 </FieldGroup>
                             </FieldRow>
@@ -1932,11 +1940,11 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             })
                                         }
                                         placeholder="e.g. Black"
-                                        className="h-9 border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                        className="h-9 border-zinc-200 text-sm focus:border-[#151515] focus:ring-[#151515]"
                                     />
                                 </FieldGroup>
                                 <FieldGroup label="Color Hex">
-                                    <div className="flex h-9 items-center gap-2 rounded-md border border-zinc-200 bg-white px-2 shadow-sm focus-within:border-[#B98B63] focus-within:ring-1 focus-within:ring-[#B98B63]">
+                                    <div className="flex h-9 items-center gap-2 rounded-md border border-zinc-200 bg-white px-2 shadow-sm focus-within:border-[#151515] focus-within:ring-1 focus-within:ring-[#151515]">
                                         <input
                                             type="color"
                                             value={
@@ -1982,7 +1990,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     e.target.value,
                                             })
                                         }
-                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#151515] focus:ring-[#151515]"
                                     />
                                 </FieldGroup>
                                 <FieldGroup label="Stock">
@@ -1996,7 +2004,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                 stock: e.target.value,
                                             })
                                         }
-                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#151515] focus:ring-[#151515]"
                                     />
                                 </FieldGroup>
                                 <FieldGroup label="Reserved">
@@ -2007,11 +2015,10 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         onChange={(e) =>
                                             setVariantDraft({
                                                 ...variantDraft,
-                                                reserved_stock:
-                                                    e.target.value,
+                                                reserved_stock: e.target.value,
                                             })
                                         }
-                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#151515] focus:ring-[#151515]"
                                     />
                                 </FieldGroup>
                             </FieldRow>
@@ -2038,8 +2045,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             accept="image/*"
                                             onChange={(e) => {
                                                 const file =
-                                                    e.target.files?.[0] ??
-                                                    null;
+                                                    e.target.files?.[0] ?? null;
 
                                                 if (
                                                     variantDraftPreview?.startsWith(
@@ -2085,7 +2091,9 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         image: null,
                                                         image_url: '',
                                                     });
-                                                    setVariantDraftPreview(null);
+                                                    setVariantDraftPreview(
+                                                        null,
+                                                    );
                                                 }}
                                                 className="text-xs font-medium text-red-500 hover:text-red-600"
                                             >
@@ -2108,7 +2116,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             is_active: value,
                                         })
                                     }
-                                    className="scale-90 data-[state=checked]:bg-[#B98B63]"
+                                    className="scale-90 data-[state=checked]:bg-[#151515]"
                                 />
                             </div>
                         </div>
@@ -2125,7 +2133,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                             <Button
                                 type="button"
                                 onClick={saveVariantDraft}
-                                className="h-9 bg-[#B98B63] px-5 text-xs font-medium text-white hover:bg-[#9A6B45]"
+                                className="h-9 bg-[#151515] px-5 text-xs font-medium text-white hover:bg-[#9A6B45]"
                             >
                                 {editingVariantIndex === null
                                     ? 'Add Variant'

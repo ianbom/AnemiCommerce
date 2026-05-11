@@ -19,7 +19,7 @@ export default function AuthSimpleLayout({
                             <img
                                 src="/logo-shay/shayda-logo-text-hitam.png"
                                 alt="Shayda"
-                                className="mb-1 h-32 w-auto object-contain "
+                                className="mb-1 h-32 w-auto object-contain"
                             />
                             <span className="sr-only">{title}</span>
                         </Link>

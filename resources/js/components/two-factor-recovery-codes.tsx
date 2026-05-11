@@ -76,7 +76,8 @@ export default function TwoFactorRecoveryCodes({
                             className="size-4"
                             aria-hidden="true"
                         />
-                        {codesAreVisible ? 'Sembunyikan' : 'Lihat'} kode pemulihan
+                        {codesAreVisible ? 'Sembunyikan' : 'Lihat'} kode
+                        pemulihan
                     </Button>
 
                     {canRegenerateCodes && (
@@ -145,10 +146,10 @@ export default function TwoFactorRecoveryCodes({
 
                                 <div className="text-xs text-muted-foreground select-none">
                                     <p id="regenerate-warning">
-                                        Setiap kode pemulihan hanya dapat dipakai
-                                        sekali untuk mengakses akun dan akan
-                                        dihapus setelah digunakan. Jika perlu
-                                        lebih banyak, klik{' '}
+                                        Setiap kode pemulihan hanya dapat
+                                        dipakai sekali untuk mengakses akun dan
+                                        akan dihapus setelah digunakan. Jika
+                                        perlu lebih banyak, klik{' '}
                                         <span className="font-bold">
                                             Buat ulang kode
                                         </span>{' '}

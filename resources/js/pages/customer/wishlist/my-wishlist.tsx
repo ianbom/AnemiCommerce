@@ -61,17 +61,17 @@ export default function MyWishlist({ wishlistItems, summary }: Props) {
             ]}
         >
             <div className="min-w-0">
-                <div className="mb-6 flex items-end justify-between border-b border-[#EADFD2] pb-4">
+                <div className="mb-6 flex items-end justify-between border-b border-[#e7e2de] pb-4">
                     <div>
-                        <p className="mb-1 text-[10px] font-semibold tracking-[0.24em] text-[#7A6A5D] uppercase">
+                        <p className="mb-1 text-[10px] font-semibold tracking-[0.24em] text-[#6f6f6f] uppercase">
                             Item Tersimpan
                         </p>
-                        <h2 className="text-[17px] font-medium tracking-wide text-[#2F241D]">
+                        <h2 className="text-[17px] font-medium tracking-wide text-[#272727]">
                             Koleksi Wishlist
                         </h2>
                     </div>
 
-                    <div className="text-right text-[11px] font-semibold tracking-[0.18em] text-[#7A6A5D] uppercase">
+                    <div className="text-right text-[11px] font-semibold tracking-[0.18em] text-[#6f6f6f] uppercase">
                         {summary.item_count} produk tersimpan
                     </div>
                 </div>
@@ -88,16 +88,16 @@ export default function MyWishlist({ wishlistItems, summary }: Props) {
                     </div>
                 ) : (
                     <div className="flex min-h-[360px] flex-col items-center justify-center rounded-md px-6 text-center">
-                        <p className="text-sm font-semibold text-[#2F241D]">
+                        <p className="text-sm font-semibold text-[#272727]">
                             Wishlist masih kosong
                         </p>
-                        <p className="mt-2 max-w-sm text-[12px] leading-6 text-[#7A6A5D]">
+                        <p className="mt-2 max-w-sm text-[12px] leading-6 text-[#6f6f6f]">
                             Simpan produk favorit dari katalog agar mudah
                             ditemukan kembali.
                         </p>
                         <Link
                             href={list.url()}
-                            className="mt-5 rounded-full bg-[#B98B63] px-5 py-2 text-[11px] font-semibold tracking-wider text-white uppercase transition hover:bg-[#9A6B45]"
+                            className="mt-5 rounded-full bg-[#151515] px-5 py-2 text-[11px] font-semibold tracking-wider text-white uppercase transition hover:bg-[#9A6B45]"
                         >
                             Lihat Produk
                         </Link>
@@ -187,7 +187,7 @@ function WishlistTile({ item, index }: { item: WishlistItem; index: number }) {
                     <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/5" />
 
                     {item.badge && (
-                        <div className="absolute top-2 left-2 rounded-sm bg-[#B98B63] px-2 py-1 text-[8px] font-medium tracking-widest text-white uppercase shadow-sm">
+                        <div className="absolute top-2 left-2 rounded-sm bg-[#151515] px-2 py-1 text-[8px] font-medium tracking-widest text-white uppercase shadow-sm">
                             {item.badge}
                         </div>
                     )}
@@ -218,17 +218,17 @@ function WishlistTile({ item, index }: { item: WishlistItem; index: number }) {
                     </div>
                 )}
 
-                <p className="mb-1 text-[9px] font-semibold tracking-[0.18em] text-[#7A6A5D] uppercase">
+                <p className="mb-1 text-[9px] font-semibold tracking-[0.18em] text-[#6f6f6f] uppercase">
                     {item.category}
                 </p>
-                <h3 className="mb-1 text-[11px] leading-[1.4] font-semibold text-[#2F241D] transition-colors hover:text-[#9A6B45]">
+                <h3 className="mb-1 text-[11px] leading-[1.4] font-semibold text-[#272727] transition-colors hover:text-[#9A6B45]">
                     {item.title}
                 </h3>
 
-                <div className="mb-4 flex flex-wrap items-center gap-2 text-[11px] text-[#7A6A5D]">
+                <div className="mb-4 flex flex-wrap items-center gap-2 text-[11px] text-[#6f6f6f]">
                     <span>{formatPrice(item.sale_price ?? item.price)}</span>
                     {item.sale_price !== null && (
-                        <span className="text-[#7A6A5D] line-through">
+                        <span className="text-[#6f6f6f] line-through">
                             {formatPrice(item.price)}
                         </span>
                     )}

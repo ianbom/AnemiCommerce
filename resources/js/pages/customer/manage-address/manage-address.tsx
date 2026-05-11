@@ -12,7 +12,12 @@ import {
 import type { FormEvent } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
-import type { Icon, LatLng, LeafletMouseEvent, Map as LeafletMap } from 'leaflet';
+import type {
+    Icon,
+    LatLng,
+    LeafletMouseEvent,
+    Map as LeafletMap,
+} from 'leaflet';
 import type {
     MapContainer,
     Marker,
@@ -381,17 +386,17 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                 style={{ animationDelay: '150ms' }}
             >
                 <div>
-                    <h2 className="font-serif text-xl text-[#B98B63]">
+                    <h2 className="font-serif text-xl text-[#151515]">
                         Alamat Tersimpan
                     </h2>
-                    <p className="mt-1 text-[12px] text-[#7A6A5D]">
+                    <p className="mt-1 text-[12px] text-[#6f6f6f]">
                         Kamu punya {addresses.length} alamat tersimpan
                     </p>
                 </div>
                 <button
                     type="button"
                     onClick={() => openModal()}
-                    className="flex items-center justify-center rounded-lg bg-[#B98B63] px-6 py-2.5 text-[12px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg active:scale-[0.98]"
+                    className="flex items-center justify-center rounded-lg bg-[#151515] px-6 py-2.5 text-[12px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg active:scale-[0.98]"
                 >
                     <Plus size={16} className="mr-2" /> Tambah Alamat Baru
                 </button>
@@ -401,15 +406,15 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                 <button
                     type="button"
                     onClick={() => openModal()}
-                    className="group animate-fade-in-up flex min-h-[240px] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#EADFD2] p-6 text-center transition-all duration-300 hover:border-[#9A6B45] hover:bg-[#FFFDF8]"
+                    className="group animate-fade-in-up flex min-h-[240px] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#e7e2de] p-6 text-center transition-all duration-300 hover:border-[#9A6B45] hover:bg-[#ffffff]"
                 >
                     <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#E8D6C1] text-[#9A6B45] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#9A6B45] group-hover:text-white">
                         <Plus size={24} />
                     </div>
-                    <h3 className="mb-1 text-[14px] font-bold text-[#2F241D] transition-colors group-hover:text-[#B98B63]">
+                    <h3 className="mb-1 text-[14px] font-bold text-[#272727] transition-colors group-hover:text-[#151515]">
                         Tambah Alamat Pertama
                     </h3>
-                    <p className="max-w-[220px] text-[11px] text-[#7A6A5D]">
+                    <p className="max-w-[220px] text-[11px] text-[#6f6f6f]">
                         Simpan alamat pengiriman agar checkout lebih cepat.
                     </p>
                 </button>
@@ -425,7 +430,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                 className={`group relative rounded-2xl border bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-md md:p-8 ${
                                     address.is_default
                                         ? 'border-[#9A6B45]'
-                                        : 'border-[#EADFD2]'
+                                        : 'border-[#e7e2de]'
                                 } animate-fade-in-up`}
                                 style={{
                                     animationDelay: `${200 + index * 50}ms`,
@@ -433,8 +438,8 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                             >
                                 {address.is_default && (
                                     <div className="absolute top-0 right-8 -translate-y-1/2">
-                                        <span className="rounded-full bg-[#B98B63] px-3 py-1 text-[10px] font-bold text-white shadow-sm">
-                                             Alamat Utama
+                                        <span className="rounded-full bg-[#151515] px-3 py-1 text-[10px] font-bold text-white shadow-sm">
+                                            Alamat Utama
                                         </span>
                                     </div>
                                 )}
@@ -445,16 +450,16 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                             className={`mr-3 flex h-10 w-10 items-center justify-center rounded-full ${
                                                 address.is_default
                                                     ? 'bg-[#E8D6C1] text-[#9A6B45]'
-                                                    : 'bg-[#FFFDF8] text-[#D1B08A]'
+                                                    : 'bg-[#ffffff] text-[#e7e2de]'
                                             }`}
                                         >
                                             <MapPin size={20} />
                                         </div>
                                         <div>
-                                            <h3 className="text-[14px] font-bold text-[#2F241D]">
+                                            <h3 className="text-[14px] font-bold text-[#272727]">
                                                 {address.label ?? 'Alamat'}
                                             </h3>
-                                            <p className="mt-0.5 text-[12px] font-semibold text-[#7A6A5D]">
+                                            <p className="mt-0.5 text-[12px] font-semibold text-[#6f6f6f]">
                                                 {address.recipient_name}
                                             </p>
                                         </div>
@@ -467,7 +472,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                             onClick={() =>
                                                 openModal(address.id)
                                             }
-                                            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FFFDF8] text-[#7A6A5D] transition-colors hover:bg-[#E8D6C1] hover:text-[#B98B63] disabled:cursor-not-allowed disabled:opacity-60"
+                                            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#ffffff] text-[#6f6f6f] transition-colors hover:bg-[#E8D6C1] hover:text-[#151515] disabled:cursor-not-allowed disabled:opacity-60"
                                         >
                                             <Edit2 size={14} />
                                         </button>
@@ -484,8 +489,8 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                     </div>
                                 </div>
 
-                                <div className="mb-6 space-y-1.5 pl-13 text-[13px] text-[#7A6A5D]">
-                                    <p className="mb-2 text-[11px] font-medium text-[#7A6A5D]">
+                                <div className="mb-6 space-y-1.5 pl-13 text-[13px] text-[#6f6f6f]">
+                                    <p className="mb-2 text-[11px] font-medium text-[#6f6f6f]">
                                         {address.recipient_phone}
                                     </p>
                                     <p className="leading-relaxed">
@@ -501,11 +506,11 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                         type="button"
                                         disabled={!canMutateCard}
                                         onClick={() => setAsDefault(address)}
-                                        className="w-full rounded-lg border border-[#EADFD2] py-2.5 text-[12px] font-bold text-[#7A6A5D] transition-colors hover:border-[#9A6B45] hover:bg-[#FFFDF8] disabled:cursor-not-allowed disabled:opacity-60"
+                                        className="w-full rounded-lg border border-[#e7e2de] py-2.5 text-[12px] font-bold text-[#6f6f6f] transition-colors hover:border-[#9A6B45] hover:bg-[#ffffff] disabled:cursor-not-allowed disabled:opacity-60"
                                     >
                                         {defaultingThis
-                                             ? 'Menjadikan utama...'
-                                             : 'Jadikan utama'}
+                                            ? 'Menjadikan utama...'
+                                            : 'Jadikan utama'}
                                     </button>
                                 )}
 
@@ -514,11 +519,11 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                         <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
                                             <AlertCircle size={24} />
                                         </div>
-                                        <h4 className="mb-1 text-[14px] font-bold text-[#2F241D]">
-                                             Hapus alamat ini?
+                                        <h4 className="mb-1 text-[14px] font-bold text-[#272727]">
+                                            Hapus alamat ini?
                                         </h4>
-                                        <p className="mb-4 text-[11px] text-[#7A6A5D]">
-                                             Tindakan ini tidak dapat dibatalkan.
+                                        <p className="mb-4 text-[11px] text-[#6f6f6f]">
+                                            Tindakan ini tidak dapat dibatalkan.
                                         </p>
                                         <div className="flex w-full space-x-3">
                                             <button
@@ -527,9 +532,9 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                                 onClick={() =>
                                                     setShowDeleteConfirm(null)
                                                 }
-                                                className="flex-1 rounded-lg border border-[#EADFD2] py-2 text-[12px] font-bold text-[#7A6A5D] transition-colors hover:bg-[#FFFDF8]"
+                                                className="flex-1 rounded-lg border border-[#e7e2de] py-2 text-[12px] font-bold text-[#6f6f6f] transition-colors hover:bg-[#ffffff]"
                                             >
-                                                 Batal
+                                                Batal
                                             </button>
                                             <button
                                                 type="button"
@@ -540,8 +545,8 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                                 className="flex-1 rounded-lg bg-[#EF4444] py-2 text-[12px] font-bold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-70"
                                             >
                                                 {deletingThis
-                                                     ? 'Menghapus...'
-                                                     : 'Hapus'}
+                                                    ? 'Menghapus...'
+                                                    : 'Hapus'}
                                             </button>
                                         </div>
                                     </div>
@@ -556,245 +561,250 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                 typeof document !== 'undefined' &&
                 createPortal(
                     <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
-                    <div
-                        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-                        onClick={closeModal}
-                    />
-                    <div className="relative z-[10001] flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
-                        <div className="flex items-center justify-between border-b border-[#EADFD2] bg-[#FFFDF8] px-6 py-4">
-                            <h3 className="font-serif text-lg text-[#B98B63]">
-                                {editingAddress
-                                     ? 'Edit Alamat'
-                                     : 'Tambah Alamat Baru'}
-                            </h3>
-                            <button
-                                type="button"
-                                onClick={closeModal}
-                                className="p-1 text-[#D1B08A] transition-colors hover:text-[#2F241D]"
-                            >
-                                <X size={20} />
-                            </button>
-                        </div>
-
-                        <form
-                            onSubmit={submit}
-                            className="flex min-h-0 flex-1 flex-col"
-                        >
-                            <div className="custom-scrollbar space-y-4 overflow-y-auto p-6">
-                                <InputBlock
-                                     label="Label Alamat"
-                                    value={form.data.label}
-                                    onChange={(value) =>
-                                        form.setData('label', value)
-                                    }
-                                     placeholder="mis. Rumah, Kantor"
-                                    error={form.errors.label}
-                                />
-                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                    <InputBlock
-                                         label="Nama Penerima"
-                                        value={form.data.recipient_name}
-                                        onChange={(value) =>
-                                            form.setData(
-                                                'recipient_name',
-                                                value,
-                                            )
-                                        }
-                                        error={form.errors.recipient_name}
-                                    />
-                                    <InputBlock
-                                         label="Nomor Telepon"
-                                        value={form.data.recipient_phone}
-                                        onChange={(value) =>
-                                            form.setData(
-                                                'recipient_phone',
-                                                value,
-                                            )
-                                        }
-                                        error={form.errors.recipient_phone}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="mb-1.5 block text-[11px] font-semibold text-[#7A6A5D]">
-                                         Cari berdasarkan Kode Pos
-                                    </label>
-                                    <div className="flex gap-2">
-                                        <input
-                                            type="text"
-                                            value={areaQuery}
-                                            onChange={(event) =>
-                                                setAreaQuery(event.target.value)
-                                            }
-                                             placeholder="Cari kecamatan, kota, kode pos"
-                                            className="w-full rounded-md border border-[#EADFD2] bg-white px-4 py-2.5 text-[13px] text-[#2F241D] transition-all focus:border-[#9A6B45] focus:ring-1 focus:ring-[#9A6B45] focus:outline-none"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={searchArea}
-                                            disabled={
-                                                areaLoading ||
-                                                areaQuery.trim().length < 3
-                                            }
-                                            className="flex items-center gap-2 rounded-md bg-[#E8D6C1] px-4 py-2.5 text-[12px] font-bold text-[#7A6A5D] disabled:opacity-60"
-                                        >
-                                            <Search size={14} />
-                                             {areaLoading ? '...' : 'Cari'}
-                                        </button>
-                                    </div>
-                                    {form.data.biteship_area_id && (
-                                        <p className="mt-1.5 text-[11px] text-[#7A6A5D]">
-                                            Area ID:{' '}
-                                            {form.data.biteship_area_id}
-                                        </p>
-                                    )}
-                                    {areaResults.length > 0 && (
-                                        <div className="mt-2 max-h-48 overflow-y-auto rounded-md border border-[#EADFD2] bg-white">
-                                            {areaResults.map((area) => (
-                                                <button
-                                                    key={area.id}
-                                                    type="button"
-                                                    onClick={() =>
-                                                        chooseArea(area)
-                                                    }
-                                                    className="block w-full border-b border-[#F1EEE8] px-4 py-2 text-left text-[12px] hover:bg-[#FFFDF8]"
-                                                >
-                                                    <span className="font-semibold text-[#2F241D]">
-                                                        {area.name ?? area.id}
-                                                    </span>
-                                                    <span className="block text-[#7A6A5D]">
-                                                        {[
-                                                            area.administrative_division_level_3_name,
-                                                            area.administrative_division_level_2_name,
-                                                            area.administrative_division_level_1_name,
-                                                            area.postal_code,
-                                                        ]
-                                                            .filter(Boolean)
-                                                            .join(', ')}
-                                                    </span>
-                                                </button>
-                                            ))}
-                                        </div>
-                                    )}
-                                    {areaError && (
-                                        <p className="mt-1.5 text-[11px] font-medium text-[#B24B4B]">
-                                            {areaError}
-                                        </p>
-                                    )}
-                                    {form.errors.biteship_area_id && (
-                                        <p className="mt-1.5 text-[11px] font-medium text-[#B24B4B]">
-                                            {form.errors.biteship_area_id}
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                    <InputBlock
-                                         label="Provinsi"
-                                        value={form.data.province}
-                                        onChange={() => undefined}
-                                        error={form.errors.province}
-                                        readOnly
-                                    />
-                                    <InputBlock
-                                         label="Kota"
-                                        value={form.data.city}
-                                        onChange={() => undefined}
-                                        error={form.errors.city}
-                                        readOnly
-                                    />
-                                </div>
-                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                    <InputBlock
-                                         label="Kecamatan"
-                                        value={form.data.district}
-                                        onChange={() => undefined}
-                                        error={form.errors.district}
-                                        readOnly
-                                    />
-                                    <InputBlock
-                                         label="Kode Pos"
-                                        value={form.data.postal_code}
-                                        onChange={() => undefined}
-                                        error={form.errors.postal_code}
-                                        readOnly
-                                    />
-                                </div>
-                                <InputBlock
-                                     label="Kelurahan"
-                                    value={form.data.subdistrict}
-                                    onChange={(value) =>
-                                        form.setData('subdistrict', value)
-                                    }
-                                    error={form.errors.subdistrict}
-                                />
-                                <LocationPicker
-                                    latitude={form.data.latitude}
-                                    longitude={form.data.longitude}
-                                    error={
-                                        mapError ||
-                                        form.errors.latitude ||
-                                        form.errors.longitude
-                                    }
-                                    onChange={updateCoordinates}
-                                    onUseCurrentLocation={useCurrentLocation}
-                                />
-                                <TextareaBlock
-                                     label="Alamat Lengkap"
-                                    value={form.data.full_address}
-                                    onChange={(value) =>
-                                        form.setData('full_address', value)
-                                    }
-                                     placeholder="Nama jalan, gedung, nomor rumah"
-                                    error={form.errors.full_address}
-                                />
-                                <TextareaBlock
-                                     label="Catatan Alamat (opsional)"
-                                    value={form.data.note}
-                                    onChange={(value) =>
-                                        form.setData('note', value)
-                                    }
-                                     placeholder="Patokan, catatan pengiriman, dll."
-                                    error={form.errors.note}
-                                />
-                                <label className="flex items-center pt-2">
-                                    <input
-                                        type="checkbox"
-                                        checked={form.data.is_default}
-                                        onChange={(event) =>
-                                            form.setData(
-                                                'is_default',
-                                                event.target.checked,
-                                            )
-                                        }
-                                        className="h-4 w-4 rounded border-[#EADFD2] text-[#B98B63] focus:ring-[#9A6B45]"
-                                    />
-                                    <span className="ml-2 cursor-pointer text-[12px] font-medium text-[#7A6A5D]">
-                                        Jadikan alamat utama
-                                    </span>
-                                </label>
-                            </div>
-
-                            <div className="flex justify-end gap-3 border-t border-[#EADFD2] bg-[#FFFDF8] px-6 py-4">
+                        <div
+                            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+                            onClick={closeModal}
+                        />
+                        <div className="relative z-[10001] flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
+                            <div className="flex items-center justify-between border-b border-[#e7e2de] bg-[#ffffff] px-6 py-4">
+                                <h3 className="font-serif text-lg text-[#151515]">
+                                    {editingAddress
+                                        ? 'Edit Alamat'
+                                        : 'Tambah Alamat Baru'}
+                                </h3>
                                 <button
                                     type="button"
                                     onClick={closeModal}
-                                    className="rounded-md border border-[#EADFD2] px-6 py-2.5 text-[12px] font-bold text-[#7A6A5D] transition-colors hover:bg-white"
+                                    className="p-1 text-[#e7e2de] transition-colors hover:text-[#272727]"
                                 >
-                                    Batal
-                                </button>
-                                <button
-                                    type="submit"
-                                    disabled={form.processing}
-                                    className="rounded-md bg-[#B98B63] px-6 py-2.5 text-[12px] font-bold text-white transition-colors hover:bg-[#9A6B45] disabled:cursor-not-allowed disabled:opacity-70"
-                                >
-                                    {form.processing
-                                         ? 'Menyimpan...'
-                                        : editingAddress
-                                           ? 'Perbarui Alamat'
-                                           : 'Simpan Alamat'}
+                                    <X size={20} />
                                 </button>
                             </div>
-                        </form>
-                    </div>
+
+                            <form
+                                onSubmit={submit}
+                                className="flex min-h-0 flex-1 flex-col"
+                            >
+                                <div className="custom-scrollbar space-y-4 overflow-y-auto p-6">
+                                    <InputBlock
+                                        label="Label Alamat"
+                                        value={form.data.label}
+                                        onChange={(value) =>
+                                            form.setData('label', value)
+                                        }
+                                        placeholder="mis. Rumah, Kantor"
+                                        error={form.errors.label}
+                                    />
+                                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                        <InputBlock
+                                            label="Nama Penerima"
+                                            value={form.data.recipient_name}
+                                            onChange={(value) =>
+                                                form.setData(
+                                                    'recipient_name',
+                                                    value,
+                                                )
+                                            }
+                                            error={form.errors.recipient_name}
+                                        />
+                                        <InputBlock
+                                            label="Nomor Telepon"
+                                            value={form.data.recipient_phone}
+                                            onChange={(value) =>
+                                                form.setData(
+                                                    'recipient_phone',
+                                                    value,
+                                                )
+                                            }
+                                            error={form.errors.recipient_phone}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="mb-1.5 block text-[11px] font-semibold text-[#6f6f6f]">
+                                            Cari berdasarkan Kode Pos
+                                        </label>
+                                        <div className="flex gap-2">
+                                            <input
+                                                type="text"
+                                                value={areaQuery}
+                                                onChange={(event) =>
+                                                    setAreaQuery(
+                                                        event.target.value,
+                                                    )
+                                                }
+                                                placeholder="Cari kecamatan, kota, kode pos"
+                                                className="w-full rounded-md border border-[#e7e2de] bg-white px-4 py-2.5 text-[13px] text-[#272727] transition-all focus:border-[#9A6B45] focus:ring-1 focus:ring-[#9A6B45] focus:outline-none"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={searchArea}
+                                                disabled={
+                                                    areaLoading ||
+                                                    areaQuery.trim().length < 3
+                                                }
+                                                className="flex items-center gap-2 rounded-md bg-[#E8D6C1] px-4 py-2.5 text-[12px] font-bold text-[#6f6f6f] disabled:opacity-60"
+                                            >
+                                                <Search size={14} />
+                                                {areaLoading ? '...' : 'Cari'}
+                                            </button>
+                                        </div>
+                                        {form.data.biteship_area_id && (
+                                            <p className="mt-1.5 text-[11px] text-[#6f6f6f]">
+                                                Area ID:{' '}
+                                                {form.data.biteship_area_id}
+                                            </p>
+                                        )}
+                                        {areaResults.length > 0 && (
+                                            <div className="mt-2 max-h-48 overflow-y-auto rounded-md border border-[#e7e2de] bg-white">
+                                                {areaResults.map((area) => (
+                                                    <button
+                                                        key={area.id}
+                                                        type="button"
+                                                        onClick={() =>
+                                                            chooseArea(area)
+                                                        }
+                                                        className="block w-full border-b border-[#F1EEE8] px-4 py-2 text-left text-[12px] hover:bg-[#ffffff]"
+                                                    >
+                                                        <span className="font-semibold text-[#272727]">
+                                                            {area.name ??
+                                                                area.id}
+                                                        </span>
+                                                        <span className="block text-[#6f6f6f]">
+                                                            {[
+                                                                area.administrative_division_level_3_name,
+                                                                area.administrative_division_level_2_name,
+                                                                area.administrative_division_level_1_name,
+                                                                area.postal_code,
+                                                            ]
+                                                                .filter(Boolean)
+                                                                .join(', ')}
+                                                        </span>
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        )}
+                                        {areaError && (
+                                            <p className="mt-1.5 text-[11px] font-medium text-[#B24B4B]">
+                                                {areaError}
+                                            </p>
+                                        )}
+                                        {form.errors.biteship_area_id && (
+                                            <p className="mt-1.5 text-[11px] font-medium text-[#B24B4B]">
+                                                {form.errors.biteship_area_id}
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                        <InputBlock
+                                            label="Provinsi"
+                                            value={form.data.province}
+                                            onChange={() => undefined}
+                                            error={form.errors.province}
+                                            readOnly
+                                        />
+                                        <InputBlock
+                                            label="Kota"
+                                            value={form.data.city}
+                                            onChange={() => undefined}
+                                            error={form.errors.city}
+                                            readOnly
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                        <InputBlock
+                                            label="Kecamatan"
+                                            value={form.data.district}
+                                            onChange={() => undefined}
+                                            error={form.errors.district}
+                                            readOnly
+                                        />
+                                        <InputBlock
+                                            label="Kode Pos"
+                                            value={form.data.postal_code}
+                                            onChange={() => undefined}
+                                            error={form.errors.postal_code}
+                                            readOnly
+                                        />
+                                    </div>
+                                    <InputBlock
+                                        label="Kelurahan"
+                                        value={form.data.subdistrict}
+                                        onChange={(value) =>
+                                            form.setData('subdistrict', value)
+                                        }
+                                        error={form.errors.subdistrict}
+                                    />
+                                    <LocationPicker
+                                        latitude={form.data.latitude}
+                                        longitude={form.data.longitude}
+                                        error={
+                                            mapError ||
+                                            form.errors.latitude ||
+                                            form.errors.longitude
+                                        }
+                                        onChange={updateCoordinates}
+                                        onUseCurrentLocation={
+                                            useCurrentLocation
+                                        }
+                                    />
+                                    <TextareaBlock
+                                        label="Alamat Lengkap"
+                                        value={form.data.full_address}
+                                        onChange={(value) =>
+                                            form.setData('full_address', value)
+                                        }
+                                        placeholder="Nama jalan, gedung, nomor rumah"
+                                        error={form.errors.full_address}
+                                    />
+                                    <TextareaBlock
+                                        label="Catatan Alamat (opsional)"
+                                        value={form.data.note}
+                                        onChange={(value) =>
+                                            form.setData('note', value)
+                                        }
+                                        placeholder="Patokan, catatan pengiriman, dll."
+                                        error={form.errors.note}
+                                    />
+                                    <label className="flex items-center pt-2">
+                                        <input
+                                            type="checkbox"
+                                            checked={form.data.is_default}
+                                            onChange={(event) =>
+                                                form.setData(
+                                                    'is_default',
+                                                    event.target.checked,
+                                                )
+                                            }
+                                            className="h-4 w-4 rounded border-[#e7e2de] text-[#151515] focus:ring-[#9A6B45]"
+                                        />
+                                        <span className="ml-2 cursor-pointer text-[12px] font-medium text-[#6f6f6f]">
+                                            Jadikan alamat utama
+                                        </span>
+                                    </label>
+                                </div>
+
+                                <div className="flex justify-end gap-3 border-t border-[#e7e2de] bg-[#ffffff] px-6 py-4">
+                                    <button
+                                        type="button"
+                                        onClick={closeModal}
+                                        className="rounded-md border border-[#e7e2de] px-6 py-2.5 text-[12px] font-bold text-[#6f6f6f] transition-colors hover:bg-white"
+                                    >
+                                        Batal
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        disabled={form.processing}
+                                        className="rounded-md bg-[#151515] px-6 py-2.5 text-[12px] font-bold text-white transition-colors hover:bg-[#9A6B45] disabled:cursor-not-allowed disabled:opacity-70"
+                                    >
+                                        {form.processing
+                                            ? 'Menyimpan...'
+                                            : editingAddress
+                                              ? 'Perbarui Alamat'
+                                              : 'Simpan Alamat'}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>,
                     document.body,
                 )}
@@ -844,32 +854,32 @@ function LocationPicker({
             import('leaflet/dist/leaflet.css'),
             import('react-leaflet'),
         ]).then(([leaflet, , reactLeaflet]) => {
-                if (!isMounted) {
-                    return;
-                }
+            if (!isMounted) {
+                return;
+            }
 
-                setMarkerIcon(
-                    leaflet.icon({
-                        iconUrl:
-                            'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-                        iconRetinaUrl:
-                            'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-                        shadowUrl:
-                            'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-                        iconSize: [25, 41],
-                        iconAnchor: [12, 41],
-                        popupAnchor: [1, -34],
-                        shadowSize: [41, 41],
-                    }),
-                );
-                setLeafletModules({
-                    MapContainer: reactLeaflet.MapContainer,
-                    Marker: reactLeaflet.Marker,
-                    TileLayer: reactLeaflet.TileLayer,
-                    useMap: reactLeaflet.useMap,
-                    useMapEvents: reactLeaflet.useMapEvents,
-                });
+            setMarkerIcon(
+                leaflet.icon({
+                    iconUrl:
+                        'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+                    iconRetinaUrl:
+                        'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+                    shadowUrl:
+                        'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41],
+                }),
+            );
+            setLeafletModules({
+                MapContainer: reactLeaflet.MapContainer,
+                Marker: reactLeaflet.Marker,
+                TileLayer: reactLeaflet.TileLayer,
+                useMap: reactLeaflet.useMap,
+                useMapEvents: reactLeaflet.useMapEvents,
             });
+        });
 
         return () => {
             isMounted = false;
@@ -880,22 +890,22 @@ function LocationPicker({
         <div>
             <div className="mb-2 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
                 <div>
-                    <label className="block text-[11px] font-semibold text-[#7A6A5D]">
+                    <label className="block text-[11px] font-semibold text-[#6f6f6f]">
                         Titik Lokasi
                     </label>
-                    <p className="mt-1 text-[11px] text-[#7A6A5D]">
+                    <p className="mt-1 text-[11px] text-[#6f6f6f]">
                         Klik map atau drag pin ke titik rumah.
                     </p>
                 </div>
                 <button
                     type="button"
                     onClick={onUseCurrentLocation}
-                    className="inline-flex items-center justify-center gap-2 rounded-md border border-[#EADFD2] bg-white px-3 py-2 text-[11px] font-bold text-[#7A6A5D] transition-colors hover:border-[#9A6B45] hover:bg-[#FFFDF8]"
+                    className="inline-flex items-center justify-center gap-2 rounded-md border border-[#e7e2de] bg-white px-3 py-2 text-[11px] font-bold text-[#6f6f6f] transition-colors hover:border-[#9A6B45] hover:bg-[#ffffff]"
                 >
                     <LocateFixed size={14} /> Gunakan Lokasi Saat Ini
                 </button>
             </div>
-            <div className="overflow-hidden rounded-xl border border-[#EADFD2] bg-[#FFFDF8]">
+            <div className="overflow-hidden rounded-xl border border-[#e7e2de] bg-[#ffffff]">
                 {leafletModules && markerIcon ? (
                     <ClientMap
                         hasCoordinates={hasCoordinates}
@@ -905,13 +915,13 @@ function LocationPicker({
                         position={position}
                     />
                 ) : (
-                    <div className="flex h-[320px] w-full items-center justify-center text-[12px] font-medium text-[#7A6A5D]">
+                    <div className="flex h-[320px] w-full items-center justify-center text-[12px] font-medium text-[#6f6f6f]">
                         Memuat peta...
                     </div>
                 )}
             </div>
             {hasCoordinates && (
-                <p className="mt-2 text-[11px] text-[#7A6A5D]">
+                <p className="mt-2 text-[11px] text-[#6f6f6f]">
                     Koordinat: {latitude}, {longitude}
                 </p>
             )}
@@ -1017,7 +1027,7 @@ function InputBlock({
 }: FieldProps) {
     return (
         <div>
-            <label className="mb-1.5 block text-[11px] font-semibold text-[#7A6A5D]">
+            <label className="mb-1.5 block text-[11px] font-semibold text-[#6f6f6f]">
                 {label}
             </label>
             <input
@@ -1026,8 +1036,8 @@ function InputBlock({
                 onChange={(event) => onChange(event.target.value)}
                 placeholder={placeholder}
                 readOnly={readOnly}
-                className={`w-full rounded-md border border-[#EADFD2] px-4 py-2.5 text-[13px] text-[#2F241D] transition-all focus:border-[#9A6B45] focus:ring-1 focus:ring-[#9A6B45] focus:outline-none ${
-                    readOnly ? 'bg-[#FFFDF8] text-[#7A6A5D]' : 'bg-white'
+                className={`w-full rounded-md border border-[#e7e2de] px-4 py-2.5 text-[13px] text-[#272727] transition-all focus:border-[#9A6B45] focus:ring-1 focus:ring-[#9A6B45] focus:outline-none ${
+                    readOnly ? 'bg-[#ffffff] text-[#6f6f6f]' : 'bg-white'
                 }`}
             />
             {error && (
@@ -1048,7 +1058,7 @@ function TextareaBlock({
 }: FieldProps) {
     return (
         <div>
-            <label className="mb-1.5 block text-[11px] font-semibold text-[#7A6A5D]">
+            <label className="mb-1.5 block text-[11px] font-semibold text-[#6f6f6f]">
                 {label}
             </label>
             <textarea
@@ -1056,7 +1066,7 @@ function TextareaBlock({
                 value={value}
                 onChange={(event) => onChange(event.target.value)}
                 placeholder={placeholder}
-                className="w-full resize-none rounded-md border border-[#EADFD2] bg-white px-4 py-2.5 text-[13px] text-[#2F241D] transition-all focus:border-[#9A6B45] focus:ring-1 focus:ring-[#9A6B45] focus:outline-none"
+                className="w-full resize-none rounded-md border border-[#e7e2de] bg-white px-4 py-2.5 text-[13px] text-[#272727] transition-all focus:border-[#9A6B45] focus:ring-1 focus:ring-[#9A6B45] focus:outline-none"
             />
             {error && (
                 <p className="mt-1.5 text-[11px] font-medium text-[#B24B4B]">

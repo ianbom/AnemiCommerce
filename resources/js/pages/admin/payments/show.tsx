@@ -60,7 +60,13 @@ export default function PaymentShow({ payment }: Props) {
                     action={
                         <Button
                             type="button"
-                            onClick={() => router.post(`/admin/payments/${payment.id}/sync`, {}, { preserveScroll: true })}
+                            onClick={() =>
+                                router.post(
+                                    `/admin/payments/${payment.id}/sync`,
+                                    {},
+                                    { preserveScroll: true },
+                                )
+                            }
                         >
                             <RefreshCw /> Sync Status
                         </Button>

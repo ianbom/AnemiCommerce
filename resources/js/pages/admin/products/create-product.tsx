@@ -66,14 +66,67 @@ type Variant = {
 };
 
 const INITIAL_VARIANTS: Variant[] = [
-    { id: 1, sku: 'ABY-NJRN-001-S',  colorName: 'Off White', colorHex: '#F8F4E6', size: 'S',  priceAdd: '0', stock: '25', reserved: 0, imageUrl: 'https://...', active: true },
-    { id: 2, sku: 'ABY-NJRN-001-M',  colorName: 'Off White', colorHex: '#F8F4E6', size: 'M',  priceAdd: '0', stock: '18', reserved: 0, imageUrl: 'https://...', active: true },
-    { id: 3, sku: 'ABY-NJRN-001-L',  colorName: 'Off White', colorHex: '#F8F4E6', size: 'L',  priceAdd: '0', stock: '12', reserved: 0, imageUrl: 'https://...', active: true },
-    { id: 4, sku: 'ABY-NJRN-001-XL', colorName: 'Off White', colorHex: '#F8F4E6', size: 'XL', priceAdd: '0', stock: '2',  reserved: 0, imageUrl: 'invalid-url', active: true, hasError: true },
+    {
+        id: 1,
+        sku: 'ABY-NJRN-001-S',
+        colorName: 'Off White',
+        colorHex: '#F8F4E6',
+        size: 'S',
+        priceAdd: '0',
+        stock: '25',
+        reserved: 0,
+        imageUrl: 'https://...',
+        active: true,
+    },
+    {
+        id: 2,
+        sku: 'ABY-NJRN-001-M',
+        colorName: 'Off White',
+        colorHex: '#F8F4E6',
+        size: 'M',
+        priceAdd: '0',
+        stock: '18',
+        reserved: 0,
+        imageUrl: 'https://...',
+        active: true,
+    },
+    {
+        id: 3,
+        sku: 'ABY-NJRN-001-L',
+        colorName: 'Off White',
+        colorHex: '#F8F4E6',
+        size: 'L',
+        priceAdd: '0',
+        stock: '12',
+        reserved: 0,
+        imageUrl: 'https://...',
+        active: true,
+    },
+    {
+        id: 4,
+        sku: 'ABY-NJRN-001-XL',
+        colorName: 'Off White',
+        colorHex: '#F8F4E6',
+        size: 'XL',
+        priceAdd: '0',
+        stock: '2',
+        reserved: 0,
+        imageUrl: 'invalid-url',
+        active: true,
+        hasError: true,
+    },
 ];
 
 const EMPTY_VARIANT: Omit<Variant, 'id'> = {
-    sku: '', colorName: '', colorHex: '#000000', size: '', priceAdd: '0', stock: '0', reserved: 0, imageUrl: '', active: true,
+    sku: '',
+    colorName: '',
+    colorHex: '#000000',
+    size: '',
+    priceAdd: '0',
+    stock: '0',
+    reserved: 0,
+    imageUrl: '',
+    active: true,
 };
 
 export default function CreateProduct() {
@@ -135,9 +188,7 @@ export default function CreateProduct() {
                                 Produk
                             </Link>
                             <span>/</span>
-                            <span className="text-zinc-900">
-                                Buat Produk
-                            </span>
+                            <span className="text-zinc-900">Buat Produk</span>
                         </div>
                         <h1 className="font-serif text-3xl leading-tight text-zinc-900 md:text-4xl">
                             Create Product
@@ -160,7 +211,7 @@ export default function CreateProduct() {
                         >
                             Preview Product
                         </Button>
-                        <Button className="h-10 rounded-lg bg-[#B98B63] px-6 font-medium text-white shadow-md transition-all hover:bg-[#9A6B45] hover:shadow-lg">
+                        <Button className="h-10 rounded-lg bg-[#151515] px-6 font-medium text-white shadow-md transition-all hover:bg-[#9A6B45] hover:shadow-lg">
                             Publish Product
                         </Button>
                     </div>
@@ -190,7 +241,7 @@ export default function CreateProduct() {
                                                 <Input
                                                     id="name"
                                                     defaultValue="Najran Piping Lace Abaya"
-                                                    className="rounded-lg border-zinc-200 shadow-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                    className="rounded-lg border-zinc-200 shadow-sm focus:border-[#151515] focus:ring-[#151515]"
                                                 />
                                             </div>
                                             <div className="space-y-1.5">
@@ -203,7 +254,7 @@ export default function CreateProduct() {
                                                 <Input
                                                     id="sku"
                                                     defaultValue="ABY-NJRN-001"
-                                                    className="rounded-lg border-zinc-200 bg-zinc-50/50 shadow-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
+                                                    className="rounded-lg border-zinc-200 bg-zinc-50/50 shadow-sm focus:border-[#151515] focus:ring-[#151515]"
                                                 />
                                             </div>
                                         </div>
@@ -389,7 +440,7 @@ export default function CreateProduct() {
                                     <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                                         {/* Dropzone */}
                                         <div className="group relative col-span-2 flex aspect-[3/4] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-zinc-200 bg-zinc-50 p-4 text-center transition-colors hover:bg-zinc-100/50 md:col-span-1">
-                                            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-white text-zinc-400 shadow-sm transition-all group-hover:scale-110 group-hover:text-[#B98B63]">
+                                            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-white text-zinc-400 shadow-sm transition-all group-hover:scale-110 group-hover:text-[#151515]">
                                                 <UploadCloud className="h-5 w-5" />
                                             </div>
                                             <p className="mb-1 text-xs font-medium text-zinc-600">
@@ -448,7 +499,7 @@ export default function CreateProduct() {
                                                         <input
                                                             type="radio"
                                                             checked
-                                                            className="h-3 w-3 text-[#B98B63] focus:ring-[#B98B63]"
+                                                            className="h-3 w-3 text-[#151515] focus:ring-[#151515]"
                                                             readOnly
                                                         />
                                                         <span className="text-[9px] font-medium text-zinc-600">
@@ -773,14 +824,30 @@ export default function CreateProduct() {
                                             <table className="w-full text-left text-[11px]">
                                                 <thead className="border-b border-zinc-200 bg-zinc-50 text-zinc-500">
                                                     <tr>
-                                                        <th className="w-8 px-2 py-2 text-center">#</th>
-                                                        <th className="px-3 py-2 font-medium">SKU</th>
-                                                        <th className="px-3 py-2 font-medium">Color</th>
-                                                        <th className="px-3 py-2 font-medium">Size</th>
-                                                        <th className="px-3 py-2 font-medium text-right">Price Add.</th>
-                                                        <th className="px-3 py-2 font-medium text-right">Stock</th>
-                                                        <th className="px-3 py-2 text-center font-medium">Active</th>
-                                                        <th className="px-3 py-2 text-center font-medium">Actions</th>
+                                                        <th className="w-8 px-2 py-2 text-center">
+                                                            #
+                                                        </th>
+                                                        <th className="px-3 py-2 font-medium">
+                                                            SKU
+                                                        </th>
+                                                        <th className="px-3 py-2 font-medium">
+                                                            Color
+                                                        </th>
+                                                        <th className="px-3 py-2 font-medium">
+                                                            Size
+                                                        </th>
+                                                        <th className="px-3 py-2 text-right font-medium">
+                                                            Price Add.
+                                                        </th>
+                                                        <th className="px-3 py-2 text-right font-medium">
+                                                            Stock
+                                                        </th>
+                                                        <th className="px-3 py-2 text-center font-medium">
+                                                            Active
+                                                        </th>
+                                                        <th className="px-3 py-2 text-center font-medium">
+                                                            Actions
+                                                        </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody className="divide-y divide-zinc-100 bg-white">
@@ -792,38 +859,79 @@ export default function CreateProduct() {
                                                             <td className="px-2 py-2 text-center text-zinc-400">
                                                                 <GripVertical className="inline-block h-3 w-3 cursor-grab" />
                                                             </td>
-                                                            <td className="px-3 py-2 font-mono text-zinc-700">{v.sku || <span className="text-zinc-300">—</span>}</td>
+                                                            <td className="px-3 py-2 font-mono text-zinc-700">
+                                                                {v.sku || (
+                                                                    <span className="text-zinc-300">
+                                                                        —
+                                                                    </span>
+                                                                )}
+                                                            </td>
                                                             <td className="px-3 py-2">
                                                                 <div className="flex items-center gap-1.5">
                                                                     <div
                                                                         className="h-3 w-3 shrink-0 rounded-full border border-zinc-200"
-                                                                        style={{ backgroundColor: v.colorHex }}
+                                                                        style={{
+                                                                            backgroundColor:
+                                                                                v.colorHex,
+                                                                        }}
                                                                     />
-                                                                    <span className="text-zinc-600">{v.colorName}</span>
+                                                                    <span className="text-zinc-600">
+                                                                        {
+                                                                            v.colorName
+                                                                        }
+                                                                    </span>
                                                                 </div>
                                                             </td>
                                                             <td className="px-3 py-2">
                                                                 <span className="rounded bg-zinc-100 px-1.5 py-0.5 text-[10px] font-semibold text-zinc-700">
-                                                                    {v.size || '—'}
+                                                                    {v.size ||
+                                                                        '—'}
                                                                 </span>
                                                             </td>
                                                             <td className="px-3 py-2 text-right text-zinc-600">
-                                                                {v.priceAdd === '0' ? <span className="text-zinc-300">+0</span> : `+${v.priceAdd}`}
+                                                                {v.priceAdd ===
+                                                                '0' ? (
+                                                                    <span className="text-zinc-300">
+                                                                        +0
+                                                                    </span>
+                                                                ) : (
+                                                                    `+${v.priceAdd}`
+                                                                )}
                                                             </td>
                                                             <td className="px-3 py-2 text-right">
-                                                                <span className={`font-medium ${parseInt(v.stock) <= 5 ? 'text-red-600' : parseInt(v.stock) <= 15 ? 'text-amber-600' : 'text-zinc-700'}`}>
+                                                                <span
+                                                                    className={`font-medium ${parseInt(v.stock) <= 5 ? 'text-red-600' : parseInt(v.stock) <= 15 ? 'text-amber-600' : 'text-zinc-700'}`}
+                                                                >
                                                                     {v.stock}
                                                                 </span>
                                                             </td>
                                                             <td className="px-3 py-2 text-center">
                                                                 <Switch
-                                                                    checked={v.active}
-                                                                    onCheckedChange={(checked) =>
-                                                                        setVariants((prev) =>
-                                                                            prev.map((x) => x.id === v.id ? { ...x, active: checked } : x)
+                                                                    checked={
+                                                                        v.active
+                                                                    }
+                                                                    onCheckedChange={(
+                                                                        checked,
+                                                                    ) =>
+                                                                        setVariants(
+                                                                            (
+                                                                                prev,
+                                                                            ) =>
+                                                                                prev.map(
+                                                                                    (
+                                                                                        x,
+                                                                                    ) =>
+                                                                                        x.id ===
+                                                                                        v.id
+                                                                                            ? {
+                                                                                                  ...x,
+                                                                                                  active: checked,
+                                                                                              }
+                                                                                            : x,
+                                                                                ),
                                                                         )
                                                                     }
-                                                                    className="scale-75 data-[state=checked]:bg-[#B98B63]"
+                                                                    className="scale-75 data-[state=checked]:bg-[#151515]"
                                                                 />
                                                             </td>
                                                             <td className="px-3 py-2 text-center">
@@ -832,7 +940,11 @@ export default function CreateProduct() {
                                                                         variant="ghost"
                                                                         size="icon"
                                                                         className="h-6 w-6 text-zinc-400 hover:text-zinc-700"
-                                                                        onClick={() => openEdit(v)}
+                                                                        onClick={() =>
+                                                                            openEdit(
+                                                                                v,
+                                                                            )
+                                                                        }
                                                                         title="Edit variant"
                                                                     >
                                                                         <Pencil className="h-3 w-3" />
@@ -841,7 +953,11 @@ export default function CreateProduct() {
                                                                         variant="ghost"
                                                                         size="icon"
                                                                         className="h-6 w-6 text-zinc-400 hover:text-red-500"
-                                                                        onClick={() => handleDelete(v.id)}
+                                                                        onClick={() =>
+                                                                            handleDelete(
+                                                                                v.id,
+                                                                            )
+                                                                        }
                                                                         title="Delete variant"
                                                                     >
                                                                         <Trash2 className="h-3 w-3" />
@@ -852,8 +968,14 @@ export default function CreateProduct() {
                                                     ))}
                                                     {variants.length === 0 && (
                                                         <tr>
-                                                            <td colSpan={8} className="py-8 text-center text-xs text-zinc-400">
-                                                                No variants yet. Click "Add Variant" to create one.
+                                                            <td
+                                                                colSpan={8}
+                                                                className="py-8 text-center text-xs text-zinc-400"
+                                                            >
+                                                                No variants yet.
+                                                                Click "Add
+                                                                Variant" to
+                                                                create one.
                                                             </td>
                                                         </tr>
                                                     )}
@@ -867,17 +989,27 @@ export default function CreateProduct() {
                                                 className="h-7 gap-1 bg-white text-[11px]"
                                                 onClick={openAdd}
                                             >
-                                                <Plus className="h-3 w-3" /> Add Variant
+                                                <Plus className="h-3 w-3" /> Add
+                                                Variant
                                             </Button>
                                             <div className="mr-2 flex items-center gap-4">
-                                                {variants.some((v) => parseInt(v.stock) <= 5 && parseInt(v.stock) > 0) && (
+                                                {variants.some(
+                                                    (v) =>
+                                                        parseInt(v.stock) <=
+                                                            5 &&
+                                                        parseInt(v.stock) > 0,
+                                                ) && (
                                                     <div className="flex items-center gap-1.5 text-[11px] font-medium text-amber-600">
-                                                        <AlertTriangle className="h-3.5 w-3.5" /> Low stock
+                                                        <AlertTriangle className="h-3.5 w-3.5" />{' '}
+                                                        Low stock
                                                     </div>
                                                 )}
-                                                {variants.some((v) => v.hasError) && (
+                                                {variants.some(
+                                                    (v) => v.hasError,
+                                                ) && (
                                                     <div className="flex items-center gap-1.5 text-[11px] font-medium text-red-500">
-                                                        <AlertTriangle className="h-3.5 w-3.5" /> Invalid URL
+                                                        <AlertTriangle className="h-3.5 w-3.5" />{' '}
+                                                        Invalid URL
                                                     </div>
                                                 )}
                                             </div>
@@ -1031,7 +1163,7 @@ export default function CreateProduct() {
                                         </div>
                                         <Switch
                                             defaultChecked
-                                            className="data-[state=checked]:bg-[#B98B63]"
+                                            className="data-[state=checked]:bg-[#151515]"
                                         />
                                     </div>
                                     <div className="group flex items-center justify-between">
@@ -1043,7 +1175,7 @@ export default function CreateProduct() {
                                         </div>
                                         <Switch
                                             defaultChecked
-                                            className="data-[state=checked]:bg-[#B98B63]"
+                                            className="data-[state=checked]:bg-[#151515]"
                                         />
                                     </div>
                                     <div className="group flex items-center justify-between">
@@ -1053,7 +1185,7 @@ export default function CreateProduct() {
                                                 Is Best Seller
                                             </Label>
                                         </div>
-                                        <Switch className="data-[state=checked]:bg-[#B98B63]" />
+                                        <Switch className="data-[state=checked]:bg-[#151515]" />
                                     </div>
                                 </div>
                             </div>
@@ -1209,7 +1341,7 @@ export default function CreateProduct() {
                         >
                             Save as Draft
                         </Button>
-                        <Button className="h-10 rounded-lg bg-[#B98B63] px-6 font-medium text-white shadow-md transition-all hover:bg-[#9A6B45] hover:shadow-lg">
+                        <Button className="h-10 rounded-lg bg-[#151515] px-6 font-medium text-white shadow-md transition-all hover:bg-[#9A6B45] hover:shadow-lg">
                             Publish Product
                         </Button>
                     </div>
@@ -1222,8 +1354,9 @@ export default function CreateProduct() {
                     variant={editingVariant}
                     onSave={handleSave}
                     onClose={() => {
- setModalOpen(false); setEditingVariant(null); 
-}}
+                        setModalOpen(false);
+                        setEditingVariant(null);
+                    }}
                 />
             )}
         </>
@@ -1247,10 +1380,10 @@ function VariantModal({
 
     useEffect(() => {
         const handler = (e: KeyboardEvent) => {
- if (e.key === 'Escape') {
-onClose();
-} 
-};
+            if (e.key === 'Escape') {
+                onClose();
+            }
+        };
         window.addEventListener('keydown', handler);
 
         return () => window.removeEventListener('keydown', handler);
@@ -1262,8 +1395,8 @@ onClose();
 
     function handleBackdropClick(e: React.MouseEvent) {
         if (e.target === backdropRef.current) {
-onClose();
-}
+            onClose();
+        }
     }
 
     return (
@@ -1280,7 +1413,9 @@ onClose();
                             {isNew ? 'Add Variant' : 'Edit Variant'}
                         </h2>
                         <p className="mt-0.5 text-xs text-zinc-400">
-                            {isNew ? 'Create a new product variant.' : `Editing: ${variant.sku}`}
+                            {isNew
+                                ? 'Create a new product variant.'
+                                : `Editing: ${variant.sku}`}
                         </p>
                     </div>
                     <button
@@ -1314,7 +1449,9 @@ onClose();
                             <Input
                                 id="v-color-name"
                                 value={form.colorName}
-                                onChange={(e) => set('colorName', e.target.value)}
+                                onChange={(e) =>
+                                    set('colorName', e.target.value)
+                                }
                                 placeholder="e.g. Off White"
                                 className="rounded-lg border-zinc-200 shadow-sm"
                             />
@@ -1325,13 +1462,17 @@ onClose();
                                 <input
                                     type="color"
                                     value={form.colorHex}
-                                    onChange={(e) => set('colorHex', e.target.value)}
+                                    onChange={(e) =>
+                                        set('colorHex', e.target.value)
+                                    }
                                     className="h-5 w-5 shrink-0 cursor-pointer rounded border-none bg-transparent p-0"
                                 />
                                 <input
                                     type="text"
                                     value={form.colorHex}
-                                    onChange={(e) => set('colorHex', e.target.value)}
+                                    onChange={(e) =>
+                                        set('colorHex', e.target.value)
+                                    }
                                     className="h-9 flex-1 border-none bg-transparent text-sm text-zinc-700 focus:ring-0"
                                     placeholder="#000000"
                                 />
@@ -1352,12 +1493,16 @@ onClose();
                             />
                         </div>
                         <div className="space-y-1.5">
-                            <Label htmlFor="v-price-add">Price Addition (IDR)</Label>
+                            <Label htmlFor="v-price-add">
+                                Price Addition (IDR)
+                            </Label>
                             <Input
                                 id="v-price-add"
                                 type="number"
                                 value={form.priceAdd}
-                                onChange={(e) => set('priceAdd', e.target.value)}
+                                onChange={(e) =>
+                                    set('priceAdd', e.target.value)
+                                }
                                 className="rounded-lg border-zinc-200 shadow-sm"
                             />
                         </div>
@@ -1384,26 +1529,34 @@ onClose();
                             onChange={(e) => set('imageUrl', e.target.value)}
                             placeholder="https://..."
                             className={`rounded-lg shadow-sm ${
-                                form.imageUrl && !form.imageUrl.startsWith('http')
+                                form.imageUrl &&
+                                !form.imageUrl.startsWith('http')
                                     ? 'border-red-300 text-red-600 focus:border-red-500'
                                     : 'border-zinc-200'
                             }`}
                         />
                         {form.imageUrl && !form.imageUrl.startsWith('http') && (
-                            <p className="text-xs text-red-500">URL must start with http:// or https://</p>
+                            <p className="text-xs text-red-500">
+                                URL must start with http:// or https://
+                            </p>
                         )}
                     </div>
 
                     {/* Active toggle */}
                     <div className="flex items-center justify-between rounded-lg border border-zinc-100 bg-zinc-50 px-4 py-3">
-                        <Label htmlFor="v-active" className="cursor-pointer font-medium text-zinc-700">
+                        <Label
+                            htmlFor="v-active"
+                            className="cursor-pointer font-medium text-zinc-700"
+                        >
                             Active
                         </Label>
                         <Switch
                             id="v-active"
                             checked={form.active}
-                            onCheckedChange={(checked) => set('active', checked)}
-                            className="data-[state=checked]:bg-[#B98B63]"
+                            onCheckedChange={(checked) =>
+                                set('active', checked)
+                            }
+                            className="data-[state=checked]:bg-[#151515]"
                         />
                     </div>
                 </div>
@@ -1418,7 +1571,7 @@ onClose();
                         Cancel
                     </Button>
                     <Button
-                        className="rounded-lg bg-[#B98B63] px-6 font-medium text-white shadow-md transition-all hover:bg-[#9A6B45]"
+                        className="rounded-lg bg-[#151515] px-6 font-medium text-white shadow-md transition-all hover:bg-[#9A6B45]"
                         onClick={() => onSave(form)}
                     >
                         {isNew ? 'Add Variant' : 'Save Changes'}
@@ -1442,7 +1595,7 @@ function SectionCard({
                 className={`flex items-center justify-between border-b border-zinc-50 px-5 pt-5 pb-3 ${noPaddingTitle ? 'pb-4' : ''}`}
             >
                 <div>
-                    <h2 className="font-serif text-base leading-tight text-zinc-900 transition-colors group-hover:text-[#B98B63]">
+                    <h2 className="font-serif text-base leading-tight text-zinc-900 transition-colors group-hover:text-[#151515]">
                         {title}
                     </h2>
                     {description && (

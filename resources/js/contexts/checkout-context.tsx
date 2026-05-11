@@ -112,7 +112,9 @@ function checkoutIdempotencyKey() {
         return existing;
     }
 
-    const generated = window.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const generated =
+        window.crypto?.randomUUID?.() ??
+        `${Date.now()}-${Math.random().toString(36).slice(2)}`;
     window.sessionStorage.setItem(storageKey, generated);
 
     return generated;
@@ -351,7 +353,13 @@ export function CheckoutProvider({
                 setPlacingOrder(false);
             }
         },
-        [currentAddressId, currentRate, currentVoucher, idempotencyKey, placingOrder],
+        [
+            currentAddressId,
+            currentRate,
+            currentVoucher,
+            idempotencyKey,
+            placingOrder,
+        ],
     );
 
     const value = useMemo<CheckoutContextValue>(

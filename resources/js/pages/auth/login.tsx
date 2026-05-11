@@ -38,7 +38,7 @@ export default function Login({
                             <h1 className="text-2xl font-bold">
                                 Masuk ke akunmu
                             </h1>
-                            <p className="text-balance text-sm text-muted-foreground">
+                            <p className="text-sm text-balance text-muted-foreground">
                                 Masukkan email untuk masuk ke akunmu
                             </p>
                         </div>

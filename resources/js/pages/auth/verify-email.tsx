@@ -34,7 +34,8 @@ export default function VerifyEmail({ status }: { status?: string }) {
                             Tunggu beberapa menit sebelum meminta tautan baru.
                         </li>
                         <li>
-                            Gunakan tombol di bawah untuk mengirim ulang email verifikasi.
+                            Gunakan tombol di bawah untuk mengirim ulang email
+                            verifikasi.
                         </li>
                     </ul>
                 </div>

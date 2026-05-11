@@ -92,7 +92,13 @@ export default function CustomerShow({ customer }: Props) {
                             </Button>
                             <Button
                                 type="button"
-                                onClick={() => router.post(`/admin/customers/${customer.id}/toggle-active`, {}, { preserveScroll: true })}
+                                onClick={() =>
+                                    router.post(
+                                        `/admin/customers/${customer.id}/toggle-active`,
+                                        {},
+                                        { preserveScroll: true },
+                                    )
+                                }
                             >
                                 <Power /> Toggle Active
                             </Button>

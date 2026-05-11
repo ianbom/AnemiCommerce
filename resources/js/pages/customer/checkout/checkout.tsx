@@ -76,7 +76,10 @@ const validCoordinates = (latitude: number, longitude: number): boolean =>
     longitude <= 180;
 
 const coordinatesFrom = (
-    location: Pick<CheckoutAddress | CheckoutStoreLocation, 'latitude' | 'longitude'>,
+    location: Pick<
+        CheckoutAddress | CheckoutStoreLocation,
+        'latitude' | 'longitude'
+    >,
 ): Coordinates | null => {
     const latitude = Number(location.latitude);
     const longitude = Number(location.longitude);
@@ -98,7 +101,9 @@ const distanceMeters = (from: Coordinates, to: Coordinates) => {
             Math.sin(longitudeDelta / 2) ** 2;
 
     return Math.round(
-        earthRadiusMeters * 2 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine)),
+        earthRadiusMeters *
+            2 *
+            Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine)),
     );
 };
 
@@ -182,7 +187,7 @@ function CheckoutScreen() {
             <Head title="Checkout - Aurea Syari" />
 
             <main className="mx-auto min-h-screen max-w-[1200px] px-4 py-8 md:px-8 md:py-12">
-                <div className="mb-8 flex items-center space-x-2 text-[10px] font-medium tracking-wide text-[#7A6A5D] md:text-xs">
+                <div className="mb-8 flex items-center space-x-2 text-[10px] font-medium tracking-wide text-[#6f6f6f] md:text-xs">
                     <Link
                         href="/"
                         className="transition-colors hover:text-black"
@@ -197,50 +202,52 @@ function CheckoutScreen() {
                         Keranjang
                     </Link>
                     <span>/</span>
-                    <span className="text-[#2F241D]">Checkout</span>
+                    <span className="text-[#272727]">Checkout</span>
                 </div>
 
                 <div className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
                     <div>
-                        <h1 className="mb-2 font-serif text-3xl text-[#B98B63] italic md:text-4xl">
+                        <h1 className="mb-2 font-serif text-3xl text-[#151515] italic md:text-4xl">
                             Checkout
                         </h1>
-                        <p className="text-xs text-[#7A6A5D] md:text-sm">
+                        <p className="text-xs text-[#6f6f6f] md:text-sm">
                             Pilih alamat tersimpan, ongkir Biteship, voucher,
                             lalu bayar via Midtrans.
                         </p>
                     </div>
                     <div className="flex max-w-[380px] items-center">
-                        {['Keranjang', 'Checkout', 'Pembayaran'].map((label, index) => (
-                            <div key={label} className="flex items-center">
-                                <div
-                                    className={`flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-bold ${index < 2 ? 'bg-[#B98B63] text-white' : 'bg-white text-[#D1B08A] ring-1 ring-[#EADFD2]'}`}
-                                >
-                                    {index === 0 ? (
-                                        <Check size={14} />
-                                    ) : (
-                                        index + 1
+                        {['Keranjang', 'Checkout', 'Pembayaran'].map(
+                            (label, index) => (
+                                <div key={label} className="flex items-center">
+                                    <div
+                                        className={`flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-bold ${index < 2 ? 'bg-[#151515] text-white' : 'bg-white text-[#e7e2de] ring-1 ring-[#e7e2de]'}`}
+                                    >
+                                        {index === 0 ? (
+                                            <Check size={14} />
+                                        ) : (
+                                            index + 1
+                                        )}
+                                    </div>
+                                    <span className="mx-2 hidden text-[11px] text-[#6f6f6f] sm:inline">
+                                        {label}
+                                    </span>
+                                    {index < 2 && (
+                                        <div className="mx-2 h-px w-10 bg-[#e7e2de]" />
                                     )}
                                 </div>
-                                <span className="mx-2 hidden text-[11px] text-[#7A6A5D] sm:inline">
-                                    {label}
-                                </span>
-                                {index < 2 && (
-                                    <div className="mx-2 h-px w-10 bg-[#EADFD2]" />
-                                )}
-                            </div>
-                        ))}
+                            ),
+                        )}
                     </div>
                 </div>
 
                 {cartItems.length === 0 ? (
-                    <div className="rounded-2xl border border-[#EADFD2] bg-white p-10 text-center">
-                        <p className="mb-4 font-serif text-2xl text-[#B98B63]">
+                    <div className="rounded-2xl border border-[#e7e2de] bg-white p-10 text-center">
+                        <p className="mb-4 font-serif text-2xl text-[#151515]">
                             Keranjang kosong
                         </p>
                         <Link
                             href="/list"
-                            className="text-sm font-semibold text-[#B98B63] underline"
+                            className="text-sm font-semibold text-[#151515] underline"
                         >
                             Belanja dulu
                         </Link>
@@ -251,13 +258,13 @@ function CheckoutScreen() {
                             <section className="border-b border-[#E5D8D2] pb-8">
                                 <div className="mb-5 flex items-center justify-between gap-4">
                                     <div>
-                                        <h2 className="font-serif text-xl text-[#2F241D]">
+                                        <h2 className="font-serif text-xl text-[#272727]">
                                             Alamat Pengiriman
                                         </h2>
                                     </div>
                                     <Link
                                         href="/address?redirect_to=/checkout"
-                                        className="text-[12px] font-bold text-[#B98B63] underline"
+                                        className="text-[12px] font-bold text-[#151515] underline"
                                     >
                                         Kelola alamat
                                     </Link>
@@ -270,25 +277,25 @@ function CheckoutScreen() {
                                             onClick={() =>
                                                 void selectAddress(address.id)
                                             }
-                                            className={`rounded-xl border p-4 text-left transition-all ${selectedAddressId === address.id ? 'border-[#9A6B45] bg-[#F8F0E5] ring-1 ring-[#9A6B45]' : 'border-[#EADFD2] hover:border-[#7A6A5D]'}`}
+                                            className={`rounded-xl border p-4 text-left transition-all ${selectedAddressId === address.id ? 'border-[#9A6B45] bg-[#F8F0E5] ring-1 ring-[#9A6B45]' : 'border-[#e7e2de] hover:border-[#6f6f6f]'}`}
                                         >
                                             <div className="mb-2 flex items-start justify-between gap-3">
-                                                <p className="text-[13px] font-bold text-[#2F241D]">
+                                                <p className="text-[13px] font-bold text-[#272727]">
                                                     {address.label ?? 'Alamat'}
                                                 </p>
                                                 {address.is_default && (
-                                                    <span className="rounded bg-[#E8D6C1] px-2 py-1 text-[10px] font-bold text-[#B98B63]">
+                                                    <span className="rounded bg-[#E8D6C1] px-2 py-1 text-[10px] font-bold text-[#151515]">
                                                         Utama
                                                     </span>
                                                 )}
                                             </div>
-                                            <p className="text-[12px] font-semibold text-[#7A6A5D]">
+                                            <p className="text-[12px] font-semibold text-[#6f6f6f]">
                                                 {address.recipient_name}
                                             </p>
-                                            <p className="mt-1 text-[11px] text-[#7A6A5D]">
+                                            <p className="mt-1 text-[11px] text-[#6f6f6f]">
                                                 {address.recipient_phone}
                                             </p>
-                                            <p className="mt-2 text-[12px] leading-relaxed text-[#7A6A5D]">
+                                            <p className="mt-2 text-[12px] leading-relaxed text-[#6f6f6f]">
                                                 {address.full_address}
                                             </p>
                                             {(!address.postal_code ||
@@ -308,10 +315,10 @@ function CheckoutScreen() {
                                 <div className="mb-5 flex items-center gap-2">
                                     <Truck
                                         size={18}
-                                        className="text-[#2F241D]"
+                                        className="text-[#272727]"
                                         strokeWidth={1.5}
                                     />
-                                    <h2 className="font-serif text-xl text-[#2F241D]">
+                                    <h2 className="font-serif text-xl text-[#272727]">
                                         Ongkir
                                     </h2>
                                 </div>
@@ -326,11 +333,11 @@ function CheckoutScreen() {
                                     </p>
                                 )}
                                 {shippingRatesLoading ? (
-                                    <div className="rounded-xl border border-dashed border-[#EADFD2] p-6 text-[12px] text-[#7A6A5D]">
+                                    <div className="rounded-xl border border-dashed border-[#e7e2de] p-6 text-[12px] text-[#6f6f6f]">
                                         Memuat harga ongkir...
                                     </div>
                                 ) : shippingRates.length === 0 ? (
-                                    <div className="rounded-xl border border-dashed border-[#EADFD2] p-6 text-[12px] text-[#7A6A5D]">
+                                    <div className="rounded-xl border border-dashed border-[#e7e2de] p-6 text-[12px] text-[#6f6f6f]">
                                         Pilih alamat dengan kode pos dan
                                         koordinat untuk melihat harga ongkir.
                                     </div>
@@ -345,19 +352,19 @@ function CheckoutScreen() {
                                                         rate,
                                                     )
                                                 }
-                                                className={`rounded-xl border p-4 text-left transition-all ${selectedShippingRate?.id === rate.id ? 'border-[#9A6B45] bg-[#F8F0E5] ring-1 ring-[#9A6B45]' : 'border-[#EADFD2] hover:border-[#7A6A5D]'}`}
+                                                className={`rounded-xl border p-4 text-left transition-all ${selectedShippingRate?.id === rate.id ? 'border-[#9A6B45] bg-[#F8F0E5] ring-1 ring-[#9A6B45]' : 'border-[#e7e2de] hover:border-[#6f6f6f]'}`}
                                             >
-                                                <p className="text-[13px] font-bold text-[#B98B63]">
+                                                <p className="text-[13px] font-bold text-[#151515]">
                                                     {rate.courier_company.toUpperCase()}{' '}
                                                     {/* {rate.courier_type} */}
                                                 </p>
-                                                <p className="mt-1 text-[11px] text-[#7A6A5D]">
+                                                <p className="mt-1 text-[11px] text-[#6f6f6f]">
                                                     {rate.courier_service_name ??
                                                         rate.description ??
                                                         'Layanan pengiriman'}{' '}
                                                     · {rate.duration ?? '-'}
                                                 </p>
-                                                <p className="mt-3 text-[15px] font-bold text-[#2F241D]">
+                                                <p className="mt-3 text-[15px] font-bold text-[#272727]">
                                                     {formatPrice(rate.price)}
                                                 </p>
                                             </button>
@@ -370,10 +377,10 @@ function CheckoutScreen() {
                                 <div className="mb-5 flex items-center gap-2">
                                     <Ticket
                                         size={18}
-                                        className="text-[#2F241D]"
+                                        className="text-[#272727]"
                                         strokeWidth={1.5}
                                     />
-                                    <h2 className="font-serif text-xl text-[#2F241D]">
+                                    <h2 className="font-serif text-xl text-[#272727]">
                                         Voucher
                                     </h2>
                                 </div>
@@ -384,14 +391,14 @@ function CheckoutScreen() {
                                             setVoucherCode(event.target.value)
                                         }
                                         placeholder="Masukkan kode voucher"
-                                        className="flex-1 rounded-md border border-[#EADFD2] bg-[#FFFDF8] px-4 py-2.5 text-[12px] focus:border-[#7A6A5D] focus:ring-1 focus:ring-[#7A6A5D] focus:outline-none"
+                                        className="flex-1 rounded-md border border-[#e7e2de] bg-[#ffffff] px-4 py-2.5 text-[12px] focus:border-[#6f6f6f] focus:ring-1 focus:ring-[#6f6f6f] focus:outline-none"
                                     />
                                     <button
                                         type="button"
                                         onClick={() =>
                                             void applyVoucher(voucherCode)
                                         }
-                                        className="rounded-md bg-[#B98B63] px-5 py-2.5 text-[12px] font-bold text-white"
+                                        className="rounded-md bg-[#151515] px-5 py-2.5 text-[12px] font-bold text-white"
                                     >
                                         Pakai
                                     </button>
@@ -399,7 +406,7 @@ function CheckoutScreen() {
                                         <button
                                             type="button"
                                             onClick={() => void removeVoucher()}
-                                            className="rounded-md border border-[#EADFD2] px-4 py-2.5 text-[12px] font-bold text-[#7A6A5D]"
+                                            className="rounded-md border border-[#e7e2de] px-4 py-2.5 text-[12px] font-bold text-[#6f6f6f]"
                                         >
                                             Hapus
                                         </button>
@@ -419,7 +426,7 @@ function CheckoutScreen() {
                             </section>
 
                             <section className="border-b border-[#E5D8D2] pb-8">
-                                <h2 className="mb-4 font-serif text-xl text-[#2F241D]">
+                                <h2 className="mb-4 font-serif text-xl text-[#272727]">
                                     Catatan Order
                                 </h2>
                                 <textarea
@@ -429,20 +436,21 @@ function CheckoutScreen() {
                                     }
                                     maxLength={2000}
                                     placeholder="Opsional"
-                                    className="h-24 w-full resize-none rounded-md border border-[#EADFD2] bg-white px-4 py-3 text-[13px] focus:border-[#9A6B45] focus:ring-1 focus:ring-[#9A6B45] focus:outline-none"
+                                    className="h-24 w-full resize-none rounded-md border border-[#e7e2de] bg-white px-4 py-3 text-[13px] focus:border-[#9A6B45] focus:ring-1 focus:ring-[#9A6B45] focus:outline-none"
                                 />
-                                <label className="mt-4 flex items-start gap-2 text-[12px] text-[#7A6A5D]">
+                                <label className="mt-4 flex items-start gap-2 text-[12px] text-[#6f6f6f]">
                                     <input
                                         type="checkbox"
                                         checked={agreed}
                                         onChange={(event) =>
                                             setAgreed(event.target.checked)
                                         }
-                                        className="mt-0.5 h-4 w-4 rounded border-[#EADFD2] text-[#B98B63]"
+                                        className="mt-0.5 h-4 w-4 rounded border-[#e7e2de] text-[#151515]"
                                     />
                                     <span>
-                                        Saya menyetujui kebijakan tanpa retur/refund,
-                                        Syarat & Ketentuan, dan Kebijakan Privasi.
+                                        Saya menyetujui kebijakan tanpa
+                                        retur/refund, Syarat & Ketentuan, dan
+                                        Kebijakan Privasi.
                                     </span>
                                 </label>
                                 {errors.no_return_refund_agreed && (
@@ -464,98 +472,105 @@ function CheckoutScreen() {
 
                         <aside className="w-full flex-shrink-0 lg:w-[380px]">
                             <div className="sticky top-24 lg:top-32">
-                                <h2 className="mb-6 font-serif text-xl text-[#2F241D] tracking-tight md:text-2xl">
+                                <h2 className="mb-6 font-serif text-xl tracking-tight text-[#272727] md:text-2xl">
                                     Ringkasan Pesanan
                                 </h2>
                                 <div className="mb-6 max-h-[300px] space-y-4 overflow-y-auto pr-2">
-                                {cartItems.map((item) => (
-                                    <div key={item.id} className="flex gap-3">
-                                        <div className="relative h-20 w-16 flex-shrink-0 overflow-hidden rounded-md bg-[#E8D6C1]">
-                                            {item.image && (
-                                                <img
-                                                    src={item.image}
-                                                    alt={item.title}
-                                                    className="h-full w-full object-cover"
-                                                />
-                                            )}
-                                            <span className="absolute top-0 right-0 flex h-5 w-5 items-center justify-center rounded-bl bg-white/90 text-[10px] font-bold">
-                                                {item.quantity}
-                                            </span>
-                                        </div>
-                                        <div className="min-w-0 flex-1">
-                                            <p className="line-clamp-2 text-[12px] font-bold text-[#2F241D]">
-                                                {item.title}
-                                            </p>
-                                            <p className="mt-1 text-[10px] text-[#7A6A5D]">
-                                                {[item.color, item.size]
-                                                    .filter(Boolean)
-                                                    .join(' / ') || '-'}
-                                            </p>
-                                            <p className="mt-1 text-[10px] font-medium text-[#7A6A5D]">
-                                                Berat: {formatWeight(item.weight)}
-                                            </p>
-                                            {!item.is_available && (
-                                                <p className="mt-1 text-[10px] font-bold text-[#B24B4B]">
-                                                    Stok berubah. Update cart.
+                                    {cartItems.map((item) => (
+                                        <div
+                                            key={item.id}
+                                            className="flex gap-3"
+                                        >
+                                            <div className="relative h-20 w-16 flex-shrink-0 overflow-hidden rounded-md bg-[#E8D6C1]">
+                                                {item.image && (
+                                                    <img
+                                                        src={item.image}
+                                                        alt={item.title}
+                                                        className="h-full w-full object-cover"
+                                                    />
+                                                )}
+                                                <span className="absolute top-0 right-0 flex h-5 w-5 items-center justify-center rounded-bl bg-white/90 text-[10px] font-bold">
+                                                    {item.quantity}
+                                                </span>
+                                            </div>
+                                            <div className="min-w-0 flex-1">
+                                                <p className="line-clamp-2 text-[12px] font-bold text-[#272727]">
+                                                    {item.title}
                                                 </p>
-                                            )}
+                                                <p className="mt-1 text-[10px] text-[#6f6f6f]">
+                                                    {[item.color, item.size]
+                                                        .filter(Boolean)
+                                                        .join(' / ') || '-'}
+                                                </p>
+                                                <p className="mt-1 text-[10px] font-medium text-[#6f6f6f]">
+                                                    Berat:{' '}
+                                                    {formatWeight(item.weight)}
+                                                </p>
+                                                {!item.is_available && (
+                                                    <p className="mt-1 text-[10px] font-bold text-[#B24B4B]">
+                                                        Stok berubah. Update
+                                                        cart.
+                                                    </p>
+                                                )}
+                                            </div>
+                                            <p className="text-right text-[12px] font-semibold text-[#272727]">
+                                                {formatPrice(item.subtotal)}
+                                            </p>
                                         </div>
-                                        <p className="text-right text-[12px] font-semibold text-[#2F241D]">
-                                            {formatPrice(item.subtotal)}
-                                        </p>
-                                    </div>
-                                ))}
-                            </div>
-                             <SummaryRow
-                                 label="Subtotal"
-                                 value={summary.subtotal}
-                             />
-                            <div className="mb-3 flex items-center justify-between text-[12px] text-[#7A6A5D]">
-                                <span>Total Berat</span>
-                                <span className="font-semibold">
-                                    {formatWeight(totalWeight)}
-                                </span>
-                            </div>
-                             <SummaryRow
-                                 label="Ongkir"
-                                 value={summary.shipping}
-                            />
-                            <SummaryRow
-                                label="Biaya Layanan"
-                                value={summary.service_fee}
-                            />
-                            <SummaryRow
-                                label="Diskon"
-                                value={-summary.discount}
-                                danger
-                            />
-                            <div className="mt-4 border-t border-[#EADFD2] pt-4">
-                                <div className="flex items-end justify-between">
-                                    <span className="text-[13px] font-semibold text-[#2F241D]">
-                                        Total Pembayaran
-                                    </span>
-                                    <span className="font-serif text-2xl text-[#2F241D]">
-                                        {formatPrice(summary.total)}
+                                    ))}
+                                </div>
+                                <SummaryRow
+                                    label="Subtotal"
+                                    value={summary.subtotal}
+                                />
+                                <div className="mb-3 flex items-center justify-between text-[12px] text-[#6f6f6f]">
+                                    <span>Total Berat</span>
+                                    <span className="font-semibold">
+                                        {formatWeight(totalWeight)}
                                     </span>
                                 </div>
-                            </div>
-                            <button
+                                <SummaryRow
+                                    label="Ongkir"
+                                    value={summary.shipping}
+                                />
+                                <SummaryRow
+                                    label="Biaya Layanan"
+                                    value={summary.service_fee}
+                                />
+                                <SummaryRow
+                                    label="Diskon"
+                                    value={-summary.discount}
+                                    danger
+                                />
+                                <div className="mt-4 border-t border-[#e7e2de] pt-4">
+                                    <div className="flex items-end justify-between">
+                                        <span className="text-[13px] font-semibold text-[#272727]">
+                                            Total Pembayaran
+                                        </span>
+                                        <span className="font-serif text-2xl text-[#272727]">
+                                            {formatPrice(summary.total)}
+                                        </span>
+                                    </div>
+                                </div>
+                                <button
                                     type="button"
                                     onClick={() => void submitOrder()}
                                     disabled={
                                         placingOrder ||
                                         !selectedShippingRate ||
                                         !agreed ||
-                                        cartItems.some((item) => !item.is_available)
+                                        cartItems.some(
+                                            (item) => !item.is_available,
+                                        )
                                     }
-                                    className="mt-6 flex w-full items-center justify-center rounded-lg bg-[#B98B63] py-4 text-[13px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg hover:shadow-[#B98B63]/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+                                    className="mt-6 flex w-full items-center justify-center rounded-lg bg-[#151515] py-4 text-[13px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg hover:shadow-[#151515]/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
                                 >
                                     <Lock size={16} className="mr-2" />
                                     {placingOrder
                                         ? 'Membuat Pembayaran...'
                                         : 'Bayar dengan Midtrans'}
                                 </button>
-                                <div className="mt-8 space-y-4 border-t border-[#EADFD2]/60 pt-6">
+                                <div className="mt-8 space-y-4 border-t border-[#e7e2de]/60 pt-6">
                                     <CheckoutRouteMap
                                         destinationAddress={selectedAddress}
                                         destinationCoordinates={
@@ -564,12 +579,20 @@ function CheckoutScreen() {
                                         distance={routeDistance}
                                         storeCoordinates={storeCoordinates}
                                     />
-                                    <div className="flex items-start space-x-3 text-[11px] text-[#7A6A5D]">
-                                        <ShieldCheck size={16} className="mt-0.5 flex-shrink-0 text-[#D1B08A]" strokeWidth={1.5} />
+                                    <div className="flex items-start space-x-3 text-[11px] text-[#6f6f6f]">
+                                        <ShieldCheck
+                                            size={16}
+                                            className="mt-0.5 flex-shrink-0 text-[#e7e2de]"
+                                            strokeWidth={1.5}
+                                        />
                                         <p>Pembayaran aman didukung Midtrans</p>
                                     </div>
-                                    <div className="flex items-start space-x-3 text-[11px] text-[#7A6A5D]">
-                                        <Box size={16} className="mt-0.5 flex-shrink-0 text-[#D1B08A]" strokeWidth={1.5} />
+                                    <div className="flex items-start space-x-3 text-[11px] text-[#6f6f6f]">
+                                        <Box
+                                            size={16}
+                                            className="mt-0.5 flex-shrink-0 text-[#e7e2de]"
+                                            strokeWidth={1.5}
+                                        />
                                         <p>Ongkir dihitung oleh Biteship</p>
                                     </div>
                                 </div>
@@ -646,15 +669,15 @@ function CheckoutRouteMap({
     }, []);
 
     return (
-        <div className="rounded-xl border border-[#EADFD2] bg-[#FFFDF8] p-3">
+        <div className="rounded-xl border border-[#e7e2de] bg-[#ffffff] p-3">
             <div className="mb-3 flex items-start justify-between gap-3">
                 <div>
-                    <p className="text-[12px] font-bold text-[#2F241D]">
+                    <p className="text-[12px] font-bold text-[#272727]">
                         Rute Pengiriman
                     </p>
                 </div>
                 {distance !== null && (
-                    <span className="rounded-full bg-white px-2.5 py-1 text-[10px] font-bold text-[#B98B63] ring-1 ring-[#EADFD2]">
+                    <span className="rounded-full bg-white px-2.5 py-1 text-[10px] font-bold text-[#151515] ring-1 ring-[#e7e2de]">
                         {formatDistance(distance)}
                     </span>
                 )}
@@ -663,13 +686,15 @@ function CheckoutRouteMap({
             {canShowRoute && leafletModules && markerIcon ? (
                 <RouteMap
                     destinationAddress={destinationAddress}
-                    destinationCoordinates={destinationCoordinates as Coordinates}
+                    destinationCoordinates={
+                        destinationCoordinates as Coordinates
+                    }
                     markerIcon={markerIcon}
                     modules={leafletModules}
                     storeCoordinates={storeCoordinates as Coordinates}
                 />
             ) : (
-                <div className="flex h-[220px] items-center justify-center rounded-lg border border-dashed border-[#EADFD2] bg-white text-center text-[11px] font-medium text-[#7A6A5D]">
+                <div className="flex h-[220px] items-center justify-center rounded-lg border border-dashed border-[#e7e2de] bg-white text-center text-[11px] font-medium text-[#6f6f6f]">
                     {!storeCoordinates
                         ? 'Koordinat toko belum dikonfigurasi.'
                         : !destinationCoordinates
@@ -685,7 +710,7 @@ function CheckoutRouteMap({
                             href={googleMapsUrl}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex w-full items-center justify-center rounded-md bg-[#B98B63] px-3 py-2 text-[11px] font-bold text-white transition-colors hover:bg-[#9A6B45]"
+                            className="inline-flex w-full items-center justify-center rounded-md bg-[#151515] px-3 py-2 text-[11px] font-bold text-white transition-colors hover:bg-[#9A6B45]"
                         >
                             Buka rute di Google Maps
                         </a>
@@ -716,7 +741,7 @@ function RouteMap({
     ];
 
     return (
-        <div className="overflow-hidden rounded-lg border border-[#EADFD2] bg-white">
+        <div className="overflow-hidden rounded-lg border border-[#e7e2de] bg-white">
             <MapContainer
                 bounds={bounds}
                 className="h-[220px] w-full"
@@ -728,7 +753,7 @@ function RouteMap({
                 />
                 <RouteMapUpdater bounds={bounds} modules={modules} />
                 <Polyline
-                    pathOptions={{ color: '#B98B63', weight: 4 }}
+                    pathOptions={{ color: '#151515', weight: 4 }}
                     positions={[storeCoordinates, destinationCoordinates]}
                 />
                 <Marker icon={markerIcon} position={storeCoordinates}>
@@ -772,7 +797,7 @@ function SummaryRow({
 }) {
     return (
         <div
-            className={`mb-3 flex items-center justify-between text-[12px] ${danger ? 'text-[#C05D5D]' : 'text-[#7A6A5D]'}`}
+            className={`mb-3 flex items-center justify-between text-[12px] ${danger ? 'text-[#C05D5D]' : 'text-[#6f6f6f]'}`}
         >
             <span>{label}</span>
             <span className="font-semibold">

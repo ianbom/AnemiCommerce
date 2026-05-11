@@ -257,13 +257,13 @@ function DetailRow({
 }) {
     return (
         <div className="flex items-start gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F8F0E5] text-[#7A6A5D]">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F8F0E5] text-[#6f6f6f]">
                 <Icon size={18} />
             </div>
             <div className="min-w-0">
-                <p className="mb-1 text-xs text-[#7A6A5D]">{label}</p>
+                <p className="mb-1 text-xs text-[#6f6f6f]">{label}</p>
                 <div
-                    className={`text-sm font-semibold break-words text-[#B98B63] ${valueClassName ?? ''}`}
+                    className={`text-sm font-semibold break-words text-[#151515] ${valueClassName ?? ''}`}
                 >
                     {value}
                 </div>
@@ -285,11 +285,13 @@ function SidebarRow({
 }) {
     return (
         <div className="flex items-center justify-between gap-4 text-sm">
-            <div className="flex items-center text-[#7A6A5D]">
+            <div className="flex items-center text-[#6f6f6f]">
                 <Icon size={14} className="mr-2 shrink-0" />
                 <span>{label}</span>
             </div>
-            <span className={`text-right font-medium text-[#B98B63] ${valueClassName ?? ''}`}>
+            <span
+                className={`text-right font-medium text-[#151515] ${valueClassName ?? ''}`}
+            >
                 {value}
             </span>
         </div>
@@ -307,7 +309,8 @@ export default function DetailNotification({ notification }: Props) {
         notification.detail_type === 'shipping'
             ? notification.actions.track_url || notification.actions.order_url
             : notification.detail_type === 'payment'
-              ? notification.actions.payment_url || notification.actions.order_url
+              ? notification.actions.payment_url ||
+                notification.actions.order_url
               : notification.actions.order_url;
 
     const markAsRead = () => {
@@ -328,7 +331,7 @@ export default function DetailNotification({ notification }: Props) {
                 <div className="flex flex-col items-start">
                     <Link
                         href={notification.actions.back_url}
-                        className="group mb-4 flex items-center font-sans text-sm not-italic text-[#B98B63] transition-colors hover:text-black"
+                        className="group mb-4 flex items-center font-sans text-sm text-[#151515] not-italic transition-colors hover:text-black"
                     >
                         <ArrowLeft
                             size={16}
@@ -354,7 +357,7 @@ export default function DetailNotification({ notification }: Props) {
             <div className="flex flex-col gap-6 lg:flex-row">
                 <div className="flex min-w-0 flex-1 flex-col gap-6">
                     <div
-                        className={`flex flex-col justify-between gap-4 rounded-2xl border border-[#EADFD2] p-6 shadow-sm transition-all hover:shadow-md md:flex-row md:items-start ${config.panel}`}
+                        className={`flex flex-col justify-between gap-4 rounded-2xl border border-[#e7e2de] p-6 shadow-sm transition-all hover:shadow-md md:flex-row md:items-start ${config.panel}`}
                     >
                         <div className="flex gap-4">
                             <div className="relative shrink-0">
@@ -363,16 +366,18 @@ export default function DetailNotification({ notification }: Props) {
                                 >
                                     <Icon size={24} />
                                 </div>
-                                <div className="absolute right-0 top-0 h-3 w-3 rounded-full border-2 border-white bg-[#8C5A41]"></div>
+                                <div className="absolute top-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-[#8C5A41]"></div>
                             </div>
                             <div>
-                                <p className={`mb-1 text-xs font-semibold ${config.accent}`}>
+                                <p
+                                    className={`mb-1 text-xs font-semibold ${config.accent}`}
+                                >
                                     {notification.type_label}
                                 </p>
-                                <h2 className="mb-2 font-serif text-lg text-[#B98B63] md:text-xl">
+                                <h2 className="mb-2 font-serif text-lg text-[#151515] md:text-xl">
                                     {notification.title}
                                 </h2>
-                                <div className="flex items-center text-xs text-[#7A6A5D]">
+                                <div className="flex items-center text-xs text-[#6f6f6f]">
                                     <Clock size={14} className="mr-1" />
                                     {formatDateTime(notification.created_at)}
                                 </div>
@@ -386,31 +391,40 @@ export default function DetailNotification({ notification }: Props) {
                                 <span
                                     className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold ${config.badge}`}
                                 >
-                                    <Star size={12} fill="currentColor" /> Penting
+                                    <Star size={12} fill="currentColor" />{' '}
+                                    Penting
                                 </span>
                             )}
                         </div>
                     </div>
 
-                    <div className="rounded-2xl border border-[#EADFD2] bg-white p-6 shadow-sm">
-                        <h3 className="mb-3 font-serif text-xl text-[#B98B63]">
+                    <div className="rounded-2xl border border-[#e7e2de] bg-white p-6 shadow-sm">
+                        <h3 className="mb-3 font-serif text-xl text-[#151515]">
                             Detail Pesan
                         </h3>
-                        <p className="mb-6 text-sm leading-relaxed text-[#7A6A5D]">
+                        <p className="mb-6 text-sm leading-relaxed text-[#6f6f6f]">
                             {notification.message}
                         </p>
 
                         {notification.detail_type === 'shipping' && (
-                            <div className="grid grid-cols-1 gap-x-8 gap-y-6 border-t border-[#EADFD2] pt-6 md:grid-cols-2">
+                            <div className="grid grid-cols-1 gap-x-8 gap-y-6 border-t border-[#e7e2de] pt-6 md:grid-cols-2">
                                 <DetailRow
                                     icon={ShoppingBag}
                                     label="Nomor Pesanan"
-                                    value={order?.order_number ? `#${order.order_number}` : '-'}
+                                    value={
+                                        order?.order_number
+                                            ? `#${order.order_number}`
+                                            : '-'
+                                    }
                                 />
                                 <DetailRow
                                     icon={Truck}
                                     label="Status Pengiriman"
-                                    value={labelValue(shipment?.shipping_status ?? order?.shipping_status ?? null)}
+                                    value={labelValue(
+                                        shipment?.shipping_status ??
+                                            order?.shipping_status ??
+                                            null,
+                                    )}
                                 />
                                 <DetailRow
                                     icon={Package}
@@ -420,70 +434,110 @@ export default function DetailNotification({ notification }: Props) {
                                 <DetailRow
                                     icon={Calendar}
                                     label="Estimasi Pengiriman"
-                                    value={formatDate(shipment?.estimated_delivery ?? null)}
+                                    value={formatDate(
+                                        shipment?.estimated_delivery ?? null,
+                                    )}
                                 />
                                 <DetailRow
                                     icon={Tag}
                                     label="Nomor Resi"
-                                    value={shipment?.waybill_id ?? shipment?.biteship_tracking_id ?? '-'}
+                                    value={
+                                        shipment?.waybill_id ??
+                                        shipment?.biteship_tracking_id ??
+                                        '-'
+                                    }
                                 />
                                 <DetailRow
                                     icon={Info}
                                     label="Pembaruan Terbaru"
-                                    value={shippingLatest?.description ?? shippingLatest?.status ?? '-'}
+                                    value={
+                                        shippingLatest?.description ??
+                                        shippingLatest?.status ??
+                                        '-'
+                                    }
                                 />
                             </div>
                         )}
 
                         {notification.detail_type === 'payment' && (
-                            <div className="grid grid-cols-1 gap-x-8 gap-y-6 border-t border-[#EADFD2] pt-6 md:grid-cols-2">
+                            <div className="grid grid-cols-1 gap-x-8 gap-y-6 border-t border-[#e7e2de] pt-6 md:grid-cols-2">
                                 <DetailRow
                                     icon={ShoppingBag}
                                     label="Nomor Pesanan"
-                                    value={order?.order_number ? `#${order.order_number}` : '-'}
+                                    value={
+                                        order?.order_number
+                                            ? `#${order.order_number}`
+                                            : '-'
+                                    }
                                 />
                                 <DetailRow
                                     icon={Check}
                                     label="Status Pembayaran"
-                                    value={labelValue(payment?.transaction_status ?? order?.payment_status ?? null)}
+                                    value={labelValue(
+                                        payment?.transaction_status ??
+                                            order?.payment_status ??
+                                            null,
+                                    )}
                                 />
                                 <DetailRow
                                     icon={CreditCard}
                                     label="Provider"
-                                    value={labelValue(payment?.payment_provider ?? null)}
+                                    value={labelValue(
+                                        payment?.payment_provider ?? null,
+                                    )}
                                 />
                                 <DetailRow
                                     icon={Gift}
                                     label="Metode Pembayaran"
-                                    value={labelValue(payment?.payment_method ?? null)}
+                                    value={labelValue(
+                                        payment?.payment_method ?? null,
+                                    )}
                                 />
                                 <DetailRow
                                     icon={Tag}
                                     label="Jumlah Pembayaran"
-                                    value={formatPrice(payment?.gross_amount ?? order?.grand_total ?? 0)}
+                                    value={formatPrice(
+                                        payment?.gross_amount ??
+                                            order?.grand_total ??
+                                            0,
+                                    )}
                                     valueClassName="text-violet-700"
                                 />
                                 <DetailRow
                                     icon={Calendar}
-                                    label={payment?.paid_at ? 'Dibayar Pada' : 'Kedaluwarsa Pada'}
-                                    value={formatDateTime(payment?.paid_at ?? payment?.expired_at ?? null)}
+                                    label={
+                                        payment?.paid_at
+                                            ? 'Dibayar Pada'
+                                            : 'Kedaluwarsa Pada'
+                                    }
+                                    value={formatDateTime(
+                                        payment?.paid_at ??
+                                            payment?.expired_at ??
+                                            null,
+                                    )}
                                 />
                                 <DetailRow
                                     icon={Info}
                                     label="ID Transaksi"
-                                    value={payment?.midtrans_transaction_id ?? payment?.midtrans_order_id ?? '-'}
+                                    value={
+                                        payment?.midtrans_transaction_id ??
+                                        payment?.midtrans_order_id ??
+                                        '-'
+                                    }
                                 />
                                 <DetailRow
                                     icon={Bell}
                                     label="Status Fraud"
-                                    value={labelValue(payment?.fraud_status ?? null)}
+                                    value={labelValue(
+                                        payment?.fraud_status ?? null,
+                                    )}
                                 />
                             </div>
                         )}
 
                         {notification.detail_type !== 'payment' &&
                             notification.detail_type !== 'shipping' && (
-                                <div className="grid grid-cols-1 gap-x-8 gap-y-6 border-t border-[#EADFD2] pt-6 md:grid-cols-2">
+                                <div className="grid grid-cols-1 gap-x-8 gap-y-6 border-t border-[#e7e2de] pt-6 md:grid-cols-2">
                                     <DetailRow
                                         icon={Bell}
                                         label="Tipe Notifikasi"
@@ -492,12 +546,16 @@ export default function DetailNotification({ notification }: Props) {
                                     <DetailRow
                                         icon={Clock}
                                         label="Dibuat Pada"
-                                        value={formatDateTime(notification.created_at)}
+                                        value={formatDateTime(
+                                            notification.created_at,
+                                        )}
                                     />
                                     <DetailRow
                                         icon={Info}
                                         label="Tipe Referensi"
-                                        value={notification.reference_type ?? '-'}
+                                        value={
+                                            notification.reference_type ?? '-'
+                                        }
                                     />
                                     <DetailRow
                                         icon={Tag}
@@ -514,7 +572,9 @@ export default function DetailNotification({ notification }: Props) {
                                             <DetailRow
                                                 icon={Package}
                                                 label="Status Pesanan"
-                                                value={labelValue(order.order_status)}
+                                                value={labelValue(
+                                                    order.order_status,
+                                                )}
                                             />
                                         </>
                                     )}
@@ -523,9 +583,9 @@ export default function DetailNotification({ notification }: Props) {
                     </div>
 
                     {order && (
-                        <div className="rounded-2xl border border-[#EADFD2] bg-white p-6 shadow-sm">
+                        <div className="rounded-2xl border border-[#e7e2de] bg-white p-6 shadow-sm">
                             <div className="mb-5 flex items-center justify-between gap-4">
-                                <h3 className="font-serif text-xl text-[#B98B63]">
+                                <h3 className="font-serif text-xl text-[#151515]">
                                     Ringkasan Pesanan
                                 </h3>
                                 <span className="rounded-full bg-[#E8D6C1] px-3 py-1 text-xs font-semibold text-[#6B5C4B]">
@@ -534,58 +594,71 @@ export default function DetailNotification({ notification }: Props) {
                             </div>
 
                             <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-                                <div className="rounded-xl border border-[#EFEAE3] bg-[#FFFDF8] p-4">
-                                    <p className="text-xs text-[#7A6A5D]">Subtotal</p>
-                                    <p className="mt-1 text-sm font-semibold text-[#B98B63]">
+                                <div className="rounded-xl border border-[#EFEAE3] bg-[#ffffff] p-4">
+                                    <p className="text-xs text-[#6f6f6f]">
+                                        Subtotal
+                                    </p>
+                                    <p className="mt-1 text-sm font-semibold text-[#151515]">
                                         {formatPrice(order.subtotal)}
                                     </p>
                                 </div>
-                                <div className="rounded-xl border border-[#EFEAE3] bg-[#FFFDF8] p-4">
-                                    <p className="text-xs text-[#7A6A5D]">Pengiriman</p>
-                                    <p className="mt-1 text-sm font-semibold text-[#B98B63]">
+                                <div className="rounded-xl border border-[#EFEAE3] bg-[#ffffff] p-4">
+                                    <p className="text-xs text-[#6f6f6f]">
+                                        Pengiriman
+                                    </p>
+                                    <p className="mt-1 text-sm font-semibold text-[#151515]">
                                         {formatPrice(order.shipping_cost)}
                                     </p>
                                 </div>
-                                <div className="rounded-xl border border-[#EFEAE3] bg-[#FFFDF8] p-4">
-                                    <p className="text-xs text-[#7A6A5D]">Biaya Layanan</p>
-                                    <p className="mt-1 text-sm font-semibold text-[#B98B63]">
+                                <div className="rounded-xl border border-[#EFEAE3] bg-[#ffffff] p-4">
+                                    <p className="text-xs text-[#6f6f6f]">
+                                        Biaya Layanan
+                                    </p>
+                                    <p className="mt-1 text-sm font-semibold text-[#151515]">
                                         {formatPrice(order.service_fee)}
                                     </p>
                                 </div>
-                                <div className="rounded-xl border border-[#EFEAE3] bg-[#FFFDF8] p-4">
-                                    <p className="text-xs text-[#7A6A5D]">Total Akhir</p>
-                                    <p className="mt-1 text-sm font-semibold text-[#B98B63]">
+                                <div className="rounded-xl border border-[#EFEAE3] bg-[#ffffff] p-4">
+                                    <p className="text-xs text-[#6f6f6f]">
+                                        Total Akhir
+                                    </p>
+                                    <p className="mt-1 text-sm font-semibold text-[#151515]">
                                         {formatPrice(order.grand_total)}
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="space-y-4 border-t border-[#EADFD2] pt-6">
+                            <div className="space-y-4 border-t border-[#e7e2de] pt-6">
                                 {order.items.map((item) => (
                                     <div
                                         key={item.id}
                                         className="flex flex-col gap-4 rounded-xl border border-[#EFEAE3] p-4 sm:flex-row sm:items-center"
                                     >
                                         <img
-                                            src={item.product_image_url || FALLBACK_IMAGE}
+                                            src={
+                                                item.product_image_url ||
+                                                FALLBACK_IMAGE
+                                            }
                                             alt={item.product_name}
                                             className="h-20 w-20 rounded-xl object-cover"
                                         />
                                         <div className="min-w-0 flex-1">
-                                            <p className="text-sm font-semibold text-[#B98B63]">
+                                            <p className="text-sm font-semibold text-[#151515]">
                                                 {item.product_name}
                                             </p>
-                                            <p className="mt-1 text-xs text-[#7A6A5D]">
+                                            <p className="mt-1 text-xs text-[#6f6f6f]">
                                                 {[
                                                     item.color_name,
-                                                    item.size ? `Ukuran ${item.size}` : null,
+                                                    item.size
+                                                        ? `Ukuran ${item.size}`
+                                                        : null,
                                                     `Jumlah ${item.quantity}`,
                                                 ]
                                                     .filter(Boolean)
                                                     .join(' • ')}
                                             </p>
                                         </div>
-                                        <div className="text-sm font-semibold text-[#B98B63]">
+                                        <div className="text-sm font-semibold text-[#151515]">
                                             {formatPrice(item.subtotal)}
                                         </div>
                                     </div>
@@ -593,16 +666,19 @@ export default function DetailNotification({ notification }: Props) {
                             </div>
 
                             {order.address && (
-                                <div className="mt-6 rounded-xl border border-[#EFEAE3] bg-[#FFFDF8] p-4">
-                                    <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-[#B98B63]">
+                                <div className="mt-6 rounded-xl border border-[#EFEAE3] bg-[#ffffff] p-4">
+                                    <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-[#151515]">
                                         <MapPin size={16} /> Alamat Pengiriman
                                     </div>
-                                    <p className="text-sm text-[#7A6A5D]">
-                                        {order.address.recipient_name} ({order.address.recipient_phone})
+                                    <p className="text-sm text-[#6f6f6f]">
+                                        {order.address.recipient_name} (
+                                        {order.address.recipient_phone})
                                     </p>
-                                    <p className="mt-1 text-sm leading-relaxed text-[#7A6A5D]">
-                                        {order.address.full_address}, {order.address.city},{' '}
-                                        {order.address.province} {order.address.postal_code}
+                                    <p className="mt-1 text-sm leading-relaxed text-[#6f6f6f]">
+                                        {order.address.full_address},{' '}
+                                        {order.address.city},{' '}
+                                        {order.address.province}{' '}
+                                        {order.address.postal_code}
                                     </p>
                                 </div>
                             )}
@@ -612,7 +688,7 @@ export default function DetailNotification({ notification }: Props) {
                     <div className="flex flex-wrap items-center gap-3">
                         <Link
                             href={notification.actions.back_url}
-                            className="flex items-center gap-2 rounded-lg border border-[#EADFD2] bg-white px-4 py-2.5 text-sm font-medium text-[#7A6A5D] shadow-sm transition-colors hover:bg-[#F8F0E5]"
+                            className="flex items-center gap-2 rounded-lg border border-[#e7e2de] bg-white px-4 py-2.5 text-sm font-medium text-[#6f6f6f] shadow-sm transition-colors hover:bg-[#F8F0E5]"
                         >
                             <ArrowLeft size={16} /> Kembali ke Notifikasi
                         </Link>
@@ -621,7 +697,7 @@ export default function DetailNotification({ notification }: Props) {
                             <button
                                 type="button"
                                 onClick={markAsRead}
-                                className="flex items-center gap-2 rounded-lg border border-[#EADFD2] bg-white px-4 py-2.5 text-sm font-medium text-[#7A6A5D] shadow-sm transition-colors hover:bg-[#F8F0E5]"
+                                className="flex items-center gap-2 rounded-lg border border-[#e7e2de] bg-white px-4 py-2.5 text-sm font-medium text-[#6f6f6f] shadow-sm transition-colors hover:bg-[#F8F0E5]"
                             >
                                 <Check size={16} /> Tandai Dibaca
                             </button>
@@ -630,7 +706,7 @@ export default function DetailNotification({ notification }: Props) {
                         {/* {notification.actions.order_url && (
                             <Link
                                 href={notification.actions.order_url}
-                                className="flex items-center gap-2 rounded-lg border border-[#EADFD2] bg-white px-4 py-2.5 text-sm font-medium text-[#7A6A5D] shadow-sm transition-colors hover:bg-[#F8F0E5]"
+                                className="flex items-center gap-2 rounded-lg border border-[#e7e2de] bg-white px-4 py-2.5 text-sm font-medium text-[#6f6f6f] shadow-sm transition-colors hover:bg-[#F8F0E5]"
                             >
                                 <Package size={16} /> View Order
                             </Link>
@@ -641,7 +717,7 @@ export default function DetailNotification({ notification }: Props) {
                                 href={primaryActionHref}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="ml-auto flex items-center gap-2 rounded-lg bg-[#B98B63] px-6 py-2.5 text-sm font-medium text-white shadow-md transition-colors hover:bg-[#2A241C]"
+                                className="ml-auto flex items-center gap-2 rounded-lg bg-[#151515] px-6 py-2.5 text-sm font-medium text-white shadow-md transition-colors hover:bg-[#2A241C]"
                             >
                                 <Icon size={16} /> {config.ctaLabel}
                             </a>
@@ -650,8 +726,8 @@ export default function DetailNotification({ notification }: Props) {
                 </div>
 
                 <div className="flex w-full shrink-0 flex-col gap-6 lg:w-[320px] xl:w-[360px]">
-                    <div className="rounded-2xl border border-[#EADFD2] bg-white p-6 shadow-sm">
-                        <h3 className="mb-5 font-serif text-lg text-[#B98B63]">
+                    <div className="rounded-2xl border border-[#e7e2de] bg-white p-6 shadow-sm">
+                        <h3 className="mb-5 font-serif text-lg text-[#151515]">
                             Informasi Terkait
                         </h3>
 
@@ -665,18 +741,26 @@ export default function DetailNotification({ notification }: Props) {
                                 <SidebarRow
                                     icon={Tag}
                                     label="Nomor Resi"
-                                    value={shipment?.waybill_id ?? shipment?.biteship_tracking_id ?? '-'}
+                                    value={
+                                        shipment?.waybill_id ??
+                                        shipment?.biteship_tracking_id ??
+                                        '-'
+                                    }
                                 />
                                 <SidebarRow
                                     icon={Info}
                                     label="Progres Pengiriman"
-                                    value={labelValue(shipment?.shipping_status ?? null)}
+                                    value={labelValue(
+                                        shipment?.shipping_status ?? null,
+                                    )}
                                     valueClassName="text-sky-700"
                                 />
                                 <SidebarRow
                                     icon={Calendar}
                                     label="Estimasi Pengiriman"
-                                    value={formatDate(shipment?.estimated_delivery ?? null)}
+                                    value={formatDate(
+                                        shipment?.estimated_delivery ?? null,
+                                    )}
                                 />
                             </div>
                         ) : notification.detail_type === 'payment' ? (
@@ -684,23 +768,35 @@ export default function DetailNotification({ notification }: Props) {
                                 <SidebarRow
                                     icon={CreditCard}
                                     label="Provider"
-                                    value={labelValue(payment?.payment_provider ?? null)}
+                                    value={labelValue(
+                                        payment?.payment_provider ?? null,
+                                    )}
                                 />
                                 <SidebarRow
                                     icon={Gift}
                                     label="Metode"
-                                    value={labelValue(payment?.payment_method ?? null)}
+                                    value={labelValue(
+                                        payment?.payment_method ?? null,
+                                    )}
                                 />
                                 <SidebarRow
                                     icon={Tag}
                                     label="Jumlah"
-                                    value={formatPrice(payment?.gross_amount ?? order?.grand_total ?? 0)}
+                                    value={formatPrice(
+                                        payment?.gross_amount ??
+                                            order?.grand_total ??
+                                            0,
+                                    )}
                                     valueClassName="text-violet-700"
                                 />
                                 <SidebarRow
                                     icon={Check}
                                     label="Status"
-                                    value={labelValue(payment?.transaction_status ?? order?.payment_status ?? null)}
+                                    value={labelValue(
+                                        payment?.transaction_status ??
+                                            order?.payment_status ??
+                                            null,
+                                    )}
                                 />
                             </div>
                         ) : (
@@ -713,7 +809,9 @@ export default function DetailNotification({ notification }: Props) {
                                 <SidebarRow
                                     icon={Clock}
                                     label="Dibuat"
-                                    value={formatDateTime(notification.created_at)}
+                                    value={formatDateTime(
+                                        notification.created_at,
+                                    )}
                                 />
                                 <SidebarRow
                                     icon={Info}
@@ -733,54 +831,59 @@ export default function DetailNotification({ notification }: Props) {
                                 href={primaryActionHref}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#B98B63] py-2.5 text-sm font-medium text-white shadow-md transition-colors hover:bg-[#2A241C]"
+                                className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#151515] py-2.5 text-sm font-medium text-white shadow-md transition-colors hover:bg-[#2A241C]"
                             >
                                 {config.ctaLabel} <ExternalLink size={16} />
                             </a>
                         )}
                     </div>
 
-                    <div className="rounded-2xl border border-[#EADFD2] bg-white p-6 shadow-sm">
-                        <h3 className="mb-6 font-serif text-lg text-[#B98B63]">
+                    <div className="rounded-2xl border border-[#e7e2de] bg-white p-6 shadow-sm">
+                        <h3 className="mb-6 font-serif text-lg text-[#151515]">
                             Linimasa Aktivitas
                         </h3>
-                        <div className="relative ml-2 space-y-7 border-l border-[#EADFD2]">
+                        <div className="relative ml-2 space-y-7 border-l border-[#e7e2de]">
                             {notification.timeline.length === 0 ? (
-                                <div className="pl-6 text-sm text-[#7A6A5D]">
+                                <div className="pl-6 text-sm text-[#6f6f6f]">
                                     No activity recorded yet.
                                 </div>
                             ) : (
                                 notification.timeline.map((item) => (
-                                    <div key={item.id} className="relative pl-6">
+                                    <div
+                                        key={item.id}
+                                        className="relative pl-6"
+                                    >
                                         <div
                                             className={
                                                 item.is_current
-                                                    ? 'absolute -left-[9px] top-0 h-[18px] w-[18px] rounded-full border-[4px] border-[#F8F0E5] bg-[#B98B63] shadow-[0_0_0_1px_#B98B63]'
-                                                    : 'absolute -left-[7px] top-1 h-[14px] w-[14px] rounded-full border-2 border-[#9A6B45] bg-white'
+                                                    ? 'absolute top-0 -left-[9px] h-[18px] w-[18px] rounded-full border-[4px] border-[#F8F0E5] bg-[#151515] shadow-[0_0_0_1px_#151515]'
+                                                    : 'absolute top-1 -left-[7px] h-[14px] w-[14px] rounded-full border-2 border-[#9A6B45] bg-white'
                                             }
                                         ></div>
                                         <div className="flex items-start justify-between gap-4">
                                             <div>
                                                 <p
-                                                    className={`text-sm ${item.is_current ? 'font-bold text-[#B98B63]' : 'font-medium text-[#B98B63]'}`}
+                                                    className={`text-sm ${item.is_current ? 'font-bold text-[#151515]' : 'font-medium text-[#151515]'}`}
                                                 >
                                                     {item.title}
                                                 </p>
                                                 {item.description && (
-                                                    <p className="mt-1 text-xs leading-relaxed text-[#7A6A5D]">
+                                                    <p className="mt-1 text-xs leading-relaxed text-[#6f6f6f]">
                                                         {item.description}
                                                     </p>
                                                 )}
                                                 {item.location && (
-                                                    <p className="mt-1 text-xs text-[#7A6A5D]">
+                                                    <p className="mt-1 text-xs text-[#6f6f6f]">
                                                         {item.location}
                                                     </p>
                                                 )}
                                             </div>
                                             <p
-                                                className={`shrink-0 text-xs ${item.is_current ? 'font-bold text-[#B98B63]' : 'text-[#7A6A5D]'}`}
+                                                className={`shrink-0 text-xs ${item.is_current ? 'font-bold text-[#151515]' : 'text-[#6f6f6f]'}`}
                                             >
-                                                {formatDateTime(item.happened_at)}
+                                                {formatDateTime(
+                                                    item.happened_at,
+                                                )}
                                             </p>
                                         </div>
                                     </div>

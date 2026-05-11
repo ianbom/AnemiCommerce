@@ -74,7 +74,7 @@
     --primary-foreground: #ffffff;
     --secondary: #f7f7f7;
     --secondary-foreground: #171717;
-    --muted: #f9f9f9;
+    --muted: #f7f7f7;
     --muted-foreground: #6f6f6f;
     --accent: #a55353;
     --accent-foreground: #ffffff;
@@ -84,10 +84,10 @@
     --input: #ded8d3;
     --ring: #151515;
     --chart-1: #151515;
-    --chart-2: #a55353;
-    --chart-3: #d83f3f;
-    --chart-4: #e7e2de;
-    --chart-5: #3d3d3d;
+    --chart-2: #272727;
+    --chart-3: #3d3d3d;
+    --chart-4: #a55353;
+    --chart-5: #e7e2de;
     --radius: 0rem;
     --sidebar: #ffffff;
     --sidebar-foreground: #272727;
@@ -100,38 +100,38 @@
 }
 
 .dark {
-    --background: #2f241d;
-    --foreground: #fffdf8;
-    --card: #3a2d24;
-    --card-foreground: #fffdf8;
-    --popover: #3a2d24;
-    --popover-foreground: #fffdf8;
-    --primary: #d1b08a;
-    --primary-foreground: #2f241d;
-    --secondary: #4d3c31;
-    --secondary-foreground: #fffdf8;
-    --muted: #3f3128;
-    --muted-foreground: #e8d6c1;
-    --accent: #b98b63;
-    --accent-foreground: #fffdf8;
-    --destructive: #e62b28;
+    --background: #151515;
+    --foreground: #ffffff;
+    --card: #171717;
+    --card-foreground: #ffffff;
+    --popover: #171717;
+    --popover-foreground: #ffffff;
+    --primary: #ffffff;
+    --primary-foreground: #151515;
+    --secondary: #272727;
+    --secondary-foreground: #ffffff;
+    --muted: #272727;
+    --muted-foreground: #e7e2de;
+    --accent: #a55353;
+    --accent-foreground: #ffffff;
+    --destructive: #d83f3f;
     --destructive-foreground: #ffffff;
-    --border: #5f4c3f;
-    --input: #5f4c3f;
-    --ring: #d1b08a;
-    --chart-1: #d1b08a;
-    --chart-2: #b98b63;
-    --chart-3: #e8d6c1;
-    --chart-4: #7a6a5d;
-    --chart-5: #fffdf8;
-    --sidebar: #2f241d;
-    --sidebar-foreground: #fffdf8;
-    --sidebar-primary: #d1b08a;
-    --sidebar-primary-foreground: #2f241d;
-    --sidebar-accent: #4d3c31;
-    --sidebar-accent-foreground: #fffdf8;
-    --sidebar-border: #5f4c3f;
-    --sidebar-ring: #d1b08a;
+    --border: #3d3d3d;
+    --input: #3d3d3d;
+    --ring: #ffffff;
+    --chart-1: #ffffff;
+    --chart-2: #e7e2de;
+    --chart-3: #a55353;
+    --chart-4: #d83f3f;
+    --chart-5: #6f6f6f;
+    --sidebar: #151515;
+    --sidebar-foreground: #ffffff;
+    --sidebar-primary: #ffffff;
+    --sidebar-primary-foreground: #151515;
+    --sidebar-accent: #272727;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: #3d3d3d;
+    --sidebar-ring: #ffffff;
 }
 
 @layer base {
