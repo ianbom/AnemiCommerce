@@ -31,6 +31,7 @@ type ProductCard = {
     price: number;
     sale_price: number | null;
     image: string | null;
+    hover_image: string | null;
     badge: string | null;
     category: string | null;
     collection: string | null;
@@ -202,28 +203,32 @@ export default function ListProduct({ products, filters, options }: Props) {
         filters.size,
         filters.search,
     ].filter(Boolean).length;
+    const selectedCollection = options.collections.find(
+        (collection) => collection.slug === filters.collection,
+    );
+    const pageTitle = selectedCollection?.name ?? 'Semua Produk';
 
     return (
         <ShopLayout>
-            <Head title="Produk - Aurea Syari" />
+            <Head title={`${pageTitle} - Aurea Syari`} />
 
-            <main className="mx-auto flex max-w-[1500px] flex-col px-4 py-6 md:px-10 md:py-10 lg:flex-row">
+            <main className="mx-auto w-full max-w-[1560px] px-4 py-8 md:px-10 md:py-12">
                 {isFilterOpen && (
                     <button
                         type="button"
                         aria-label="Tutup filter"
                         onClick={() => setIsFilterOpen(false)}
-                        className="fixed inset-0 z-40 bg-black/35 backdrop-blur-[2px] lg:hidden"
+                        className="fixed inset-0 z-40 bg-black/30 backdrop-blur-[2px]"
                     />
                 )}
                 <aside
-                    className={`fixed inset-x-0 bottom-0 z-50 max-h-[86vh] w-full shrink-0 overflow-y-auto rounded-t-[28px] border-t border-border bg-background px-5 pt-3 pb-6 shadow-[0_-24px_80px_rgba(0,0,0,0.18)] transition-transform duration-300 ease-out lg:sticky lg:top-24 lg:z-auto lg:mb-0 lg:max-h-[calc(100dvh-7rem)] lg:w-72 lg:translate-y-0 lg:self-start lg:overflow-y-auto lg:rounded-none lg:border-0 lg:bg-transparent lg:px-0 lg:pt-0 lg:pr-12 lg:pb-0 lg:shadow-none ${
+                    className={`fixed top-0 right-0 bottom-0 z-50 flex w-full max-w-md flex-col overflow-y-auto border-l border-border bg-white px-5 pt-5 pb-6 shadow-[-24px_0_80px_rgba(0,0,0,0.14)] transition-transform duration-300 ease-out md:px-7 ${
                         isFilterOpen
-                            ? 'translate-y-0'
-                            : 'pointer-events-none translate-y-full lg:pointer-events-auto'
+                            ? 'translate-x-0'
+                            : 'pointer-events-none translate-x-full'
                     }`}
                 >
-                    <div className="mb-5 flex items-center justify-between lg:hidden">
+                    <div className="mb-6 flex items-center justify-between border-b border-border pb-5">
                         <div>
                             <p className="text-[12px] font-semibold tracking-[0.22em] text-foreground uppercase">
                                 Filter & Urutkan
@@ -235,12 +240,11 @@ export default function ListProduct({ products, filters, options }: Props) {
                         <button
                             type="button"
                             onClick={() => setIsFilterOpen(false)}
-                            className="rounded-full border border-border px-4 py-2 text-[10px] font-semibold tracking-wider uppercase"
+                            className="border border-border px-4 py-2 text-[10px] font-semibold tracking-wider uppercase transition-colors hover:border-foreground"
                         >
                             Tutup
                         </button>
                     </div>
-                    <div className="mx-auto mb-5 h-1 w-12 rounded-full bg-border lg:hidden" />
                     <form
                         onSubmit={submitSearch}
                         className="group relative mb-7"
@@ -537,59 +541,65 @@ export default function ListProduct({ products, filters, options }: Props) {
                             </FilterSection>
                         </div>
                     </div>
-                    <div className="sticky bottom-0 -mx-5 mt-5 grid grid-cols-2 gap-3 border-t border-border bg-background px-5 pt-4 lg:hidden">
+                    <div className="sticky bottom-0 -mx-5 mt-auto grid grid-cols-2 gap-3 border-t border-border bg-white px-5 pt-4 md:-mx-7 md:px-7">
                         <button
                             type="button"
                             onClick={resetFilters}
-                            className="rounded-full border border-border py-3 text-[11px] font-semibold tracking-wider uppercase"
+                            className="border border-border py-3 text-[11px] font-semibold tracking-wider uppercase transition-colors hover:border-foreground"
                         >
                             Atur Ulang
                         </button>
                         <button
                             type="button"
                             onClick={() => setIsFilterOpen(false)}
-                            className="rounded-full bg-primary py-3 text-[11px] font-semibold tracking-wider text-primary-foreground uppercase"
+                            className="bg-primary py-3 text-[11px] font-semibold tracking-wider text-primary-foreground uppercase transition-colors hover:bg-[#030303]"
                         >
                             Lihat Produk
                         </button>
                     </div>
                 </aside>
 
-                <div className="flex-1">
-                    <div className="mb-6 flex flex-col gap-4 border-b border-border/60 pb-4 sm:flex-row sm:items-end sm:justify-between">
-                        <div>
-                            <h1 className="text-[17px] font-medium tracking-wide">
-                                Semua Produk
-                            </h1>
+                <div className="w-full">
+                    <section className="mb-8 border-b border-border pb-7 md:mb-10 md:pb-9">
+                        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                            <div>
+                                <p className="mb-2 text-[10px] font-semibold tracking-[0.24em] text-muted-foreground uppercase">
+                                    Collection
+                                </p>
+                                <h1 className="text-4xl leading-none font-light tracking-tight text-[#171717] md:text-6xl">
+                                    {pageTitle}
+                                </h1>
+                                <p className="mt-4 max-w-lg text-sm leading-6 text-muted-foreground">
+                                    Temukan pilihan modest wear terbaru dengan
+                                    filter cepat, tampilan bersih, dan katalog
+                                    yang lebih lapang.
+                                </p>
+                            </div>
+                            <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsFilterOpen(true)}
+                                    className="group inline-flex min-w-48 items-center justify-between border border-[#151515] px-5 py-3 text-left transition-colors hover:bg-[#151515] hover:text-white"
+                                >
+                                    <span>
+                                        <span className="block text-[11px] font-semibold tracking-[0.22em] uppercase">
+                                            Filter & Sort
+                                        </span>
+                                    </span>
+                                    <ChevronDown
+                                        size={14}
+                                        className="transition-transform group-hover:translate-y-0.5"
+                                    />
+                                </button>
+                            </div>
                         </div>
-
-                        <button
-                            type="button"
-                            onClick={() => setIsFilterOpen(true)}
-                            className="group flex w-full items-center justify-between border-b border-foreground py-3 text-left transition-colors hover:text-primary sm:w-auto sm:min-w-48 lg:hidden"
-                        >
-                            <span>
-                                <span className="block text-[11px] font-semibold tracking-[0.24em] text-foreground uppercase transition-colors group-hover:text-primary">
-                                    Filter & Urutkan
-                                </span>
-                                <span className="mt-1 block text-[10px] tracking-wide text-muted-foreground">
-                                    {activeSummary > 0
-                                        ? `${activeSummary} filter aktif`
-                                        : 'Pilih detail produk'}
-                                </span>
-                            </span>
-                            <ChevronDown
-                                size={14}
-                                className="text-muted-foreground transition-transform group-hover:translate-y-0.5 group-hover:text-primary"
-                            />
-                        </button>
-                    </div>
+                    </section>
 
                     {products.data.length > 0 ? (
                         <InfiniteScroll data="products" buffer={400}>
                             {({ loading }) => (
                                 <>
-                                    <div className="grid grid-cols-2 gap-x-3 gap-y-6 md:grid-cols-3 md:gap-x-5 md:gap-y-10 lg:grid-cols-4">
+                                    <div className="grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-3 md:gap-x-5 md:gap-y-12 lg:grid-cols-4 xl:grid-cols-4">
                                         {products.data.map((product, index) => (
                                             <ProductTile
                                                 key={product.id}
@@ -715,12 +725,12 @@ function ProductTile({
     };
 
     return (
-        <FadeInOnScroll delay={(index % 12) * 60}>
+        <FadeInOnScroll delay={(index % 15) * 45}>
             <Link
                 href={detail.url({ query: { product: product.slug } })}
                 className="group flex h-full cursor-pointer flex-col"
             >
-                <div className="relative mb-3 aspect-[3/4] overflow-hidden bg-[#f7f7f7]">
+                <div className="relative mb-4 aspect-[3/4] overflow-hidden bg-[#f7f7f7]">
                     <img
                         src={
                             product.image ??
@@ -729,8 +739,17 @@ function ProductTile({
                         alt={product.title}
                         loading="lazy"
                         decoding="async"
-                        className="h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.03]"
+                        className={`h-full w-full object-cover transition-all duration-700 ease-in-out ${product.hover_image ? 'group-hover:opacity-0' : 'group-hover:scale-[1.03]'}`}
                     />
+                    {product.hover_image && (
+                        <img
+                            src={product.hover_image}
+                            alt={product.title}
+                            loading="lazy"
+                            decoding="async"
+                            className="absolute inset-0 h-full w-full scale-[1.03] object-cover opacity-0 transition-all duration-700 ease-in-out group-hover:scale-100 group-hover:opacity-100"
+                        />
+                    )}
                     <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/5" />
 
                     {product.badge && (
@@ -757,24 +776,33 @@ function ProductTile({
                     </button>
                 </div>
 
-                {product.colors.length > 0 && (
-                    <div className="mb-2 flex space-x-1.5">
-                        {product.colors.map((color) => (
-                            <div
-                                key={color.hex}
-                                className="h-[12px] w-[12px] rounded-full border border-[#e7e2de]"
-                                style={{ backgroundColor: color.hex }}
-                                title={color.name ?? color.hex}
-                            />
-                        ))}
-                    </div>
-                )}
+                <div className="mb-2 flex min-h-3 items-center justify-between gap-3">
+                    {product.colors.length > 0 ? (
+                        <div className="flex space-x-1.5">
+                            {product.colors.slice(0, 5).map((color) => (
+                                <div
+                                    key={color.hex}
+                                    className="h-[10px] w-[10px] rounded-full border border-[#e7e2de]"
+                                    style={{ backgroundColor: color.hex }}
+                                    title={color.name ?? color.hex}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <span />
+                    )}
+                    {product.collection && (
+                        <span className="truncate text-[9px] font-medium tracking-[0.14em] text-muted-foreground uppercase">
+                            {product.collection}
+                        </span>
+                    )}
+                </div>
 
-                <h3 className="mb-1 line-clamp-2 min-h-[2.75em] text-[11px] leading-snug font-medium text-[#272727] transition-colors hover:text-[#a55353]">
+                <h3 className="mb-2 line-clamp-2 min-h-[2.75em] text-[12px] leading-snug font-medium text-[#272727] transition-colors group-hover:text-[#a55353]">
                     {product.title}
                 </h3>
 
-                <div className="mb-4 flex flex-wrap items-center gap-2 text-[11px] font-medium text-[#3d3d3d]">
+                <div className="mt-auto flex flex-wrap items-center gap-2 text-[12px] font-medium text-[#3d3d3d]">
                     <span>
                         {formatPrice(product.sale_price ?? product.price)}
                     </span>
@@ -785,11 +813,11 @@ function ProductTile({
                     )}
                 </div>
 
-                <span className="mt-auto w-full border border-[#151515] py-2.5 text-center text-[10px] font-semibold tracking-[0.16em] text-[#151515] uppercase transition-all duration-300 hover:bg-[#151515] hover:text-white active:scale-[0.98]">
+                {/* <span className="mt-4 w-full border border-[#151515] py-2.5 text-center text-[10px] font-semibold tracking-[0.16em] text-[#151515] uppercase transition-all duration-300 group-hover:bg-[#151515] group-hover:text-white active:scale-[0.98]">
                     {product.available_stock > 0
                         ? 'Choose options'
                         : 'Sold out'}
-                </span>
+                </span> */}
             </Link>
         </FadeInOnScroll>
     );

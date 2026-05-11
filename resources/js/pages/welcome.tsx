@@ -39,7 +39,8 @@ type CategoryCard = {
 
 type Props = {
     heroBanners: BannerCard[];
-    promoBanner: BannerCard;
+    ctaBanner: BannerCard;
+    collectionBanners: BannerCard[];
     categories: CategoryCard[];
     hajjSeries: ProductCard[];
     wePresent: ProductCard[];
@@ -69,12 +70,13 @@ const formatPrice = (value: number) =>
 
 const productImage = (product: ProductCard | undefined, index: number) =>
     product?.image ?? fallbackImages[index % fallbackImages.length];
-const bannerImage = (banner: BannerCard, fallback: string) =>
+const bannerImage = (banner: BannerCard | undefined, fallback: string) =>
     banner?.image_desktop_url ?? fallback;
 
 export default function Home({
     heroBanners,
-    promoBanner,
+    ctaBanner,
+    collectionBanners,
     categories,
     hajjSeries,
     wePresent,
@@ -94,21 +96,16 @@ export default function Home({
                 <div className="mb-2 flex w-full items-center justify-center gap-4 md:mb-0 md:w-auto md:gap-10">
                     <div className="flex items-center gap-2">
                         <Clock size={16} strokeWidth={1.5} />
-                        <span>Dikirim dalam 24 Jam</span>
+                        <span>Koleksi Lengkap</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <Star size={16} strokeWidth={1.5} />
-                        <span>Brand Publik Figur, Harga Menghibur</span>
+                        <span>Harga Terjangkau</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <RotateCcw size={16} strokeWidth={1.5} />
-                        <span>Produk Original *</span>
+                        <span>Nyaman & Stylish</span>
                     </div>
-                </div>
-                <div className="hidden md:block">
-                    <Link href="#" className="hover:underline">
-                        Butuh Bantuan? Chat dengan kami
-                    </Link>
                 </div>
             </div>
 
@@ -121,6 +118,7 @@ export default function Home({
                         </h2>
                     </div>
                 </FadeInOnScroll>
+
                 <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
                     {categories?.map((category, index) => (
                         <FadeInOnScroll key={index} delay={index * 100}>
@@ -150,40 +148,6 @@ export default function Home({
 
             <section className="mx-auto max-w-[1500px] px-4 py-12 md:px-10 md:py-16">
                 <SectionTitle
-                    title="Seri Haji Itsar 2026"
-                    subtitle="Kini Hadir Hangat, Terbungkus Cinta"
-                />
-
-                <div className="flex flex-col items-center gap-6 md:gap-8 lg:flex-row">
-                    <FadeInOnScroll className="w-full lg:w-[45%]">
-                        <div className="group relative aspect-[4/3] w-full overflow-hidden bg-[#f7f7f7]">
-                            <img
-                                src={productImage(hajjSeries[0], 8)}
-                                alt={
-                                    hajjSeries[0]?.name ?? 'Lifestyle Seri Haji'
-                                }
-                                className="h-full w-full object-cover transition-transform duration-[1.5s] group-hover:scale-105"
-                            />
-                        </div>
-                    </FadeInOnScroll>
-
-                    <div className="relative w-full lg:w-[55%]">
-                        <div className="hide-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:pb-0">
-                            {hajjSeries.map((item, index) => (
-                                <ProductTile
-                                    key={item.id}
-                                    product={item}
-                                    index={index}
-                                    centered
-                                />
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="mx-auto max-w-[1500px] px-4 py-12 md:px-10 md:py-16">
-                <SectionTitle
                     title="Kami Hadirkan Untukmu..."
                     subtitle="Lebih Banyak Cinta. Tambahan Spesial, Eksklusif Untukmu"
                 />
@@ -200,69 +164,7 @@ export default function Home({
                 </div>
             </section>
 
-            <section className="bg-white px-4 py-12 md:px-10 md:py-16">
-                <div className="mx-auto max-w-[1500px]">
-                    <SectionTitle
-                        title="Koleksi Terbaru"
-                        subtitle="Essential Favoritmu, Kini Hadir dalam Beragam Warna"
-                    />
-
-                    <div className="relative">
-                        <div className="hide-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto pb-4 md:grid md:grid-cols-3 md:gap-4 md:pb-0 lg:grid-cols-6">
-                            {recentAdditions.map((item, index) => (
-                                <FadeInOnScroll
-                                    key={item.id}
-                                    className="min-w-[40%] snap-start sm:min-w-[30%] md:min-w-0"
-                                    delay={index * 60}
-                                >
-                                    <Link
-                                        href={detail.url({
-                                            query: { product: item.slug },
-                                        })}
-                                        className="group flex flex-col text-left"
-                                    >
-                                        <div className="relative mb-3 aspect-[3/4] overflow-hidden bg-[#f7f7f7]">
-                                            <img
-                                                src={productImage(item, index)}
-                                                alt={item.name}
-                                                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                                loading="lazy"
-                                                decoding="async"
-                                            />
-                                        </div>
-                                        <h3 className="line-clamp-2 min-h-[2.5em] px-0 text-[10px] leading-tight font-medium text-[#272727] md:text-[11px]">
-                                            {item.name}
-                                        </h3>
-                                        <p className="mb-2 text-[10px] font-medium text-[#3d3d3d] md:text-[11px]">
-                                            {formatPrice(
-                                                item.sale_price ?? item.price,
-                                            )}
-                                        </p>
-                                        <div className="flex justify-center gap-1.5">
-                                            {item.colors
-                                                .slice(0, 3)
-                                                .map((color) => (
-                                                    <span
-                                                        key={color.hex}
-                                                        className="h-2.5 w-2.5 rounded-full border border-[#e7e2de] md:h-3 md:w-3"
-                                                        style={{
-                                                            backgroundColor:
-                                                                color.hex,
-                                                        }}
-                                                        title={
-                                                            color.name ??
-                                                            color.hex
-                                                        }
-                                                    />
-                                                ))}
-                                        </div>
-                                    </Link>
-                                </FadeInOnScroll>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <NewCollectionsSection collectionBanners={collectionBanners} />
 
             <section className="mx-auto max-w-[1500px] px-4 py-12 md:px-10 md:py-20">
                 <SectionTitle
@@ -285,24 +187,8 @@ export default function Home({
                 </div>
             </section>
 
-            <FadeInOnScroll>
-                <section className="relative mt-6 mb-12 h-[250px] w-full overflow-hidden md:mt-10 md:mb-20 md:h-[420px]">
-                    <div
-                        className="absolute inset-0 bg-cover bg-center"
-                        style={{
-                            backgroundImage: `url('${bannerImage(promoBanner, '/img/sarah-khan-R7p66Oj8ZOQ-unsplash.webp')}')`,
-                        }}
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/15">
-                        <Link
-                            href={promoBanner?.button_url ?? list.url()}
-                            className="border border-white px-7 py-3 text-[10px] font-semibold tracking-[0.18em] text-white uppercase backdrop-blur-sm transition-colors hover:bg-white hover:text-black md:px-8 md:text-[11px]"
-                        >
-                            {promoBanner?.button_text ?? 'Discover'}
-                        </Link>
-                    </div>
-                </section>
-            </FadeInOnScroll>
+            {/* CTA Section */}
+            <CtaSection ctaBanner={ctaBanner} />
 
             <style
                 dangerouslySetInnerHTML={{
@@ -313,6 +199,118 @@ export default function Home({
                 }}
             />
         </ShopLayout>
+    );
+}
+
+function CtaSection({ ctaBanner }: { ctaBanner: BannerCard }) {
+    return (
+        <FadeInOnScroll>
+            <section className="mx-auto mt-6 mb-12 max-w-[1500px] px-4 md:mt-10 md:mb-20 md:px-10">
+                <div className="group relative min-h-[280px] overflow-hidden rounded-2xl md:min-h-[500px]">
+                    <img
+                        src={bannerImage(
+                            ctaBanner,
+                            '/img/sarah-khan-R7p66Oj8ZOQ-unsplash.webp',
+                        )}
+                        alt={ctaBanner?.title ?? 'Shayda collection banner'}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.5s] group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/25" />
+                    <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/65 via-black/25 to-transparent" />
+
+                    <div className="relative z-10 flex min-h-[280px] items-end justify-start px-6 py-10 text-left md:min-h-[500px] md:px-10 md:py-16">
+                        <div className="max-w-[560px]">
+                            <p className="mb-3 text-[10px] font-semibold tracking-[0.22em] text-white/80 uppercase md:text-xs">
+                                {ctaBanner?.subtitle ?? 'New Collection'}
+                            </p>
+                            <h2 className="text-3xl leading-tight font-light tracking-[0.08em] text-white uppercase md:text-5xl">
+                                {/* {ctaBanner?.title ?? 'Discover Your Style'} */}
+                                Temukan Style Anda
+                            </h2>
+                            <p className="mt-4 max-w-[430px] text-sm leading-6 text-white/80 md:text-base">
+                                Temukan pilihan busana muslim elegan dengan
+                                detail nyaman, siluet modern, dan sentuhan
+                                eksklusif untuk setiap momen spesialmu.
+                            </p>
+                            <Link
+                                href={ctaBanner?.button_url ?? list.url()}
+                                className="mt-7 inline-flex border border-white px-8 py-3 text-[10px] font-semibold tracking-[0.18em] text-white uppercase backdrop-blur-sm transition-colors hover:bg-white hover:text-black md:text-[11px]"
+                            >
+                                {ctaBanner?.button_text ?? 'Discover'}
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </FadeInOnScroll>
+    );
+}
+
+function NewCollectionsSection({
+    collectionBanners,
+}: {
+    collectionBanners: BannerCard[];
+}) {
+    const [mainBanner, secondaryBanner] = collectionBanners;
+
+    return (
+        <FadeInOnScroll>
+            <section className="bg-[#f7f7f7] px-5 py-8 md:px-10 md:py-12">
+                <div className="relative mx-auto flex max-w-[1188px] flex-col gap-8 overflow-hidden lg:min-h-[768px]">
+                    <img
+                        src={bannerImage(
+                            mainBanner,
+                            '/img/shedrack-salami-DRjeesi2kFM-unsplash.webp',
+                        )}
+                        alt={
+                            mainBanner?.title ??
+                            'Model wearing red fashion collection'
+                        }
+                        className="order-3 h-[520px] w-full object-cover md:h-[680px] lg:absolute lg:top-0 lg:left-0 lg:order-none lg:h-[752px] lg:w-[430px]"
+                    />
+
+                    <h2 className="order-1 text-[42px] leading-[0.88] font-light tracking-[-0.045em] text-[#111111] uppercase md:text-[58px] lg:absolute lg:top-0 lg:left-[455px]">
+                        NEW
+                        <br />
+                        COLLECTIONS
+                    </h2>
+
+                    <Link
+                        href={list.url()}
+                        className="order-2 flex w-fit items-center gap-3 text-sm font-semibold text-[#111111] lg:absolute lg:top-5 lg:right-[22px]"
+                    >
+                        <span>See more</span>
+                        <span className="relative block h-px w-[43px] bg-[#111111] after:absolute after:top-1/2 after:right-0 after:h-2 after:w-2 after:-translate-y-1/2 after:rotate-45 after:border-t after:border-r after:border-[#111111] after:content-['']" />
+                    </Link>
+
+                    <div className="order-4 max-w-[255px] text-[15px] leading-[1.55] text-[#333333] lg:absolute lg:top-[156px] lg:left-[816px]">
+                        <p>
+                            A stoical elegance, you might call it. Black
+                            asymmetric dresses blowing voluminously in the artic
+                            wind.
+                        </p>
+                        <p className="mt-3">
+                            Oversized hybrids of hoodie and padded outerwear;
+                            leather jackets that turn out to be made from
+                            Balenciaga’s new mycelium-derived leather-mimicking
+                            alternative. Tote bags mated with boots.
+                        </p>
+                    </div>
+
+                    <img
+                        src={bannerImage(
+                            secondaryBanner,
+                            '/img/sajimon-sahadevan-AWC94dVpTPc-unsplash.webp',
+                        )}
+                        alt={
+                            secondaryBanner?.title ??
+                            'Model wearing black fashion collection'
+                        }
+                        className="order-5 h-[377px] w-[249px] object-cover lg:absolute lg:top-[376px] lg:left-[456px] lg:order-none"
+                    />
+                </div>
+            </section>
+        </FadeInOnScroll>
     );
 }
 
@@ -564,7 +562,6 @@ function ProductTile({
                         loading="lazy"
                         decoding="async"
                     />
-                 
                 </div>
                 <div className={centered ? 'px-1 text-center' : 'px-1'}>
                     <h3 className="mb-1 line-clamp-2 min-h-[2.75em] text-[10px] leading-snug font-medium text-[#272727] md:text-xs">

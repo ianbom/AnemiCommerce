@@ -15,19 +15,18 @@ class ProductBrowsingService
 {
     public function homeData(): array
     {
-        $banners = Banner::query()
-            ->where('is_active', true)
-            ->where('placement', 'homepage')
-            ->where(fn ($query) => $query->whereNull('starts_at')->orWhere('starts_at', '<=', now()))
-            ->where(fn ($query) => $query->whereNull('ends_at')->orWhere('ends_at', '>=', now()))
-            ->orderBy('sort_order')
-            ->orderByDesc('created_at')
+        $banners = $this->activeBanners('homepage')->get();
+        $collectionBanners = $this->activeBanners('collection')
+            ->limit(2)
             ->get();
+        $ctaBanner = $this->activeBanners('cta')->first();
 
         return [
             'canRegister' => Features::enabled(Features::registration()),
             'heroBanners' => $banners->map(fn ($banner) => $this->bannerCard($banner))->toArray(),
             'promoBanner' => $this->bannerCard($banners->skip(1)->first()),
+            'ctaBanner' => $this->bannerCard($ctaBanner),
+            'collectionBanners' => $collectionBanners->map(fn ($banner) => $this->bannerCard($banner))->toArray(),
             'categories' => Category::query()->where('is_active', true)->orderBy('name')->get(['name', 'slug', 'image_url']),
             'hajjSeries' => $this->productsForSection('hajj', 3),
             'wePresent' => $this->productsForSection('sale', 5),
@@ -195,6 +194,9 @@ class ProductBrowsingService
         $image = $product->primaryImage?->image_url
             ?? $product->images->first()?->image_url
             ?? $variants->firstWhere('image_url', '!=', null)?->image_url;
+        $hoverImage = $product->images
+            ->first(fn ($productImage) => $productImage->image_url !== $image)?->image_url
+            ?? $variants->first(fn ($variant) => filled($variant->image_url) && $variant->image_url !== $image)?->image_url;
 
         return [
             'id' => $product->id,
@@ -204,6 +206,7 @@ class ProductBrowsingService
             'price' => $basePrice,
             'sale_price' => $salePrice,
             'image' => $image,
+            'hover_image' => $hoverImage,
             'badge' => $this->badge($product),
             'label' => $this->label($product),
             'category' => $product->category?->name,
@@ -370,6 +373,17 @@ class ProductBrowsingService
                 'type' => $page->type,
                 'date' => $page->created_at?->format('M d, Y'),
             ]);
+    }
+
+    private function activeBanners(string $placement)
+    {
+        return Banner::query()
+            ->where('is_active', true)
+            ->where('placement', $placement)
+            ->where(fn ($query) => $query->whereNull('starts_at')->orWhere('starts_at', '<=', now()))
+            ->where(fn ($query) => $query->whereNull('ends_at')->orWhere('ends_at', '>=', now()))
+            ->orderBy('sort_order')
+            ->orderByDesc('created_at');
     }
 
     private function bannerCard(?Banner $banner): ?array
