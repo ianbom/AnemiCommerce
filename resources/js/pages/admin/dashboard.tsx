@@ -209,7 +209,7 @@ function DashboardHeader() {
     return (
         <header className="flex items-end justify-between gap-6">
             <div>
-                <p className="mb-2 flex items-center gap-2 text-xs font-bold tracking-widest text-[#7F2020]/50 uppercase">
+                <p className="mb-2 flex items-center gap-2 text-xs font-bold tracking-widest text-[#B98B63]/50 uppercase">
                     <Shirt className="size-4" strokeWidth={1.7} />
                     Modest Fashion Admin
                 </p>
@@ -231,7 +231,7 @@ function DashboardHeader() {
                 </Button>
                 <Button
                     asChild
-                    className="h-9 rounded-lg bg-[#7F2020] px-4 text-white shadow-none hover:bg-[#5F1717] active:scale-[0.98]"
+                    className="h-9 rounded-lg bg-[#B98B63] px-4 text-white shadow-none hover:bg-[#9A6B45] active:scale-[0.98]"
                 >
                     <Link href="/admin/orders">
                         View Orders
@@ -387,7 +387,7 @@ function SalesTrendCard({ data }: { data: ChartPoint[] }) {
                         />
                         <Bar
                             dataKey="revenue"
-                            fill="#7F2020"
+                            fill="#B98B63"
                             radius={[12, 12, 4, 4]}
                         />
                     </BarChart>
@@ -416,7 +416,7 @@ function OrdersNeedAttention({ orders }: { orders: AttentionOrder[] }) {
                             <div>
                                 <Link
                                     href={`/admin/orders/${order.id}`}
-                                    className="text-sm font-semibold text-zinc-900 transition-colors hover:text-[#7F2020]"
+                                    className="text-sm font-semibold text-zinc-900 transition-colors hover:text-[#B98B63]"
                                 >
                                     {order.order_number}
                                 </Link>
@@ -425,7 +425,7 @@ function OrdersNeedAttention({ orders }: { orders: AttentionOrder[] }) {
                                     {order.user_id ? (
                                         <Link
                                             href={`/admin/customers/${order.user_id}`}
-                                            className="transition-colors hover:text-[#7F2020]"
+                                            className="transition-colors hover:text-[#B98B63]"
                                         >
                                             {order.customer_name}
                                         </Link>
@@ -508,7 +508,7 @@ function RecentOrdersTable({ orders }: { orders: RecentOrder[] }) {
                                 {order.id ? (
                                     <Link
                                         href={`/admin/orders/${order.id}`}
-                                        className="transition-colors hover:text-[#7F2020]"
+                                        className="transition-colors hover:text-[#B98B63]"
                                     >
                                         {order.order_number}
                                     </Link>
@@ -520,7 +520,7 @@ function RecentOrdersTable({ orders }: { orders: RecentOrder[] }) {
                                 {order.user_id ? (
                                     <Link
                                         href={`/admin/customers/${order.user_id}`}
-                                        className="transition-colors hover:text-[#7F2020]"
+                                        className="transition-colors hover:text-[#B98B63]"
                                     >
                                         {order.customer_name}
                                     </Link>
@@ -598,7 +598,7 @@ function LowStockProductsCard({ products }: { products: LowStockVariant[] }) {
                                 {product.product_id ? (
                                     <Link
                                         href={`/admin/products/${product.product_id}`}
-                                        className="block truncate text-sm font-semibold text-zinc-900 transition-colors hover:text-[#7F2020]"
+                                        className="block truncate text-sm font-semibold text-zinc-900 transition-colors hover:text-[#B98B63]"
                                     >
                                         {product.product_name ??
                                             'Unnamed Product'}
@@ -622,7 +622,7 @@ function LowStockProductsCard({ products }: { products: LowStockVariant[] }) {
                                 {product.id ? (
                                     <Link
                                         href={`/admin/product-variants/${product.id}/stock-adjustment`}
-                                        className="text-sm font-semibold text-zinc-900 transition-colors hover:text-[#7F2020]"
+                                        className="text-sm font-semibold text-zinc-900 transition-colors hover:text-[#B98B63]"
                                     >
                                         Stock: {product.available_stock}
                                     </Link>
@@ -661,7 +661,7 @@ function SectionHeader({
         <div>
             <div className="flex items-center gap-2">
                 {Icon && (
-                    <Icon className="size-4 text-[#7F2020]" strokeWidth={1.7} />
+                    <Icon className="size-4 text-[#B98B63]" strokeWidth={1.7} />
                 )}
                 <h2 className="text-lg font-semibold tracking-tight text-zinc-900">
                     {title}

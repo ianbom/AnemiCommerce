@@ -146,7 +146,7 @@ export default function ProductVariantsIndex({
             icon: Package,
             iconBg: 'bg-white/20',
             iconColor: 'text-white',
-            cardBg: 'bg-gradient-to-br from-[#7F2020] to-[#2a1c17] text-white',
+            cardBg: 'bg-gradient-to-br from-[#B98B63] to-[#2a1c17] text-white',
             valColor: 'text-white',
             titleColor: 'text-white/90',
             subColor: 'text-white/60',
@@ -205,7 +205,7 @@ export default function ProductVariantsIndex({
                 {/* Header */}
                 <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
                     <div>
-                        <p className="mb-1 text-[11px] font-bold tracking-widest text-[#7F2020]/50 uppercase">
+                        <p className="mb-1 text-[11px] font-bold tracking-widest text-[#B98B63]/50 uppercase">
                             Catalog Management
                         </p>
                         <h1 className="font-serif text-3xl leading-tight text-zinc-900">
@@ -224,7 +224,7 @@ export default function ProductVariantsIndex({
                         >
                             <Button
                                 size="sm"
-                                className="h-9 gap-1.5 bg-[#7F2020] text-white shadow-sm hover:bg-[#5F1717]"
+                                className="h-9 gap-1.5 bg-[#B98B63] text-white shadow-sm hover:bg-[#9A6B45]"
                             >
                                 <Plus className="h-3.5 w-3.5" /> Add Variant
                             </Button>
@@ -240,7 +240,7 @@ export default function ProductVariantsIndex({
                             className={[
                                 'relative overflow-hidden rounded-2xl border transition-all duration-200 hover:-translate-y-0.5',
                                 m.featured
-                                    ? 'border-transparent shadow-lg shadow-[#7F2020]/20'
+                                    ? 'border-transparent shadow-lg shadow-[#B98B63]/20'
                                     : 'border-zinc-100 shadow-sm hover:shadow-md',
                                 m.cardBg,
                             ].join(' ')}
@@ -333,7 +333,7 @@ export default function ProductVariantsIndex({
                             <Button
                                 type="submit"
                                 size="sm"
-                                className="h-9 gap-1.5 bg-[#7F2020] text-white hover:bg-[#5F1717]"
+                                className="h-9 gap-1.5 bg-[#B98B63] text-white hover:bg-[#9A6B45]"
                             >
                                 <Search className="h-3.5 w-3.5" /> Search
                             </Button>
@@ -409,7 +409,7 @@ export default function ProductVariantsIndex({
                                                     onCheckedChange={() =>
                                                         toggleOne(v.id)
                                                     }
-                                                    className="rounded border-zinc-300 data-[state=checked]:bg-[#7F2020]"
+                                                    className="rounded border-zinc-300 data-[state=checked]:bg-[#B98B63]"
                                                 />
                                             </td>
                                             <td className="px-5 py-3">
@@ -600,7 +600,7 @@ export default function ProductVariantsIndex({
                                         className={[
                                             'flex h-8 min-w-8 items-center justify-center rounded-lg px-2.5 text-xs font-medium transition-colors',
                                             link.active
-                                                ? 'bg-[#7F2020] text-white shadow-sm'
+                                                ? 'bg-[#B98B63] text-white shadow-sm'
                                                 : !link.url
                                                   ? 'cursor-not-allowed text-zinc-300'
                                                   : 'text-zinc-500 hover:bg-zinc-100',

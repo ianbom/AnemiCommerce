@@ -50,9 +50,9 @@ export default function ShopLayout({ children }: ShopLayoutProps) {
     ];
 
     return (
-        <div className="flex min-h-screen flex-col overflow-x-hidden bg-[#f7f0e8] font-sans text-[#53362d] selection:bg-[#e6d5c8] selection:text-[#53362d]">
+        <div className="flex min-h-screen flex-col overflow-x-hidden bg-white font-sans text-[#272727] selection:bg-[#151515] selection:text-white">
             <Navbar cartCount={cartCount} collections={featuredCollections} />
-            <main className="mx-auto w-full max-w-md flex-grow bg-[#f7f0e8] pb-24 md:max-w-none md:pb-0">
+            <main className="mx-auto w-full max-w-md flex-grow bg-white pb-24 md:max-w-none md:pb-0">
                 {children}
             </main>
             <Toaster />
@@ -61,7 +61,7 @@ export default function ShopLayout({ children }: ShopLayoutProps) {
             </div>
 
             {/* Mobile Bottom Navigation */}
-            <nav className="pb-safe fixed bottom-0 left-1/2 z-50 w-full max-w-md -translate-x-1/2 border-t border-[#ddd0c4] bg-[#f7f0e8]/98 px-6 py-2 backdrop-blur-xl md:hidden">
+            <nav className="pb-safe fixed bottom-0 left-1/2 z-50 w-full max-w-md -translate-x-1/2 border-t border-[#e7e2de] bg-white/98 px-6 py-2 backdrop-blur-xl md:hidden">
                 <div className="flex h-14 items-center justify-between">
                     {navItems.map((item, index) => {
                         const Icon = item.icon;
@@ -70,7 +70,7 @@ export default function ShopLayout({ children }: ShopLayoutProps) {
                             <Link
                                 key={index}
                                 href={item.href}
-                                className={`flex w-14 flex-col items-center justify-center transition-colors ${item.active ? 'text-[#8b5e4c]' : 'text-[#bc9e90]'}`}
+                                className={`flex w-14 flex-col items-center justify-center transition-colors ${item.active ? 'text-[#151515]' : 'text-[#8b827c]'}`}
                             >
                                 <div className="relative mb-1">
                                     <Icon
@@ -78,13 +78,13 @@ export default function ShopLayout({ children }: ShopLayoutProps) {
                                         size={22}
                                         className={
                                             item.active
-                                                ? 'fill-[#8b5e4c]/20'
+                                                ? 'fill-[#151515]/10'
                                                 : ''
                                         }
                                     />
                                     {'count' in item &&
                                         Number(item.count ?? 0) > 0 && (
-                                            <span className="absolute -top-2 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#8b5e4c] px-1 text-[9px] leading-none font-semibold text-white">
+                                            <span className="absolute -top-2 -right-2 flex h-4 min-w-4 items-center justify-center bg-[#151515] px-1 text-[9px] leading-none font-semibold text-white">
                                                 {Number(item.count ?? 0) > 99
                                                     ? '99+'
                                                     : item.count}

@@ -160,7 +160,7 @@ export default function CreateProduct() {
                         >
                             Preview Product
                         </Button>
-                        <Button className="h-10 rounded-lg bg-[#7F2020] px-6 font-medium text-white shadow-md transition-all hover:bg-[#5F1717] hover:shadow-lg">
+                        <Button className="h-10 rounded-lg bg-[#B98B63] px-6 font-medium text-white shadow-md transition-all hover:bg-[#9A6B45] hover:shadow-lg">
                             Publish Product
                         </Button>
                     </div>
@@ -190,7 +190,7 @@ export default function CreateProduct() {
                                                 <Input
                                                     id="name"
                                                     defaultValue="Najran Piping Lace Abaya"
-                                                    className="rounded-lg border-zinc-200 shadow-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                    className="rounded-lg border-zinc-200 shadow-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                                 />
                                             </div>
                                             <div className="space-y-1.5">
@@ -203,7 +203,7 @@ export default function CreateProduct() {
                                                 <Input
                                                     id="sku"
                                                     defaultValue="ABY-NJRN-001"
-                                                    className="rounded-lg border-zinc-200 bg-zinc-50/50 shadow-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                    className="rounded-lg border-zinc-200 bg-zinc-50/50 shadow-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                                 />
                                             </div>
                                         </div>
@@ -389,7 +389,7 @@ export default function CreateProduct() {
                                     <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                                         {/* Dropzone */}
                                         <div className="group relative col-span-2 flex aspect-[3/4] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-zinc-200 bg-zinc-50 p-4 text-center transition-colors hover:bg-zinc-100/50 md:col-span-1">
-                                            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-white text-zinc-400 shadow-sm transition-all group-hover:scale-110 group-hover:text-[#7F2020]">
+                                            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-white text-zinc-400 shadow-sm transition-all group-hover:scale-110 group-hover:text-[#B98B63]">
                                                 <UploadCloud className="h-5 w-5" />
                                             </div>
                                             <p className="mb-1 text-xs font-medium text-zinc-600">
@@ -448,7 +448,7 @@ export default function CreateProduct() {
                                                         <input
                                                             type="radio"
                                                             checked
-                                                            className="h-3 w-3 text-[#7F2020] focus:ring-[#7F2020]"
+                                                            className="h-3 w-3 text-[#B98B63] focus:ring-[#B98B63]"
                                                             readOnly
                                                         />
                                                         <span className="text-[9px] font-medium text-zinc-600">
@@ -823,7 +823,7 @@ export default function CreateProduct() {
                                                                             prev.map((x) => x.id === v.id ? { ...x, active: checked } : x)
                                                                         )
                                                                     }
-                                                                    className="scale-75 data-[state=checked]:bg-[#7F2020]"
+                                                                    className="scale-75 data-[state=checked]:bg-[#B98B63]"
                                                                 />
                                                             </td>
                                                             <td className="px-3 py-2 text-center">
@@ -1031,7 +1031,7 @@ export default function CreateProduct() {
                                         </div>
                                         <Switch
                                             defaultChecked
-                                            className="data-[state=checked]:bg-[#7F2020]"
+                                            className="data-[state=checked]:bg-[#B98B63]"
                                         />
                                     </div>
                                     <div className="group flex items-center justify-between">
@@ -1043,7 +1043,7 @@ export default function CreateProduct() {
                                         </div>
                                         <Switch
                                             defaultChecked
-                                            className="data-[state=checked]:bg-[#7F2020]"
+                                            className="data-[state=checked]:bg-[#B98B63]"
                                         />
                                     </div>
                                     <div className="group flex items-center justify-between">
@@ -1053,7 +1053,7 @@ export default function CreateProduct() {
                                                 Is Best Seller
                                             </Label>
                                         </div>
-                                        <Switch className="data-[state=checked]:bg-[#7F2020]" />
+                                        <Switch className="data-[state=checked]:bg-[#B98B63]" />
                                     </div>
                                 </div>
                             </div>
@@ -1209,7 +1209,7 @@ export default function CreateProduct() {
                         >
                             Save as Draft
                         </Button>
-                        <Button className="h-10 rounded-lg bg-[#7F2020] px-6 font-medium text-white shadow-md transition-all hover:bg-[#5F1717] hover:shadow-lg">
+                        <Button className="h-10 rounded-lg bg-[#B98B63] px-6 font-medium text-white shadow-md transition-all hover:bg-[#9A6B45] hover:shadow-lg">
                             Publish Product
                         </Button>
                     </div>
@@ -1403,7 +1403,7 @@ onClose();
                             id="v-active"
                             checked={form.active}
                             onCheckedChange={(checked) => set('active', checked)}
-                            className="data-[state=checked]:bg-[#7F2020]"
+                            className="data-[state=checked]:bg-[#B98B63]"
                         />
                     </div>
                 </div>
@@ -1418,7 +1418,7 @@ onClose();
                         Cancel
                     </Button>
                     <Button
-                        className="rounded-lg bg-[#7F2020] px-6 font-medium text-white shadow-md transition-all hover:bg-[#5F1717]"
+                        className="rounded-lg bg-[#B98B63] px-6 font-medium text-white shadow-md transition-all hover:bg-[#9A6B45]"
                         onClick={() => onSave(form)}
                     >
                         {isNew ? 'Add Variant' : 'Save Changes'}
@@ -1442,7 +1442,7 @@ function SectionCard({
                 className={`flex items-center justify-between border-b border-zinc-50 px-5 pt-5 pb-3 ${noPaddingTitle ? 'pb-4' : ''}`}
             >
                 <div>
-                    <h2 className="font-serif text-base leading-tight text-zinc-900 transition-colors group-hover:text-[#7F2020]">
+                    <h2 className="font-serif text-base leading-tight text-zinc-900 transition-colors group-hover:text-[#B98B63]">
                         {title}
                     </h2>
                     {description && (

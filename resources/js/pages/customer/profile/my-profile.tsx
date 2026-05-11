@@ -135,12 +135,12 @@ export default function MyProfile() {
             ]}
         >
             {/* Profile Header */}
-            <div className="animate-fade-in-up flex flex-col items-start justify-between border-b border-[#EADBD8] pb-8 md:flex-row md:items-center">
+            <div className="animate-fade-in-up flex flex-col items-start justify-between border-b border-[#EADFD2] pb-8 md:flex-row md:items-center">
                 <div className="mb-6 flex items-center space-x-6 md:mb-0">
                     <button
                         type="button"
                         onClick={() => avatarInputRef.current?.click()}
-                        className="group relative h-20 w-20 cursor-pointer overflow-hidden rounded-full border border-[#EADBD8] md:h-24 md:w-24"
+                        className="group relative h-20 w-20 cursor-pointer overflow-hidden rounded-full border border-[#EADFD2] md:h-24 md:w-24"
                     >
                         <img
                             src={avatarSrc}
@@ -152,14 +152,14 @@ export default function MyProfile() {
                         </div>
                     </button>
                     <div>
-                        <h2 className="mb-1 font-serif text-xl text-[#4A2525] md:text-2xl">
+                        <h2 className="mb-1 font-serif text-xl text-[#B98B63] md:text-2xl">
                             {user.name}
                         </h2>
-                        <p className="mb-1 text-[12px] text-[#4A4A4A] md:text-[13px]">
+                        <p className="mb-1 text-[12px] text-[#7A6A5D] md:text-[13px]">
                             {user.email}
                         </p>
                         {user.member_since && (
-                            <p className="mb-3 text-[11px] text-[#8A6B62]">
+                            <p className="mb-3 text-[11px] text-[#7A6A5D]">
                                 Member sejak {user.member_since}
                             </p>
                         )}
@@ -167,10 +167,10 @@ export default function MyProfile() {
                 </div>
 
                 <div className="text-left md:text-right">
-                    <p className="mb-1 text-[10px] font-bold tracking-[0.2em] text-[#C99A8F] uppercase">
+                    <p className="mb-1 text-[10px] font-bold tracking-[0.2em] text-[#D1B08A] uppercase">
                         Peran akun
                     </p>
-                    <p className="font-serif text-lg text-[#4A2525] capitalize">
+                    <p className="font-serif text-lg text-[#B98B63] capitalize">
                         {user.role}
                     </p>
                 </div>
@@ -179,12 +179,12 @@ export default function MyProfile() {
             <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-2 md:gap-12">
                 <form
                     onSubmit={submitProfile}
-                    className="animate-fade-in-up border-b border-[#EADBD8] pb-10 md:border-b-0"
+                    className="animate-fade-in-up border-b border-[#EADFD2] pb-10 md:border-b-0"
                     style={{ animationDelay: '150ms' }}
                 >
-                    <div className="mb-6 flex items-center border-b border-[#EADBD8] pb-4">
-                        <User size={18} className="mr-2 text-[#4A2525]" />
-                        <h3 className="font-serif text-lg text-[#4A2525]">
+                    <div className="mb-6 flex items-center border-b border-[#EADFD2] pb-4">
+                        <User size={18} className="mr-2 text-[#B98B63]" />
+                        <h3 className="font-serif text-lg text-[#B98B63]">
                             Informasi Pribadi
                         </h3>
                     </div>
@@ -192,7 +192,7 @@ export default function MyProfile() {
                     <div className="space-y-4">
                         {/* Full Name */}
                         <div>
-                            <label className="mb-1.5 block text-[11px] font-semibold text-[#4A4A4A]">
+                            <label className="mb-1.5 block text-[11px] font-semibold text-[#7A6A5D]">
                                 Nama Lengkap
                             </label>
                             <input
@@ -201,10 +201,10 @@ export default function MyProfile() {
                                 onChange={(e) =>
                                     profileForm.setData('name', e.target.value)
                                 }
-                                    className={`w-full border-b bg-transparent px-1 py-2.5 text-[13px] text-[#333] transition-colors focus:outline-none ${
+                                    className={`w-full border-b bg-transparent px-1 py-2.5 text-[13px] text-[#2F241D] transition-colors focus:outline-none ${
                                     profileForm.errors.name
                                         ? 'border-red-400 focus:border-red-400'
-                                        : 'border-[#EADBD8] focus:border-[#4A2525]'
+                                        : 'border-[#EADFD2] focus:border-[#B98B63]'
                                 }`}
                             />
                             {profileForm.errors.name && (
@@ -216,7 +216,7 @@ export default function MyProfile() {
 
                         {/* Email */}
                         <div>
-                            <label className="mb-1.5 block text-[11px] font-semibold text-[#4A4A4A]">
+                            <label className="mb-1.5 block text-[11px] font-semibold text-[#7A6A5D]">
                                 Alamat Email
                             </label>
                             <input
@@ -225,10 +225,10 @@ export default function MyProfile() {
                                 onChange={(e) =>
                                     profileForm.setData('email', e.target.value)
                                 }
-                                    className={`w-full border-b bg-transparent px-1 py-2.5 text-[13px] text-[#333] transition-colors focus:outline-none ${
+                                    className={`w-full border-b bg-transparent px-1 py-2.5 text-[13px] text-[#2F241D] transition-colors focus:outline-none ${
                                     profileForm.errors.email
                                         ? 'border-red-400 focus:border-red-400'
-                                        : 'border-[#EADBD8] focus:border-[#4A2525]'
+                                        : 'border-[#EADFD2] focus:border-[#B98B63]'
                                 }`}
                             />
                             {profileForm.errors.email && (
@@ -240,7 +240,7 @@ export default function MyProfile() {
 
                         {/* Phone */}
                         <div>
-                            <label className="mb-1.5 block text-[11px] font-semibold text-[#4A4A4A]">
+                            <label className="mb-1.5 block text-[11px] font-semibold text-[#7A6A5D]">
                                 Nomor Telepon
                             </label>
                             <input
@@ -250,10 +250,10 @@ export default function MyProfile() {
                                     profileForm.setData('phone', e.target.value)
                                 }
                                 placeholder="contoh 0812 3456 789"
-                                    className={`w-full border-b bg-transparent px-1 py-2.5 text-[13px] text-[#333] transition-colors focus:outline-none ${
+                                    className={`w-full border-b bg-transparent px-1 py-2.5 text-[13px] text-[#2F241D] transition-colors focus:outline-none ${
                                     profileForm.errors.phone
                                         ? 'border-red-400 focus:border-red-400'
-                                        : 'border-[#EADBD8] focus:border-[#4A2525]'
+                                        : 'border-[#EADFD2] focus:border-[#B98B63]'
                                 }`}
                             />
                             {profileForm.errors.phone && (
@@ -265,9 +265,9 @@ export default function MyProfile() {
 
                         {/* Avatar Upload */}
                         <div>
-                            <label className="mb-1.5 block text-[11px] font-semibold text-[#4A4A4A]">
+                            <label className="mb-1.5 block text-[11px] font-semibold text-[#7A6A5D]">
                                 Foto Avatar{' '}
-                                <span className="font-normal text-[#8A6B62]">
+                                <span className="font-normal text-[#7A6A5D]">
                                     (opsional)
                                 </span>
                             </label>
@@ -278,10 +278,10 @@ export default function MyProfile() {
                                 onChange={(e) =>
                                     selectAvatar(e.target.files?.[0] ?? null)
                                 }
-                                    className={`w-full border-b bg-transparent px-1 py-2.5 text-[13px] text-[#333] transition-colors file:mr-4 file:border-0 file:bg-[#F1E6E2] file:px-3 file:py-1.5 file:text-[11px] file:font-bold file:text-[#4A2525] focus:outline-none ${
+                                    className={`w-full border-b bg-transparent px-1 py-2.5 text-[13px] text-[#2F241D] transition-colors file:mr-4 file:border-0 file:bg-[#E8D6C1] file:px-3 file:py-1.5 file:text-[11px] file:font-bold file:text-[#B98B63] focus:outline-none ${
                                     profileForm.errors.avatar_url
                                         ? 'border-red-400 focus:border-red-400'
-                                        : 'border-[#EADBD8] focus:border-[#4A2525]'
+                                        : 'border-[#EADFD2] focus:border-[#B98B63]'
                                 }`}
                             />
                             {profileForm.errors.avatar_url && (
@@ -289,7 +289,7 @@ export default function MyProfile() {
                                     {profileForm.errors.avatar_url}
                                 </p>
                             )}
-                            <p className="mt-1.5 text-[10px] text-[#8A6B62]">
+                            <p className="mt-1.5 text-[10px] text-[#7A6A5D]">
                                 JPG, PNG, atau WEBP. Maks 2MB.
                             </p>
                         </div>
@@ -298,7 +298,7 @@ export default function MyProfile() {
                             <button
                                 type="submit"
                                 disabled={profileForm.processing}
-                                className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-[#4A2525] px-6 py-2.5 text-[12px] font-bold tracking-wider text-white transition-colors hover:bg-[#5F1717] disabled:cursor-not-allowed disabled:opacity-60"
+                                className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-[#B98B63] px-6 py-2.5 text-[12px] font-bold tracking-wider text-white transition-colors hover:bg-[#9A6B45] disabled:cursor-not-allowed disabled:opacity-60"
                             >
                                 {profileForm.processing && (
                                     <Loader2
@@ -311,7 +311,7 @@ export default function MyProfile() {
                             <button
                                 type="button"
                                 onClick={() => profileForm.reset()}
-                                className="rounded-md border border-[#EADBD8] bg-transparent px-6 py-2.5 text-[12px] font-bold tracking-wider text-[#4A4A4A] transition-colors hover:bg-white"
+                                className="rounded-md border border-[#EADFD2] bg-transparent px-6 py-2.5 text-[12px] font-bold tracking-wider text-[#7A6A5D] transition-colors hover:bg-white"
                             >
                                 Batal
                             </button>
@@ -323,15 +323,15 @@ export default function MyProfile() {
                     {/* Change Password */}
                     <form
                         onSubmit={submitPassword}
-                        className="animate-fade-in-up border-b border-[#EADBD8] pb-10"
+                        className="animate-fade-in-up border-b border-[#EADFD2] pb-10"
                         style={{ animationDelay: '200ms' }}
                     >
-                        <div className="mb-6 flex items-center border-b border-[#EADBD8] pb-4">
+                        <div className="mb-6 flex items-center border-b border-[#EADFD2] pb-4">
                             <LockIcon
                                 size={18}
-                                className="mr-2 text-[#4A2525]"
+                                className="mr-2 text-[#B98B63]"
                             />
-                            <h3 className="font-serif text-lg text-[#4A2525]">
+                            <h3 className="font-serif text-lg text-[#B98B63]">
                                 Ubah Kata Sandi
                             </h3>
                         </div>
@@ -389,7 +389,7 @@ export default function MyProfile() {
                                 <button
                                     type="submit"
                                     disabled={passwordForm.processing}
-                                    className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#4A2525] px-6 py-2.5 text-[12px] font-bold tracking-wider text-white transition-colors hover:bg-[#5F1717] disabled:cursor-not-allowed disabled:opacity-60"
+                                    className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#B98B63] px-6 py-2.5 text-[12px] font-bold tracking-wider text-white transition-colors hover:bg-[#9A6B45] disabled:cursor-not-allowed disabled:opacity-60"
                                 >
                                     {passwordForm.processing && (
                                         <Loader2
@@ -408,13 +408,13 @@ export default function MyProfile() {
                         className="animate-fade-in-up"
                         style={{ animationDelay: '250ms' }}
                     >
-                        <div className="mb-4 flex items-center justify-between border-b border-[#EADBD8] pb-4">
+                        <div className="mb-4 flex items-center justify-between border-b border-[#EADFD2] pb-4">
                             <div className="flex items-center">
                                 <MapPin
                                     size={18}
-                                    className="mr-2 text-[#4A2525]"
+                                    className="mr-2 text-[#B98B63]"
                                 />
-                                <h3 className="font-serif text-lg text-[#4A2525]">
+                                <h3 className="font-serif text-lg text-[#B98B63]">
                                     Alamat Utama
                                 </h3>
                             </div>
@@ -422,20 +422,20 @@ export default function MyProfile() {
                         {defaultAddress ? (
                             <div className="mb-6 space-y-3 text-[12px]">
                                 <div className="flex items-center justify-between gap-3">
-                                    <p className="font-semibold text-[#333]">
+                                    <p className="font-semibold text-[#2F241D]">
                                         {defaultAddress.recipient_name}
                                     </p>
-                                    <span className="text-[10px] font-bold text-[#4A2525]">
+                                    <span className="text-[10px] font-bold text-[#B98B63]">
                                         {defaultAddress.label ?? 'Utama'}
                                     </span>
                                 </div>
-                                <p className="text-[#4A4A4A]">
+                                <p className="text-[#7A6A5D]">
                                     {defaultAddress.recipient_phone}
                                 </p>
-                                <p className="leading-relaxed text-[#4A4A4A]">
+                                <p className="leading-relaxed text-[#7A6A5D]">
                                     {defaultAddress.full_address}
                                 </p>
-                                <p className="text-[#8A6B62]">
+                                <p className="text-[#7A6A5D]">
                                     {[
                                         defaultAddress.district,
                                         defaultAddress.city,
@@ -446,20 +446,20 @@ export default function MyProfile() {
                                         .join(', ')}
                                 </p>
                                 {defaultAddress.note && (
-                                    <p className="border-l border-[#EADBD8] pl-3 text-[#8A6B62]">
+                                    <p className="border-l border-[#EADFD2] pl-3 text-[#7A6A5D]">
                                         {defaultAddress.note}
                                     </p>
                                 )}
                             </div>
                         ) : (
-                            <p className="mb-6 text-[12px] leading-relaxed text-[#8A6B62]">
+                            <p className="mb-6 text-[12px] leading-relaxed text-[#7A6A5D]">
                                 Belum ada alamat utama. Tambahkan alamat untuk
                                 checkout lebih cepat.
                             </p>
                         )}
                         <Link
                             href="/address"
-                            className="block w-full rounded-md border border-[#EADBD8] bg-white px-4 py-2 text-center text-[12px] font-bold tracking-wider text-[#4A2525] transition-colors hover:bg-[#FAF9F6]"
+                            className="block w-full rounded-md border border-[#EADFD2] bg-white px-4 py-2 text-center text-[12px] font-bold tracking-wider text-[#B98B63] transition-colors hover:bg-[#FFFDF8]"
                         >
                             Kelola Alamat
                         </Link>
@@ -481,7 +481,7 @@ function PasswordField({
     error,
     autoComplete,
     hint,
-    hintColor = 'text-[#8A6B62]',
+    hintColor = 'text-[#7A6A5D]',
 }: {
     label: string;
     show: boolean;
@@ -495,7 +495,7 @@ function PasswordField({
 }) {
     return (
         <div>
-            <label className="mb-1.5 block text-[11px] font-semibold text-[#4A4A4A]">
+            <label className="mb-1.5 block text-[11px] font-semibold text-[#7A6A5D]">
                 {label}
             </label>
             <div className="relative">
@@ -504,16 +504,16 @@ function PasswordField({
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     autoComplete={autoComplete}
-                    className={`w-full border-b bg-transparent px-1 py-2.5 pr-10 text-[13px] text-[#333] transition-colors focus:outline-none ${
+                    className={`w-full border-b bg-transparent px-1 py-2.5 pr-10 text-[13px] text-[#2F241D] transition-colors focus:outline-none ${
                         error
                             ? 'border-red-400 focus:border-red-400'
-                            : 'border-[#EADBD8] focus:border-[#4A2525]'
+                            : 'border-[#EADFD2] focus:border-[#B98B63]'
                     }`}
                 />
                 <button
                     type="button"
                     onClick={onToggle}
-                    className="absolute top-1/2 right-3 -translate-y-1/2 text-[#C99A8F] hover:text-[#333]"
+                    className="absolute top-1/2 right-3 -translate-y-1/2 text-[#D1B08A] hover:text-[#2F241D]"
                 >
                     {show ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>

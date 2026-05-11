@@ -81,13 +81,13 @@ function FeatureBox({
     title: string;
 }) {
     return (
-        <div className="flex items-center gap-3 border-b border-[#eadfd4] py-4 transition duration-300 hover:border-[#cdb5a4]">
+        <div className="flex items-center gap-3 border-b border-[#EADFD2] py-4 transition duration-300 hover:border-[#cdb5a4]">
             <Icon
                 size={22}
                 strokeWidth={1.4}
-                className="shrink-0 text-[#8b5e4c]"
+                className="shrink-0 text-[#9A6B45]"
             />
-            <span className="text-sm leading-snug font-medium text-[#53362d] sm:text-base">
+            <span className="text-sm leading-snug font-medium text-[#2F241D] sm:text-base">
                 {title}
             </span>
         </div>
@@ -108,7 +108,7 @@ function AccordionItem({
     return (
         <section
             id={item.id}
-            className={`${isLast ? '' : 'border-b border-[#eadfd4]'} scroll-mt-28 py-6`}
+            className={`${isLast ? '' : 'border-b border-[#EADFD2]'} scroll-mt-28 py-6`}
         >
             <button
                 type="button"
@@ -122,7 +122,7 @@ function AccordionItem({
                         {String(index + 1).padStart(2, '0')}
                     </span>
                     <span>
-                        <span className="block text-base font-semibold text-[#53362d] sm:text-lg">
+                        <span className="block text-base font-semibold text-[#2F241D] sm:text-lg">
                             {item.title}
                         </span>
                         <div
@@ -130,7 +130,7 @@ function AccordionItem({
                             className={`grid transition-all duration-300 ease-out ${isOpen ? 'mt-2 grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
                         >
                             <div className="overflow-hidden">
-                                <p className="max-w-3xl text-sm leading-7 text-[#846b60] sm:text-base">
+                                <p className="max-w-3xl text-sm leading-7 text-[#7A6A5D] sm:text-base">
                                     {item.content}
                                 </p>
                             </div>
@@ -139,7 +139,7 @@ function AccordionItem({
                 </span>
                 <ChevronDown
                     size={20}
-                    className={`mt-1 shrink-0 text-[#bc9e90] transition duration-300 ${isOpen ? 'rotate-180' : ''} group-hover:text-[#8b5e4c]`}
+                    className={`mt-1 shrink-0 text-[#bc9e90] transition duration-300 ${isOpen ? 'rotate-180' : ''} group-hover:text-[#9A6B45]`}
                 />
             </button>
         </section>
@@ -155,41 +155,41 @@ export default function TermCondition() {
     return (
         <ShopLayout>
             <Head title="Syarat & Ketentuan" />
-            <div className="relative w-full overflow-hidden border-b border-[#eadfd4] bg-[#fcfbf9] pt-8 pb-14 sm:pt-10 lg:pb-20">
+            <div className="relative w-full overflow-hidden border-b border-[#EADFD2] bg-[#FFFDF8] pt-8 pb-14 sm:pt-10 lg:pb-20">
                 <div className="pointer-events-none absolute top-0 right-0 h-full w-1/3 bg-[#f6eee7]"></div>
                 <div className="relative mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
                     <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)]">
                         <div className="max-w-2xl">
-                            <div className="mb-8 flex items-center text-sm font-medium text-[#846b60]">
+                            <div className="mb-8 flex items-center text-sm font-medium text-[#7A6A5D]">
                                 <Link
                                     href="/"
-                                    className="transition-colors hover:text-[#8b5e4c]"
+                                    className="transition-colors hover:text-[#9A6B45]"
                                 >
                                     Beranda
                                 </Link>
                                 <span className="mx-2 text-[#bc9e90]">/</span>
-                                <span className="text-[#53362d]">
+                                <span className="text-[#2F241D]">
                                     Syarat & Ketentuan
                                 </span>
                             </div>
-                            <p className="mb-4 inline-flex border-l border-[#8b5e4c] pl-3 text-xs font-semibold tracking-[0.22em] text-[#8b5e4c] uppercase">
+                            <p className="mb-4 inline-flex border-l border-[#9A6B45] pl-3 text-xs font-semibold tracking-[0.22em] text-[#9A6B45] uppercase">
                                 Kebijakan Ketentuan Pelanggan
                             </p>
-                            <h1 className="mb-5 max-w-xl font-serif text-4xl leading-tight text-[#53362d] md:text-5xl lg:text-6xl">
+                            <h1 className="mb-5 max-w-xl font-serif text-4xl leading-tight text-[#2F241D] md:text-5xl lg:text-6xl">
                                 Syarat & Ketentuan
                             </h1>
-                            <p className="max-w-xl text-base leading-8 text-[#846b60] sm:text-lg">
+                            <p className="max-w-xl text-base leading-8 text-[#7A6A5D] sm:text-lg">
                                 Baca syarat dan ketentuan ini dengan saksama
                                 sebelum menggunakan situs web kami.
                             </p>
-                            <div className="mt-8 flex flex-wrap items-center gap-3 text-sm text-[#846b60]">
+                            <div className="mt-8 flex flex-wrap items-center gap-3 text-sm text-[#7A6A5D]">
                                 <span className="border-b border-[#dcc8b8] pb-1">
                                     Terakhir diperbarui: 15 Mei 2024
                                 </span>
                                 <button
                                     type="button"
                                     onClick={() => scrollToSection('contact')}
-                                    className="border-b border-[#53362d] pb-1 font-medium text-[#53362d] transition hover:text-[#8b5e4c] active:scale-[0.98]"
+                                    className="border-b border-[#2F241D] pb-1 font-medium text-[#2F241D] transition hover:text-[#9A6B45] active:scale-[0.98]"
                                 >
                                     Hubungi tim dukungan
                                 </button>
@@ -213,12 +213,12 @@ export default function TermCondition() {
             <div className="mx-auto max-w-7xl px-4 py-10 md:px-6 lg:px-8 lg:py-16">
                 <div className="grid gap-8 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-12">
                     <div className="hidden lg:block">
-                        <div className="sticky top-24 border-l border-[#eadfd4] pl-5">
-                            <div className="mb-5 flex items-center gap-3 text-base text-[#53362d]">
+                        <div className="sticky top-24 border-l border-[#EADFD2] pl-5">
+                            <div className="mb-5 flex items-center gap-3 text-base text-[#2F241D]">
                                 <FileText
                                     size={20}
                                     strokeWidth={1.5}
-                                    className="text-[#8b5e4c]"
+                                    className="text-[#9A6B45]"
                                 />
                                 <h2 className="font-serif">Di Halaman Ini</h2>
                             </div>
@@ -230,7 +230,7 @@ export default function TermCondition() {
                                             onClick={() =>
                                                 scrollToSection(item.id)
                                             }
-                                            className="flex w-full items-center gap-3 py-2.5 text-left text-sm font-medium text-[#846b60] transition duration-300 hover:translate-x-1 hover:text-[#53362d] active:scale-[0.98]"
+                                            className="flex w-full items-center gap-3 py-2.5 text-left text-sm font-medium text-[#7A6A5D] transition duration-300 hover:translate-x-1 hover:text-[#2F241D] active:scale-[0.98]"
                                         >
                                             <item.icon
                                                 size={18}
@@ -245,18 +245,18 @@ export default function TermCondition() {
                         </div>
                     </div>
                     <div className="min-w-0">
-                        <div className="mb-10 border-b border-[#eadfd4] pb-8">
+                        <div className="mb-10 border-b border-[#EADFD2] pb-8">
                             <div className="flex flex-col items-start gap-4 sm:flex-row sm:gap-5">
                                 <Scale
                                     size={28}
                                     strokeWidth={1.5}
-                                    className="mt-1 shrink-0 text-[#8b5e4c]"
+                                    className="mt-1 shrink-0 text-[#9A6B45]"
                                 />
                                 <div>
-                                    <h3 className="mb-2 text-xl font-semibold text-[#53362d]">
+                                    <h3 className="mb-2 text-xl font-semibold text-[#2F241D]">
                                         Ketentuan Belanja Aman
                                     </h3>
-                                    <p className="max-w-3xl leading-7 text-[#846b60]">
+                                    <p className="max-w-3xl leading-7 text-[#7A6A5D]">
                                         Ketentuan ini menjelaskan penggunaan situs,
                                         tanggung jawab akun, aturan informasi
                                         produk, dan perubahan layanan.
@@ -279,7 +279,7 @@ export default function TermCondition() {
                                 title="Informasi Produk"
                             />
                         </div>
-                        <div className="mb-10 border-y border-[#eadfd4]">
+                        <div className="mb-10 border-y border-[#EADFD2]">
                             {sections.map((section, index) => (
                                 <AccordionItem
                                     key={section.id}
@@ -291,46 +291,46 @@ export default function TermCondition() {
                         </div>
                         <div
                             id="contact"
-                            className="grid scroll-mt-28 gap-5 border-t border-[#eadfd4] pt-8 md:grid-cols-3"
+                            className="grid scroll-mt-28 gap-5 border-t border-[#EADFD2] pt-8 md:grid-cols-3"
                         >
                             <div className="flex items-center gap-4">
-                                <div className="shrink-0 text-[#8b5e4c]">
+                                <div className="shrink-0 text-[#9A6B45]">
                                     <Mail size={22} strokeWidth={1.5} />
                                 </div>
                                 <div>
-                                    <div className="mb-0.5 text-sm font-medium text-[#53362d]">
+                                    <div className="mb-0.5 text-sm font-medium text-[#2F241D]">
                                         Email
                                     </div>
-                                    <div className="text-sm text-[#846b60]">
+                                    <div className="text-sm text-[#7A6A5D]">
                                         support@aureasyari.com
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-4 border-t border-[#eadfd4] pt-5 md:border-t-0 md:border-l md:pt-0 md:pl-5">
-                                <div className="shrink-0 text-[#8b5e4c]">
+                            <div className="flex items-center gap-4 border-t border-[#EADFD2] pt-5 md:border-t-0 md:border-l md:pt-0 md:pl-5">
+                                <div className="shrink-0 text-[#9A6B45]">
                                     <MessageCircle
                                         size={22}
                                         strokeWidth={1.5}
                                     />
                                 </div>
                                 <div>
-                                    <div className="mb-0.5 text-sm font-medium text-[#53362d]">
+                                    <div className="mb-0.5 text-sm font-medium text-[#2F241D]">
                                         WhatsApp
                                     </div>
-                                    <div className="text-sm text-[#846b60]">
+                                    <div className="text-sm text-[#7A6A5D]">
                                         +62 812-0000-0000
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-4 border-t border-[#eadfd4] pt-5 md:border-t-0 md:border-l md:pt-0 md:pl-5">
-                                <div className="shrink-0 text-[#8b5e4c]">
+                            <div className="flex items-center gap-4 border-t border-[#EADFD2] pt-5 md:border-t-0 md:border-l md:pt-0 md:pl-5">
+                                <div className="shrink-0 text-[#9A6B45]">
                                     <Clock size={22} strokeWidth={1.5} />
                                 </div>
                                 <div>
-                                    <div className="mb-0.5 text-sm font-medium text-[#53362d]">
+                                    <div className="mb-0.5 text-sm font-medium text-[#2F241D]">
                                         Jam operasional
                                     </div>
-                                    <div className="text-sm text-[#846b60]">
+                                    <div className="text-sm text-[#7A6A5D]">
                                         Senin - Sabtu, 09:00 - 17:00
                                     </div>
                                 </div>

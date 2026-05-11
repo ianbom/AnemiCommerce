@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Search, User, ShoppingBag, Heart } from 'lucide-react';
+import { Search, User, ShoppingBag, Heart, Menu } from 'lucide-react';
 
 type NavbarCollection = {
     id: number;
@@ -12,21 +12,34 @@ type NavbarProps = {
     collections?: NavbarCollection[];
 };
 
-export default function Navbar({ cartCount = 0, collections = [] }: NavbarProps) {
+export default function Navbar({
+    cartCount = 0,
+    collections = [],
+}: NavbarProps) {
     const cartBadge = cartCount > 99 ? '99+' : String(cartCount);
 
     return (
-        <nav className="sticky top-0 z-50 flex h-16 items-center justify-between bg-[#FAF9F6]/90 px-4 backdrop-blur-md transition-all duration-300 md:h-15 md:px-10">
+        <nav className="sticky top-0 z-50 border-b border-[#e7e2de] bg-white">
             {/* Mobile View */}
-            <div className="flex w-full items-center justify-between md:hidden">
-                <Link href="/" className="flex h-10 items-center overflow-visible">
+            <div className="flex h-16 w-full items-center justify-between px-4 md:hidden">
+                <button
+                    type="button"
+                    aria-label="Buka menu"
+                    className="text-[#151515]"
+                >
+                    <Menu strokeWidth={1.4} size={22} />
+                </button>
+                <Link
+                    href="/"
+                    className="flex h-10 items-center overflow-visible"
+                >
                     <img
                         src="/logo-shay/shayda-logo-text-hitam.png"
                         alt="Shayda"
-                        className="h-14 w-auto scale-125 object-contain"
+                        className="h-12 w-auto object-contain"
                     />
                 </Link>
-                <div className="flex items-center space-x-4 text-[#4A2525]">
+                <div className="flex items-center gap-4 text-[#151515]">
                     <Heart
                         strokeWidth={1.5}
                         size={22}
@@ -36,54 +49,67 @@ export default function Navbar({ cartCount = 0, collections = [] }: NavbarProps)
             </div>
 
             {/* Desktop View (Keeping existing structure but restyled) */}
-            <div className="hidden w-full items-center justify-between md:flex">
+            <div className="hidden h-[76px] w-full items-center justify-between px-10 md:flex">
                 <Link
                     href="/"
-                    className="flex h-12 transform cursor-pointer items-center justify-center overflow-visible transition-transform duration-300 hover:scale-105 lg:h-14"
+                    className="flex h-14 cursor-pointer items-center justify-center overflow-visible transition-opacity duration-300 hover:opacity-75"
                 >
                     <img
                         src="/logo-shay/shayda-logo-text-hitam.png"
                         alt="Shayda"
-                        className="h-16 w-auto scale-125 object-contain lg:h-20"
+                        className="h-16 w-auto object-contain"
                     />
                 </Link>
 
-                <div className="flex items-center space-x-10 text-[11px] font-semibold tracking-widest text-[#8A6B62]">
+                <div className="flex items-center gap-9 text-[12px] font-medium tracking-[0.12em] text-[#151515] uppercase">
                     <Link
                         href="/list"
-                        className="border-b border-transparent pb-1 transition-colors hover:border-[#4A2525] hover:text-[#4A2525]"
+                        className="border-b border-transparent pb-1 hover:border-[#151515]"
                     >
-                    BELANJA SEMUA
+                        ALL PRODUCT
+                    </Link>
+                    <Link
+                        href="/list?sort=newest"
+                        className="border-b border-transparent pb-1 hover:border-[#151515]"
+                    >
+                        NEW ARRIVALS
                     </Link>
                     {collections.map((collection) => (
                         <Link
                             key={collection.id}
                             href={`/list?collection=${encodeURIComponent(collection.slug)}`}
-                            className="border-b border-transparent pb-1 transition-colors hover:border-[#4A2525] hover:text-[#4A2525]"
+                            className="border-b border-transparent pb-1 hover:border-[#151515]"
                         >
                             {collection.name.toUpperCase()}
                         </Link>
                     ))}
                 </div>
 
-                <div className="flex items-center space-x-6 text-[#4A2525]">
+                <div className="flex items-center gap-6 text-[#151515]">
+                    <Link href="/list" aria-label="Cari produk">
+                        <Search
+                            strokeWidth={1.4}
+                            size={20}
+                            className="cursor-pointer transition-opacity hover:opacity-60"
+                        />
+                    </Link>
                     <Link href="/my-profile" aria-label="Buka profil">
                         <User
-                            strokeWidth={1.5}
+                            strokeWidth={1.4}
                             size={20}
-                            className="cursor-pointer transition-all hover:text-[#7F2020]"
+                            className="cursor-pointer transition-opacity hover:opacity-60"
                         />
                     </Link>
                     <div className="relative">
                         <Link href="/my-cart" aria-label="Buka keranjang">
                             <ShoppingBag
-                                strokeWidth={1.5}
+                                strokeWidth={1.4}
                                 size={20}
-                                className="cursor-pointer transition-all hover:text-[#7F2020]"
+                                className="cursor-pointer transition-opacity hover:opacity-60"
                             />
                         </Link>
                         {cartCount > 0 && (
-                            <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#7F2020] px-1 text-[9px] font-bold text-white">
+                            <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center bg-[#151515] px-1 text-[9px] font-bold text-white">
                                 {cartBadge}
                             </span>
                         )}

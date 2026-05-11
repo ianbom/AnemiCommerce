@@ -13,10 +13,10 @@ import React from 'react';
 
 export default function Footer() {
     return (
-        <footer className="border-t border-border bg-primary pt-16 pb-8 text-primary-foreground md:pt-24">
+        <footer className="border-t border-[#e7e2de] bg-[#f9f9f9] pt-14 pb-8 text-[#232323] md:pt-20">
             {/* Top Section: Newsletter & Brand */}
             <div className="mx-auto mb-16 max-w-[1500px] px-6 md:px-10">
-                <div className="grid grid-cols-1 items-center gap-12 border-b border-white/10 pb-12 lg:grid-cols-2">
+                <div className="grid grid-cols-1 items-center gap-12 border-b border-[#e7e2de] pb-12 lg:grid-cols-2">
                     <div className="flex flex-col">
                         <div className="mb-4 flex items-center gap-4">
                             <img
@@ -24,11 +24,11 @@ export default function Footer() {
                                 alt="Shayda"
                                 className="h-16 w-auto object-contain md:h-20"
                             />
-                            <span className="text-xl font-bold tracking-[0.3em] text-accent md:text-2xl">
+                            <span className="text-xl font-semibold tracking-[0.3em] text-[#151515] uppercase md:text-2xl">
                                 Shayda
                             </span>
                         </div>
-                        <p className="max-w-md text-xs leading-relaxed text-white/60 md:text-sm">
+                        <p className="max-w-md text-xs leading-relaxed text-[#6f6f6f] md:text-sm">
                             Menghadirkan modest fashion dengan elegansi dan
                             kelembutan. Temukan identitas terbaikmu lewat
                             koleksi eksklusif kami.
@@ -36,16 +36,20 @@ export default function Footer() {
                     </div>
 
                     <div className="flex flex-col lg:items-end">
-                        <h3 className="mb-4 text-xs font-bold tracking-[0.2em] text-white/95 uppercase">
-                            Berlangganan Newsletter
+                        <h3 className="mb-4 text-xs font-semibold tracking-[0.2em] text-[#151515] uppercase">
+                            Berlangganan
                         </h3>
-                        <div className="group flex w-full max-w-md border-b border-white/30 pb-2 transition-colors focus-within:border-white">
+                        <p className="mb-5 max-w-md text-sm leading-6 text-[#6f6f6f] lg:text-right">
+                            Untuk menerima pembaruan, akses ke penawaran
+                            eksklusif dan lebih.
+                        </p>
+                        <div className="group flex w-full max-w-md border-b border-[#151515] pb-2 transition-colors focus-within:border-[#a55353]">
                             <input
                                 type="email"
                                 placeholder="Masukkan alamat email"
-                                className="flex-1 bg-transparent text-xs tracking-wider text-white placeholder-white/40 outline-none md:text-sm"
+                                className="flex-1 bg-transparent text-xs tracking-wider text-[#151515] placeholder-[#8b827c] outline-none md:text-sm"
                             />
-                            <button className="flex items-center gap-2 text-xs font-bold tracking-widest text-white/60 uppercase transition-colors group-focus-within:text-white hover:text-white">
+                            <button className="flex items-center gap-2 text-xs font-semibold tracking-widest text-[#151515] uppercase transition-colors hover:text-[#a55353]">
                                 Berlangganan <ArrowRight size={14} />
                             </button>
                         </div>
@@ -55,14 +59,14 @@ export default function Footer() {
 
             {/* Middle Section: Links */}
             <div className="mx-auto max-w-[1500px] px-6 md:px-10">
-                <div className="mb-16 grid grid-cols-1 gap-12 text-[11px] font-medium tracking-widest md:grid-cols-2 lg:grid-cols-4">
+                <div className="mb-16 grid grid-cols-1 gap-12 text-[11px] font-medium tracking-[0.12em] md:grid-cols-2 lg:grid-cols-4">
                     {/* Contact Us */}
                     <div>
-                        <h3 className="mb-6 text-xs font-bold tracking-[0.2em] text-white/95 uppercase">
+                        <h3 className="mb-6 text-xs font-semibold tracking-[0.2em] text-[#151515] uppercase">
                             Hubungi Kami
                         </h3>
-                        <ul className="space-y-4 text-white/60">
-                            <li className="group flex cursor-pointer items-start gap-3 transition-colors hover:text-white">
+                        <ul className="space-y-4 text-[#6f6f6f]">
+                            <li className="group flex cursor-pointer items-start gap-3 transition-colors hover:text-[#151515]">
                                 <MapPin
                                     size={16}
                                     className="mt-0.5 shrink-0 transition-colors group-hover:text-accent"
@@ -73,14 +77,14 @@ export default function Footer() {
                                     Surabaya, 12345
                                 </span>
                             </li>
-                            <li className="group flex cursor-pointer items-center gap-3 transition-colors hover:text-white">
+                            <li className="group flex cursor-pointer items-center gap-3 transition-colors hover:text-[#151515]">
                                 <Phone
                                     size={16}
                                     className="shrink-0 transition-colors group-hover:text-accent"
                                 />
                                 <span>+62 812 3456 7890</span>
                             </li>
-                            <li className="group flex cursor-pointer items-center gap-3 transition-colors hover:text-white">
+                            <li className="group flex cursor-pointer items-center gap-3 transition-colors hover:text-[#151515]">
                                 <Mail
                                     size={16}
                                     className="shrink-0 transition-colors group-hover:text-accent"
@@ -92,14 +96,14 @@ export default function Footer() {
 
                     {/* Customer Care */}
                     <div>
-                        <h3 className="mb-6 text-xs font-bold tracking-[0.2em] text-white/95 uppercase">
+                        <h3 className="mb-6 text-xs font-semibold tracking-[0.2em] text-[#151515] uppercase">
                             Layanan Pelanggan
                         </h3>
-                        <ul className="space-y-4 text-white/60">
+                        <ul className="space-y-4 text-[#6f6f6f]">
                             <li>
                                 <Link
                                     href="/list"
-                                    className="inline-block transition-transform hover:translate-x-1 hover:text-white"
+                                    className="inline-block transition-transform hover:translate-x-1 hover:text-[#151515]"
                                 >
                                     Cara Membeli
                                 </Link>
@@ -107,7 +111,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/checkout"
-                                    className="inline-block transition-transform hover:translate-x-1 hover:text-white"
+                                    className="inline-block transition-transform hover:translate-x-1 hover:text-[#151515]"
                                 >
                                     Informasi Pembayaran
                                 </Link>
@@ -115,7 +119,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/shipping-policy"
-                                    className="inline-block transition-transform hover:translate-x-1 hover:text-white"
+                                    className="inline-block transition-transform hover:translate-x-1 hover:text-[#151515]"
                                 >
                                     Informasi Pengiriman
                                 </Link>
@@ -123,7 +127,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/no-return-policy"
-                                    className="inline-block transition-transform hover:translate-x-1 hover:text-white"
+                                    className="inline-block transition-transform hover:translate-x-1 hover:text-[#151515]"
                                 >
                                     Retur & Penukaran
                                 </Link>
@@ -131,7 +135,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/my-order"
-                                    className="inline-block transition-transform hover:translate-x-1 hover:text-white"
+                                    className="inline-block transition-transform hover:translate-x-1 hover:text-[#151515]"
                                 >
                                     Lacak Pesanan
                                 </Link>
@@ -139,7 +143,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/notifications"
-                                    className="inline-block transition-transform hover:translate-x-1 hover:text-white"
+                                    className="inline-block transition-transform hover:translate-x-1 hover:text-[#151515]"
                                 >
                                     Pertanyaan Umum
                                 </Link>
@@ -149,14 +153,14 @@ export default function Footer() {
 
                     {/* Explore */}
                     <div>
-                        <h3 className="mb-6 text-xs font-bold tracking-[0.2em] text-white/95 uppercase">
-                            Jelajahi
+                        <h3 className="mb-6 text-xs font-semibold tracking-[0.2em] text-[#151515] uppercase">
+                            Informasi
                         </h3>
-                        <ul className="space-y-4 text-white/60">
+                        <ul className="space-y-4 text-[#6f6f6f]">
                             <li>
                                 <Link
                                     href="/"
-                                    className="inline-block transition-transform hover:translate-x-1 hover:text-white"
+                                    className="inline-block transition-transform hover:translate-x-1 hover:text-[#151515]"
                                 >
                                     Cerita Kami
                                 </Link>
@@ -164,7 +168,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/"
-                                    className="inline-block transition-transform hover:translate-x-1 hover:text-white"
+                                    className="inline-block transition-transform hover:translate-x-1 hover:text-[#151515]"
                                 >
                                     Jurnal Kami
                                 </Link>
@@ -172,7 +176,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/shipping-policy"
-                                    className="inline-block transition-transform hover:translate-x-1 hover:text-white"
+                                    className="inline-block transition-transform hover:translate-x-1 hover:text-[#151515]"
                                 >
                                     Kebijakan Pengiriman
                                 </Link>
@@ -180,7 +184,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/no-return-policy"
-                                    className="inline-block transition-transform hover:translate-x-1 hover:text-white"
+                                    className="inline-block transition-transform hover:translate-x-1 hover:text-[#151515]"
                                 >
                                     Kebijakan Tanpa Retur
                                 </Link>
@@ -188,7 +192,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/terms-conditions"
-                                    className="inline-block transition-transform hover:translate-x-1 hover:text-white"
+                                    className="inline-block transition-transform hover:translate-x-1 hover:text-[#151515]"
                                 >
                                     Syarat & Ketentuan
                                 </Link>
@@ -196,7 +200,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/privacy-policy"
-                                    className="inline-block transition-transform hover:translate-x-1 hover:text-white"
+                                    className="inline-block transition-transform hover:translate-x-1 hover:text-[#151515]"
                                 >
                                     Kebijakan Privasi
                                 </Link>
@@ -207,10 +211,10 @@ export default function Footer() {
                     {/* Payment & Social */}
                     <div className="flex flex-col justify-between">
                         <div>
-                            <h3 className="mb-6 text-xs font-bold tracking-[0.2em] text-white/95 uppercase">
+                            <h3 className="mb-6 text-xs font-semibold tracking-[0.2em] text-[#151515] uppercase">
                                 Pembayaran Aman
                             </h3>
-                            <div className="grid grid-cols-4 gap-2 opacity-70 transition-opacity hover:opacity-100">
+                            <div className="grid grid-cols-4 gap-2 opacity-80 transition-opacity hover:opacity-100">
                                 {[
                                     'QRIS',
                                     'OVO',
@@ -226,7 +230,7 @@ export default function Footer() {
                                 ].map((method) => (
                                     <div
                                         key={method}
-                                        className="flex h-8 cursor-default items-center justify-center rounded border border-white/5 bg-white/10 text-[7px] font-bold tracking-wider uppercase backdrop-blur-sm transition-colors hover:bg-white/20"
+                                        className="flex h-8 cursor-default items-center justify-center border border-[#e7e2de] bg-white text-[7px] font-semibold tracking-wider text-[#6f6f6f] uppercase transition-colors hover:border-[#151515] hover:text-[#151515]"
                                     >
                                         {method}
                                     </div>
@@ -237,10 +241,10 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom Section */}
-                <div className="flex flex-col items-center justify-between border-t border-white/10 pt-8 text-[10px] tracking-[0.15em] text-white/50 md:flex-row">
+                <div className="flex flex-col items-center justify-between border-t border-[#e7e2de] pt-8 text-[10px] tracking-[0.15em] text-[#6f6f6f] md:flex-row">
                     <p className="mb-4 md:mb-0">
-                        © {new Date().getFullYear()} Shayda. All
-                        Rights Reserved.
+                        © {new Date().getFullYear()} Shayda. All Rights
+                        Reserved.
                     </p>
 
                     <div className="flex items-center space-x-6">

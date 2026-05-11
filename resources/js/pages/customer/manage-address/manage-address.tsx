@@ -381,17 +381,17 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                 style={{ animationDelay: '150ms' }}
             >
                 <div>
-                    <h2 className="font-serif text-xl text-[#4A2525]">
+                    <h2 className="font-serif text-xl text-[#B98B63]">
                         Alamat Tersimpan
                     </h2>
-                    <p className="mt-1 text-[12px] text-[#8A6B62]">
+                    <p className="mt-1 text-[12px] text-[#7A6A5D]">
                         Kamu punya {addresses.length} alamat tersimpan
                     </p>
                 </div>
                 <button
                     type="button"
                     onClick={() => openModal()}
-                    className="flex items-center justify-center rounded-lg bg-[#4A2525] px-6 py-2.5 text-[12px] font-bold tracking-wider text-white transition-all hover:bg-[#5F1717] hover:shadow-lg active:scale-[0.98]"
+                    className="flex items-center justify-center rounded-lg bg-[#B98B63] px-6 py-2.5 text-[12px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg active:scale-[0.98]"
                 >
                     <Plus size={16} className="mr-2" /> Tambah Alamat Baru
                 </button>
@@ -401,15 +401,15 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                 <button
                     type="button"
                     onClick={() => openModal()}
-                    className="group animate-fade-in-up flex min-h-[240px] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#EADBD8] p-6 text-center transition-all duration-300 hover:border-[#B6574B] hover:bg-[#FAF9F6]"
+                    className="group animate-fade-in-up flex min-h-[240px] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#EADFD2] p-6 text-center transition-all duration-300 hover:border-[#9A6B45] hover:bg-[#FFFDF8]"
                 >
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#F8EDED] text-[#B6574B] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#B6574B] group-hover:text-white">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#E8D6C1] text-[#9A6B45] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#9A6B45] group-hover:text-white">
                         <Plus size={24} />
                     </div>
-                    <h3 className="mb-1 text-[14px] font-bold text-[#333] transition-colors group-hover:text-[#4A2525]">
+                    <h3 className="mb-1 text-[14px] font-bold text-[#2F241D] transition-colors group-hover:text-[#B98B63]">
                         Tambah Alamat Pertama
                     </h3>
-                    <p className="max-w-[220px] text-[11px] text-[#8A6B62]">
+                    <p className="max-w-[220px] text-[11px] text-[#7A6A5D]">
                         Simpan alamat pengiriman agar checkout lebih cepat.
                     </p>
                 </button>
@@ -424,8 +424,8 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                 key={address.id}
                                 className={`group relative rounded-2xl border bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-md md:p-8 ${
                                     address.is_default
-                                        ? 'border-[#B6574B]'
-                                        : 'border-[#EADBD8]'
+                                        ? 'border-[#9A6B45]'
+                                        : 'border-[#EADFD2]'
                                 } animate-fade-in-up`}
                                 style={{
                                     animationDelay: `${200 + index * 50}ms`,
@@ -433,7 +433,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                             >
                                 {address.is_default && (
                                     <div className="absolute top-0 right-8 -translate-y-1/2">
-                                        <span className="rounded-full bg-[#4A2525] px-3 py-1 text-[10px] font-bold text-white shadow-sm">
+                                        <span className="rounded-full bg-[#B98B63] px-3 py-1 text-[10px] font-bold text-white shadow-sm">
                                              Alamat Utama
                                         </span>
                                     </div>
@@ -444,17 +444,17 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                         <div
                                             className={`mr-3 flex h-10 w-10 items-center justify-center rounded-full ${
                                                 address.is_default
-                                                    ? 'bg-[#F8EDED] text-[#B6574B]'
-                                                    : 'bg-[#FAF9F6] text-[#C99A8F]'
+                                                    ? 'bg-[#E8D6C1] text-[#9A6B45]'
+                                                    : 'bg-[#FFFDF8] text-[#D1B08A]'
                                             }`}
                                         >
                                             <MapPin size={20} />
                                         </div>
                                         <div>
-                                            <h3 className="text-[14px] font-bold text-[#333]">
+                                            <h3 className="text-[14px] font-bold text-[#2F241D]">
                                                 {address.label ?? 'Alamat'}
                                             </h3>
-                                            <p className="mt-0.5 text-[12px] font-semibold text-[#4A4A4A]">
+                                            <p className="mt-0.5 text-[12px] font-semibold text-[#7A6A5D]">
                                                 {address.recipient_name}
                                             </p>
                                         </div>
@@ -467,7 +467,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                             onClick={() =>
                                                 openModal(address.id)
                                             }
-                                            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FAF9F6] text-[#8A6B62] transition-colors hover:bg-[#F8EDED] hover:text-[#4A2525] disabled:cursor-not-allowed disabled:opacity-60"
+                                            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FFFDF8] text-[#7A6A5D] transition-colors hover:bg-[#E8D6C1] hover:text-[#B98B63] disabled:cursor-not-allowed disabled:opacity-60"
                                         >
                                             <Edit2 size={14} />
                                         </button>
@@ -484,8 +484,8 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                     </div>
                                 </div>
 
-                                <div className="mb-6 space-y-1.5 pl-13 text-[13px] text-[#4A4A4A]">
-                                    <p className="mb-2 text-[11px] font-medium text-[#8A6B62]">
+                                <div className="mb-6 space-y-1.5 pl-13 text-[13px] text-[#7A6A5D]">
+                                    <p className="mb-2 text-[11px] font-medium text-[#7A6A5D]">
                                         {address.recipient_phone}
                                     </p>
                                     <p className="leading-relaxed">
@@ -501,7 +501,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                         type="button"
                                         disabled={!canMutateCard}
                                         onClick={() => setAsDefault(address)}
-                                        className="w-full rounded-lg border border-[#EADBD8] py-2.5 text-[12px] font-bold text-[#4A4A4A] transition-colors hover:border-[#B6574B] hover:bg-[#FAF9F6] disabled:cursor-not-allowed disabled:opacity-60"
+                                        className="w-full rounded-lg border border-[#EADFD2] py-2.5 text-[12px] font-bold text-[#7A6A5D] transition-colors hover:border-[#9A6B45] hover:bg-[#FFFDF8] disabled:cursor-not-allowed disabled:opacity-60"
                                     >
                                         {defaultingThis
                                              ? 'Menjadikan utama...'
@@ -514,10 +514,10 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                         <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
                                             <AlertCircle size={24} />
                                         </div>
-                                        <h4 className="mb-1 text-[14px] font-bold text-[#333]">
+                                        <h4 className="mb-1 text-[14px] font-bold text-[#2F241D]">
                                              Hapus alamat ini?
                                         </h4>
-                                        <p className="mb-4 text-[11px] text-[#8A6B62]">
+                                        <p className="mb-4 text-[11px] text-[#7A6A5D]">
                                              Tindakan ini tidak dapat dibatalkan.
                                         </p>
                                         <div className="flex w-full space-x-3">
@@ -527,7 +527,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                                 onClick={() =>
                                                     setShowDeleteConfirm(null)
                                                 }
-                                                className="flex-1 rounded-lg border border-[#EADBD8] py-2 text-[12px] font-bold text-[#4A4A4A] transition-colors hover:bg-[#FAF9F6]"
+                                                className="flex-1 rounded-lg border border-[#EADFD2] py-2 text-[12px] font-bold text-[#7A6A5D] transition-colors hover:bg-[#FFFDF8]"
                                             >
                                                  Batal
                                             </button>
@@ -561,8 +561,8 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                         onClick={closeModal}
                     />
                     <div className="relative z-[10001] flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
-                        <div className="flex items-center justify-between border-b border-[#EADBD8] bg-[#FAF9F6] px-6 py-4">
-                            <h3 className="font-serif text-lg text-[#4A2525]">
+                        <div className="flex items-center justify-between border-b border-[#EADFD2] bg-[#FFFDF8] px-6 py-4">
+                            <h3 className="font-serif text-lg text-[#B98B63]">
                                 {editingAddress
                                      ? 'Edit Alamat'
                                      : 'Tambah Alamat Baru'}
@@ -570,7 +570,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                             <button
                                 type="button"
                                 onClick={closeModal}
-                                className="p-1 text-[#C99A8F] transition-colors hover:text-[#333]"
+                                className="p-1 text-[#D1B08A] transition-colors hover:text-[#2F241D]"
                             >
                                 <X size={20} />
                             </button>
@@ -615,7 +615,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                     />
                                 </div>
                                 <div>
-                                    <label className="mb-1.5 block text-[11px] font-semibold text-[#4A4A4A]">
+                                    <label className="mb-1.5 block text-[11px] font-semibold text-[#7A6A5D]">
                                          Cari berdasarkan Kode Pos
                                     </label>
                                     <div className="flex gap-2">
@@ -626,7 +626,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                                 setAreaQuery(event.target.value)
                                             }
                                              placeholder="Cari kecamatan, kota, kode pos"
-                                            className="w-full rounded-md border border-[#EADBD8] bg-white px-4 py-2.5 text-[13px] text-[#333] transition-all focus:border-[#B6574B] focus:ring-1 focus:ring-[#B6574B] focus:outline-none"
+                                            className="w-full rounded-md border border-[#EADFD2] bg-white px-4 py-2.5 text-[13px] text-[#2F241D] transition-all focus:border-[#9A6B45] focus:ring-1 focus:ring-[#9A6B45] focus:outline-none"
                                         />
                                         <button
                                             type="button"
@@ -635,20 +635,20 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                                 areaLoading ||
                                                 areaQuery.trim().length < 3
                                             }
-                                            className="flex items-center gap-2 rounded-md bg-[#F1E6E2] px-4 py-2.5 text-[12px] font-bold text-[#4A4A4A] disabled:opacity-60"
+                                            className="flex items-center gap-2 rounded-md bg-[#E8D6C1] px-4 py-2.5 text-[12px] font-bold text-[#7A6A5D] disabled:opacity-60"
                                         >
                                             <Search size={14} />
                                              {areaLoading ? '...' : 'Cari'}
                                         </button>
                                     </div>
                                     {form.data.biteship_area_id && (
-                                        <p className="mt-1.5 text-[11px] text-[#8A6B62]">
+                                        <p className="mt-1.5 text-[11px] text-[#7A6A5D]">
                                             Area ID:{' '}
                                             {form.data.biteship_area_id}
                                         </p>
                                     )}
                                     {areaResults.length > 0 && (
-                                        <div className="mt-2 max-h-48 overflow-y-auto rounded-md border border-[#EADBD8] bg-white">
+                                        <div className="mt-2 max-h-48 overflow-y-auto rounded-md border border-[#EADFD2] bg-white">
                                             {areaResults.map((area) => (
                                                 <button
                                                     key={area.id}
@@ -656,12 +656,12 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                                     onClick={() =>
                                                         chooseArea(area)
                                                     }
-                                                    className="block w-full border-b border-[#F1EEE8] px-4 py-2 text-left text-[12px] hover:bg-[#FAF9F6]"
+                                                    className="block w-full border-b border-[#F1EEE8] px-4 py-2 text-left text-[12px] hover:bg-[#FFFDF8]"
                                                 >
-                                                    <span className="font-semibold text-[#333]">
+                                                    <span className="font-semibold text-[#2F241D]">
                                                         {area.name ?? area.id}
                                                     </span>
-                                                    <span className="block text-[#8A6B62]">
+                                                    <span className="block text-[#7A6A5D]">
                                                         {[
                                                             area.administrative_division_level_3_name,
                                                             area.administrative_division_level_2_name,
@@ -765,26 +765,26 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                                 event.target.checked,
                                             )
                                         }
-                                        className="h-4 w-4 rounded border-[#EADBD8] text-[#4A2525] focus:ring-[#B6574B]"
+                                        className="h-4 w-4 rounded border-[#EADFD2] text-[#B98B63] focus:ring-[#9A6B45]"
                                     />
-                                    <span className="ml-2 cursor-pointer text-[12px] font-medium text-[#4A4A4A]">
+                                    <span className="ml-2 cursor-pointer text-[12px] font-medium text-[#7A6A5D]">
                                         Jadikan alamat utama
                                     </span>
                                 </label>
                             </div>
 
-                            <div className="flex justify-end gap-3 border-t border-[#EADBD8] bg-[#FAF9F6] px-6 py-4">
+                            <div className="flex justify-end gap-3 border-t border-[#EADFD2] bg-[#FFFDF8] px-6 py-4">
                                 <button
                                     type="button"
                                     onClick={closeModal}
-                                    className="rounded-md border border-[#EADBD8] px-6 py-2.5 text-[12px] font-bold text-[#4A4A4A] transition-colors hover:bg-white"
+                                    className="rounded-md border border-[#EADFD2] px-6 py-2.5 text-[12px] font-bold text-[#7A6A5D] transition-colors hover:bg-white"
                                 >
                                     Batal
                                 </button>
                                 <button
                                     type="submit"
                                     disabled={form.processing}
-                                    className="rounded-md bg-[#4A2525] px-6 py-2.5 text-[12px] font-bold text-white transition-colors hover:bg-[#5F1717] disabled:cursor-not-allowed disabled:opacity-70"
+                                    className="rounded-md bg-[#B98B63] px-6 py-2.5 text-[12px] font-bold text-white transition-colors hover:bg-[#9A6B45] disabled:cursor-not-allowed disabled:opacity-70"
                                 >
                                     {form.processing
                                          ? 'Menyimpan...'
@@ -880,22 +880,22 @@ function LocationPicker({
         <div>
             <div className="mb-2 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
                 <div>
-                    <label className="block text-[11px] font-semibold text-[#4A4A4A]">
+                    <label className="block text-[11px] font-semibold text-[#7A6A5D]">
                         Titik Lokasi
                     </label>
-                    <p className="mt-1 text-[11px] text-[#8A6B62]">
+                    <p className="mt-1 text-[11px] text-[#7A6A5D]">
                         Klik map atau drag pin ke titik rumah.
                     </p>
                 </div>
                 <button
                     type="button"
                     onClick={onUseCurrentLocation}
-                    className="inline-flex items-center justify-center gap-2 rounded-md border border-[#EADBD8] bg-white px-3 py-2 text-[11px] font-bold text-[#4A4A4A] transition-colors hover:border-[#B6574B] hover:bg-[#FAF9F6]"
+                    className="inline-flex items-center justify-center gap-2 rounded-md border border-[#EADFD2] bg-white px-3 py-2 text-[11px] font-bold text-[#7A6A5D] transition-colors hover:border-[#9A6B45] hover:bg-[#FFFDF8]"
                 >
                     <LocateFixed size={14} /> Gunakan Lokasi Saat Ini
                 </button>
             </div>
-            <div className="overflow-hidden rounded-xl border border-[#EADBD8] bg-[#FAF9F6]">
+            <div className="overflow-hidden rounded-xl border border-[#EADFD2] bg-[#FFFDF8]">
                 {leafletModules && markerIcon ? (
                     <ClientMap
                         hasCoordinates={hasCoordinates}
@@ -905,13 +905,13 @@ function LocationPicker({
                         position={position}
                     />
                 ) : (
-                    <div className="flex h-[320px] w-full items-center justify-center text-[12px] font-medium text-[#8A6B62]">
+                    <div className="flex h-[320px] w-full items-center justify-center text-[12px] font-medium text-[#7A6A5D]">
                         Memuat peta...
                     </div>
                 )}
             </div>
             {hasCoordinates && (
-                <p className="mt-2 text-[11px] text-[#8A6B62]">
+                <p className="mt-2 text-[11px] text-[#7A6A5D]">
                     Koordinat: {latitude}, {longitude}
                 </p>
             )}
@@ -1017,7 +1017,7 @@ function InputBlock({
 }: FieldProps) {
     return (
         <div>
-            <label className="mb-1.5 block text-[11px] font-semibold text-[#4A4A4A]">
+            <label className="mb-1.5 block text-[11px] font-semibold text-[#7A6A5D]">
                 {label}
             </label>
             <input
@@ -1026,8 +1026,8 @@ function InputBlock({
                 onChange={(event) => onChange(event.target.value)}
                 placeholder={placeholder}
                 readOnly={readOnly}
-                className={`w-full rounded-md border border-[#EADBD8] px-4 py-2.5 text-[13px] text-[#333] transition-all focus:border-[#B6574B] focus:ring-1 focus:ring-[#B6574B] focus:outline-none ${
-                    readOnly ? 'bg-[#FAF9F6] text-[#8A6B62]' : 'bg-white'
+                className={`w-full rounded-md border border-[#EADFD2] px-4 py-2.5 text-[13px] text-[#2F241D] transition-all focus:border-[#9A6B45] focus:ring-1 focus:ring-[#9A6B45] focus:outline-none ${
+                    readOnly ? 'bg-[#FFFDF8] text-[#7A6A5D]' : 'bg-white'
                 }`}
             />
             {error && (
@@ -1048,7 +1048,7 @@ function TextareaBlock({
 }: FieldProps) {
     return (
         <div>
-            <label className="mb-1.5 block text-[11px] font-semibold text-[#4A4A4A]">
+            <label className="mb-1.5 block text-[11px] font-semibold text-[#7A6A5D]">
                 {label}
             </label>
             <textarea
@@ -1056,7 +1056,7 @@ function TextareaBlock({
                 value={value}
                 onChange={(event) => onChange(event.target.value)}
                 placeholder={placeholder}
-                className="w-full resize-none rounded-md border border-[#EADBD8] bg-white px-4 py-2.5 text-[13px] text-[#333] transition-all focus:border-[#B6574B] focus:ring-1 focus:ring-[#B6574B] focus:outline-none"
+                className="w-full resize-none rounded-md border border-[#EADFD2] bg-white px-4 py-2.5 text-[13px] text-[#2F241D] transition-all focus:border-[#9A6B45] focus:ring-1 focus:ring-[#9A6B45] focus:outline-none"
             />
             {error && (
                 <p className="mt-1.5 text-[11px] font-medium text-[#B24B4B]">

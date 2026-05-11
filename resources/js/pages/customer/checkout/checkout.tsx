@@ -182,7 +182,7 @@ function CheckoutScreen() {
             <Head title="Checkout - Aurea Syari" />
 
             <main className="mx-auto min-h-screen max-w-[1200px] px-4 py-8 md:px-8 md:py-12">
-                <div className="mb-8 flex items-center space-x-2 text-[10px] font-medium tracking-wide text-[#8A6B62] md:text-xs">
+                <div className="mb-8 flex items-center space-x-2 text-[10px] font-medium tracking-wide text-[#7A6A5D] md:text-xs">
                     <Link
                         href="/"
                         className="transition-colors hover:text-black"
@@ -197,15 +197,15 @@ function CheckoutScreen() {
                         Keranjang
                     </Link>
                     <span>/</span>
-                    <span className="text-[#333333]">Checkout</span>
+                    <span className="text-[#2F241D]">Checkout</span>
                 </div>
 
                 <div className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
                     <div>
-                        <h1 className="mb-2 font-serif text-3xl text-[#4A2525] italic md:text-4xl">
+                        <h1 className="mb-2 font-serif text-3xl text-[#B98B63] italic md:text-4xl">
                             Checkout
                         </h1>
-                        <p className="text-xs text-[#8A6B62] md:text-sm">
+                        <p className="text-xs text-[#7A6A5D] md:text-sm">
                             Pilih alamat tersimpan, ongkir Biteship, voucher,
                             lalu bayar via Midtrans.
                         </p>
@@ -214,7 +214,7 @@ function CheckoutScreen() {
                         {['Keranjang', 'Checkout', 'Pembayaran'].map((label, index) => (
                             <div key={label} className="flex items-center">
                                 <div
-                                    className={`flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-bold ${index < 2 ? 'bg-[#4A2525] text-white' : 'bg-white text-[#C99A8F] ring-1 ring-[#EADBD8]'}`}
+                                    className={`flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-bold ${index < 2 ? 'bg-[#B98B63] text-white' : 'bg-white text-[#D1B08A] ring-1 ring-[#EADFD2]'}`}
                                 >
                                     {index === 0 ? (
                                         <Check size={14} />
@@ -222,11 +222,11 @@ function CheckoutScreen() {
                                         index + 1
                                     )}
                                 </div>
-                                <span className="mx-2 hidden text-[11px] text-[#8A6B62] sm:inline">
+                                <span className="mx-2 hidden text-[11px] text-[#7A6A5D] sm:inline">
                                     {label}
                                 </span>
                                 {index < 2 && (
-                                    <div className="mx-2 h-px w-10 bg-[#EADBD8]" />
+                                    <div className="mx-2 h-px w-10 bg-[#EADFD2]" />
                                 )}
                             </div>
                         ))}
@@ -234,13 +234,13 @@ function CheckoutScreen() {
                 </div>
 
                 {cartItems.length === 0 ? (
-                    <div className="rounded-2xl border border-[#EADBD8] bg-white p-10 text-center">
-                        <p className="mb-4 font-serif text-2xl text-[#4A2525]">
+                    <div className="rounded-2xl border border-[#EADFD2] bg-white p-10 text-center">
+                        <p className="mb-4 font-serif text-2xl text-[#B98B63]">
                             Keranjang kosong
                         </p>
                         <Link
                             href="/list"
-                            className="text-sm font-semibold text-[#4A2525] underline"
+                            className="text-sm font-semibold text-[#B98B63] underline"
                         >
                             Belanja dulu
                         </Link>
@@ -251,13 +251,13 @@ function CheckoutScreen() {
                             <section className="border-b border-[#E5D8D2] pb-8">
                                 <div className="mb-5 flex items-center justify-between gap-4">
                                     <div>
-                                        <h2 className="font-serif text-xl text-[#333333]">
+                                        <h2 className="font-serif text-xl text-[#2F241D]">
                                             Alamat Pengiriman
                                         </h2>
                                     </div>
                                     <Link
                                         href="/address?redirect_to=/checkout"
-                                        className="text-[12px] font-bold text-[#4A2525] underline"
+                                        className="text-[12px] font-bold text-[#B98B63] underline"
                                     >
                                         Kelola alamat
                                     </Link>
@@ -270,25 +270,25 @@ function CheckoutScreen() {
                                             onClick={() =>
                                                 void selectAddress(address.id)
                                             }
-                                            className={`rounded-xl border p-4 text-left transition-all ${selectedAddressId === address.id ? 'border-[#B6574B] bg-[#FAF8F5] ring-1 ring-[#B6574B]' : 'border-[#EADBD8] hover:border-[#C4BDB1]'}`}
+                                            className={`rounded-xl border p-4 text-left transition-all ${selectedAddressId === address.id ? 'border-[#9A6B45] bg-[#F8F0E5] ring-1 ring-[#9A6B45]' : 'border-[#EADFD2] hover:border-[#7A6A5D]'}`}
                                         >
                                             <div className="mb-2 flex items-start justify-between gap-3">
-                                                <p className="text-[13px] font-bold text-[#333]">
+                                                <p className="text-[13px] font-bold text-[#2F241D]">
                                                     {address.label ?? 'Alamat'}
                                                 </p>
                                                 {address.is_default && (
-                                                    <span className="rounded bg-[#F8EDED] px-2 py-1 text-[10px] font-bold text-[#4A2525]">
+                                                    <span className="rounded bg-[#E8D6C1] px-2 py-1 text-[10px] font-bold text-[#B98B63]">
                                                         Utama
                                                     </span>
                                                 )}
                                             </div>
-                                            <p className="text-[12px] font-semibold text-[#4A4A4A]">
+                                            <p className="text-[12px] font-semibold text-[#7A6A5D]">
                                                 {address.recipient_name}
                                             </p>
-                                            <p className="mt-1 text-[11px] text-[#8A6B62]">
+                                            <p className="mt-1 text-[11px] text-[#7A6A5D]">
                                                 {address.recipient_phone}
                                             </p>
-                                            <p className="mt-2 text-[12px] leading-relaxed text-[#4A4A4A]">
+                                            <p className="mt-2 text-[12px] leading-relaxed text-[#7A6A5D]">
                                                 {address.full_address}
                                             </p>
                                             {(!address.postal_code ||
@@ -308,10 +308,10 @@ function CheckoutScreen() {
                                 <div className="mb-5 flex items-center gap-2">
                                     <Truck
                                         size={18}
-                                        className="text-[#333333]"
+                                        className="text-[#2F241D]"
                                         strokeWidth={1.5}
                                     />
-                                    <h2 className="font-serif text-xl text-[#333333]">
+                                    <h2 className="font-serif text-xl text-[#2F241D]">
                                         Ongkir
                                     </h2>
                                 </div>
@@ -326,11 +326,11 @@ function CheckoutScreen() {
                                     </p>
                                 )}
                                 {shippingRatesLoading ? (
-                                    <div className="rounded-xl border border-dashed border-[#EADBD8] p-6 text-[12px] text-[#8A6B62]">
+                                    <div className="rounded-xl border border-dashed border-[#EADFD2] p-6 text-[12px] text-[#7A6A5D]">
                                         Memuat harga ongkir...
                                     </div>
                                 ) : shippingRates.length === 0 ? (
-                                    <div className="rounded-xl border border-dashed border-[#EADBD8] p-6 text-[12px] text-[#8A6B62]">
+                                    <div className="rounded-xl border border-dashed border-[#EADFD2] p-6 text-[12px] text-[#7A6A5D]">
                                         Pilih alamat dengan kode pos dan
                                         koordinat untuk melihat harga ongkir.
                                     </div>
@@ -345,19 +345,19 @@ function CheckoutScreen() {
                                                         rate,
                                                     )
                                                 }
-                                                className={`rounded-xl border p-4 text-left transition-all ${selectedShippingRate?.id === rate.id ? 'border-[#B6574B] bg-[#FAF8F5] ring-1 ring-[#B6574B]' : 'border-[#EADBD8] hover:border-[#C4BDB1]'}`}
+                                                className={`rounded-xl border p-4 text-left transition-all ${selectedShippingRate?.id === rate.id ? 'border-[#9A6B45] bg-[#F8F0E5] ring-1 ring-[#9A6B45]' : 'border-[#EADFD2] hover:border-[#7A6A5D]'}`}
                                             >
-                                                <p className="text-[13px] font-bold text-[#4A2525]">
+                                                <p className="text-[13px] font-bold text-[#B98B63]">
                                                     {rate.courier_company.toUpperCase()}{' '}
                                                     {/* {rate.courier_type} */}
                                                 </p>
-                                                <p className="mt-1 text-[11px] text-[#8A6B62]">
+                                                <p className="mt-1 text-[11px] text-[#7A6A5D]">
                                                     {rate.courier_service_name ??
                                                         rate.description ??
                                                         'Layanan pengiriman'}{' '}
                                                     · {rate.duration ?? '-'}
                                                 </p>
-                                                <p className="mt-3 text-[15px] font-bold text-[#333]">
+                                                <p className="mt-3 text-[15px] font-bold text-[#2F241D]">
                                                     {formatPrice(rate.price)}
                                                 </p>
                                             </button>
@@ -370,10 +370,10 @@ function CheckoutScreen() {
                                 <div className="mb-5 flex items-center gap-2">
                                     <Ticket
                                         size={18}
-                                        className="text-[#333333]"
+                                        className="text-[#2F241D]"
                                         strokeWidth={1.5}
                                     />
-                                    <h2 className="font-serif text-xl text-[#333333]">
+                                    <h2 className="font-serif text-xl text-[#2F241D]">
                                         Voucher
                                     </h2>
                                 </div>
@@ -384,14 +384,14 @@ function CheckoutScreen() {
                                             setVoucherCode(event.target.value)
                                         }
                                         placeholder="Masukkan kode voucher"
-                                        className="flex-1 rounded-md border border-[#EADBD8] bg-[#FAF9F6] px-4 py-2.5 text-[12px] focus:border-[#C4BDB1] focus:ring-1 focus:ring-[#C4BDB1] focus:outline-none"
+                                        className="flex-1 rounded-md border border-[#EADFD2] bg-[#FFFDF8] px-4 py-2.5 text-[12px] focus:border-[#7A6A5D] focus:ring-1 focus:ring-[#7A6A5D] focus:outline-none"
                                     />
                                     <button
                                         type="button"
                                         onClick={() =>
                                             void applyVoucher(voucherCode)
                                         }
-                                        className="rounded-md bg-[#4A2525] px-5 py-2.5 text-[12px] font-bold text-white"
+                                        className="rounded-md bg-[#B98B63] px-5 py-2.5 text-[12px] font-bold text-white"
                                     >
                                         Pakai
                                     </button>
@@ -399,7 +399,7 @@ function CheckoutScreen() {
                                         <button
                                             type="button"
                                             onClick={() => void removeVoucher()}
-                                            className="rounded-md border border-[#EADBD8] px-4 py-2.5 text-[12px] font-bold text-[#4A4A4A]"
+                                            className="rounded-md border border-[#EADFD2] px-4 py-2.5 text-[12px] font-bold text-[#7A6A5D]"
                                         >
                                             Hapus
                                         </button>
@@ -419,7 +419,7 @@ function CheckoutScreen() {
                             </section>
 
                             <section className="border-b border-[#E5D8D2] pb-8">
-                                <h2 className="mb-4 font-serif text-xl text-[#333333]">
+                                <h2 className="mb-4 font-serif text-xl text-[#2F241D]">
                                     Catatan Order
                                 </h2>
                                 <textarea
@@ -429,16 +429,16 @@ function CheckoutScreen() {
                                     }
                                     maxLength={2000}
                                     placeholder="Opsional"
-                                    className="h-24 w-full resize-none rounded-md border border-[#EADBD8] bg-white px-4 py-3 text-[13px] focus:border-[#B6574B] focus:ring-1 focus:ring-[#B6574B] focus:outline-none"
+                                    className="h-24 w-full resize-none rounded-md border border-[#EADFD2] bg-white px-4 py-3 text-[13px] focus:border-[#9A6B45] focus:ring-1 focus:ring-[#9A6B45] focus:outline-none"
                                 />
-                                <label className="mt-4 flex items-start gap-2 text-[12px] text-[#4A4A4A]">
+                                <label className="mt-4 flex items-start gap-2 text-[12px] text-[#7A6A5D]">
                                     <input
                                         type="checkbox"
                                         checked={agreed}
                                         onChange={(event) =>
                                             setAgreed(event.target.checked)
                                         }
-                                        className="mt-0.5 h-4 w-4 rounded border-[#EADBD8] text-[#4A2525]"
+                                        className="mt-0.5 h-4 w-4 rounded border-[#EADFD2] text-[#B98B63]"
                                     />
                                     <span>
                                         Saya menyetujui kebijakan tanpa retur/refund,
@@ -464,13 +464,13 @@ function CheckoutScreen() {
 
                         <aside className="w-full flex-shrink-0 lg:w-[380px]">
                             <div className="sticky top-24 lg:top-32">
-                                <h2 className="mb-6 font-serif text-xl text-[#333333] tracking-tight md:text-2xl">
+                                <h2 className="mb-6 font-serif text-xl text-[#2F241D] tracking-tight md:text-2xl">
                                     Ringkasan Pesanan
                                 </h2>
                                 <div className="mb-6 max-h-[300px] space-y-4 overflow-y-auto pr-2">
                                 {cartItems.map((item) => (
                                     <div key={item.id} className="flex gap-3">
-                                        <div className="relative h-20 w-16 flex-shrink-0 overflow-hidden rounded-md bg-[#F8EDED]">
+                                        <div className="relative h-20 w-16 flex-shrink-0 overflow-hidden rounded-md bg-[#E8D6C1]">
                                             {item.image && (
                                                 <img
                                                     src={item.image}
@@ -483,15 +483,15 @@ function CheckoutScreen() {
                                             </span>
                                         </div>
                                         <div className="min-w-0 flex-1">
-                                            <p className="line-clamp-2 text-[12px] font-bold text-[#333]">
+                                            <p className="line-clamp-2 text-[12px] font-bold text-[#2F241D]">
                                                 {item.title}
                                             </p>
-                                            <p className="mt-1 text-[10px] text-[#8A6B62]">
+                                            <p className="mt-1 text-[10px] text-[#7A6A5D]">
                                                 {[item.color, item.size]
                                                     .filter(Boolean)
                                                     .join(' / ') || '-'}
                                             </p>
-                                            <p className="mt-1 text-[10px] font-medium text-[#8A6B62]">
+                                            <p className="mt-1 text-[10px] font-medium text-[#7A6A5D]">
                                                 Berat: {formatWeight(item.weight)}
                                             </p>
                                             {!item.is_available && (
@@ -500,7 +500,7 @@ function CheckoutScreen() {
                                                 </p>
                                             )}
                                         </div>
-                                        <p className="text-right text-[12px] font-semibold text-[#333]">
+                                        <p className="text-right text-[12px] font-semibold text-[#2F241D]">
                                             {formatPrice(item.subtotal)}
                                         </p>
                                     </div>
@@ -510,7 +510,7 @@ function CheckoutScreen() {
                                  label="Subtotal"
                                  value={summary.subtotal}
                              />
-                            <div className="mb-3 flex items-center justify-between text-[12px] text-[#4A4A4A]">
+                            <div className="mb-3 flex items-center justify-between text-[12px] text-[#7A6A5D]">
                                 <span>Total Berat</span>
                                 <span className="font-semibold">
                                     {formatWeight(totalWeight)}
@@ -529,12 +529,12 @@ function CheckoutScreen() {
                                 value={-summary.discount}
                                 danger
                             />
-                            <div className="mt-4 border-t border-[#EADBD8] pt-4">
+                            <div className="mt-4 border-t border-[#EADFD2] pt-4">
                                 <div className="flex items-end justify-between">
-                                    <span className="text-[13px] font-semibold text-[#333]">
+                                    <span className="text-[13px] font-semibold text-[#2F241D]">
                                         Total Pembayaran
                                     </span>
-                                    <span className="font-serif text-2xl text-[#333]">
+                                    <span className="font-serif text-2xl text-[#2F241D]">
                                         {formatPrice(summary.total)}
                                     </span>
                                 </div>
@@ -548,14 +548,14 @@ function CheckoutScreen() {
                                         !agreed ||
                                         cartItems.some((item) => !item.is_available)
                                     }
-                                    className="mt-6 flex w-full items-center justify-center rounded-lg bg-[#4A2525] py-4 text-[13px] font-bold tracking-wider text-white transition-all hover:bg-[#5F1717] hover:shadow-lg hover:shadow-[#4A2525]/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+                                    className="mt-6 flex w-full items-center justify-center rounded-lg bg-[#B98B63] py-4 text-[13px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg hover:shadow-[#B98B63]/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
                                 >
                                     <Lock size={16} className="mr-2" />
                                     {placingOrder
                                         ? 'Membuat Pembayaran...'
                                         : 'Bayar dengan Midtrans'}
                                 </button>
-                                <div className="mt-8 space-y-4 border-t border-[#EADBD8]/60 pt-6">
+                                <div className="mt-8 space-y-4 border-t border-[#EADFD2]/60 pt-6">
                                     <CheckoutRouteMap
                                         destinationAddress={selectedAddress}
                                         destinationCoordinates={
@@ -564,12 +564,12 @@ function CheckoutScreen() {
                                         distance={routeDistance}
                                         storeCoordinates={storeCoordinates}
                                     />
-                                    <div className="flex items-start space-x-3 text-[11px] text-[#8A6B62]">
-                                        <ShieldCheck size={16} className="mt-0.5 flex-shrink-0 text-[#C99A8F]" strokeWidth={1.5} />
+                                    <div className="flex items-start space-x-3 text-[11px] text-[#7A6A5D]">
+                                        <ShieldCheck size={16} className="mt-0.5 flex-shrink-0 text-[#D1B08A]" strokeWidth={1.5} />
                                         <p>Pembayaran aman didukung Midtrans</p>
                                     </div>
-                                    <div className="flex items-start space-x-3 text-[11px] text-[#8A6B62]">
-                                        <Box size={16} className="mt-0.5 flex-shrink-0 text-[#C99A8F]" strokeWidth={1.5} />
+                                    <div className="flex items-start space-x-3 text-[11px] text-[#7A6A5D]">
+                                        <Box size={16} className="mt-0.5 flex-shrink-0 text-[#D1B08A]" strokeWidth={1.5} />
                                         <p>Ongkir dihitung oleh Biteship</p>
                                     </div>
                                 </div>
@@ -646,15 +646,15 @@ function CheckoutRouteMap({
     }, []);
 
     return (
-        <div className="rounded-xl border border-[#EADBD8] bg-[#FAF9F6] p-3">
+        <div className="rounded-xl border border-[#EADFD2] bg-[#FFFDF8] p-3">
             <div className="mb-3 flex items-start justify-between gap-3">
                 <div>
-                    <p className="text-[12px] font-bold text-[#333]">
+                    <p className="text-[12px] font-bold text-[#2F241D]">
                         Rute Pengiriman
                     </p>
                 </div>
                 {distance !== null && (
-                    <span className="rounded-full bg-white px-2.5 py-1 text-[10px] font-bold text-[#4A2525] ring-1 ring-[#EADBD8]">
+                    <span className="rounded-full bg-white px-2.5 py-1 text-[10px] font-bold text-[#B98B63] ring-1 ring-[#EADFD2]">
                         {formatDistance(distance)}
                     </span>
                 )}
@@ -669,7 +669,7 @@ function CheckoutRouteMap({
                     storeCoordinates={storeCoordinates as Coordinates}
                 />
             ) : (
-                <div className="flex h-[220px] items-center justify-center rounded-lg border border-dashed border-[#EADBD8] bg-white text-center text-[11px] font-medium text-[#8A6B62]">
+                <div className="flex h-[220px] items-center justify-center rounded-lg border border-dashed border-[#EADFD2] bg-white text-center text-[11px] font-medium text-[#7A6A5D]">
                     {!storeCoordinates
                         ? 'Koordinat toko belum dikonfigurasi.'
                         : !destinationCoordinates
@@ -685,7 +685,7 @@ function CheckoutRouteMap({
                             href={googleMapsUrl}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex w-full items-center justify-center rounded-md bg-[#4A2525] px-3 py-2 text-[11px] font-bold text-white transition-colors hover:bg-[#5F1717]"
+                            className="inline-flex w-full items-center justify-center rounded-md bg-[#B98B63] px-3 py-2 text-[11px] font-bold text-white transition-colors hover:bg-[#9A6B45]"
                         >
                             Buka rute di Google Maps
                         </a>
@@ -716,7 +716,7 @@ function RouteMap({
     ];
 
     return (
-        <div className="overflow-hidden rounded-lg border border-[#EADBD8] bg-white">
+        <div className="overflow-hidden rounded-lg border border-[#EADFD2] bg-white">
             <MapContainer
                 bounds={bounds}
                 className="h-[220px] w-full"
@@ -728,7 +728,7 @@ function RouteMap({
                 />
                 <RouteMapUpdater bounds={bounds} modules={modules} />
                 <Polyline
-                    pathOptions={{ color: '#4A2525', weight: 4 }}
+                    pathOptions={{ color: '#B98B63', weight: 4 }}
                     positions={[storeCoordinates, destinationCoordinates]}
                 />
                 <Marker icon={markerIcon} position={storeCoordinates}>
@@ -772,7 +772,7 @@ function SummaryRow({
 }) {
     return (
         <div
-            className={`mb-3 flex items-center justify-between text-[12px] ${danger ? 'text-[#C05D5D]' : 'text-[#4A4A4A]'}`}
+            className={`mb-3 flex items-center justify-between text-[12px] ${danger ? 'text-[#C05D5D]' : 'text-[#7A6A5D]'}`}
         >
             <span>{label}</span>
             <span className="font-semibold">

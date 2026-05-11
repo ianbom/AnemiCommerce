@@ -93,7 +93,7 @@ export default function CustomersIndex({ customers, filters }: Props) {
             icon: Users,
             iconBg: 'bg-white/20',
             iconColor: 'text-white',
-            cardBg: 'bg-gradient-to-br from-[#7F2020] to-[#B6574B]',
+            cardBg: 'bg-gradient-to-br from-[#B98B63] to-[#9A6B45]',
             subColor: 'text-white/60',
             valColor: 'text-white',
             titleColor: 'text-white/80',
@@ -179,7 +179,7 @@ export default function CustomersIndex({ customers, filters }: Props) {
             <div className="flex flex-col gap-6 p-6">
                 <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
                     <div>
-                        <p className="mb-1 text-[11px] font-bold tracking-widest text-[#7F2020]/50 uppercase">
+                        <p className="mb-1 text-[11px] font-bold tracking-widest text-[#B98B63]/50 uppercase">
                             Customer Management
                         </p>
                         <h1 className="font-serif text-3xl leading-tight text-zinc-900">
@@ -278,7 +278,7 @@ export default function CustomersIndex({ customers, filters }: Props) {
                             <Button
                                 type="submit"
                                 size="sm"
-                                className="h-9 gap-1.5 bg-[#7F2020] text-white hover:bg-[#5F1717]"
+                                className="h-9 gap-1.5 bg-[#B98B63] text-white hover:bg-[#9A6B45]"
                                 disabled={processing}
                             >
                                 <Search className="h-3.5 w-3.5" /> Search
@@ -355,7 +355,7 @@ export default function CustomersIndex({ customers, filters }: Props) {
                                             <div className="flex flex-col gap-1">
                                                 <Link
                                                     href={`/admin/customers/${customer.id}`}
-                                                    className="font-medium text-zinc-900 transition-colors hover:text-[#7F2020]"
+                                                    className="font-medium text-zinc-900 transition-colors hover:text-[#B98B63]"
                                                 >
                                                     {customer.name}
                                                 </Link>
@@ -448,7 +448,7 @@ function StatsGrid({ stats }: { stats: Array<Record<string, any>> }) {
                     className={[
                         'relative overflow-hidden rounded-2xl border transition-all duration-200 hover:-translate-y-0.5',
                         m.featured
-                            ? 'border-transparent shadow-lg shadow-[#7F2020]/20'
+                            ? 'border-transparent shadow-lg shadow-[#B98B63]/20'
                             : 'border-zinc-100 shadow-sm hover:shadow-md',
                         m.cardBg,
                     ].join(' ')}
@@ -571,7 +571,7 @@ function PaginationFooter<T>({
                             className={[
                                 'h-8 min-w-8 rounded-lg px-2.5 text-xs font-medium transition-colors',
                                 link.active
-                                    ? 'bg-[#7F2020] text-white shadow-sm'
+                                    ? 'bg-[#B98B63] text-white shadow-sm'
                                     : !link.url
                                       ? 'cursor-not-allowed text-zinc-300'
                                       : 'text-zinc-500 hover:bg-zinc-100',

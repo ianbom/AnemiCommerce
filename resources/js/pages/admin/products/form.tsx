@@ -476,7 +476,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         }
                                                     }}
                                                     placeholder="e.g. Gamis Syar'i Pita"
-                                                    className="h-9 border-zinc-200 text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                    className="h-9 border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                                 />
                                             </FieldGroup>
                                             <FieldGroup
@@ -494,7 +494,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         )
                                                     }
                                                     placeholder="e.g. GMS-001"
-                                                    className="h-9 border-zinc-200 font-mono text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                    className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                                 />
                                             </FieldGroup>
                                         </FieldRow>
@@ -517,7 +517,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         )
                                                     }
                                                     placeholder="e.g. gamis-syari-pita"
-                                                    className="h-9 flex-1 border-zinc-200 font-mono text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                    className="h-9 flex-1 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                                 />
                                                 <Button
                                                     type="button"
@@ -549,7 +549,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                             e.target.value,
                                                         )
                                                     }
-                                                    className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 shadow-sm focus:border-[#7F2020] focus:ring-1 focus:ring-[#7F2020] focus:outline-none"
+                                                    className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 shadow-sm focus:border-[#B98B63] focus:ring-1 focus:ring-[#B98B63] focus:outline-none"
                                                 >
                                                     <option value="">
                                                         No category
@@ -578,7 +578,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                             e.target.value,
                                                         )
                                                     }
-                                                    className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 shadow-sm focus:border-[#7F2020] focus:ring-1 focus:ring-[#7F2020] focus:outline-none"
+                                                    className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 shadow-sm focus:border-[#B98B63] focus:ring-1 focus:ring-[#B98B63] focus:outline-none"
                                                 >
                                                     <option value="">
                                                         No collection
@@ -615,7 +615,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="Brief product summary for listings"
-                                                className="h-9 border-zinc-200 text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                className="h-9 border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                             />
                                         </FieldGroup>
 
@@ -633,7 +633,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="Detailed product description..."
-                                                className="min-h-[120px] resize-y border-zinc-200 text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                className="min-h-[120px] resize-y border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                             />
                                         </FieldGroup>
                                     </div>
@@ -663,7 +663,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="Describe material composition..."
-                                                className="min-h-[90px] resize-y border-zinc-200 text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                className="min-h-[90px] resize-y border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                             />
                                         </FieldGroup>
                                         <FieldGroup
@@ -681,7 +681,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="Washing and care instructions..."
-                                                className="min-h-[90px] resize-y border-zinc-200 text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                className="min-h-[90px] resize-y border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                             />
                                         </FieldGroup>
                                     </FieldRow>
@@ -713,7 +713,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         )
                                                     }
                                                     placeholder="0"
-                                                    className="h-9 border-zinc-200 font-mono text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                    className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                                 />
                                             </FieldGroup>
                                             <FieldGroup
@@ -732,7 +732,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         )
                                                     }
                                                     placeholder="Leave empty for no discount"
-                                                    className="h-9 border-zinc-200 font-mono text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                    className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                                 />
                                             </FieldGroup>
                                         </div>
@@ -776,7 +776,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         <span className="text-sm font-semibold text-zinc-900">
                                                             Final
                                                         </span>
-                                                        <span className="font-mono text-base font-bold text-[#7F2020]">
+                                                        <span className="font-mono text-base font-bold text-[#B98B63]">
                                                             IDR{' '}
                                                             {Number(
                                                                 data.sale_price ||
@@ -839,7 +839,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="0"
-                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                             />
                                         </FieldGroup>
                                         <FieldGroup
@@ -858,7 +858,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="0"
-                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                             />
                                         </FieldGroup>
                                         <FieldGroup
@@ -877,7 +877,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="0"
-                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                             />
                                         </FieldGroup>
                                         <FieldGroup
@@ -896,7 +896,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     )
                                                 }
                                                 placeholder="0"
-                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                             />
                                         </FieldGroup>
                                     </FieldRow>
@@ -916,7 +916,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                 key={index}
                                                 className={`group relative overflow-hidden rounded-lg border-2 transition-all ${
                                                     image.is_primary
-                                                        ? 'border-[#7F2020] ring-2 ring-[#7F2020]/20'
+                                                        ? 'border-[#B98B63] ring-2 ring-[#B98B63]/20'
                                                         : 'border-zinc-200 hover:border-zinc-300'
                                                 }`}
                                             >
@@ -1023,7 +1023,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     </button>
                                                     {/* Primary badge */}
                                                     {image.is_primary && (
-                                                        <div className="absolute bottom-1.5 left-1.5 z-10 rounded bg-[#7F2020] px-1.5 py-0.5 text-[9px] font-bold tracking-wider text-white uppercase">
+                                                        <div className="absolute bottom-1.5 left-1.5 z-10 rounded bg-[#B98B63] px-1.5 py-0.5 text-[9px] font-bold tracking-wider text-white uppercase">
                                                             Primary
                                                         </div>
                                                     )}
@@ -1056,7 +1056,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                                         index,
                                                                     )
                                                                 }
-                                                                className="h-3 w-3 accent-[#7F2020]"
+                                                                className="h-3 w-3 accent-[#B98B63]"
                                                             />
                                                             <span className="text-[10px] text-zinc-500">
                                                                 Primary
@@ -1243,7 +1243,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                                                 v,
                                                                             )
                                                                         }
-                                                                        className="scale-[0.8] data-[state=checked]:bg-[#7F2020]"
+                                                                        className="scale-[0.8] data-[state=checked]:bg-[#B98B63]"
                                                                     />
                                                                 </td>
                                                                 <td className="px-3 py-2 text-center">
@@ -1371,7 +1371,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         data.name ||
                                                         'Product title for search results'
                                                     }
-                                                    className="h-9 border-zinc-200 text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                    className="h-9 border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                                 />
                                             </FieldGroup>
                                             <FieldGroup
@@ -1398,7 +1398,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         data.short_description ||
                                                         'Brief description for search results...'
                                                     }
-                                                    className="min-h-[80px] resize-y border-zinc-200 text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                                    className="min-h-[80px] resize-y border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                                 />
                                             </FieldGroup>
                                         </div>
@@ -1474,7 +1474,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         </Button> */}
                                         <Button
                                             type="submit"
-                                            className="h-10 bg-[#7F2020] px-6 font-medium text-white shadow-sm hover:bg-[#5F1717]"
+                                            className="h-10 bg-[#B98B63] px-6 font-medium text-white shadow-sm hover:bg-[#9A6B45]"
                                             disabled={processing}
                                         >
                                             {processing ? (
@@ -1538,7 +1538,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         e.target.value,
                                                     )
                                                 }
-                                                className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 shadow-sm focus:border-[#7F2020] focus:ring-1 focus:ring-[#7F2020] focus:outline-none"
+                                                className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 shadow-sm focus:border-[#B98B63] focus:ring-1 focus:ring-[#B98B63] focus:outline-none"
                                             >
                                                 {options.statuses.map((s) => (
                                                     <option key={s} value={s}>
@@ -1599,7 +1599,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                             v,
                                                         )
                                                     }
-                                                    className="scale-90 data-[state=checked]:bg-[#7F2020]"
+                                                    className="scale-90 data-[state=checked]:bg-[#B98B63]"
                                                 />
                                             </div>
                                             <div className="flex items-center justify-between">
@@ -1625,7 +1625,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                             v,
                                                         )
                                                     }
-                                                    className="scale-90 data-[state=checked]:bg-[#7F2020]"
+                                                    className="scale-90 data-[state=checked]:bg-[#B98B63]"
                                                 />
                                             </div>
                                             <div className="flex items-center justify-between">
@@ -1651,7 +1651,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                             v,
                                                         )
                                                     }
-                                                    className="scale-90 data-[state=checked]:bg-[#7F2020]"
+                                                    className="scale-90 data-[state=checked]:bg-[#B98B63]"
                                                 />
                                             </div>
                                         </div>
@@ -1708,7 +1708,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                                     'id-ID',
                                                                 )}
                                                             </span>
-                                                            <span className="text-sm font-bold text-[#7F2020]">
+                                                            <span className="text-sm font-bold text-[#B98B63]">
                                                                 IDR{' '}
                                                                 {Number(
                                                                     data.sale_price,
@@ -1836,7 +1836,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                     {/* <Button
                                         type="submit"
                                         form="product-form"
-                                        className="w-full h-10 bg-[#7F2020] hover:bg-[#5F1717] text-white font-medium shadow-sm"
+                                        className="w-full h-10 bg-[#B98B63] hover:bg-[#9A6B45] text-white font-medium shadow-sm"
                                         disabled={processing}
                                         onClick={() => submit({ preventDefault: () => {} } as any)}
                                     >
@@ -1903,7 +1903,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             })
                                         }
                                         placeholder="e.g. GMS-001-S"
-                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                     />
                                 </FieldGroup>
                                 <FieldGroup label="Size">
@@ -1916,7 +1916,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             })
                                         }
                                         placeholder="e.g. S, M, L, XL"
-                                        className="h-9 border-zinc-200 text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                        className="h-9 border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                     />
                                 </FieldGroup>
                             </FieldRow>
@@ -1932,11 +1932,11 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             })
                                         }
                                         placeholder="e.g. Black"
-                                        className="h-9 border-zinc-200 text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                        className="h-9 border-zinc-200 text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                     />
                                 </FieldGroup>
                                 <FieldGroup label="Color Hex">
-                                    <div className="flex h-9 items-center gap-2 rounded-md border border-zinc-200 bg-white px-2 shadow-sm focus-within:border-[#7F2020] focus-within:ring-1 focus-within:ring-[#7F2020]">
+                                    <div className="flex h-9 items-center gap-2 rounded-md border border-zinc-200 bg-white px-2 shadow-sm focus-within:border-[#B98B63] focus-within:ring-1 focus-within:ring-[#B98B63]">
                                         <input
                                             type="color"
                                             value={
@@ -1982,7 +1982,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     e.target.value,
                                             })
                                         }
-                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                     />
                                 </FieldGroup>
                                 <FieldGroup label="Stock">
@@ -1996,7 +1996,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                 stock: e.target.value,
                                             })
                                         }
-                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                     />
                                 </FieldGroup>
                                 <FieldGroup label="Reserved">
@@ -2011,7 +2011,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     e.target.value,
                                             })
                                         }
-                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#7F2020] focus:ring-[#7F2020]"
+                                        className="h-9 border-zinc-200 font-mono text-sm focus:border-[#B98B63] focus:ring-[#B98B63]"
                                     />
                                 </FieldGroup>
                             </FieldRow>
@@ -2108,7 +2108,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             is_active: value,
                                         })
                                     }
-                                    className="scale-90 data-[state=checked]:bg-[#7F2020]"
+                                    className="scale-90 data-[state=checked]:bg-[#B98B63]"
                                 />
                             </div>
                         </div>
@@ -2125,7 +2125,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                             <Button
                                 type="button"
                                 onClick={saveVariantDraft}
-                                className="h-9 bg-[#7F2020] px-5 text-xs font-medium text-white hover:bg-[#5F1717]"
+                                className="h-9 bg-[#B98B63] px-5 text-xs font-medium text-white hover:bg-[#9A6B45]"
                             >
                                 {editingVariantIndex === null
                                     ? 'Add Variant'

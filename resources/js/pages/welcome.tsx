@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import { Clock, Heart, RotateCcw, Star } from 'lucide-react';
+import { Clock, RotateCcw, Star } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import type { PointerEvent, ReactNode } from 'react';
 import ShopLayout from '@/layouts/shop-layout';
@@ -83,14 +83,14 @@ export default function Home({
 }: Props) {
     return (
         <ShopLayout>
-            <Head title="Beranda - Aurea Syari" />
+            <Head title="Brand Fashion Muslim No.1 - Shayda" />
 
             <FadeInOnScroll>
                 <HeroSlider heroBanners={heroBanners} />
             </FadeInOnScroll>
 
             {/* Feature Strip */}
-            <div className="flex w-full flex-col items-center justify-between border-b border-[#e6d5c8] bg-[#fcfbf9] px-4 py-3.5 text-[10px] font-medium text-[#53362d] md:flex-row md:px-10 md:text-xs">
+            <div className="flex w-full flex-col items-center justify-center border-b border-[#e7e2de] bg-white px-4 py-5 text-[10px] font-medium tracking-[0.08em] text-[#272727] uppercase md:flex-row md:px-10 md:text-xs">
                 <div className="mb-2 flex w-full items-center justify-center gap-4 md:mb-0 md:w-auto md:gap-10">
                     <div className="flex items-center gap-2">
                         <Clock size={16} strokeWidth={1.5} />
@@ -113,20 +113,20 @@ export default function Home({
             </div>
 
             {/* Category Section */}
-            <section className="mx-auto max-w-[1500px] px-4 py-12 md:px-10 md:py-16">
+            <section className="mx-auto max-w-[1500px] px-4 py-10 md:px-10 md:py-14">
                 <FadeInOnScroll>
-                    <div className="mb-8 text-center md:mb-12">
-                        <h2 className="font-serif text-2xl tracking-wider text-[#53362d] uppercase md:text-3xl">
-                            Kategori
+                    <div className="mb-8 text-center md:mb-10">
+                        <h2 className="text-2xl tracking-normal text-[#171717] uppercase md:text-3xl">
+                            Category
                         </h2>
                     </div>
                 </FadeInOnScroll>
-                <div className="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-3">
+                <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
                     {categories?.map((category, index) => (
                         <FadeInOnScroll key={index} delay={index * 100}>
                             <Link
                                 href={`/list?category=${encodeURIComponent(category.slug)}`}
-                                className="group relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-gray-100"
+                                className="group relative flex aspect-[3/4] w-full items-end justify-center overflow-hidden bg-[#f7f7f7]"
                             >
                                 <img
                                     src={
@@ -138,8 +138,8 @@ export default function Home({
                                     alt={category.name}
                                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 />
-                                <div className="absolute inset-0 bg-black/20 transition-colors duration-500 group-hover:bg-black/40" />
-                                <span className="relative z-10 font-serif text-lg tracking-wide text-white drop-shadow-md md:text-xl">
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/5 to-transparent transition-colors duration-500 group-hover:from-black/55" />
+                                <span className="relative z-10 mb-5 text-center text-sm font-medium tracking-[0.18em] text-white uppercase drop-shadow-md md:text-base">
                                     {category.name}
                                 </span>
                             </Link>
@@ -148,7 +148,7 @@ export default function Home({
                 </div>
             </section>
 
-            <section className="mx-auto max-w-[1500px] px-4 py-12 md:px-10 md:py-20">
+            <section className="mx-auto max-w-[1500px] px-4 py-12 md:px-10 md:py-16">
                 <SectionTitle
                     title="Seri Haji Itsar 2026"
                     subtitle="Kini Hadir Hangat, Terbungkus Cinta"
@@ -156,7 +156,7 @@ export default function Home({
 
                 <div className="flex flex-col items-center gap-6 md:gap-8 lg:flex-row">
                     <FadeInOnScroll className="w-full lg:w-[45%]">
-                        <div className="group relative aspect-[4/3] w-full overflow-hidden rounded-sm">
+                        <div className="group relative aspect-[4/3] w-full overflow-hidden bg-[#f7f7f7]">
                             <img
                                 src={productImage(hajjSeries[0], 8)}
                                 alt={
@@ -219,9 +219,9 @@ export default function Home({
                                         href={detail.url({
                                             query: { product: item.slug },
                                         })}
-                                        className="group flex flex-col text-center"
+                                        className="group flex flex-col text-left"
                                     >
-                                        <div className="relative mb-3 aspect-[3/4] overflow-hidden rounded-sm bg-background">
+                                        <div className="relative mb-3 aspect-[3/4] overflow-hidden bg-[#f7f7f7]">
                                             <img
                                                 src={productImage(item, index)}
                                                 alt={item.name}
@@ -230,10 +230,10 @@ export default function Home({
                                                 decoding="async"
                                             />
                                         </div>
-                                        <h3 className="truncate px-1 text-[9px] font-semibold md:text-[10px]">
+                                        <h3 className="line-clamp-2 min-h-[2.5em] px-0 text-[10px] leading-tight font-medium text-[#272727] md:text-[11px]">
                                             {item.name}
                                         </h3>
-                                        <p className="mb-2 text-[9px] text-muted-foreground md:text-[10px]">
+                                        <p className="mb-2 text-[10px] font-medium text-[#3d3d3d] md:text-[11px]">
                                             {formatPrice(
                                                 item.sale_price ?? item.price,
                                             )}
@@ -244,7 +244,7 @@ export default function Home({
                                                 .map((color) => (
                                                     <span
                                                         key={color.hex}
-                                                        className="h-2.5 w-2.5 rounded-full border border-gray-200 md:h-3 md:w-3"
+                                                        className="h-2.5 w-2.5 rounded-full border border-[#e7e2de] md:h-3 md:w-3"
                                                         style={{
                                                             backgroundColor:
                                                                 color.hex,
@@ -286,17 +286,17 @@ export default function Home({
             </section>
 
             <FadeInOnScroll>
-                <section className="relative mt-6 mb-12 h-[250px] w-full overflow-hidden md:mt-10 md:mb-20 md:h-[400px]">
+                <section className="relative mt-6 mb-12 h-[250px] w-full overflow-hidden md:mt-10 md:mb-20 md:h-[420px]">
                     <div
                         className="absolute inset-0 bg-cover bg-center"
                         style={{
                             backgroundImage: `url('${bannerImage(promoBanner, '/img/sarah-khan-R7p66Oj8ZOQ-unsplash.webp')}')`,
                         }}
                     />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/10">
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/15">
                         <Link
                             href={promoBanner?.button_url ?? list.url()}
-                            className="rounded-sm border border-white px-5 py-2 text-[9px] font-bold tracking-widest text-white uppercase backdrop-blur-sm transition-colors hover:bg-white hover:text-black md:px-6 md:text-[10px]"
+                            className="border border-white px-7 py-3 text-[10px] font-semibold tracking-[0.18em] text-white uppercase backdrop-blur-sm transition-colors hover:bg-white hover:text-black md:px-8 md:text-[11px]"
                         >
                             {promoBanner?.button_text ?? 'Discover'}
                         </Link>
@@ -408,7 +408,7 @@ function HeroSlider({ heroBanners }: { heroBanners: BannerCard[] }) {
     }, [currentIndex, images.length]);
 
     return (
-        <section className="relative h-[60vh] w-full overflow-hidden md:h-[85vh]">
+        <section className="relative h-[62vh] w-full overflow-hidden bg-[#f7f7f7] md:h-[82vh]">
             <div
                 ref={sliderRef}
                 onScroll={updateCurrentSlide}
@@ -430,7 +430,7 @@ function HeroSlider({ heroBanners }: { heroBanners: BannerCard[] }) {
                             draggable={false}
                             className="h-full w-full object-cover"
                         />
-                        <div className="absolute inset-0 bg-black/10" />
+                        <div className="absolute inset-0 bg-black/5" />
                     </div>
                 ))}
             </div>
@@ -443,7 +443,7 @@ function HeroSlider({ heroBanners }: { heroBanners: BannerCard[] }) {
                         className={`h-0.5 transition-all duration-300 ${
                             index === currentIndex
                                 ? 'w-10 bg-white'
-                                : 'w-6 bg-white/50'
+                                : 'w-6 bg-white/45'
                         }`}
                         aria-hidden="true"
                     />
@@ -510,11 +510,11 @@ function SectionTitle({
     subtitle: string;
 }) {
     return (
-        <div className="mb-8 text-center md:mb-12">
-            <h2 className="mb-2 font-serif text-xl text-primary italic md:text-3xl">
+        <div className="mb-8 text-center md:mb-10">
+            <h2 className="mb-2 text-2xl tracking-normal text-[#171717] uppercase md:text-3xl">
                 {title}
             </h2>
-            <p className="text-[10px] tracking-[0.1em] text-muted-foreground uppercase md:text-xs">
+            <p className="mx-auto max-w-xl text-[10px] tracking-[0.12em] text-[#6f6f6f] uppercase md:text-xs">
                 {subtitle}
             </p>
         </div>
@@ -545,13 +545,13 @@ function ProductTile({
                 href={detail.url({ query: { product: product.slug } })}
                 className={`group flex cursor-pointer flex-col ${centered ? 'text-center' : ''}`}
             >
-                <div className="relative mb-3 aspect-[3/4] overflow-hidden rounded-sm">
+                <div className="relative mb-3 aspect-[3/4] overflow-hidden bg-[#f7f7f7]">
                     {product.label && (
                         <span
                             className={`absolute top-2 left-2 z-10 px-2 py-1 text-[8px] font-bold tracking-widest uppercase ${
                                 product.label.includes('%')
-                                    ? 'bg-destructive text-destructive-foreground'
-                                    : 'bg-background/90 text-secondary-foreground'
+                                    ? 'bg-[#d83f3f] text-white'
+                                    : 'bg-white/90 text-[#151515]'
                             }`}
                         >
                             {product.label}
@@ -564,34 +564,29 @@ function ProductTile({
                         loading="lazy"
                         decoding="async"
                     />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 transition-opacity group-hover:opacity-100">
-                        <Heart
-                            className="text-white drop-shadow-md"
-                            size={20}
-                        />
-                    </div>
+                 
                 </div>
                 <div className={centered ? 'px-1 text-center' : 'px-1'}>
-                    <h3 className="mb-1 truncate text-[10px] font-semibold md:text-xs">
+                    <h3 className="mb-1 line-clamp-2 min-h-[2.75em] text-[10px] leading-snug font-medium text-[#272727] md:text-xs">
                         {product.name}
                     </h3>
-                    <div className="mb-2 flex flex-wrap items-center gap-1.5 text-[10px] text-muted-foreground md:mb-3 md:text-xs">
+                    <div className="mb-2 flex flex-wrap items-center gap-1.5 text-[10px] font-medium text-[#3d3d3d] md:mb-3 md:text-xs">
                         <span>
                             {formatPrice(product.sale_price ?? product.price)}
                         </span>
                         {product.sale_price !== null && (
-                            <span className="line-through">
+                            <span className="text-[#8b827c] line-through">
                                 {formatPrice(product.price)}
                             </span>
                         )}
                     </div>
                     {button ? (
-                        <span className="block w-full rounded-sm bg-primary py-2 text-center text-[9px] font-bold tracking-widest text-primary-foreground uppercase transition-colors hover:bg-primary/90 md:text-[10px]">
-                            Buy
+                        <span className="block w-full bg-[#151515] py-2.5 text-center text-[9px] font-semibold tracking-[0.16em] text-white uppercase transition-colors hover:bg-[#030303] md:text-[10px]">
+                            Choose options
                         </span>
                     ) : (
-                        <span className="border-b border-foreground pb-0.5 text-[9px] font-bold tracking-wider uppercase transition-colors hover:border-primary hover:text-primary md:text-[10px]">
-                            Buy
+                        <span className="border-b border-[#151515] pb-0.5 text-[9px] font-semibold tracking-[0.14em] text-[#151515] uppercase transition-colors hover:border-[#a55353] hover:text-[#a55353] md:text-[10px]">
+                            Choose options
                         </span>
                     )}
                 </div>

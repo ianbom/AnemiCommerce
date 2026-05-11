@@ -59,12 +59,12 @@ export function ChartAreaInteractive() {
                             >
                                 <stop
                                     offset="5%"
-                                    stopColor="#4A2525"
+                                    stopColor="#B98B63"
                                     stopOpacity={0.3}
                                 />
                                 <stop
                                     offset="95%"
-                                    stopColor="#4A2525"
+                                    stopColor="#B98B63"
                                     stopOpacity={0}
                                 />
                             </linearGradient>
@@ -77,12 +77,12 @@ export function ChartAreaInteractive() {
                             >
                                 <stop
                                     offset="5%"
-                                    stopColor="#B6574B"
+                                    stopColor="#9A6B45"
                                     stopOpacity={0.4}
                                 />
                                 <stop
                                     offset="95%"
-                                    stopColor="#B6574B"
+                                    stopColor="#9A6B45"
                                     stopOpacity={0}
                                 />
                             </linearGradient>
@@ -128,14 +128,14 @@ export function ChartAreaInteractive() {
                             contentStyle={{
                                 borderRadius: '8px',
                                 fontSize: '12px',
-                                border: '1px solid #EADBD8',
+                                border: '1px solid #EADFD2',
                             }}
                         />
                         <Area
                             yAxisId="revenue"
                             type="monotone"
                             dataKey="revenue"
-                            stroke="#4A2525"
+                            stroke="#B98B63"
                             strokeWidth={2}
                             fill="url(#colorRevenue)"
                         />
@@ -143,7 +143,7 @@ export function ChartAreaInteractive() {
                             yAxisId="orders"
                             type="monotone"
                             dataKey="orders"
-                            stroke="#B6574B"
+                            stroke="#9A6B45"
                             strokeWidth={2}
                             fill="url(#colorOrders)"
                         />
@@ -151,11 +151,11 @@ export function ChartAreaInteractive() {
                 </ResponsiveContainer>
                 <div className="mt-4 flex items-center gap-6 text-[12px] text-muted-foreground">
                     <span className="flex items-center gap-1.5">
-                        <span className="h-2.5 w-2.5 rounded-full bg-[#4A2525]" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#B98B63]" />
                         Revenue
                     </span>
                     <span className="flex items-center gap-1.5">
-                        <span className="h-2.5 w-2.5 rounded-full bg-[#B6574B]" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#9A6B45]" />
                         Orders
                     </span>
                 </div>

@@ -720,7 +720,7 @@ function ProductTile({
                 href={detail.url({ query: { product: product.slug } })}
                 className="group flex h-full cursor-pointer flex-col"
             >
-                <div className="relative mb-3 aspect-[3/4] overflow-hidden rounded-sm bg-muted">
+                <div className="relative mb-3 aspect-[3/4] overflow-hidden bg-[#f7f7f7]">
                     <img
                         src={
                             product.image ??
@@ -734,7 +734,7 @@ function ProductTile({
                     <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/5" />
 
                     {product.badge && (
-                        <div className="absolute top-2 left-2 rounded-sm bg-primary px-2 py-1 text-[8px] font-medium tracking-widest text-primary-foreground uppercase shadow-sm">
+                        <div className="absolute top-2 left-2 bg-[#d83f3f] px-2 py-1 text-[8px] font-medium tracking-widest text-white uppercase shadow-sm">
                             {product.badge}
                         </div>
                     )}
@@ -747,7 +747,7 @@ function ProductTile({
                         }
                         onClick={toggleWishlist}
                         disabled={isWishlistProcessing}
-                        className="absolute right-2 bottom-2 text-white/90 drop-shadow-md transition-colors hover:scale-110 hover:text-white disabled:cursor-default"
+                        className="absolute top-2 right-2 text-white drop-shadow-md transition-colors hover:text-white/80 disabled:cursor-default"
                     >
                         <Heart
                             size={18}
@@ -762,7 +762,7 @@ function ProductTile({
                         {product.colors.map((color) => (
                             <div
                                 key={color.hex}
-                                className="h-[12px] w-[12px] rounded-full border border-gray-200/60 shadow-sm"
+                                className="h-[12px] w-[12px] rounded-full border border-[#e7e2de]"
                                 style={{ backgroundColor: color.hex }}
                                 title={color.name ?? color.hex}
                             />
@@ -770,23 +770,25 @@ function ProductTile({
                     </div>
                 )}
 
-                <h3 className="mb-1 text-[11px] leading-[1.4] font-semibold text-foreground transition-colors hover:text-primary">
+                <h3 className="mb-1 line-clamp-2 min-h-[2.75em] text-[11px] leading-snug font-medium text-[#272727] transition-colors hover:text-[#a55353]">
                     {product.title}
                 </h3>
 
-                <div className="mb-4 flex flex-wrap items-center gap-2 text-[11px] text-secondary-foreground">
+                <div className="mb-4 flex flex-wrap items-center gap-2 text-[11px] font-medium text-[#3d3d3d]">
                     <span>
                         {formatPrice(product.sale_price ?? product.price)}
                     </span>
                     {product.sale_price !== null && (
-                        <span className="text-muted-foreground line-through">
+                        <span className="text-[#8b827c] line-through">
                             {formatPrice(product.price)}
                         </span>
                     )}
                 </div>
 
-                <span className="mt-auto w-full rounded-full border border-input py-2 text-center text-[11px] font-semibold tracking-wider text-secondary-foreground shadow-sm transition-all duration-300 hover:border-primary hover:bg-primary hover:text-primary-foreground hover:shadow-md active:scale-95">
-                    {product.available_stock > 0 ? 'Beli' : 'Habis'}
+                <span className="mt-auto w-full border border-[#151515] py-2.5 text-center text-[10px] font-semibold tracking-[0.16em] text-[#151515] uppercase transition-all duration-300 hover:bg-[#151515] hover:text-white active:scale-[0.98]">
+                    {product.available_stock > 0
+                        ? 'Choose options'
+                        : 'Sold out'}
                 </span>
             </Link>
         </FadeInOnScroll>

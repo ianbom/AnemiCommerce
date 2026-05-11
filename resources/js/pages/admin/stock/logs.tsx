@@ -120,7 +120,7 @@ export default function StockLogs({ logs, filters }: Props) {
                 {/* Header */}
                 <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
                     <div>
-                        <p className="mb-1 text-[11px] font-bold tracking-widest text-[#7F2020]/50 uppercase">
+                        <p className="mb-1 text-[11px] font-bold tracking-widest text-[#B98B63]/50 uppercase">
                             Catalog Management
                         </p>
                         <h1 className="font-serif text-3xl leading-tight text-zinc-900">
@@ -173,7 +173,7 @@ export default function StockLogs({ logs, filters }: Props) {
                             <Button
                                 type="submit"
                                 size="sm"
-                                className="h-9 gap-1.5 bg-[#7F2020] text-white hover:bg-[#5F1717]"
+                                className="h-9 gap-1.5 bg-[#B98B63] text-white hover:bg-[#9A6B45]"
                             >
                                 <Search className="h-3.5 w-3.5" /> Search
                             </Button>
@@ -264,7 +264,7 @@ export default function StockLogs({ logs, filters }: Props) {
                                                             ? `/admin/products/${log.product_id}`
                                                             : '#'
                                                     }
-                                                    className="flex flex-col rounded-md transition-colors hover:text-[#7F2020] focus-visible:ring-2 focus-visible:ring-[#7F2020]/30 focus-visible:outline-none"
+                                                    className="flex flex-col rounded-md transition-colors hover:text-[#B98B63] focus-visible:ring-2 focus-visible:ring-[#B98B63]/30 focus-visible:outline-none"
                                                     aria-disabled={!log.product_id}
                                                 >
                                                     <span className="font-semibold text-zinc-900">
@@ -403,7 +403,7 @@ export default function StockLogs({ logs, filters }: Props) {
                                         className={[
                                             'h-8 min-w-8 rounded-lg px-2.5 text-xs font-medium transition-colors',
                                             link.active
-                                                ? 'bg-[#7F2020] text-white shadow-sm'
+                                                ? 'bg-[#B98B63] text-white shadow-sm'
                                                 : !link.url
                                                   ? 'cursor-not-allowed text-zinc-300'
                                                   : 'text-zinc-500 hover:bg-zinc-100',
