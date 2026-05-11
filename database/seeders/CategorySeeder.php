@@ -7,61 +7,39 @@ use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
+        // Data kategori dikurasi dari katalog https://zaskiamecca.com/.
         $categories = [
-            [
-                'name' => "Women's Tops",
-                'slug' => 'womens-tops',
-                'description' => 'Koleksi atasan wanita untuk daily wear, office look, dan weekend style.',
-                'image_url' => 'https://images.unsplash.com/photo-1708151729075-89f1fc21e19e?q=80&w=626&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                'is_active' => true,
-            ],
-            [
-                'name' => "Women's Dresses",
-                'slug' => 'womens-dresses',
-                'description' => 'Dress dengan siluet modern untuk momen kasual hingga acara spesial.',
-                'image_url' => 'https://plus.unsplash.com/premium_photo-1680012590879-39a8ec7c7cea?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                'is_active' => true,
-            ],
-            [
-                'name' => "Men's Shirts",
-                'slug' => 'mens-shirts',
-                'description' => 'Pilihan kemeja pria dari bahan breathable untuk smart casual sampai formal.',
-                'image_url' => 'https://images.unsplash.com/photo-1772474511860-9cef46d98ea6?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Outerwear',
-                'slug' => 'outerwear',
-                'description' => 'Layering pieces seperti blazer, cardigan, dan jacket dengan cutting rapi.',
-                'image_url' => 'https://plus.unsplash.com/premium_photo-1679000359310-13de627abdf4?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Accessories',
-                'slug' => 'accessories',
-                'description' => 'Aksesori pelengkap gaya harian, dari hijab hingga tas statement.',
-                'image_url' => 'https://images.unsplash.com/photo-1590213363762-49b45897b5a7?q=80&w=1073&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Footwear',
-                'slug' => 'footwear',
-                'description' => 'Sepatu dengan fokus kenyamanan dan desain versatile untuk berbagai aktivitas.',
-                'image_url' => 'https://images.unsplash.com/photo-1584339312444-6952d098e152?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                'is_active' => true,
-            ],
+        [
+            'name' => 'Hijab & Scarf',
+            'slug' => 'hijab-scarf',
+            'description' => 'Koleksi scarf dan hijab segi empat ZM Zaskia Mecca dari Voal Alaska Premium.',
+            'image_url' => 'https://cdn.shopify.com/s/files/1/0083/3241/0942/files/26fd858db89a4f018c0536c484e68ea6_tplv-aphluv4xwc-origin-jpeg.jpg?v=1777517735',
+            'is_active' => true,
+        ],
+        [
+            'name' => 'Women\'s Tunics',
+            'slug' => 'womens-tunics',
+            'description' => 'Tunik wanita ZM Zaskia Mecca untuk tampilan modest, feminin, dan nyaman.',
+            'image_url' => 'https://cdn.shopify.com/s/files/1/0083/3241/0942/files/sg-11134201-825zr-ml31rmqs52io5f.webp?v=1771996057',
+            'is_active' => true,
+        ],
+        [
+            'name' => 'Men\'s Shirts',
+            'slug' => 'mens-shirts',
+            'description' => 'Kemeja pria ZM Zaskia Mecca dengan desain rapi untuk momen harian hingga raya.',
+            'image_url' => 'https://cdn.shopify.com/s/files/1/0083/3241/0942/files/f38eec2ded12437ebbe163d5390917b8_tplv-aphluv4xwc-origin-jpeg.webp?v=1774415487',
+            'is_active' => true,
+        ],
+        [
+            'name' => 'Outerwear',
+            'slug' => 'outerwear',
+            'description' => 'Outerwear dan vest daily ZM Zaskia Mecca untuk layering kasual.',
+            'image_url' => 'https://cdn.shopify.com/s/files/1/0083/3241/0942/files/a80a91f2c2984cec9533ecea991a3aa6_tplv-o3syd03w52-origin-jpeg.webp?v=1774414928',
+            'is_active' => true,
+        ]
         ];
-
-        foreach ($categories as $category) {
-            Category::query()->updateOrCreate(
-                ['slug' => $category['slug']],
-                $category,
-            );
-        }
+        foreach ($categories as $category) { Category::query()->updateOrCreate(['slug' => $category['slug']], $category); }
     }
 }

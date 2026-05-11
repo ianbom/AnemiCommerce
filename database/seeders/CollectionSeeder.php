@@ -7,64 +7,56 @@ use Illuminate\Database\Seeder;
 
 class CollectionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
+        // Data collection dikurasi dari https://zaskiamecca.com/collections.json dan katalog produk.
         $collections = [
-            [
-                'name' => 'Summer Linen 2026',
-                'slug' => 'summer-linen-2026',
-                'description' => 'Edit koleksi linen ringan dengan warna netral untuk cuaca tropis.',
-                'banner_desktop_url' => 'https://picsum.photos/seed/collection-summer-linen-desktop/1600/700',
-                'banner_mobile_url' => 'https://picsum.photos/seed/collection-summer-linen-mobile/900/1200',
-                'is_featured' => true,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Eid Radiance',
-                'slug' => 'eid-radiance',
-                'description' => 'Pilihan outfit dan aksesori bernuansa elegan untuk momen perayaan.',
-                'banner_desktop_url' => 'https://picsum.photos/seed/collection-eid-radiance-desktop/1600/700',
-                'banner_mobile_url' => 'https://picsum.photos/seed/collection-eid-radiance-mobile/900/1200',
-                'is_featured' => true,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Workwear Essentials',
-                'slug' => 'workwear-essentials',
-                'description' => 'Koleksi office-ready dengan cutting clean untuk weekday wardrobe.',
-                'banner_desktop_url' => 'https://picsum.photos/seed/collection-workwear-desktop/1600/700',
-                'banner_mobile_url' => 'https://picsum.photos/seed/collection-workwear-mobile/900/1200',
-                'is_featured' => true,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Weekend Casual',
-                'slug' => 'weekend-casual',
-                'description' => 'Item santai untuk aktivitas akhir pekan dengan material nyaman.',
-                'banner_desktop_url' => 'https://picsum.photos/seed/collection-weekend-desktop/1600/700',
-                'banner_mobile_url' => 'https://picsum.photos/seed/collection-weekend-mobile/900/1200',
-                'is_featured' => false,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Monochrome Studio',
-                'slug' => 'monochrome-studio',
-                'description' => 'Rangkaian item hitam-putih minimalis yang mudah dipadukan lintas season.',
-                'banner_desktop_url' => 'https://picsum.photos/seed/collection-monochrome-desktop/1600/700',
-                'banner_mobile_url' => 'https://picsum.photos/seed/collection-monochrome-mobile/900/1200',
-                'is_featured' => false,
-                'is_active' => true,
-            ],
+        [
+            'name' => 'Bunga Pertiwi',
+            'slug' => 'bunga-pertiwi',
+            'description' => 'Scarf Bunga Pertiwi edisi pahlawan perempuan Indonesia dari ZM Zaskia Mecca.',
+            'banner_desktop_url' => 'https://cdn.shopify.com/s/files/1/0083/3241/0942/files/9028d5d5ac48461ea36182c1b41855d2_tplv-aphluv4xwc-origin-jpeg.jpg?v=1777517636',
+            'banner_mobile_url' => 'https://cdn.shopify.com/s/files/1/0083/3241/0942/files/9028d5d5ac48461ea36182c1b41855d2_tplv-aphluv4xwc-origin-jpeg.jpg?v=1777517636',
+            'is_featured' => true,
+            'is_active' => true,
+        ],
+        [
+            'name' => 'Primadona Series',
+            'slug' => 'primadona-series',
+            'description' => 'Koleksi Raya Primadona Series ZM Zaskia Mecca.',
+            'banner_desktop_url' => 'https://cdn.shopify.com/s/files/1/0083/3241/0942/files/sg-11134201-825zr-ml31rmqs52io5f.webp?v=1771996057',
+            'banner_mobile_url' => 'https://cdn.shopify.com/s/files/1/0083/3241/0942/files/sg-11134201-825zr-ml31rmqs52io5f.webp?v=1771996057',
+            'is_featured' => true,
+            'is_active' => true,
+        ],
+        [
+            'name' => 'Jejak Teduh',
+            'slug' => 'jejak-teduh',
+            'description' => 'Koleksi Jejak Teduh terinspirasi budaya Nusantara.',
+            'banner_desktop_url' => 'https://cdn.shopify.com/s/files/1/0083/3241/0942/files/sg-11134201-8262w-ml3ns60k2vie4a.webp?v=1771996087',
+            'banner_mobile_url' => 'https://cdn.shopify.com/s/files/1/0083/3241/0942/files/sg-11134201-8262w-ml3ns60k2vie4a.webp?v=1771996087',
+            'is_featured' => true,
+            'is_active' => true,
+        ],
+        [
+            'name' => 'Monogram Series',
+            'slug' => 'monogram-series',
+            'description' => 'Koleksi hijab premium motif monogram ZM Zaskia Mecca.',
+            'banner_desktop_url' => 'https://cdn.shopify.com/s/files/1/0083/3241/0942/files/150315b1e1da4470875aa4f30e3b92bf_tplv-aphluv4xwc-origin-jpeg.webp?v=1774415520',
+            'banner_mobile_url' => 'https://cdn.shopify.com/s/files/1/0083/3241/0942/files/150315b1e1da4470875aa4f30e3b92bf_tplv-aphluv4xwc-origin-jpeg.webp?v=1774415520',
+            'is_featured' => true,
+            'is_active' => true,
+        ],
+        [
+            'name' => 'Daily Wear',
+            'slug' => 'daily-wear',
+            'description' => 'Produk daily ZM Zaskia Mecca untuk gaya harian.',
+            'banner_desktop_url' => 'https://cdn.shopify.com/s/files/1/0083/3241/0942/files/a80a91f2c2984cec9533ecea991a3aa6_tplv-o3syd03w52-origin-jpeg.webp?v=1774414928',
+            'banner_mobile_url' => 'https://cdn.shopify.com/s/files/1/0083/3241/0942/files/a80a91f2c2984cec9533ecea991a3aa6_tplv-o3syd03w52-origin-jpeg.webp?v=1774414928',
+            'is_featured' => false,
+            'is_active' => true,
+        ]
         ];
-
-        foreach ($collections as $collection) {
-            Collection::query()->updateOrCreate(
-                ['slug' => $collection['slug']],
-                $collection,
-            );
-        }
+        foreach ($collections as $collection) { Collection::query()->updateOrCreate(['slug' => $collection['slug']], $collection); }
     }
 }
