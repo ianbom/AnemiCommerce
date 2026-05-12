@@ -151,7 +151,7 @@ export function ChartAreaInteractive() {
                 </ResponsiveContainer>
                 <div className="mt-4 flex items-center gap-6 text-[12px] text-muted-foreground">
                     <span className="flex items-center gap-1.5">
-                        <span className="h-2.5 w-2.5 rounded-full bg-[#151515]" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#B98B63]" />
                         Revenue
                     </span>
                     <span className="flex items-center gap-1.5">

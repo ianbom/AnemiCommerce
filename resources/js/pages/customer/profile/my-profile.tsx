@@ -291,7 +291,7 @@ export default function MyProfile() {
                             <button
                                 type="submit"
                                 disabled={profileForm.processing}
-                                className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-[#151515] px-6 py-2.5 text-[12px] font-bold tracking-wider text-white transition-colors hover:bg-[#9A6B45] disabled:cursor-not-allowed disabled:opacity-60"
+                                className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-[#B98B63] px-6 py-2.5 text-[12px] font-bold tracking-wider text-white transition-colors hover:bg-[#9A6B45] disabled:cursor-not-allowed disabled:opacity-60"
                             >
                                 {profileForm.processing && (
                                     <Loader2
@@ -382,7 +382,7 @@ export default function MyProfile() {
                                 <button
                                     type="submit"
                                     disabled={passwordForm.processing}
-                                    className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#151515] px-6 py-2.5 text-[12px] font-bold tracking-wider text-white transition-colors hover:bg-[#9A6B45] disabled:cursor-not-allowed disabled:opacity-60"
+                                    className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#B98B63] px-6 py-2.5 text-[12px] font-bold tracking-wider text-white transition-colors hover:bg-[#9A6B45] disabled:cursor-not-allowed disabled:opacity-60"
                                 >
                                     {passwordForm.processing && (
                                         <Loader2

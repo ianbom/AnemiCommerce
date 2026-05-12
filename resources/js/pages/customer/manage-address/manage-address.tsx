@@ -396,7 +396,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                 <button
                     type="button"
                     onClick={() => openModal()}
-                    className="flex items-center justify-center rounded-lg bg-[#151515] px-6 py-2.5 text-[12px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg active:scale-[0.98]"
+                    className="flex items-center justify-center rounded-lg bg-[#B98B63] px-6 py-2.5 text-[12px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg active:scale-[0.98]"
                 >
                     <Plus size={16} className="mr-2" /> Tambah Alamat Baru
                 </button>
@@ -438,7 +438,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                             >
                                 {address.is_default && (
                                     <div className="absolute top-0 right-8 -translate-y-1/2">
-                                        <span className="rounded-full bg-[#151515] px-3 py-1 text-[10px] font-bold text-white shadow-sm">
+                                        <span className="rounded-full bg-[#B98B63] px-3 py-1 text-[10px] font-bold text-white shadow-sm">
                                             Alamat Utama
                                         </span>
                                     </div>
@@ -794,7 +794,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                     <button
                                         type="submit"
                                         disabled={form.processing}
-                                        className="rounded-md bg-[#151515] px-6 py-2.5 text-[12px] font-bold text-white transition-colors hover:bg-[#9A6B45] disabled:cursor-not-allowed disabled:opacity-70"
+                                        className="rounded-md bg-[#B98B63] px-6 py-2.5 text-[12px] font-bold text-white transition-colors hover:bg-[#9A6B45] disabled:cursor-not-allowed disabled:opacity-70"
                                     >
                                         {form.processing
                                             ? 'Menyimpan...'

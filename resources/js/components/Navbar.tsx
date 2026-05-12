@@ -91,7 +91,7 @@ export default function Navbar({
                             />
                         </Link>
                         {cartCount > 0 && (
-                            <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center bg-[#151515] px-1 text-[9px] font-bold text-white">
+                            <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center bg-[#B98B63] px-1 text-[9px] font-bold text-white">
                                 {cartBadge}
                             </span>
                         )}

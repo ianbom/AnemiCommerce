@@ -552,7 +552,7 @@ export default function ListProduct({ products, filters, options }: Props) {
                         <button
                             type="button"
                             onClick={() => setIsFilterOpen(false)}
-                            className="bg-primary py-3 text-[11px] font-semibold tracking-wider text-primary-foreground uppercase transition-colors hover:bg-[#030303]"
+                            className="bg-primary py-3 text-[11px] font-semibold tracking-wider text-primary-foreground uppercase transition-colors hover:bg-[#9A6B45]"
                         >
                             Lihat Produk
                         </button>
@@ -579,7 +579,7 @@ export default function ListProduct({ products, filters, options }: Props) {
                                 <button
                                     type="button"
                                     onClick={() => setIsFilterOpen(true)}
-                                    className="group inline-flex min-w-48 items-center justify-between border border-[#151515] px-5 py-3 text-left transition-colors hover:bg-[#151515] hover:text-white"
+                                    className="group inline-flex min-w-48 items-center justify-between border border-[#B98B63] px-5 py-3 text-left transition-colors hover:bg-[#B98B63] hover:text-white"
                                 >
                                     <span>
                                         <span className="block text-[11px] font-semibold tracking-[0.22em] uppercase">

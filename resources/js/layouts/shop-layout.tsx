@@ -50,7 +50,7 @@ export default function ShopLayout({ children }: ShopLayoutProps) {
     ];
 
     return (
-        <div className="flex min-h-screen flex-col overflow-x-hidden bg-white font-sans text-[#272727] selection:bg-[#151515] selection:text-white">
+        <div className="flex min-h-screen flex-col overflow-x-hidden bg-white font-sans text-[#272727] selection:bg-[#B98B63] selection:text-white">
             <Navbar cartCount={cartCount} collections={featuredCollections} />
             <main className="mx-auto w-full max-w-md flex-grow bg-white pb-24 md:max-w-none md:pb-0">
                 {children}
@@ -84,7 +84,7 @@ export default function ShopLayout({ children }: ShopLayoutProps) {
                                     />
                                     {'count' in item &&
                                         Number(item.count ?? 0) > 0 && (
-                                            <span className="absolute -top-2 -right-2 flex h-4 min-w-4 items-center justify-center bg-[#151515] px-1 text-[9px] leading-none font-semibold text-white">
+                                            <span className="absolute -top-2 -right-2 flex h-4 min-w-4 items-center justify-center bg-[#B98B63] px-1 text-[9px] leading-none font-semibold text-white">
                                                 {Number(item.count ?? 0) > 99
                                                     ? '99+'
                                                     : item.count}

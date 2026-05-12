@@ -574,11 +574,11 @@ function ProductTile({
                         )}
                     </div>
                     {button ? (
-                        <span className="block w-full bg-[#151515] py-2.5 text-center text-[9px] font-semibold tracking-[0.16em] text-white uppercase transition-colors hover:bg-[#030303] md:text-[10px]">
+                        <span className="block w-full bg-[#B98B63] py-2.5 text-center text-[9px] font-semibold tracking-[0.16em] text-white uppercase transition-colors hover:bg-[#9A6B45] md:text-[10px]">
                             Choose options
                         </span>
                     ) : (
-                        <span className="border-b border-[#151515] pb-0.5 text-[9px] font-semibold tracking-[0.14em] text-[#151515] uppercase transition-colors hover:border-[#a55353] hover:text-[#a55353] md:text-[10px]">
+                        <span className="border-b border-[#B98B63] pb-0.5 text-[9px] font-semibold tracking-[0.14em] text-[#B98B63] uppercase transition-colors hover:border-[#9A6B45] hover:text-[#9A6B45] md:text-[10px]">
                             Choose options
                         </span>
                     )}

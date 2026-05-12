@@ -148,10 +148,10 @@ export default function ProfileLayout({
                                     <Link
                                         key={item.id}
                                         href={item.href}
-                                        className={`group relative mb-1 flex items-center gap-3 py-2.5 text-[13px] transition-colors ${isActive ? 'font-semibold text-[#151515]' : 'text-[#6f6f6f] hover:text-[#151515]'}`}
+                                        className={`group relative mb-1 flex items-center gap-3 py-2.5 text-[13px] transition-colors ${isActive ? 'font-semibold text-[#B98B63]' : 'text-[#6f6f6f] hover:text-[#B98B63]'}`}
                                     >
                                         <span
-                                            className={`absolute top-1/2 -left-5 h-5 w-px -translate-y-1/2 transition-colors ${isActive ? 'bg-[#151515]' : 'bg-transparent group-hover:bg-[#e7e2de]'}`}
+                                            className={`absolute top-1/2 -left-5 h-5 w-px -translate-y-1/2 transition-colors ${isActive ? 'bg-[#B98B63]' : 'bg-transparent group-hover:bg-[#e7e2de]'}`}
                                         />
                                         <Icon
                                             size={16}

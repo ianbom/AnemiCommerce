@@ -351,7 +351,7 @@ export default function ListOrder({ orders, filters }: Props) {
                                                     ? 'noreferrer'
                                                     : undefined
                                             }
-                                            className="flex-1 rounded-lg bg-[#151515] py-2.5 text-center text-[12px] font-bold text-white transition-colors hover:bg-[#9A6B45] lg:w-full"
+                                            className="flex-1 rounded-lg bg-[#B98B63] py-2.5 text-center text-[12px] font-bold text-white transition-colors hover:bg-[#9A6B45] lg:w-full"
                                         >
                                             Bayar Sekarang
                                         </a>
@@ -359,21 +359,21 @@ export default function ListOrder({ orders, filters }: Props) {
                                     {order.order_status === 'shipped' && (
                                         <Link
                                             href={orderShow.url(order.id)}
-                                            className="flex-1 rounded-lg bg-[#151515] py-2.5 text-center text-[12px] font-bold text-white transition-colors hover:bg-[#9A6B45] lg:w-full"
+                                            className="flex-1 rounded-lg bg-[#B98B63] py-2.5 text-center text-[12px] font-bold text-white transition-colors hover:bg-[#9A6B45] lg:w-full"
                                         >
                                             Lacak Pesanan
                                         </Link>
                                     )}
                                     <Link
                                         href={orderShow.url(order.id)}
-                                        className="flex-1 rounded-lg border border-[#e7e2de] bg-white py-2.5 text-center text-[12px] font-bold text-[#151515] transition-colors hover:border-[#6f6f6f] hover:bg-[#ffffff] lg:w-full"
+                                        className="flex-1 rounded-lg border border-[#e7e2de] bg-white py-2.5 text-center text-[12px] font-bold text-[#B98B63] transition-colors hover:border-[#6f6f6f] hover:bg-[#ffffff] lg:w-full"
                                     >
                                         Lihat Detail
                                     </Link>
                                     {canBuyAgain(order.order_status) && (
                                         <Link
                                             href="/list"
-                                            className="flex-1 rounded-lg bg-[#151515] py-2.5 text-center text-[12px] font-bold text-white transition-colors hover:bg-[#9A6B45] lg:w-full"
+                                            className="flex-1 rounded-lg bg-[#B98B63] py-2.5 text-center text-[12px] font-bold text-white transition-colors hover:bg-[#9A6B45] lg:w-full"
                                         >
                                             Beli Lagi
                                         </Link>
