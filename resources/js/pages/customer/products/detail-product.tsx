@@ -613,11 +613,11 @@ function DetailProductContent({
                                             !selectedVariant ||
                                             cartForm.processing
                                         }
-                                        className={`flex h-full min-h-12 w-full items-center justify-center border border-[#151515] px-3 py-3.5 text-center text-[10px] font-semibold tracking-[0.16em] text-[#151515] uppercase transition-all active:scale-[0.99] sm:text-[11px] ${
+                                        className={`flex h-full min-h-12 w-full items-center justify-center border border-[#B98B63] px-3 py-3.5 text-center text-[10px] font-semibold tracking-[0.16em] text-[#B98B63] uppercase transition-all active:scale-[0.99] sm:text-[11px] ${
                                             isAvailable &&
                                             selectedVariant &&
                                             !cartForm.processing
-                                                ? 'hover:bg-[#151515] hover:text-white'
+                                                ? 'hover:bg-[#B98B63] hover:text-white'
                                                 : 'cursor-not-allowed opacity-50'
                                         }`}
                                     >
@@ -642,11 +642,11 @@ function DetailProductContent({
                                         !selectedVariant ||
                                         cartForm.processing
                                     }
-                                    className={`flex min-h-12 min-w-0 items-center justify-center bg-[#151515] px-3 py-3.5 text-center text-[10px] font-semibold tracking-[0.16em] text-white uppercase transition-all active:scale-[0.99] sm:text-[11px] ${
+                                    className={`flex min-h-12 min-w-0 items-center justify-center bg-[#B98B63] px-3 py-3.5 text-center text-[10px] font-semibold tracking-[0.16em] text-white uppercase transition-all active:scale-[0.99] sm:text-[11px] ${
                                         isAvailable &&
                                         selectedVariant &&
                                         !cartForm.processing
-                                            ? 'hover:bg-[#030303]'
+                                            ? 'hover:bg-[#9A6B45]'
                                             : 'cursor-not-allowed opacity-50'
                                     }`}
                                 >

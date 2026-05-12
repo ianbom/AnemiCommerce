@@ -211,7 +211,7 @@ export default function CreateProduct() {
                         >
                             Preview Product
                         </Button>
-                        <Button className="h-10 rounded-lg bg-[#151515] px-6 font-medium text-white shadow-md transition-all hover:bg-[#9A6B45] hover:shadow-lg">
+                        <Button className="h-10 rounded-lg bg-[#B98B63] px-6 font-medium text-white shadow-md transition-all hover:bg-[#9A6B45] hover:shadow-lg">
                             Publish Product
                         </Button>
                     </div>
@@ -931,7 +931,7 @@ export default function CreateProduct() {
                                                                                 ),
                                                                         )
                                                                     }
-                                                                    className="scale-75 data-[state=checked]:bg-[#151515]"
+                                                                    className="scale-75 data-[state=checked]:bg-[#B98B63]"
                                                                 />
                                                             </td>
                                                             <td className="px-3 py-2 text-center">
@@ -1163,7 +1163,7 @@ export default function CreateProduct() {
                                         </div>
                                         <Switch
                                             defaultChecked
-                                            className="data-[state=checked]:bg-[#151515]"
+                                            className="data-[state=checked]:bg-[#B98B63]"
                                         />
                                     </div>
                                     <div className="group flex items-center justify-between">
@@ -1175,7 +1175,7 @@ export default function CreateProduct() {
                                         </div>
                                         <Switch
                                             defaultChecked
-                                            className="data-[state=checked]:bg-[#151515]"
+                                            className="data-[state=checked]:bg-[#B98B63]"
                                         />
                                     </div>
                                     <div className="group flex items-center justify-between">
@@ -1185,7 +1185,7 @@ export default function CreateProduct() {
                                                 Is Best Seller
                                             </Label>
                                         </div>
-                                        <Switch className="data-[state=checked]:bg-[#151515]" />
+                                        <Switch className="data-[state=checked]:bg-[#B98B63]" />
                                     </div>
                                 </div>
                             </div>
@@ -1341,7 +1341,7 @@ export default function CreateProduct() {
                         >
                             Save as Draft
                         </Button>
-                        <Button className="h-10 rounded-lg bg-[#151515] px-6 font-medium text-white shadow-md transition-all hover:bg-[#9A6B45] hover:shadow-lg">
+                        <Button className="h-10 rounded-lg bg-[#B98B63] px-6 font-medium text-white shadow-md transition-all hover:bg-[#9A6B45] hover:shadow-lg">
                             Publish Product
                         </Button>
                     </div>
@@ -1556,7 +1556,7 @@ function VariantModal({
                             onCheckedChange={(checked) =>
                                 set('active', checked)
                             }
-                            className="data-[state=checked]:bg-[#151515]"
+                            className="data-[state=checked]:bg-[#B98B63]"
                         />
                     </div>
                 </div>
@@ -1571,7 +1571,7 @@ function VariantModal({
                         Cancel
                     </Button>
                     <Button
-                        className="rounded-lg bg-[#151515] px-6 font-medium text-white shadow-md transition-all hover:bg-[#9A6B45]"
+                        className="rounded-lg bg-[#B98B63] px-6 font-medium text-white shadow-md transition-all hover:bg-[#9A6B45]"
                         onClick={() => onSave(form)}
                     >
                         {isNew ? 'Add Variant' : 'Save Changes'}

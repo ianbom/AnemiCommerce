@@ -22,29 +22,24 @@ export default function Navbar({
         <nav className="sticky top-0 z-50 border-b border-[#e7e2de] bg-white">
             {/* Mobile View */}
             <div className="flex h-16 w-full items-center justify-between px-4 md:hidden">
-                <button
-                    type="button"
-                    aria-label="Buka menu"
-                    className="text-[#151515]"
-                >
-                    <Menu strokeWidth={1.4} size={22} />
-                </button>
                 <Link
                     href="/"
                     className="flex h-10 items-center overflow-visible"
                 >
                     <img
-                        src="/logo-shay/shayda-logo-text-hitam.png"
-                        alt="Shayda"
+                        src="/logo-shay/anemi-black.webp"
+                        alt="Anemi"
                         className="h-12 w-auto object-contain"
                     />
                 </Link>
                 <div className="flex items-center gap-4 text-[#151515]">
+                    <Link href={'/wishlist'}>
                     <Heart
                         strokeWidth={1.5}
                         size={22}
                         className="cursor-pointer"
                     />
+                    </Link>
                 </div>
             </div>
 
@@ -55,8 +50,8 @@ export default function Navbar({
                     className="flex h-14 cursor-pointer items-center justify-center overflow-visible transition-opacity duration-300 hover:opacity-75"
                 >
                     <img
-                        src="/logo-shay/shayda-logo-text-hitam.png"
-                        alt="Shayda"
+                        src="/logo-shay/anemi-black.webp"
+                        alt="Anemi"
                         className="h-16 w-auto object-contain"
                     />
                 </Link>
@@ -96,7 +91,7 @@ export default function Navbar({
                             />
                         </Link>
                         {cartCount > 0 && (
-                            <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center bg-[#151515] px-1 text-[9px] font-bold text-white">
+                            <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center bg-[#B98B63] px-1 text-[9px] font-bold text-white">
                                 {cartBadge}
                             </span>
                         )}

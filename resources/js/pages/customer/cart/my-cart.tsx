@@ -453,7 +453,7 @@ export default function MyCart({
                                     <div className="space-y-4">
                                         <Link
                                             href={checkoutHref}
-                                            className="block w-full rounded-lg bg-[#151515] py-4 text-center text-[13px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg hover:shadow-[#151515]/20 active:scale-[0.98]"
+                                            className="block w-full rounded-lg bg-[#B98B63] py-4 text-center text-[13px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg hover:shadow-[#B98B63]/20 active:scale-[0.98]"
                                         >
                                             Lanjut ke Checkout
                                         </Link>
@@ -506,7 +506,7 @@ export default function MyCart({
                             </div>
                             <Link
                                 href={checkoutHref}
-                                className="rounded-md bg-[#E8D6C1] px-6 py-3 text-xs font-bold tracking-wide text-[#151515] transition-colors hover:bg-white active:scale-95"
+                                className="rounded-md bg-[#E8D6C1] px-6 py-3 text-xs font-bold tracking-wide text-[#B98B63] transition-colors hover:bg-white active:scale-95"
                             >
                                 Checkout ({summary.item_count})
                             </Link>
@@ -556,7 +556,7 @@ export default function MyCart({
                         </p>
                         <Link
                             href={list.url()}
-                            className="rounded-lg bg-[#151515] px-8 py-4 text-sm font-bold tracking-wider text-white transition-all hover:-translate-y-1 hover:bg-[#9A6B45] hover:shadow-xl active:translate-y-0"
+                            className="rounded-lg bg-[#B98B63] px-8 py-4 text-sm font-bold tracking-wider text-white transition-all hover:-translate-y-1 hover:bg-[#9A6B45] hover:shadow-xl active:translate-y-0"
                         >
                             Jelajahi Koleksi
                         </Link>

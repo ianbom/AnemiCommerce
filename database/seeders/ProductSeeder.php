@@ -12,285 +12,105 @@ class ProductSeeder extends Seeder
 {
     public function run(): void
     {
-        // Data produk diambil dari https://zaskiamecca.com/products.json.
-        $products = [
-        [
-            'category_slug' => 'hijab-scarf',
-            'collection_slug' => 'bunga-pertiwi',
-            'name' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Bunga Pertiwi Edisi Cut Nyak Meutia | Material Voal Alaska Premium | Hijab Motif Segi Empat',
-            'slug' => 'include-hard-box-zm-zaskia-mecca-scarf-bunga-pertiwi-edisi-cut-nyak-meutia-material-voal-alaska-premium-hijab-motif-segi-empat',
-            'sku' => 'ZM-001',
-            'short_description' => 'Hijab “Meutia” – Mutiara dari Nusa Laut Terinspirasi dari keberanian dan semangat juang Cut Nyak Meutia, Hijab “Meutia” merepresentasikan sosok perempuan tangguh yang tetap bersina',
-            'description' => 'Hijab “Meutia” – Mutiara dari Nusa Laut Terinspirasi dari keberanian dan semangat juang Cut Nyak Meutia, Hijab “Meutia” merepresentasikan sosok perempuan tangguh yang tetap bersinar di tengah tantangan. Dikenal sebagai salah satu pahlawan perempuan dari Aceh yang berani memimpin perjuangan melawan penjajahan, Cut Nyak Meutia menjadi simbol keberanian, kecerdasan, dan keteguhan hati perempuan Indonesia. Hijab ini menghadirkan keindahan yang bukan hanya terlihat dari motifnya, tetapi juga dari makna mendalam yang terkandung di dalamnya. Filosofi Motif: Mutiara – Bunga Pertiwi dari Laut Konsep desain hijab ini terinspirasi dari mutiara, permata laut yang terbentuk melalui proses panjang dan penuh tekanan. Mutiara melambangkan: Keteguhan hati dalam menghadapi ujian Keindahan yang lahir dari perjuangan Kemuliaan dan nilai yang abadi Kekuatan perempuan yang tetap bersinar dalam kondisi tersuli',
-            'material' => 'Voal Alaska Premium',
-            'care_instruction' => 'Cuci lembut, pisahkan warna, hindari pemutih, jemur teduh, setrika suhu rendah bila diperlukan.',
-            'base_price' => 199000,
-            'sale_price' => null,
-            'weight' => 300,
-            'length' => 28,
-            'width' => 22,
-            'height' => 4,
-            'status' => 'published',
-            'is_featured' => true,
-            'is_new_arrival' => true,
-            'is_best_seller' => true,
-            'meta_title' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Bunga Pertiwi Edisi Cut Nyak Meutia | Material Voal Alaska Premium | Hijab Motif Segi Empat | ZM Zaskia Mecca',
-            'meta_description' => 'Hijab “Meutia” – Mutiara dari Nusa Laut Terinspirasi dari keberanian dan semangat juang Cut Nyak Meutia, Hijab “Meutia” merepresentasikan sosok perempuan t',
-        ],
-        [
-            'category_slug' => 'hijab-scarf',
-            'collection_slug' => 'bunga-pertiwi',
-            'name' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Bunga Pertiwi Edisi Rasuna Said | Material Voal Alaska Premium | Hijab Motif Segi Empat',
-            'slug' => 'include-hard-box-zm-zaskia-mecca-scarf-bunga-pertiwi-edisi-rasuna-said-material-voal-alaska-premium-hijab-motif-segi-empat',
-            'sku' => 'ZM-002',
-            'short_description' => 'Hijab “Rasuna” – Suara Perempuan, Kekuatan Perjuangan Terinspirasi dari semangat juang Rasuna Said, Hijab “Rasuna” merepresentasikan perempuan yang cerdas, berani bersuara, dan teg',
-            'description' => 'Hijab “Rasuna” – Suara Perempuan, Kekuatan Perjuangan Terinspirasi dari semangat juang Rasuna Said, Hijab “Rasuna” merepresentasikan perempuan yang cerdas, berani bersuara, dan teguh dalam memperjuangkan kebenaran. Dikenal sebagai orator ulung dan pejuang hak perempuan, Rasuna Said menjadi simbol keberanian perempuan Indonesia dalam menyuarakan gagasan dan memperjuangkan keadilan. Semangat tersebut diwujudkan dalam desain hijab yang memadukan keanggunan, karakter kuat, dan filosofi mendalam. Filosofi Motif: Seleguri – Bunga Pertiwi Motif utama pada hijab ini adalah bunga seleguri, bunga liar yang tumbuh sederhana namun memiliki daya hidup yang kuat. Meski sering dianggap kecil dan biasa, seleguri mampu bertahan dan berkembang di berbagai kondisi. Bunga ini melambangkan: Ketahanan dan keberanian menghadapi tantangan Harapan yang terus tumbuh Kekuatan yang lahir dari kesederhanaan Semangat',
-            'material' => 'Voal Alaska Premium',
-            'care_instruction' => 'Cuci lembut, pisahkan warna, hindari pemutih, jemur teduh, setrika suhu rendah bila diperlukan.',
-            'base_price' => 199000,
-            'sale_price' => null,
-            'weight' => 300,
-            'length' => 28,
-            'width' => 22,
-            'height' => 4,
-            'status' => 'published',
-            'is_featured' => true,
-            'is_new_arrival' => true,
-            'is_best_seller' => true,
-            'meta_title' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Bunga Pertiwi Edisi Rasuna Said | Material Voal Alaska Premium | Hijab Motif Segi Empat | ZM Zaskia Mecca',
-            'meta_description' => 'Hijab “Rasuna” – Suara Perempuan, Kekuatan Perjuangan Terinspirasi dari semangat juang Rasuna Said, Hijab “Rasuna” merepresentasikan perempuan yang cerdas,',
-        ],
-        [
-            'category_slug' => 'outerwear',
-            'collection_slug' => 'daily-wear',
-            'name' => 'ZM Zaskia Mecca - Dyona Vest Daily',
-            'slug' => 'zm-zaskia-mecca-dyona-vest-daily',
-            'sku' => 'ZM-003',
-            'short_description' => 'Vest ini hadir dengan sentuhan playful yang manis melalui detail kancing hias lucu serta patch cantik di bagian depan, memberikan tampilan yang fresh dan penuh karakter. Terbuat da',
-            'description' => 'Vest ini hadir dengan sentuhan playful yang manis melalui detail kancing hias lucu serta patch cantik di bagian depan, memberikan tampilan yang fresh dan penuh karakter. Terbuat dari kain rajut berkualitas yang lembut dan nyaman, vest ini memberikan sensasi hangat namun tetap ringan saat dipakai. Dengan desain kasual yang stylish, vest ini mudah dipadupadankan dengan berbagai outfit favoritmu — mulai dari kaos basic, kemeja, hingga dress. Tekstur rajutnya yang halus menghadirkan look effortless namun tetap fashionable, membuat vest ini cocok untuk aktivitas santai hingga hangout. Keunggulan: * Detail kancing hias & patch yang memberikan kesan youthful dan unik * Kain rajut lembut, nyaman, dan tidak mudah melar * Mudah dipadukan dengan berbagai gaya kasual * Desain timeless yang tetap trendi untuk berbagai kesempatan Variant Warna: - Black - Broken White',
-            'material' => 'Kain rajut berkualitas',
-            'care_instruction' => 'Cuci lembut, pisahkan warna, hindari pemutih, jemur teduh, setrika suhu rendah bila diperlukan.',
-            'base_price' => 199000,
-            'sale_price' => null,
-            'weight' => 600,
-            'length' => 28,
-            'width' => 22,
-            'height' => 4,
-            'status' => 'published',
-            'is_featured' => true,
-            'is_new_arrival' => true,
-            'is_best_seller' => false,
-            'meta_title' => 'ZM Zaskia Mecca - Dyona Vest Daily | ZM Zaskia Mecca',
-            'meta_description' => 'Vest ini hadir dengan sentuhan playful yang manis melalui detail kancing hias lucu serta patch cantik di bagian depan, memberikan tampilan yang fresh dan p',
-        ],
-        [
-            'category_slug' => 'hijab-scarf',
-            'collection_slug' => 'bunga-pertiwi',
-            'name' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Bunga Pertiwi Edisi R.A Kartini | Material Voal Alaska Premium | Hijab Motif Segi Empat',
-            'slug' => 'include-hard-box-zm-zaskia-mecca-scarf-bunga-pertiwi-edisi-r-a-kartini-material-voal-alaska-premium-hijab-motif-segi-empat',
-            'sku' => 'ZM-004',
-            'short_description' => 'Hijab “Kartini” - Cahaya Perempuan, Harum Perjuangan Terinspirasi dari semangat emansipasi Raden Ajeng Kartini, Hijab “Kartini” merepresentasikan sosok perempuan yang cerdas, lembu',
-            'description' => 'Hijab “Kartini” - Cahaya Perempuan, Harum Perjuangan Terinspirasi dari semangat emansipasi Raden Ajeng Kartini, Hijab “Kartini” merepresentasikan sosok perempuan yang cerdas, lembut dalam tutur, namun teguh dalam cita-cita. Kartini adalah simbol keberanian untuk bermimpi lebih besar dan memperjuangkan pendidikan serta kesetaraan bagi perempuan Indonesia. Nilai itulah yang dihadirkan dalam setiap detail desain hijab ini. Hijab ini bukan hanya aksesori, tetapi refleksi karakter perempuan yang berkelas dan berprinsip. Filosofi Motif: Melati - Bunga Pertiwi Detail utama pada hijab ini adalah bunga melati, bunga yang identik dengan kesucian, ketulusan, dan keanggunan. Melati tumbuh sederhana namun menyebarkan harum yang luas—melambangkan pemikiran Kartini yang lahir dalam keterbatasan, namun memberi pengaruh besar lintas generasi. Makna yang terkandung dalam motif melati: Kesucian hati dan ke',
-            'material' => 'Voal Alaska Premium',
-            'care_instruction' => 'Cuci lembut, pisahkan warna, hindari pemutih, jemur teduh, setrika suhu rendah bila diperlukan.',
-            'base_price' => 169000,
-            'sale_price' => null,
-            'weight' => 300,
-            'length' => 28,
-            'width' => 22,
-            'height' => 4,
-            'status' => 'published',
-            'is_featured' => true,
-            'is_new_arrival' => true,
-            'is_best_seller' => true,
-            'meta_title' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Bunga Pertiwi Edisi R.A Kartini | Material Voal Alaska Premium | Hijab Motif Segi Empat | ZM Zaskia Mecca',
-            'meta_description' => 'Hijab “Kartini” - Cahaya Perempuan, Harum Perjuangan Terinspirasi dari semangat emansipasi Raden Ajeng Kartini, Hijab “Kartini” merepresentasikan sosok per',
-        ],
-        [
-            'category_slug' => 'hijab-scarf',
-            'collection_slug' => 'bunga-pertiwi',
-            'name' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Bunga Pertiwi Edisi Cut Nyak Dien | Material Voal Alaska Premium | Hijab Motif Segi Empat',
-            'slug' => 'include-hard-box-zm-zaskia-mecca-scarf-bunga-pertiwi-edisi-cut-nyak-dien-material-voal-alaska-premium-hijab-motif-segi-empat',
-            'sku' => 'ZM-005',
-            'short_description' => 'Voal Alaska Premium | 108 x 108 cm | Laser Cut | Exclusive Box Terinspirasi dari keberanian Cut Nyak Dhien, Hijab Dien hadir sebagai representasi perempuan tangguh yang berdiri teg',
-            'description' => 'Voal Alaska Premium | 108 x 108 cm | Laser Cut | Exclusive Box Terinspirasi dari keberanian Cut Nyak Dhien, Hijab Dien hadir sebagai representasi perempuan tangguh yang berdiri tegap dalam prinsip, namun tetap memancarkan kelembutan dan keanggunan. Sosok pahlawan Aceh ini dikenal sebagai simbol perlawanan yang tak gentar menghadapi tantangan—dan semangat itulah yang dituangkan dalam setiap detail desain hijab ini. Filosofi Motif: Bunga Pertiwi & Dendrobium Detail utama pada hijab ini adalah ilustrasi anggrek Dendrobium, bunga yang melambangkan kekuatan, daya tahan, dan keindahan yang elegan. Seperti Dendrobium yang tetap mekar di lingkungan penuh tantangan, semangat Cut Nyak Dhien pun tetap menyala di tengah perjuangan panjangnya. Motif “Bunga Pertiwi” menjadi simbol cinta tanah air perempuan Indonesia yang lembut namun kokoh, berakar kuat pada nilai dan kehormatan. Sentuhan warna ungu l',
-            'material' => 'Voal Alaska Premium',
-            'care_instruction' => 'Cuci lembut, pisahkan warna, hindari pemutih, jemur teduh, setrika suhu rendah bila diperlukan.',
-            'base_price' => 169000,
-            'sale_price' => null,
-            'weight' => 300,
-            'length' => 28,
-            'width' => 22,
-            'height' => 4,
-            'status' => 'published',
-            'is_featured' => true,
-            'is_new_arrival' => true,
-            'is_best_seller' => true,
-            'meta_title' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Bunga Pertiwi Edisi Cut Nyak Dien | Material Voal Alaska Premium | Hijab Motif Segi Empat | ZM Zaskia Mecca',
-            'meta_description' => 'Voal Alaska Premium | 108 x 108 cm | Laser Cut | Exclusive Box Terinspirasi dari keberanian Cut Nyak Dhien, Hijab Dien hadir sebagai representasi perempuan',
-        ],
-        [
-            'category_slug' => 'hijab-scarf',
-            'collection_slug' => 'bunga-pertiwi',
-            'name' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Bunga Pertiwi Edisi Dewi Sartika | Material Voal Alaska Premium | Hijab Motif Segi Empat',
-            'slug' => 'include-hard-box-zm-zaskia-mecca-scarf-bunga-pertiwi-edisi-dewi-sartika-material-voal-alaska-premium-hijab-motif-segi-empat',
-            'sku' => 'ZM-006',
-            'short_description' => 'Voal Alaska Premium | 108 x 108 cm | Laser Cut | Exclusive Box Terinspirasi dari dedikasi dan ketulusan Dewi Sartika, Hijab “Sartika” merepresentasikan perempuan pelopor yang mengh',
-            'description' => 'Voal Alaska Premium | 108 x 108 cm | Laser Cut | Exclusive Box Terinspirasi dari dedikasi dan ketulusan Dewi Sartika, Hijab “Sartika” merepresentasikan perempuan pelopor yang menghadirkan cahaya ilmu bagi bangsanya. Sebagai tokoh pendidikan yang membuka akses belajar untuk perempuan Indonesia, Dewi Sartika menjadi simbol keberanian berpikir maju, ketekunan, dan kasih yang mencerahkan. Hijab ini bukan sekadar motif, ia adalah narasi tentang perempuan yang bertumbuh dan memberdayakan. Filosofi Motif: Teratai Bunga Pertiwi Motif utama hijab ini adalah bunga teratai, bunga yang tumbuh indah di atas permukaan air meski berakar di lumpur. Teratai melambangkan: Kesucian hati Keteguhan dalam prinsip Kemampuan bangkit dan berkembang dalam situasi apa pun Seperti teratai yang tetap mekar tanpa terpengaruh lingkungan sekitarnya, semangat Dewi Sartika dalam memperjuangkan pendidikan tetap bersinar m',
-            'material' => 'Voal Alaska Premium',
-            'care_instruction' => 'Cuci lembut, pisahkan warna, hindari pemutih, jemur teduh, setrika suhu rendah bila diperlukan.',
-            'base_price' => 169000,
-            'sale_price' => null,
-            'weight' => 300,
-            'length' => 28,
-            'width' => 22,
-            'height' => 4,
-            'status' => 'published',
-            'is_featured' => true,
-            'is_new_arrival' => true,
-            'is_best_seller' => false,
-            'meta_title' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Bunga Pertiwi Edisi Dewi Sartika | Material Voal Alaska Premium | Hijab Motif Segi Empat | ZM Zaskia Mecca',
-            'meta_description' => 'Voal Alaska Premium | 108 x 108 cm | Laser Cut | Exclusive Box Terinspirasi dari dedikasi dan ketulusan Dewi Sartika, Hijab “Sartika” merepresentasikan per',
-        ],
-        [
-            'category_slug' => 'mens-shirts',
-            'collection_slug' => 'primadona-series',
-            'name' => '[Raya Collection] ZM Zaskia Mecca - Rylou Kemeja Pria - Primadona Series Edisi Lilya Senja - Koleksi Ramadhan Series',
-            'slug' => 'raya-collection-zm-zaskia-mecca-rylou-kemeja-pria-primadona-series-edisi-lilya-senja-koleksi-ramadhan-series',
-            'sku' => 'ZM-007',
-            'short_description' => 'KOLEKSI RAMADHAN SERIES - RYLOU KEMEJA PRIA - PRIMADONA SERIES EDISI LILYA SENJA By ZM Zaskia Mecca Kemeja pria lengan pendek ini dirancang untuk menghadirkan tampilan modern yang ',
-            'description' => 'KOLEKSI RAMADHAN SERIES - RYLOU KEMEJA PRIA - PRIMADONA SERIES EDISI LILYA SENJA By ZM Zaskia Mecca Kemeja pria lengan pendek ini dirancang untuk menghadirkan tampilan modern yang rapi dan berkelas dalam balutan desain yang simpel. Mengusung kerah shanghai yang clean dan kontemporer, kemeja ini memberikan kesan tegas namun tetap santai, cocok dikenakan untuk berbagai kesempatan. Menggunakan bahan poly structured premium dengan tekstur garis halus, kemeja ini menghadirkan sentuhan mewah yang subtle tanpa terlihat berlebihan. Bahannya terasa ringan, adem, dan nyaman, serta tidak mudah kusut, menjadikannya praktis untuk dipakai sepanjang hari. Detail kancing depan yang rapi menambah kesan neat dan memudahkan pemakaian. Pilihan warna Sky Blue, Light Grey, dan Lime memberikan nuansa fresh, clean, dan modern, mudah dipadukan dengan berbagai bawahan untuk tampilan formal maupun santai. Detail P',
-            'material' => 'Material sesuai deskripsi zaskiamecca.com',
-            'care_instruction' => 'Cuci lembut, pisahkan warna, hindari pemutih, jemur teduh, setrika suhu rendah bila diperlukan.',
-            'base_price' => 349000,
-            'sale_price' => null,
-            'weight' => 600,
-            'length' => 28,
-            'width' => 22,
-            'height' => 4,
-            'status' => 'published',
-            'is_featured' => false,
-            'is_new_arrival' => true,
-            'is_best_seller' => false,
-            'meta_title' => '[Raya Collection] ZM Zaskia Mecca - Rylou Kemeja Pria - Primadona Series Edisi Lilya Senja - Koleksi Ramadhan Series | ZM Zaskia Mecca',
-            'meta_description' => 'KOLEKSI RAMADHAN SERIES - RYLOU KEMEJA PRIA - PRIMADONA SERIES EDISI LILYA SENJA By ZM Zaskia Mecca Kemeja pria lengan pendek ini dirancang untuk menghadir',
-        ],
-        [
-            'category_slug' => 'womens-tunics',
-            'collection_slug' => 'primadona-series',
-            'name' => '[Raya Collection] ZM Zaskia Mecca - Rienna Tunik Wanita | Primadona Series | Edisi Lilya Raya | Koleksi Ramadhan Series',
-            'slug' => 'raya-collection-zm-zaskia-mecca-rienna-tunik-wanita-primadona-series-edisi-lilya-raya-koleksi-ramadhan-series',
-            'sku' => 'ZM-008',
-            'short_description' => 'Hadir sebagai pilihan busana elegan untuk momen istimewa, Rienna Primadona Series Edisi Lilya Raya menampilkan tunik dengan kombinasi motif yang anggun dan berkelas, dirancang untu',
-            'description' => 'Hadir sebagai pilihan busana elegan untuk momen istimewa, Rienna Primadona Series Edisi Lilya Raya menampilkan tunik dengan kombinasi motif yang anggun dan berkelas, dirancang untuk menghadirkan tampilan sophisticated namun tetap feminin. Menggunakan kain Silky Luxe premium yang adem, halus, lembut, dan flowy, tunik ini memberikan kenyamanan maksimal sekaligus kesan mewah saat dikenakan. Jatuh kainnya yang indah membuat tampilan terlihat ringan, rapi, dan effortless sepanjang hari. Detail lengan manset dengan kancing hias menjadi aksen manis yang memperkuat karakter elegan dan eksklusif. Dipadukan dengan leher kerah Shanghai, desain ini menciptakan kesan modern, chic, dan timeless mudah dipadukan untuk berbagai gaya dan kesempatan. Cocok digunakan untuk acara formal maupun semi-formal, mulai dari momen Raya, acara keluarga, hingga pertemuan spesial lainnya, menjadikan penampilan tetap st',
-            'material' => 'Silky Luxe premium',
-            'care_instruction' => 'Cuci lembut, pisahkan warna, hindari pemutih, jemur teduh, setrika suhu rendah bila diperlukan.',
-            'base_price' => 419000,
-            'sale_price' => null,
-            'weight' => 600,
-            'length' => 28,
-            'width' => 22,
-            'height' => 4,
-            'status' => 'published',
-            'is_featured' => false,
-            'is_new_arrival' => true,
-            'is_best_seller' => true,
-            'meta_title' => '[Raya Collection] ZM Zaskia Mecca - Rienna Tunik Wanita | Primadona Series | Edisi Lilya Raya | Koleksi Ramadhan Series | ZM Zaskia Mecca',
-            'meta_description' => 'Hadir sebagai pilihan busana elegan untuk momen istimewa, Rienna Primadona Series Edisi Lilya Raya menampilkan tunik dengan kombinasi motif yang anggun dan',
-        ],
-        [
-            'category_slug' => 'hijab-scarf',
-            'collection_slug' => 'jejak-teduh',
-            'name' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Jejak Teduh Huta | Hijab Voal Alaska Premium Square | Hijab Motif Kerudung Segi Empat',
-            'slug' => 'include-hard-box-zm-zaskia-mecca-scarf-jejak-teduh-huta-hijab-voal-alaska-premium-square-hijab-motif-kerudung-segi-empat',
-            'sku' => 'ZM-009',
-            'short_description' => 'Voal Alaska | Square 108 x 108 cm | Laser Cut | Special Box Huta terinspirasi dari keindahan arsitektur rumah adat masyarakat Batak yang menjadi simbol kehormatan, perlindungan, da',
-            'description' => 'Voal Alaska | Square 108 x 108 cm | Laser Cut | Special Box Huta terinspirasi dari keindahan arsitektur rumah adat masyarakat Batak yang menjadi simbol kehormatan, perlindungan, dan persatuan keluarga. Dalam bahasa Batak, huta berarti kampung—ruang kebersamaan yang sarat nilai adat dan kearifan lokal. Motif pada scarf ini mengadaptasi ornamen gorga khas Batak dengan garis tegas dan detail simetris yang merepresentasikan kekuatan, keseimbangan, serta harmoni dalam kehidupan. Kombinasi warna merah, hitam, dan putih dihadirkan sebagai simbol filosofi Batak: keberanian, ketegasan, dan kesucian hati. Huta bukan sekadar hijab, tetapi representasi akar budaya dalam balutan gaya modern yang elegan. Detail Produk: * Material: Voal Alaska Premium * Ukuran: 108 x 108 cm (square) * Finishing: Laser Cut (tepi rapi tanpa jahitan) * Motif: Printed eksklusif dengan detail tajam * Special Packaging: Excl',
-            'material' => 'Voal Alaska Premium',
-            'care_instruction' => 'Cuci lembut, pisahkan warna, hindari pemutih, jemur teduh, setrika suhu rendah bila diperlukan.',
-            'base_price' => 199000,
-            'sale_price' => 149000,
-            'weight' => 300,
-            'length' => 28,
-            'width' => 22,
-            'height' => 4,
-            'status' => 'published',
-            'is_featured' => false,
-            'is_new_arrival' => false,
-            'is_best_seller' => false,
-            'meta_title' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Jejak Teduh Huta | Hijab Voal Alaska Premium Square | Hijab Motif Kerudung Segi Empat | ZM Zaskia Mecca',
-            'meta_description' => 'Voal Alaska | Square 108 x 108 cm | Laser Cut | Special Box Huta terinspirasi dari keindahan arsitektur rumah adat masyarakat Batak yang menjadi simbol keh',
-        ],
-        [
-            'category_slug' => 'hijab-scarf',
-            'collection_slug' => 'jejak-teduh',
-            'name' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Jejak Teduh Ruma | Hijab Voal Alaska Premium Square | Hijab Motif Kerudung Segi Empat',
-            'slug' => 'include-hard-box-zm-zaskia-mecca-scarf-jejak-teduh-ruma-hijab-voal-alaska-premium-square-hijab-motif-kerudung-segi-empat',
-            'sku' => 'ZM-010',
-            'short_description' => 'Voal Alaska Premium | 108 x 108 cm | Laser Cut | Exclusive Box Ruma terinspirasi dari keindahan dan kekuatan arsitektur rumah adat khas suku Batak yang melambangkan kehormatan, keb',
-            'description' => 'Voal Alaska Premium | 108 x 108 cm | Laser Cut | Exclusive Box Ruma terinspirasi dari keindahan dan kekuatan arsitektur rumah adat khas suku Batak yang melambangkan kehormatan, kebersamaan, dan keteguhan keluarga. Dalam bahasa Batak, Ruma berarti rumah - simbol kehangatan, perlindungan, dan tempat pulang. Motif pada hijab ini mengangkat elemen geometris khas Batak yang terinspirasi dari ukiran gorga. Garis-garis tegas dan detail artistik mencerminkan kekuatan, kepemimpinan, serta nilai perlindungan dalam kehidupan. Perpaduan warna merah bata, hitam pekat, dan putih gading merepresentasikan filosofi tradisional Batak: keberanian, ketegasan, dan kesucian hati. Ruma bukan sekadar scarf, tetapi representasi perempuan yang kuat, berakar pada tradisi, namun tetap modern dan percaya diri. Detail Produk: Material: Voal Alaska Premium Ukuran: Square 108 x 108 cm Finishing: Laser Cut (tepi clean t',
-            'material' => 'Voal Alaska Premium',
-            'care_instruction' => 'Cuci lembut, pisahkan warna, hindari pemutih, jemur teduh, setrika suhu rendah bila diperlukan.',
-            'base_price' => 199000,
-            'sale_price' => 149000,
-            'weight' => 300,
-            'length' => 28,
-            'width' => 22,
-            'height' => 4,
-            'status' => 'published',
-            'is_featured' => false,
-            'is_new_arrival' => false,
-            'is_best_seller' => false,
-            'meta_title' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Jejak Teduh Ruma | Hijab Voal Alaska Premium Square | Hijab Motif Kerudung Segi Empat | ZM Zaskia Mecca',
-            'meta_description' => 'Voal Alaska Premium | 108 x 108 cm | Laser Cut | Exclusive Box Ruma terinspirasi dari keindahan dan kekuatan arsitektur rumah adat khas suku Batak yang mel',
-        ],
-        [
-            'category_slug' => 'womens-tunics',
-            'collection_slug' => 'jejak-teduh',
-            'name' => '[Raya Collection] ZM Zaskia Mecca - Belani Tunik Wanita - Jejak Teduh Ruma - Koleksi Ramadhan Series',
-            'slug' => 'raya-collection-zm-zaskia-mecca-belani-tunik-wanita-jejak-teduh-ruma-koleksi-ramadhan-series',
-            'sku' => 'ZM-011',
-            'short_description' => 'NEW LOUNCH - BELANI TUNIK - JEJAK TEDUH RUMA by Zaskia Mecca Tunik ini dirancang untuk menghadirkan perpaduan keindahan budaya Nusantara dan sentuhan look Melayu yang anggun. Mengu',
-            'description' => 'NEW LOUNCH - BELANI TUNIK - JEJAK TEDUH RUMA by Zaskia Mecca Tunik ini dirancang untuk menghadirkan perpaduan keindahan budaya Nusantara dan sentuhan look Melayu yang anggun. Mengusung model leher bulat yang klasik dan lengan lonceng yang flowy, tunik ini menciptakan siluet sopan, feminin, dan elegan saat dikenakan. Keistimewaan tunik ini terletak pada detail bordir motif Rumah Adat Batak Toba yang diaplikasikan secara rapi di setiap sisi, memberikan karakter etnik yang kuat namun tetap terlihat modern dan berkelas. Aksen kancing hias pada bagian depan menjadi pemanis tampilan, menambah kesan manis sekaligus sophisticated tanpa terlihat berlebihan. Terbuat dari bahan cotton embroidery premium, tunik ini memiliki tekstur halus, lembut, ringan, dan breathable, sehingga nyaman digunakan sepanjang hari. Detail bordir yang menyeluruh tidak hanya memperkaya visual, tetapi juga menghadirkan nil',
-            'material' => 'Material sesuai deskripsi zaskiamecca.com',
-            'care_instruction' => 'Cuci lembut, pisahkan warna, hindari pemutih, jemur teduh, setrika suhu rendah bila diperlukan.',
-            'base_price' => 499000,
-            'sale_price' => null,
-            'weight' => 600,
-            'length' => 28,
-            'width' => 22,
-            'height' => 4,
-            'status' => 'published',
-            'is_featured' => false,
-            'is_new_arrival' => false,
-            'is_best_seller' => true,
-            'meta_title' => '[Raya Collection] ZM Zaskia Mecca - Belani Tunik Wanita - Jejak Teduh Ruma - Koleksi Ramadhan Series | ZM Zaskia Mecca',
-            'meta_description' => 'NEW LOUNCH - BELANI TUNIK - JEJAK TEDUH RUMA by Zaskia Mecca Tunik ini dirancang untuk menghadirkan perpaduan keindahan budaya Nusantara dan sentuhan look ',
-        ],
-        [
-            'category_slug' => 'hijab-scarf',
-            'collection_slug' => 'monogram-series',
-            'name' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Monogram Series Liris | Hijab Premium Square Motif Kerudung Segi Empat',
-            'slug' => 'include-hard-box-zm-zaskia-mecca-scarf-monogram-series-liris-hijab-premium-square-motif-kerudung-segi-empat',
-            'sku' => 'ZM-012',
-            'short_description' => 'SPECIAL NEW LAUNCH — HIJAB BOX MONOGRAM LIRIS by ZM Zaskia Mecca Hadir sebagai koleksi terbaru, Hijab Box Monogram Liris dirancang khusus untuk menemani gaya elegan dan modern dala',
-            'description' => 'SPECIAL NEW LAUNCH — HIJAB BOX MONOGRAM LIRIS by ZM Zaskia Mecca Hadir sebagai koleksi terbaru, Hijab Box Monogram Liris dirancang khusus untuk menemani gaya elegan dan modern dalam sentuhan yang tetap lembut. Mengusung motif monogram terinspirasi dari bentuk liris yang anggun, hijab ini memadukan kesederhanaan dan karakter kuat dalam satu tampilan yang harmonis. Dibuat dari bahan voal premium yang ringan, jatuhnya natural, serta nyaman dipakai sepanjang hari. Teksturnya lembut di kulit dan tidak mudah melar, membuat hijab ini cocok untuk aktivitas harian maupun acara khusus. Dengan ukuran square 108 x 108 cm , hijab ini mudah dibentuk, tidak licin, dan memberikan tampilan rapi tanpa effort berlebih. Fitur Utama: Bahan: Voal Alaska premium lembut dan breathable Ukuran: 108 x 108 cm Motif monogram eksklusif terinspirasi dari liris Pemakaian nyaman seharian Kemasan box eksklusif, cocok seb',
-            'material' => 'Voal Alaska Premium',
-            'care_instruction' => 'Cuci lembut, pisahkan warna, hindari pemutih, jemur teduh, setrika suhu rendah bila diperlukan.',
-            'base_price' => 159000,
-            'sale_price' => null,
-            'weight' => 300,
-            'length' => 28,
-            'width' => 22,
-            'height' => 4,
-            'status' => 'published',
-            'is_featured' => false,
-            'is_new_arrival' => false,
-            'is_best_seller' => false,
-            'meta_title' => '[INCLUDE HARD BOX] ZM Zaskia Mecca - Scarf Monogram Series Liris | Hijab Premium Square Motif Kerudung Segi Empat | ZM Zaskia Mecca',
-            'meta_description' => 'SPECIAL NEW LAUNCH — HIJAB BOX MONOGRAM LIRIS by ZM Zaskia Mecca Hadir sebagai koleksi terbaru, Hijab Box Monogram Liris dirancang khusus untuk menemani ga',
-        ]
-        ];
+        $products = [];
+        
+        // Prioritas 1: Baca dari CSV Shopee
+        $csvPath = public_path('shopee-co-id-2026-05-12.csv');
+        if (file_exists($csvPath)) {
+            $file = fopen($csvPath, 'r');
+            $headers = fgetcsv($file);
+            $rowIndex = 0;
+            
+            while (($row = fgetcsv($file)) !== false) {
+                $rowIndex++;
+                $data = array_combine($headers, $row);
+                
+                $name = trim($data['Nama'] ?? '');
+                if (empty($name)) continue;
+                
+                $slug = $this->slugify($name);
+                $price = (float) preg_replace('/[^\d]/', '', $data['Harga'] ?? '0');
+                
+                $products[] = [
+                    'name' => $name,
+                    'slug' => $slug,
+                    'sku' => 'SHP-' . str_pad($rowIndex, 3, '0', STR_PAD_LEFT),
+                    'category_slug' => 'baju-setelan',
+                    'collection_slug' => 'shopee-collection',
+                    'brand' => 'Anemi Official',
+                    'short_description' => $name . ' koleksi terbaru yang modis dan nyaman dipakai.',
+                    'description' => $name . ' hadir dengan desain kekinian yang cocok untuk berbagai aktivitas Anda. Dibuat dengan material berkualitas.',
+                    'material' => 'Bahan berkualitas',
+                    'care_instruction' => 'Cuci lembut, pisahkan warna, hindari pemutih, jemur teduh, setrika suhu rendah bila diperlukan.',
+                    'base_price' => $price ?: 100000,
+                    'sale_price' => null,
+                    'weight' => 500,
+                    'length' => 30,
+                    'width' => 25,
+                    'height' => 5,
+                    'status' => 'published',
+                    'is_featured' => true,
+                    'is_new_arrival' => true,
+                    'is_best_seller' => false,
+                    'meta_title' => $name . ' | Anemi Official',
+                    'meta_description' => 'Beli ' . $name . ' berkualitas dengan harga terbaik di Anemi Official.',
+                ];
+            }
+            fclose($file);
+        }
+        
+        // Prioritas 2: Baca dari JSON (hasil ekstraksi Python)
+        if (empty($products) && file_exists(public_path('products_shopee.json'))) {
+            $products = json_decode(file_get_contents(public_path('products_shopee.json')), true);
+        }
+        
+        // Prioritas 3: Fallback ke Excel
+        if (empty($products)) {
+            $filePath = public_path('anemi-seeder.xlsx');
+            if (file_exists($filePath) && class_exists('\PhpOffice\PhpSpreadsheet\Reader\Xlsx')) {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+                $spreadsheet = $reader->load($filePath);
+                $sheet = $spreadsheet->getSheetByName('Products');
+                if ($sheet) {
+                    $highestRow = $sheet->getHighestRow();
+                    for ($row = 2; $row <= $highestRow; $row++) {
+                        $slug = $sheet->getCell("C{$row}")->getValue();
+                        if (!$slug) continue;
+                        
+                        $products[] = [
+                            'name' => $sheet->getCell("B{$row}")->getValue(),
+                            'slug' => $slug,
+                            'sku' => $sheet->getCell("D{$row}")->getValue(),
+                            'category_slug' => $sheet->getCell("E{$row}")->getValue(),
+                            'collection_slug' => $sheet->getCell("G{$row}")->getValue(),
+                            'brand' => $sheet->getCell("H{$row}")->getValue() ?? 'Anemi Official',
+                            'short_description' => $sheet->getCell("I{$row}")->getValue() ?? '',
+                            'description' => $sheet->getCell("J{$row}")->getValue() ?? '',
+                            'material' => 'Material sesuai deskripsi',
+                            'care_instruction' => 'Cuci lembut, pisahkan warna, hindari pemutih, jemur teduh, setrika suhu rendah bila diperlukan.',
+                            'base_price' => (float) $sheet->getCell("K{$row}")->getValue(),
+                            'sale_price' => $sheet->getCell("L{$row}")->getValue() ? (float) $sheet->getCell("L{$row}")->getValue() : null,
+                            'weight' => (int) ($sheet->getCell("N{$row}")->getValue() ?: 850),
+                            'length' => (int) ($sheet->getCell("O{$row}")->getValue() ?: 36),
+                            'width' => (int) ($sheet->getCell("P{$row}")->getValue() ?: 28),
+                            'height' => (int) ($sheet->getCell("Q{$row}")->getValue() ?: 7),
+                            'status' => strtolower($sheet->getCell("R{$row}")->getValue() ?? 'published'),
+                            'is_featured' => (bool) $sheet->getCell("S{$row}")->getValue(),
+                            'is_new_arrival' => (bool) $sheet->getCell("T{$row}")->getValue(),
+                            'is_best_seller' => false,
+                            'meta_title' => $sheet->getCell("U{$row}")->getValue() ?? '',
+                            'meta_description' => $sheet->getCell("V{$row}")->getValue() ?? '',
+                        ];
+                    }
+                }
+            } elseif (file_exists(public_path('products.json'))) {
+                $products = json_decode(file_get_contents(public_path('products.json')), true);
+            }
+        }
+
+        if (empty($products)) {
+            throw new RuntimeException("Gagal membaca data produk dari CSV, JSON, atau Excel");
+        }
 
         $categoryIds = Category::query()->pluck('id', 'slug');
         $collectionIds = Collection::query()->pluck('id', 'slug');
@@ -298,9 +118,21 @@ class ProductSeeder extends Seeder
 
         foreach ($products as $product) {
             $categoryId = $categoryIds->get($product['category_slug']);
+            if (! $categoryId) {
+                $category = Category::query()->firstOrCreate(['slug' => $product['category_slug']], ['name' => ucwords(str_replace('-', ' ', $product['category_slug']))]);
+                $categoryId = $category->id;
+                $categoryIds->put($product['category_slug'], $categoryId);
+            }
+            
             $collectionId = $collectionIds->get($product['collection_slug']);
-            if (! $categoryId) { throw new RuntimeException("Category slug [{$product['category_slug']}] tidak ditemukan."); }
-            if (! $collectionId) { throw new RuntimeException("Collection slug [{$product['collection_slug']}] tidak ditemukan."); }
+            if (! $collectionId && $product['collection_slug']) {
+                $collection = Collection::query()->firstOrCreate(['slug' => $product['collection_slug']], ['name' => ucwords(str_replace('-', ' ', $product['collection_slug']))]);
+                $collectionId = $collection->id;
+                $collectionIds->put($product['collection_slug'], $collectionId);
+            } elseif (! $collectionId) {
+                $collectionId = null; // or create a default collection
+            }
+            
             $record = Product::query()->withTrashed()->updateOrCreate(['slug' => $product['slug']], [
                 'category_id' => $categoryId, 'collection_id' => $collectionId, 'name' => $product['name'], 'sku' => $product['sku'],
                 'short_description' => $product['short_description'], 'description' => $product['description'], 'material' => $product['material'],
@@ -311,6 +143,14 @@ class ProductSeeder extends Seeder
             ]);
             if ($record->trashed()) { $record->restore(); }
         }
-        Product::query()->where('sku', 'like', 'ZM-%')->whereNotIn('slug', $currentSlugs)->delete();
+        Product::query()->where('sku', 'like', 'SHP-%')->whereNotIn('slug', $currentSlugs)->delete();
+    }
+
+    private function slugify($text)
+    {
+        $text = strtolower($text);
+        $text = preg_replace('/[^a-z0-9\s-]/', '', $text);
+        $text = preg_replace('/[\s-]+/', '-', $text);
+        return trim($text, '-');
     }
 }

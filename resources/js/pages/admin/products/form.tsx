@@ -1023,7 +1023,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     </button>
                                                     {/* Primary badge */}
                                                     {image.is_primary && (
-                                                        <div className="absolute bottom-1.5 left-1.5 z-10 rounded bg-[#151515] px-1.5 py-0.5 text-[9px] font-bold tracking-wider text-white uppercase">
+                                                        <div className="absolute bottom-1.5 left-1.5 z-10 rounded bg-[#B98B63] px-1.5 py-0.5 text-[9px] font-bold tracking-wider text-white uppercase">
                                                             Primary
                                                         </div>
                                                     )}
@@ -1248,7 +1248,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                                                 v,
                                                                             )
                                                                         }
-                                                                        className="scale-[0.8] data-[state=checked]:bg-[#151515]"
+                                                                        className="scale-[0.8] data-[state=checked]:bg-[#B98B63]"
                                                                     />
                                                                 </td>
                                                                 <td className="px-3 py-2 text-center">
@@ -1481,7 +1481,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         </Button> */}
                                         <Button
                                             type="submit"
-                                            className="h-10 bg-[#151515] px-6 font-medium text-white shadow-sm hover:bg-[#9A6B45]"
+                                            className="h-10 bg-[#B98B63] px-6 font-medium text-white shadow-sm hover:bg-[#9A6B45]"
                                             disabled={processing}
                                         >
                                             {processing ? (
@@ -1606,7 +1606,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                             v,
                                                         )
                                                     }
-                                                    className="scale-90 data-[state=checked]:bg-[#151515]"
+                                                    className="scale-90 data-[state=checked]:bg-[#B98B63]"
                                                 />
                                             </div>
                                             <div className="flex items-center justify-between">
@@ -1632,7 +1632,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                             v,
                                                         )
                                                     }
-                                                    className="scale-90 data-[state=checked]:bg-[#151515]"
+                                                    className="scale-90 data-[state=checked]:bg-[#B98B63]"
                                                 />
                                             </div>
                                             <div className="flex items-center justify-between">
@@ -1658,7 +1658,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                             v,
                                                         )
                                                     }
-                                                    className="scale-90 data-[state=checked]:bg-[#151515]"
+                                                    className="scale-90 data-[state=checked]:bg-[#B98B63]"
                                                 />
                                             </div>
                                         </div>
@@ -1843,7 +1843,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                     {/* <Button
                                         type="submit"
                                         form="product-form"
-                                        className="w-full h-10 bg-[#151515] hover:bg-[#9A6B45] text-white font-medium shadow-sm"
+                                        className="w-full h-10 bg-[#B98B63] hover:bg-[#9A6B45] text-white font-medium shadow-sm"
                                         disabled={processing}
                                         onClick={() => submit({ preventDefault: () => {} } as any)}
                                     >
@@ -2116,7 +2116,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             is_active: value,
                                         })
                                     }
-                                    className="scale-90 data-[state=checked]:bg-[#151515]"
+                                    className="scale-90 data-[state=checked]:bg-[#B98B63]"
                                 />
                             </div>
                         </div>
@@ -2133,7 +2133,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                             <Button
                                 type="button"
                                 onClick={saveVariantDraft}
-                                className="h-9 bg-[#151515] px-5 text-xs font-medium text-white hover:bg-[#9A6B45]"
+                                className="h-9 bg-[#B98B63] px-5 text-xs font-medium text-white hover:bg-[#9A6B45]"
                             >
                                 {editingVariantIndex === null
                                     ? 'Add Variant'

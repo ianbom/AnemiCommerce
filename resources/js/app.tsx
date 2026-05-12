@@ -6,7 +6,7 @@ import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Shayda';
+const appName = import.meta.env.VITE_APP_NAME || 'Anemi';
 const pages = import.meta.glob('./pages/**/*.tsx');
 
 createInertiaApp({

@@ -179,7 +179,7 @@ export default function ListNotification({ notifications }: Props) {
                             : "When you get updates on your orders or exclusive offers, they'll show up here."}
                     </p>
                     <Link href="/">
-                        <button className="rounded-lg bg-[#151515] px-8 py-3 text-[12px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg active:scale-[0.98]">
+                        <button className="rounded-lg bg-[#B98B63] px-8 py-3 text-[12px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg active:scale-[0.98]">
                             Continue Shopping
                         </button>
                     </Link>

@@ -220,7 +220,7 @@ function CheckoutScreen() {
                             (label, index) => (
                                 <div key={label} className="flex items-center">
                                     <div
-                                        className={`flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-bold ${index < 2 ? 'bg-[#151515] text-white' : 'bg-white text-[#e7e2de] ring-1 ring-[#e7e2de]'}`}
+                                        className={`flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-bold ${index < 2 ? 'bg-[#B98B63] text-white' : 'bg-white text-[#e7e2de] ring-1 ring-[#e7e2de]'}`}
                                     >
                                         {index === 0 ? (
                                             <Check size={14} />
@@ -398,7 +398,7 @@ function CheckoutScreen() {
                                         onClick={() =>
                                             void applyVoucher(voucherCode)
                                         }
-                                        className="rounded-md bg-[#151515] px-5 py-2.5 text-[12px] font-bold text-white"
+                                        className="rounded-md bg-[#B98B63] px-5 py-2.5 text-[12px] font-bold text-white transition-colors hover:bg-[#9A6B45]"
                                     >
                                         Pakai
                                     </button>
@@ -563,7 +563,7 @@ function CheckoutScreen() {
                                             (item) => !item.is_available,
                                         )
                                     }
-                                    className="mt-6 flex w-full items-center justify-center rounded-lg bg-[#151515] py-4 text-[13px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg hover:shadow-[#151515]/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+                                    className="mt-6 flex w-full items-center justify-center rounded-lg bg-[#B98B63] py-4 text-[13px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg hover:shadow-[#B98B63]/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
                                 >
                                     <Lock size={16} className="mr-2" />
                                     {placingOrder
@@ -710,7 +710,7 @@ function CheckoutRouteMap({
                             href={googleMapsUrl}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex w-full items-center justify-center rounded-md bg-[#151515] px-3 py-2 text-[11px] font-bold text-white transition-colors hover:bg-[#9A6B45]"
+                            className="inline-flex w-full items-center justify-center rounded-md bg-[#B98B63] px-3 py-2 text-[11px] font-bold text-white transition-colors hover:bg-[#9A6B45]"
                         >
                             Buka rute di Google Maps
                         </a>

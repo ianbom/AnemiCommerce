@@ -231,7 +231,7 @@ function DashboardHeader() {
                 </Button>
                 <Button
                     asChild
-                    className="h-9 rounded-lg bg-[#151515] px-4 text-white shadow-none hover:bg-[#9A6B45] active:scale-[0.98]"
+                    className="h-9 rounded-lg bg-[#B98B63] px-4 text-white shadow-none hover:bg-[#9A6B45] active:scale-[0.98]"
                 >
                     <Link href="/admin/orders">
                         View Orders

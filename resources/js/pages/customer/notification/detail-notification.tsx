@@ -717,7 +717,7 @@ export default function DetailNotification({ notification }: Props) {
                                 href={primaryActionHref}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="ml-auto flex items-center gap-2 rounded-lg bg-[#151515] px-6 py-2.5 text-sm font-medium text-white shadow-md transition-colors hover:bg-[#2A241C]"
+                                className="ml-auto flex items-center gap-2 rounded-lg bg-[#B98B63] px-6 py-2.5 text-sm font-medium text-white shadow-md transition-colors hover:bg-[#9A6B45]"
                             >
                                 <Icon size={16} /> {config.ctaLabel}
                             </a>
@@ -831,7 +831,7 @@ export default function DetailNotification({ notification }: Props) {
                                 href={primaryActionHref}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#151515] py-2.5 text-sm font-medium text-white shadow-md transition-colors hover:bg-[#2A241C]"
+                                className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#B98B63] py-2.5 text-sm font-medium text-white shadow-md transition-colors hover:bg-[#9A6B45]"
                             >
                                 {config.ctaLabel} <ExternalLink size={16} />
                             </a>
@@ -856,7 +856,7 @@ export default function DetailNotification({ notification }: Props) {
                                         <div
                                             className={
                                                 item.is_current
-                                                    ? 'absolute top-0 -left-[9px] h-[18px] w-[18px] rounded-full border-[4px] border-[#F8F0E5] bg-[#151515] shadow-[0_0_0_1px_#151515]'
+                                                    ? 'absolute top-0 -left-[9px] h-[18px] w-[18px] rounded-full border-[4px] border-[#F8F0E5] bg-[#B98B63] shadow-[0_0_0_1px_#B98B63]'
                                                     : 'absolute top-1 -left-[7px] h-[14px] w-[14px] rounded-full border-2 border-[#9A6B45] bg-white'
                                             }
                                         ></div>

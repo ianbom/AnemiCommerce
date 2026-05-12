@@ -97,7 +97,7 @@ export default function MyWishlist({ wishlistItems, summary }: Props) {
                         </p>
                         <Link
                             href={list.url()}
-                            className="mt-5 rounded-full bg-[#151515] px-5 py-2 text-[11px] font-semibold tracking-wider text-white uppercase transition hover:bg-[#9A6B45]"
+                            className="mt-5 rounded-full bg-[#B98B63] px-5 py-2 text-[11px] font-semibold tracking-wider text-white uppercase transition hover:bg-[#9A6B45]"
                         >
                             Lihat Produk
                         </Link>
@@ -187,7 +187,7 @@ function WishlistTile({ item, index }: { item: WishlistItem; index: number }) {
                     <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/5" />
 
                     {item.badge && (
-                        <div className="absolute top-2 left-2 rounded-sm bg-[#151515] px-2 py-1 text-[8px] font-medium tracking-widest text-white uppercase shadow-sm">
+                        <div className="absolute top-2 left-2 rounded-sm bg-[#B98B63] px-2 py-1 text-[8px] font-medium tracking-widest text-white uppercase shadow-sm">
                             {item.badge}
                         </div>
                     )}
