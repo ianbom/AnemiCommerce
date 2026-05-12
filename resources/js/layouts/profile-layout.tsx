@@ -65,7 +65,7 @@ export default function ProfileLayout({
 }: ProfileLayoutProps) {
     return (
         <ShopLayout>
-            <Head title={`${pageTitle} - Shayda`} />
+            <Head title={`${pageTitle} - Anemi`} />
 
             {/* --- Hero / Header Section --- */}
             <div className="relative flex h-[200px] w-full items-center overflow-hidden bg-[#e7e2de] md:h-[280px]">

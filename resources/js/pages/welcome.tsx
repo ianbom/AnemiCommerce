@@ -85,7 +85,7 @@ export default function Home({
 }: Props) {
     return (
         <ShopLayout>
-            <Head title="Brand Fashion Muslim No.1 - Shayda" />
+            <Head title="Brand Fashion Muslim No.1 - Anemi" />
 
             <FadeInOnScroll>
                 <HeroSlider heroBanners={heroBanners} />
@@ -130,7 +130,7 @@ export default function Home({
                                     src={
                                         category.image_url ??
                                         fallbackImages[
-                                            index % fallbackImages.length
+                                        index % fallbackImages.length
                                         ]
                                     }
                                     alt={category.name}
@@ -212,7 +212,7 @@ function CtaSection({ ctaBanner }: { ctaBanner: BannerCard }) {
                             ctaBanner,
                             '/img/sarah-khan-R7p66Oj8ZOQ-unsplash.webp',
                         )}
-                        alt={ctaBanner?.title ?? 'Shayda collection banner'}
+                        alt={ctaBanner?.title ?? 'Anemi collection banner'}
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.5s] group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-black/25" />
@@ -318,16 +318,16 @@ function HeroSlider({ heroBanners }: { heroBanners: BannerCard[] }) {
     const images =
         heroBanners && heroBanners.length > 0
             ? heroBanners.map((banner) =>
-                  bannerImage(
-                      banner,
-                      '/img/omar-elsharawy-gFHBofW3ncQ-unsplash.webp',
-                  ),
-              )
+                bannerImage(
+                    banner,
+                    '/img/omar-elsharawy-gFHBofW3ncQ-unsplash.webp',
+                ),
+            )
             : [
-                  '/img/omar-elsharawy-gFHBofW3ncQ-unsplash.webp',
-                  '/img/abdul-raheem-kannath-aNWfK46QWto-unsplash.webp',
-                  '/img/ainur-iman-qcNmigFPTQM-unsplash.webp',
-              ];
+                '/img/omar-elsharawy-gFHBofW3ncQ-unsplash.webp',
+                '/img/abdul-raheem-kannath-aNWfK46QWto-unsplash.webp',
+                '/img/ainur-iman-qcNmigFPTQM-unsplash.webp',
+            ];
 
     const sliderRef = useRef<HTMLDivElement>(null);
     const isDraggingRef = useRef(false);
@@ -438,11 +438,10 @@ function HeroSlider({ heroBanners }: { heroBanners: BannerCard[] }) {
                 {images.map((_, index) => (
                     <span
                         key={index}
-                        className={`h-0.5 transition-all duration-300 ${
-                            index === currentIndex
-                                ? 'w-10 bg-white'
-                                : 'w-6 bg-white/45'
-                        }`}
+                        className={`h-0.5 transition-all duration-300 ${index === currentIndex
+                            ? 'w-10 bg-white'
+                            : 'w-6 bg-white/45'
+                            }`}
                         aria-hidden="true"
                     />
                 ))}
@@ -488,11 +487,10 @@ function FadeInOnScroll({
     return (
         <div
             ref={ref}
-            className={`${className} transition-all duration-700 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 ${
-                visible
-                    ? 'translate-y-0 opacity-100'
-                    : 'translate-y-6 opacity-0'
-            }`}
+            className={`${className} transition-all duration-700 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 ${visible
+                ? 'translate-y-0 opacity-100'
+                : 'translate-y-6 opacity-0'
+                }`}
             style={{ transitionDelay: `${delay}ms` }}
         >
             {children}
@@ -534,9 +532,8 @@ function ProductTile({
 }) {
     return (
         <FadeInOnScroll
-            className={`${centered ? 'min-w-[45%] sm:min-w-[30%]' : ''} ${
-                wide ? 'min-w-[65%] sm:min-w-[45%]' : ''
-            } snap-start md:min-w-0`}
+            className={`${centered ? 'min-w-[45%] sm:min-w-[30%]' : ''} ${wide ? 'min-w-[65%] sm:min-w-[45%]' : ''
+                } snap-start md:min-w-0`}
             delay={index * 60}
         >
             <Link
@@ -546,11 +543,10 @@ function ProductTile({
                 <div className="relative mb-3 aspect-[3/4] overflow-hidden bg-[#f7f7f7]">
                     {product.label && (
                         <span
-                            className={`absolute top-2 left-2 z-10 px-2 py-1 text-[8px] font-bold tracking-widest uppercase ${
-                                product.label.includes('%')
-                                    ? 'bg-[#d83f3f] text-white'
-                                    : 'bg-white/90 text-[#151515]'
-                            }`}
+                            className={`absolute top-2 left-2 z-10 px-2 py-1 text-[8px] font-bold tracking-widest uppercase ${product.label.includes('%')
+                                ? 'bg-[#d83f3f] text-white'
+                                : 'bg-white/90 text-[#151515]'
+                                }`}
                         >
                             {product.label}
                         </span>

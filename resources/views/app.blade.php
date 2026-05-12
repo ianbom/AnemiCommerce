@@ -12,8 +12,8 @@
             }
         </style>
 
-        <link rel="icon" href="/logo-shay/logo-tab.png" type="image/png">
-        <link rel="apple-touch-icon" href="/logo-shay/logo-tab.png">
+        <link rel="icon" href="/logo-shay/anemi-gold-white.webp" type="image/png">
+        <link rel="apple-touch-icon" href="/logo-shay/anemi-gold-white.webp">
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=jost:400,500,600|fraunces:300,400" rel="stylesheet" />

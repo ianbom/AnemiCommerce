@@ -20,12 +20,12 @@ export default function Footer() {
                     <div className="flex flex-col">
                         <div className="mb-4 flex items-center gap-4">
                             <img
-                                src="/logo-shay/logo-tab.png"
-                                alt="Shayda"
+                                src="/logo-shay/anemi-black.webp"
+                                alt="Anemi"
                                 className="h-16 w-auto object-contain md:h-20"
                             />
                             <span className="text-xl font-semibold tracking-[0.3em] text-[#151515] uppercase md:text-2xl">
-                                Shayda
+                                Anemi Official
                             </span>
                         </div>
                         <p className="max-w-md text-xs leading-relaxed text-[#6f6f6f] md:text-sm">
@@ -89,7 +89,7 @@ export default function Footer() {
                                     size={16}
                                     className="shrink-0 transition-colors group-hover:text-accent"
                                 />
-                                <span>hello@shayda.com</span>
+                                <span>hello@Anemi.com</span>
                             </li>
                         </ul>
                     </div>
@@ -243,7 +243,7 @@ export default function Footer() {
                 {/* Bottom Section */}
                 <div className="flex flex-col items-center justify-between border-t border-[#e7e2de] pt-8 text-[10px] tracking-[0.15em] text-[#6f6f6f] md:flex-row">
                     <p className="mb-4 md:mb-0">
-                        © {new Date().getFullYear()} Shayda. All Rights
+                        © {new Date().getFullYear()} Anemi. All Rights
                         Reserved.
                     </p>
 
