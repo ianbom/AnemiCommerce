@@ -30,7 +30,7 @@ class ProductImageSeeder extends Seeder
                 $slug = $this->slugify($name);
                 $imagesByProduct[$slug] = [];
                 
-                $imgCols = ['image', 'image2', 'image3', 'image4'];
+                $imgCols = ['image'];
                 $sortOrder = 0;
                 
                 foreach ($imgCols as $col) {
