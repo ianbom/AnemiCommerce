@@ -1,9 +1,18 @@
 import { Link, useForm, usePage } from '@inertiajs/react';
-import { User, MapPin, Camera, Eye, EyeOff, Loader2 } from 'lucide-react';
+import {
+    User,
+    MapPin,
+    Camera,
+    Eye,
+    EyeOff,
+    Loader2,
+    LogOut,
+} from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import SecurityController from '@/actions/App/Http/Controllers/Settings/SecurityController';
 import ProfileLayout from '@/layouts/profile-layout';
+import { logout } from '@/routes';
 import { dashboard as adminDashboard } from '@/routes/admin';
 
 type UserProp = {
@@ -465,6 +474,15 @@ export default function MyProfile() {
                             className="block w-full rounded-md border border-[#e7e2de] bg-white px-4 py-2 text-center text-[12px] font-bold tracking-wider text-[#151515] transition-colors hover:bg-[#ffffff]"
                         >
                             Kelola Alamat
+                        </Link>
+                        <Link
+                            href={logout()}
+                            method="post"
+                            as="button"
+                            className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-md border border-red-200 bg-white px-4 py-2 text-[12px] font-bold tracking-wider text-red-600 transition-colors hover:bg-red-50 lg:hidden"
+                        >
+                            <LogOut size={15} strokeWidth={1.8} />
+                            Keluar
                         </Link>
                     </div>
                 </div>
