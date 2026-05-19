@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import SecurityController from '@/actions/App/Http/Controllers/Settings/SecurityController';
 import ProfileLayout from '@/layouts/profile-layout';
+import { dashboard as adminDashboard } from '@/routes/admin';
 
 type UserProp = {
     id: number;
@@ -39,6 +40,7 @@ export default function MyProfile() {
     const { defaultAddress, user } = usePage<PageProps>().props;
     const avatarInputRef = useRef<HTMLInputElement>(null);
     const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+    const isAdmin = user.role.toLowerCase() === 'admin';
 
     // --- Personal Info Form ---
     const profileForm = useForm<{
@@ -166,6 +168,14 @@ export default function MyProfile() {
                     <p className="font-serif text-lg text-[#151515] capitalize">
                         {user.role}
                     </p>
+                    {isAdmin && (
+                        <Link
+                            href={adminDashboard()}
+                            className="mt-3 inline-flex items-center justify-center rounded-md bg-[#151515] px-4 py-2 text-[11px] font-bold tracking-wider text-white transition-colors hover:bg-[#272727]"
+                        >
+                            Dashboard
+                        </Link>
+                    )}
                 </div>
             </div>
 
