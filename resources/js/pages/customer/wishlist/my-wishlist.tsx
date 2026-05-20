@@ -48,6 +48,10 @@ const formatPrice = (value: number) =>
     }).format(value);
 
 export default function MyWishlist({ wishlistItems, summary }: Props) {
+    const visibleWishlistItems = wishlistItems.filter(
+        (item) => item.is_available,
+    );
+
     return (
         <ProfileLayout
             title="Wishlist Saya"
@@ -76,9 +80,9 @@ export default function MyWishlist({ wishlistItems, summary }: Props) {
                     </div>
                 </div>
 
-                {wishlistItems.length > 0 ? (
+                {visibleWishlistItems.length > 0 ? (
                     <div className="grid grid-cols-2 gap-x-3 gap-y-6 md:grid-cols-3 md:gap-x-5 md:gap-y-10 xl:grid-cols-4">
-                        {wishlistItems.map((item, index) => (
+                        {visibleWishlistItems.map((item, index) => (
                             <WishlistTile
                                 key={item.id}
                                 item={item}

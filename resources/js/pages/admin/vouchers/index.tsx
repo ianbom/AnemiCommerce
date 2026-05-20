@@ -106,6 +106,9 @@ export default function VouchersIndex({ vouchers, filters }: Props) {
                         <table className="w-full text-sm">
                             <thead>
                                 <tr className="border-b text-left text-muted-foreground">
+                                    <th className="w-14 pr-4 pb-3 font-medium">
+                                        No
+                                    </th>
                                     <th className="pr-4 pb-3 font-medium">
                                         Voucher
                                     </th>
@@ -127,11 +130,14 @@ export default function VouchersIndex({ vouchers, filters }: Props) {
                                 </tr>
                             </thead>
                             <tbody className="divide-y">
-                                {vouchers.data.map((voucher) => (
+                                {vouchers.data.map((voucher, index) => (
                                     <tr
                                         key={voucher.id}
                                         className="hover:bg-muted/40"
                                     >
+                                        <td className="py-3 pr-4 text-xs font-medium text-muted-foreground">
+                                            {(vouchers.from ?? 1) + index}
+                                        </td>
                                         <td className="py-3 pr-4">
                                             <div className="font-semibold">
                                                 {voucher.code}

@@ -109,6 +109,9 @@ export default function BannersIndex({ banners, filters, placements }: Props) {
                         <table className="w-full text-sm">
                             <thead>
                                 <tr className="border-b text-left text-muted-foreground">
+                                    <th className="w-14 pr-4 pb-3 font-medium">
+                                        No
+                                    </th>
                                     <th className="pr-4 pb-3 font-medium">
                                         Banner
                                     </th>
@@ -130,11 +133,14 @@ export default function BannersIndex({ banners, filters, placements }: Props) {
                                 </tr>
                             </thead>
                             <tbody className="divide-y">
-                                {banners.data.map((banner) => (
+                                {banners.data.map((banner, index) => (
                                     <tr
                                         key={banner.id}
                                         className="hover:bg-muted/40"
                                     >
+                                        <td className="py-3 pr-4 text-xs font-medium text-muted-foreground">
+                                            {(banners.from ?? 1) + index}
+                                        </td>
                                         <td className="py-3 pr-4">
                                             <div className="flex items-center gap-3">
                                                 <Thumbnail

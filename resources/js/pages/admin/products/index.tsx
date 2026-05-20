@@ -18,13 +18,10 @@ import {
     Star,
     Trash2,
     TrendingDown,
-    Upload,
-    X,
 } from 'lucide-react';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -172,18 +169,6 @@ export default function ProductsIndex({
     stats: totals,
 }: Props) {
     const [search, setSearch] = useState(filters.search ?? '');
-    const [selected, setSelected] = useState<number[]>([]);
-
-    const allSelected =
-        products.data.length > 0 && selected.length === products.data.length;
-
-    const toggleAll = () =>
-        setSelected(allSelected ? [] : products.data.map((p) => p.id));
-
-    const toggleOne = (id: number) =>
-        setSelected((prev) =>
-            prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
-        );
 
     const applyFilter = (key: string, value: string) =>
         router.get(
@@ -309,20 +294,6 @@ export default function ProductsIndex({
                         </p>
                     </div>
                     <div className="flex w-full flex-wrap items-center gap-2 md:w-auto md:shrink-0">
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="h-9 flex-1 gap-1.5 border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50 md:flex-none"
-                        >
-                            <Download className="h-3.5 w-3.5" /> Import
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="h-9 flex-1 gap-1.5 border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50 md:flex-none"
-                        >
-                            <Upload className="h-3.5 w-3.5" /> Export
-                        </Button>
                         <Link
                             href="/admin/products/create"
                             className="w-full md:w-auto"
@@ -573,77 +544,13 @@ export default function ProductsIndex({
                         </div>
                     </form>
 
-                    {/* Bulk Action Bar */}
-                    {selected.length > 0 && (
-                        <div className="flex flex-wrap items-center gap-3 border-b border-[#e8ddd8] bg-[#fdfaf8] px-4 py-2.5 sm:px-5">
-                            <span className="text-sm font-semibold text-[#151515]">
-                                {selected.length} selected
-                            </span>
-                            <div className="flex flex-wrap gap-2">
-                                <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="h-7 gap-1 border-zinc-200 text-xs text-zinc-600 hover:bg-zinc-100"
-                                    onClick={() =>
-                                        doAction('/admin/products/bulk-publish')
-                                    }
-                                >
-                                    <Eye className="h-3 w-3" /> Publish
-                                </Button>
-                                <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="h-7 gap-1 border-zinc-200 text-xs text-zinc-600 hover:bg-zinc-100"
-                                    onClick={() =>
-                                        doAction('/admin/products/bulk-archive')
-                                    }
-                                >
-                                    <Archive className="h-3 w-3" /> Archive
-                                </Button>
-                                <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="h-7 gap-1 border-red-100 text-xs text-red-600 hover:bg-red-50"
-                                    onClick={() => {
-                                        if (
-                                            confirm(
-                                                'Delete ' +
-                                                    selected.length +
-                                                    ' products?',
-                                            )
-                                        ) {
-                                            doAction(
-                                                '/admin/products/bulk-delete',
-                                                'delete',
-                                            );
-                                        }
-                                    }}
-                                >
-                                    <Trash2 className="h-3 w-3" /> Delete
-                                </Button>
-                            </div>
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                className="ml-auto h-7 w-7 text-zinc-400 hover:text-zinc-600"
-                                onClick={() => setSelected([])}
-                            >
-                                <X className="h-3.5 w-3.5" />
-                            </Button>
-                        </div>
-                    )}
-
                     {/* Table */}
                     <div className="overflow-x-auto">
                         <table className="w-full min-w-[1120px] text-left text-sm">
                             <thead>
                                 <tr className="border-b border-zinc-100 bg-zinc-50/60">
-                                    <th className="w-10 px-4 py-3">
-                                        <Checkbox
-                                            checked={allSelected}
-                                            onCheckedChange={toggleAll}
-                                            className="border-zinc-300 data-[state=checked]:bg-[#B98B63]"
-                                        />
+                                    <th className="w-14 px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
+                                        No
                                     </th>
                                     <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
                                         Product
@@ -703,8 +610,7 @@ export default function ProductsIndex({
                                         </td>
                                     </tr>
                                 )}
-                                {products.data.map((p) => {
-                                    const isSelected = selected.includes(p.id);
+                                {products.data.map((p, index) => {
                                     const vis = visibilityFor(p);
                                     const isLowStock =
                                         p.total_stock > 0 && p.total_stock <= 5;
@@ -725,25 +631,10 @@ export default function ProductsIndex({
                                     return (
                                         <tr
                                             key={p.id}
-                                            className={
-                                                'transition-colors hover:bg-zinc-50/70 ' +
-                                                (isSelected
-                                                    ? 'bg-[#fdfaf8]'
-                                                    : '')
-                                            }
+                                            className="transition-colors hover:bg-zinc-50/70"
                                         >
-                                            <td className="px-4 py-3.5">
-                                                <Checkbox
-                                                    checked={isSelected}
-                                                    onCheckedChange={() =>
-                                                        toggleOne(p.id)
-                                                    }
-                                                    className={
-                                                        isSelected
-                                                            ? 'border-[#151515] data-[state=checked]:bg-[#B98B63]'
-                                                            : 'border-zinc-300'
-                                                    }
-                                                />
+                                            <td className="px-4 py-3.5 text-xs font-medium text-zinc-400">
+                                                {(products.from ?? 1) + index}
                                             </td>
 
                                             <td className="px-4 py-3.5">

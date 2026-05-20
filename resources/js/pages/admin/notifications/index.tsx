@@ -288,6 +288,9 @@ export default function NotificationsIndex({
                         <table className="w-full text-left text-sm">
                             <thead>
                                 <tr className="border-b border-zinc-100 bg-zinc-50/60">
+                                    <th className="w-14 px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
+                                        No
+                                    </th>
                                     <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
                                         Notification
                                     </th>
@@ -311,7 +314,7 @@ export default function NotificationsIndex({
                             <tbody className="divide-y divide-zinc-50">
                                 {notifications.data.length === 0 && (
                                     <tr>
-                                        <td colSpan={6}>
+                                        <td colSpan={7}>
                                             <div className="flex flex-col items-center justify-center gap-3 py-20">
                                                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100">
                                                     <Bell className="h-5 w-5 text-zinc-400" />
@@ -334,88 +337,98 @@ export default function NotificationsIndex({
                                     </tr>
                                 )}
 
-                                {notifications.data.map((notification) => {
-                                    const typeConfig = getTypeConfig(
-                                        notification.type,
-                                    );
+                                {notifications.data.map(
+                                    (notification, index) => {
+                                        const typeConfig = getTypeConfig(
+                                            notification.type,
+                                        );
 
-                                    return (
-                                        <tr
-                                            key={notification.id}
-                                            className="transition-colors hover:bg-zinc-50/70"
-                                        >
-                                            <td className="px-4 py-3.5">
-                                                <div className="flex max-w-lg flex-col gap-1">
-                                                    <span className="font-medium text-zinc-900">
-                                                        {notification.title}
-                                                    </span>
-                                                    <span className="truncate text-xs text-zinc-500">
-                                                        {notification.message}
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-3.5">
-                                                <div className="flex flex-col gap-1">
-                                                    <span className="font-medium text-zinc-700">
-                                                        {notification.customer ??
-                                                            '-'}
-                                                    </span>
-                                                    <span className="text-xs text-zinc-500">
-                                                        {notification.customer_email ??
-                                                            '-'}
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-3.5">
-                                                <span
-                                                    className={
-                                                        'inline-flex w-fit items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-semibold capitalize ' +
-                                                        typeConfig.text +
-                                                        ' ' +
-                                                        typeConfig.bg
-                                                    }
-                                                >
+                                        return (
+                                            <tr
+                                                key={notification.id}
+                                                className="transition-colors hover:bg-zinc-50/70"
+                                            >
+                                                <td className="px-4 py-3.5 text-xs font-medium text-zinc-400">
+                                                    {(notifications.from ?? 1) +
+                                                        index}
+                                                </td>
+                                                <td className="px-4 py-3.5">
+                                                    <div className="flex max-w-lg flex-col gap-1">
+                                                        <span className="font-medium text-zinc-900">
+                                                            {notification.title}
+                                                        </span>
+                                                        <span className="truncate text-xs text-zinc-500">
+                                                            {
+                                                                notification.message
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-3.5">
+                                                    <div className="flex flex-col gap-1">
+                                                        <span className="font-medium text-zinc-700">
+                                                            {notification.customer ??
+                                                                '-'}
+                                                        </span>
+                                                        <span className="text-xs text-zinc-500">
+                                                            {notification.customer_email ??
+                                                                '-'}
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-3.5">
                                                     <span
                                                         className={
-                                                            'h-1.5 w-1.5 rounded-full ' +
-                                                            typeConfig.dot
+                                                            'inline-flex w-fit items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-semibold capitalize ' +
+                                                            typeConfig.text +
+                                                            ' ' +
+                                                            typeConfig.bg
+                                                        }
+                                                    >
+                                                        <span
+                                                            className={
+                                                                'h-1.5 w-1.5 rounded-full ' +
+                                                                typeConfig.dot
+                                                            }
+                                                        />
+                                                        {notification.type.replace(
+                                                            /_/g,
+                                                            ' ',
+                                                        )}
+                                                    </span>
+                                                </td>
+                                                <td className="px-4 py-3.5">
+                                                    <ReadPill
+                                                        read={
+                                                            notification.is_read
                                                         }
                                                     />
-                                                    {notification.type.replace(
-                                                        /_/g,
-                                                        ' ',
-                                                    )}
-                                                </span>
-                                            </td>
-                                            <td className="px-4 py-3.5">
-                                                <ReadPill
-                                                    read={notification.is_read}
-                                                />
-                                            </td>
-                                            <td className="px-4 py-3.5">
-                                                <div className="flex flex-col gap-1 text-xs text-zinc-500">
-                                                    <span>
-                                                        {notification.reference_type ??
+                                                </td>
+                                                <td className="px-4 py-3.5">
+                                                    <div className="flex flex-col gap-1 text-xs text-zinc-500">
+                                                        <span>
+                                                            {notification.reference_type ??
+                                                                '-'}
+                                                        </span>
+                                                        <span>
+                                                            {notification.reference_id
+                                                                ? '#' +
+                                                                  notification.reference_id
+                                                                : ''}
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-3.5 text-xs whitespace-nowrap text-zinc-500">
+                                                    <div className="flex items-center gap-1.5">
+                                                        <Clock className="h-3.5 w-3.5 text-zinc-300" />
+                                                        {notification.created_at ??
                                                             '-'}
-                                                    </span>
-                                                    <span>
-                                                        {notification.reference_id
-                                                            ? '#' +
-                                                              notification.reference_id
-                                                            : ''}
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-3.5 text-xs whitespace-nowrap text-zinc-500">
-                                                <div className="flex items-center gap-1.5">
-                                                    <Clock className="h-3.5 w-3.5 text-zinc-300" />
-                                                    {notification.created_at ??
-                                                        '-'}
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        );
+                                    },
+                                )}
                             </tbody>
                         </table>
                     </div>

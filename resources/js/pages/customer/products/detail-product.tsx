@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { FormEvent, ReactNode } from 'react';
+import { toast } from 'sonner';
 import { addProductVariantToCart as addProductVariantToCartRoute } from '@/actions/App/Http/Controllers/Customer/CartController';
 import {
     destroyProduct as removeWishlistProduct,
@@ -28,6 +29,7 @@ type Variant = {
     stock: number;
     reserved_stock: number;
     available_stock: number;
+    cart_quantity: number;
     image_url: string | null;
 };
 
@@ -207,13 +209,20 @@ function DetailProductContent({
         (product.sale_price ?? product.price) +
         (selectedVariant?.additional_price ?? 0);
     const basePrice = product.price + (selectedVariant?.additional_price ?? 0);
-    const maxQuantity = Math.max(
-        1,
-        selectedVariant?.available_stock ?? product.available_stock,
+    const selectedAvailableStock =
+        selectedVariant?.available_stock ?? product.available_stock;
+    const selectedCartQuantity = selectedVariant?.cart_quantity ?? 0;
+    const remainingStock = Math.max(
+        0,
+        selectedAvailableStock - selectedCartQuantity,
     );
+    const maxQuantity = Math.max(1, selectedAvailableStock);
+    const cartStockExceeded =
+        selectedVariant !== undefined &&
+        selectedCartQuantity + quantity > selectedAvailableStock;
     const isAvailable =
         product.available_stock > 0 &&
-        (selectedVariant?.available_stock ?? product.available_stock) > 0;
+        selectedAvailableStock > 0;
     const productDescription = product.description || product.short_description;
     const decreaseQuantity = () =>
         setQuantity((current) => Math.max(1, current - 1));
@@ -226,12 +235,30 @@ function DetailProductContent({
             return;
         }
 
+        if (cartStockExceeded) {
+            toast.error('Jumlah di keranjang melebihi stok tersedia.');
+
+            return;
+        }
+
         cartForm.submit(addProductVariantToCartRoute(selectedVariant.id), {
             preserveScroll: true,
         });
     };
     const buyItNow = () => {
         if (!selectedVariant || !isAvailable || cartForm.processing) {
+            return;
+        }
+
+        if (selectedCartQuantity > 0) {
+            router.visit(cart.url());
+
+            return;
+        }
+
+        if (cartStockExceeded) {
+            toast.error('Jumlah di keranjang melebihi stok tersedia.');
+
             return;
         }
 
@@ -600,6 +627,19 @@ function DetailProductContent({
                                     <Plus size={14} strokeWidth={2} />
                                 </button>
                             </div>
+                            {selectedCartQuantity > 0 && (
+                                <p
+                                    className={`mb-4 text-[11px] font-medium ${
+                                        cartStockExceeded
+                                            ? 'text-destructive'
+                                            : 'text-muted-foreground'
+                                    }`}
+                                >
+                                    {cartStockExceeded
+                                        ? 'Stock keranjang melebihi stock tersedia.'
+                                        : `Di keranjang: ${selectedCartQuantity}. Sisa stok tersedia: ${remainingStock}.`}
+                                </p>
+                            )}
 
                             <div className="grid grid-cols-2 gap-3">
                                 <form
@@ -625,12 +665,12 @@ function DetailProductContent({
                                             ? 'Menambahkan...'
                                             : 'Add to cart'}
                                     </button>
-                                    {(cartForm.errors.quantity ||
-                                        cartForm.errors.product_variant_id) && (
+                                    {cartForm.errors.product_variant_id && (
                                         <p className="mt-2 text-center text-[11px] font-medium text-destructive">
-                                            {cartForm.errors.quantity ||
+                                            {
                                                 cartForm.errors
-                                                    .product_variant_id}
+                                                    .product_variant_id
+                                            }
                                         </p>
                                     )}
                                 </form>

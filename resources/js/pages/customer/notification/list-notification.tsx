@@ -1,6 +1,10 @@
 import { Link, router } from '@inertiajs/react';
 import { Bell, Package, Tag, Check, Truck, Star } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
+import {
+    markAllAsRead as markAllAsReadRoute,
+    markAsRead as markAsReadRoute,
+} from '@/actions/App/Http/Controllers/Customer/NotificationController';
 import ProfileLayout from '@/layouts/profile-layout';
 
 // Helper to render heart icon as it wasn't directly imported
@@ -84,7 +88,7 @@ export default function ListNotification({ notifications }: Props) {
 
     const markAllAsRead = () => {
         router.post(
-            '/notifications/read-all',
+            markAllAsReadRoute.url(),
             {},
             { preserveScroll: true, preserveState: true },
         );
@@ -98,7 +102,7 @@ export default function ListNotification({ notifications }: Props) {
         }
 
         router.post(
-            `/notifications/${id}/read`,
+            markAsReadRoute.url(id),
             {},
             { preserveScroll: true, preserveState: true },
         );
@@ -195,11 +199,11 @@ export default function ListNotification({ notifications }: Props) {
                             const IconComponent = notification.icon;
 
                             return (
-                                <Link
+                                <button
                                     key={notification.id}
-                                    href={`/notifications/${notification.id}`}
+                                    type="button"
                                     onClick={() => markAsRead(notification.id)}
-                                    className={`group relative flex items-start gap-4 p-5 transition-all duration-300 hover:bg-[#ffffff] md:p-6 ${!notification.isRead ? 'bg-[#ffffff]/50' : 'bg-white'}`}
+                                    className={`group relative flex w-full items-start gap-4 p-5 text-left transition-all duration-300 hover:bg-[#ffffff] md:p-6 ${!notification.isRead ? 'bg-[#ffffff]/50' : 'bg-white'}`}
                                 >
                                     {/* Unread indicator line */}
                                     {!notification.isRead && (
@@ -236,7 +240,7 @@ export default function ListNotification({ notifications }: Props) {
                                     {!notification.isRead && (
                                         <div className="mt-2 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-[#EF4444] shadow-[0_0_8px_rgba(239,68,68,0.5)]"></div>
                                     )}
-                                </Link>
+                                </button>
                             );
                         })}
                     </div>

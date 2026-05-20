@@ -6,7 +6,9 @@ use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Collection;
 use App\Models\Page;
+use App\Models\CartItem;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -99,7 +101,7 @@ class ProductBrowsingService
             ->firstOrFail();
 
         return [
-            'product' => $this->productDetail($product),
+            'product' => $this->productDetail($product, $request->user()),
             'relatedProducts' => $this->relatedProducts($product, 8),
             'recentProducts' => $this->recentProducts($product, 4),
         ];
@@ -227,9 +229,10 @@ class ProductBrowsingService
         ];
     }
 
-    private function productDetail(Product $product): array
+    private function productDetail(Product $product, ?User $user = null): array
     {
         $variants = $product->variants;
+        $cartQuantities = $this->cartQuantities($product, $user);
         $images = $product->images
             ->map(fn ($image) => [
                 'url' => $image->image_url,
@@ -269,10 +272,24 @@ class ProductBrowsingService
                     'stock' => $variant->stock,
                     'reserved_stock' => $variant->reserved_stock,
                     'available_stock' => max(0, $variant->stock - $variant->reserved_stock),
+                    'cart_quantity' => (int) ($cartQuantities[$variant->id] ?? 0),
                     'image_url' => $variant->image_url,
                 ])
                 ->values(),
         ];
+    }
+
+    private function cartQuantities(Product $product, ?User $user): array
+    {
+        if (! $user) {
+            return [];
+        }
+
+        return CartItem::query()
+            ->where('product_id', $product->id)
+            ->whereHas('cart', fn ($query) => $query->where('user_id', $user->id))
+            ->pluck('quantity', 'product_variant_id')
+            ->all();
     }
 
     private function validatedFilters(Request $request): array

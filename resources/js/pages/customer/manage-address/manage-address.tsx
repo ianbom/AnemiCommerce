@@ -246,8 +246,26 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
         });
     };
 
-    const searchArea = async () => {
-        if (areaQuery.trim().length < 3) {
+    const chooseArea = (area: BiteshipArea) => {
+        form.setData({
+            ...form.data,
+            biteship_area_id: area.id,
+            province:
+                area.administrative_division_level_1_name ?? form.data.province,
+            city: area.administrative_division_level_2_name ?? form.data.city,
+            district:
+                area.administrative_division_level_3_name ?? form.data.district,
+            postal_code: area.postal_code ?? form.data.postal_code,
+        });
+        setAreaQuery(area.postal_code ?? area.name ?? area.id);
+        setAreaResults([]);
+        setAreaError('');
+    };
+
+    const searchArea = async (query = areaQuery, autoSelect = false) => {
+        const normalizedQuery = query.trim();
+
+        if (normalizedQuery.length < 3) {
             return;
         }
 
@@ -256,7 +274,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
 
         try {
             const response = await fetch(
-                biteshipAreas.url({ query: { search: areaQuery.trim() } }),
+                biteshipAreas.url({ query: { search: normalizedQuery } }),
                 {
                     headers: { Accept: 'application/json' },
                 },
@@ -270,7 +288,19 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                 return;
             }
 
-            setAreaResults(payload.areas ?? []);
+            const areas = payload.areas ?? [];
+            setAreaResults(areas);
+
+            if (autoSelect) {
+                const exactPostalMatches = areas.filter(
+                    (area: BiteshipArea) =>
+                        area.postal_code === normalizedQuery,
+                );
+
+                if (exactPostalMatches.length === 1) {
+                    chooseArea(exactPostalMatches[0]);
+                }
+            }
         } catch {
             setAreaError('Gagal terhubung ke Biteship.');
             setAreaResults([]);
@@ -279,21 +309,19 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
         }
     };
 
-    const chooseArea = (area: BiteshipArea) => {
-        form.setData({
-            ...form.data,
-            biteship_area_id: area.id,
-            province:
-                area.administrative_division_level_1_name ?? form.data.province,
-            city: area.administrative_division_level_2_name ?? form.data.city,
-            district:
-                area.administrative_division_level_3_name ?? form.data.district,
-            postal_code: area.postal_code ?? form.data.postal_code,
-        });
-        setAreaQuery(area.name ?? area.id);
-        setAreaResults([]);
-        setAreaError('');
-    };
+    useEffect(() => {
+        const query = areaQuery.trim();
+
+        if (!isModalOpen || query.length < 5) {
+            return;
+        }
+
+        const timeout = window.setTimeout(() => {
+            void searchArea(query, true);
+        }, 500);
+
+        return () => window.clearTimeout(timeout);
+    }, [areaQuery, isModalOpen]);
 
     const updateCoordinates = (latitude: number, longitude: number) => {
         if (!validCoordinates(latitude, longitude)) {
@@ -621,7 +649,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                     </div>
                                     <div>
                                         <label className="mb-1.5 block text-[11px] font-semibold text-[#6f6f6f]">
-                                            Cari berdasarkan Kode Pos
+                                            Kode Pos
                                         </label>
                                         <div className="flex gap-2">
                                             <input
@@ -632,12 +660,14 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                                         event.target.value,
                                                     )
                                                 }
-                                                placeholder="Cari kecamatan, kota, kode pos"
+                                                placeholder="Masukkan kode pos"
                                                 className="w-full rounded-md border border-[#e7e2de] bg-white px-4 py-2.5 text-[13px] text-[#272727] transition-all focus:border-[#9A6B45] focus:ring-1 focus:ring-[#9A6B45] focus:outline-none"
                                             />
                                             <button
                                                 type="button"
-                                                onClick={searchArea}
+                                                onClick={() =>
+                                                    searchArea(areaQuery, true)
+                                                }
                                                 disabled={
                                                     areaLoading ||
                                                     areaQuery.trim().length < 3

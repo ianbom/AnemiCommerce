@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import {
     AlertTriangle,
     ArrowRight,
@@ -10,6 +10,7 @@ import {
     ShoppingBag,
     Truck,
 } from 'lucide-react';
+import { useState } from 'react';
 import {
     Bar,
     BarChart,
@@ -69,6 +70,11 @@ type AttentionOrder = {
 };
 
 type SummaryMetric = { label: string; value: number };
+type DashboardFilters = {
+    range: string;
+    date_from: string;
+    date_to: string;
+};
 
 function summaryHref(label: string) {
     const normalized = label.toLowerCase();
@@ -85,6 +91,7 @@ function summaryHref(label: string) {
 }
 
 type Props = {
+    filters: DashboardFilters;
     summary: SummaryItem[];
     salesChart: ChartPoint[];
     attentionOrders: AttentionOrder[];
@@ -163,6 +170,7 @@ function badgeTone(value: string | null | undefined): BadgeTone {
 }
 
 export default function AdminDashboard({
+    filters,
     summary,
     salesChart,
     attentionOrders,
@@ -177,7 +185,7 @@ export default function AdminDashboard({
 
             <main className="min-h-[100dvh] bg-white px-8 py-7 text-zinc-900">
                 <div className="mx-auto flex max-w-7xl flex-col gap-8">
-                    <DashboardHeader />
+                    <DashboardHeader filters={filters} />
                     <StatCards stats={dashboardStats(summary)} />
                     <StatusSummary
                         paymentSummary={paymentSummary}
@@ -205,7 +213,44 @@ export default function AdminDashboard({
     );
 }
 
-function DashboardHeader() {
+function DashboardHeader({ filters }: { filters: DashboardFilters }) {
+    const [range, setRange] = useState(filters.range || '30d');
+    const [dateFrom, setDateFrom] = useState(filters.date_from || '');
+    const [dateTo, setDateTo] = useState(filters.date_to || '');
+
+    const applyRange = (nextRange: string) => {
+        setRange(nextRange);
+
+        if (nextRange !== 'custom') {
+            router.get(
+                '/admin/dashboard',
+                { range: nextRange },
+                { preserveState: true, replace: true },
+            );
+        }
+    };
+
+    const applyCustomRange = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        router.get(
+            '/admin/dashboard',
+            {
+                range: 'custom',
+                date_from: dateFrom,
+                date_to: dateTo,
+            },
+            { preserveState: true, replace: true },
+        );
+    };
+
+    const ranges = [
+        { label: 'Today', value: 'today' },
+        { label: '7D', value: '7d' },
+        { label: '30D', value: '30d' },
+        { label: 'Month', value: 'month' },
+        { label: 'Custom', value: 'custom' },
+    ];
+
     return (
         <header className="flex items-end justify-between gap-6">
             <div>
@@ -221,14 +266,61 @@ function DashboardHeader() {
                 </p>
             </div>
 
-            <div className="flex items-center gap-3">
-                <Button
-                    variant="outline"
-                    className="h-9 rounded-lg border-zinc-200 bg-white px-4 text-zinc-600 shadow-none hover:bg-zinc-50 hover:text-zinc-800 active:scale-[0.98]"
+            <div className="flex flex-wrap items-end justify-end gap-3">
+                <form
+                    onSubmit={applyCustomRange}
+                    className="flex flex-wrap items-end justify-end gap-2"
                 >
-                    <CalendarDays className="size-4" strokeWidth={1.7} />
-                    Today
-                </Button>
+                    <div className="flex rounded-lg border border-zinc-200 bg-white p-1">
+                        {ranges.map((item) => (
+                            <button
+                                key={item.value}
+                                type="button"
+                                onClick={() => applyRange(item.value)}
+                                className={[
+                                    'h-8 rounded-md px-3 text-xs font-semibold transition-colors',
+                                    range === item.value
+                                        ? 'bg-[#151515] text-white'
+                                        : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900',
+                                ].join(' ')}
+                            >
+                                {item.label}
+                            </button>
+                        ))}
+                    </div>
+
+                    {range === 'custom' && (
+                        <div className="flex items-end gap-2">
+                            <input
+                                type="date"
+                                value={dateFrom}
+                                onChange={(event) =>
+                                    setDateFrom(event.target.value)
+                                }
+                                className="h-9 min-w-[150px] cursor-pointer rounded-lg border border-zinc-200 bg-white px-3 text-sm text-zinc-700 shadow-none outline-none focus:border-[#B98B63] focus:ring-2 focus:ring-[#B98B63]/20"
+                            />
+                            <input
+                                type="date"
+                                value={dateTo}
+                                onChange={(event) =>
+                                    setDateTo(event.target.value)
+                                }
+                                className="h-9 min-w-[150px] cursor-pointer rounded-lg border border-zinc-200 bg-white px-3 text-sm text-zinc-700 shadow-none outline-none focus:border-[#B98B63] focus:ring-2 focus:ring-[#B98B63]/20"
+                            />
+                            <Button
+                                type="submit"
+                                variant="outline"
+                                className="h-9 rounded-lg border-zinc-200 bg-white px-4 text-zinc-600 shadow-none hover:bg-zinc-50 hover:text-zinc-800 active:scale-[0.98]"
+                            >
+                                <CalendarDays
+                                    className="size-4"
+                                    strokeWidth={1.7}
+                                />
+                                Apply
+                            </Button>
+                        </div>
+                    )}
+                </form>
                 <Button
                     asChild
                     className="h-9 rounded-lg bg-[#B98B63] px-4 text-white shadow-none hover:bg-[#9A6B45] active:scale-[0.98]"

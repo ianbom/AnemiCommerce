@@ -51,8 +51,6 @@ type Props = {
     filters: Record<string, string>;
 };
 
-const numberFormat = new Intl.NumberFormat('id-ID');
-
 export default function CustomersIndex({ customers, filters }: Props) {
     const { data, setData, get, processing } = useForm({
         search: filters.search ?? '',
@@ -299,6 +297,9 @@ export default function CustomersIndex({ customers, filters }: Props) {
                         <table className="w-full text-left text-sm">
                             <thead>
                                 <tr className="border-b border-zinc-100 bg-zinc-50/60">
+                                    <th className="w-14 px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
+                                        No
+                                    </th>
                                     <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
                                         Customer
                                     </th>
@@ -323,7 +324,7 @@ export default function CustomersIndex({ customers, filters }: Props) {
                             <tbody className="divide-y divide-zinc-50">
                                 {customers.data.length === 0 && (
                                     <tr>
-                                        <td colSpan={7}>
+                                        <td colSpan={8}>
                                             <div className="flex flex-col items-center justify-center gap-3 py-20">
                                                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100">
                                                     <Users className="h-5 w-5 text-zinc-400" />
@@ -346,11 +347,14 @@ export default function CustomersIndex({ customers, filters }: Props) {
                                     </tr>
                                 )}
 
-                                {customers.data.map((customer) => (
+                                {customers.data.map((customer, index) => (
                                     <tr
                                         key={customer.id}
                                         className="transition-colors hover:bg-zinc-50/70"
                                     >
+                                        <td className="px-4 py-3.5 text-xs font-medium text-zinc-400">
+                                            {(customers.from ?? 1) + index}
+                                        </td>
                                         <td className="px-4 py-3.5">
                                             <div className="flex flex-col gap-1">
                                                 <Link

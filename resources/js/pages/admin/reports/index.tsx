@@ -211,10 +211,13 @@ export default function ReportIndex({
                             <table className="w-full min-w-[760px] border-y border-zinc-200 text-sm">
                                 <thead className="border-b border-zinc-200 bg-zinc-50/70 text-xs tracking-wider text-zinc-500 uppercase">
                                     <tr className="text-left">
+                                        <th className="w-14 py-4 pr-4 pl-4 font-semibold">
+                                            No
+                                        </th>
                                         {table.columns.map((column) => (
                                             <th
                                                 key={column}
-                                                className="py-4 pr-4 font-semibold first:pl-4"
+                                                className="py-4 pr-4 font-semibold"
                                             >
                                                 {column.replaceAll('_', ' ')}
                                             </th>
@@ -227,10 +230,13 @@ export default function ReportIndex({
                                             key={index}
                                             className="transition-colors hover:bg-zinc-50/70"
                                         >
+                                            <td className="py-4 pr-4 pl-4 text-xs font-medium text-zinc-400">
+                                                {index + 1}
+                                            </td>
                                             {table.columns.map((column) => (
                                                 <td
                                                     key={column}
-                                                    className="py-4 pr-4 text-zinc-600 first:pl-4"
+                                                    className="py-4 pr-4 text-zinc-600"
                                                 >
                                                     {formatCell(
                                                         column,
@@ -243,7 +249,9 @@ export default function ReportIndex({
                                     {table.rows.length === 0 && (
                                         <tr>
                                             <td
-                                                colSpan={table.columns.length}
+                                                colSpan={
+                                                    table.columns.length + 1
+                                                }
                                                 className="px-4 py-8 text-center text-sm text-zinc-400"
                                             >
                                                 No report data found.

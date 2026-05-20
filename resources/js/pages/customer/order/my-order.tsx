@@ -5,6 +5,7 @@ import {
     ChevronRight,
     Package,
     Search,
+    ShoppingCart,
     Truck,
 } from 'lucide-react';
 import type { FormEvent } from 'react';
@@ -210,12 +211,12 @@ export default function ListOrder({ orders, filters }: Props) {
 
             {orders.data.length === 0 ? (
                 <div className="flex flex-col items-center justify-center border-y border-[#e7e2de] px-6 py-20 text-center">
-                    <div className="relative mb-6 h-40 w-32">
-                        <div className="absolute inset-0 bg-[#E8D6C1] opacity-50 blur-2xl" />
-                        <img
-                            src={FALLBACK_IMAGE}
-                            alt="Pesanan kosong"
-                            className="relative z-10 h-full w-full object-cover"
+                    <div className="relative mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-[#e7e2de] bg-white text-[#B98B63] shadow-sm">
+                        <div className="absolute inset-0 rounded-full bg-[#E8D6C1] opacity-60 blur-xl" />
+                        <ShoppingCart
+                            size={38}
+                            strokeWidth={1.7}
+                            className="relative z-10"
                         />
                     </div>
                     <h2 className="mb-2 font-serif text-2xl text-[#151515]">

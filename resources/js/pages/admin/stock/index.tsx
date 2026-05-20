@@ -323,6 +323,9 @@ export default function StockIndex({
                         <table className="w-full text-left text-sm">
                             <thead>
                                 <tr className="border-b border-zinc-100 bg-zinc-50/60">
+                                    <th className="w-14 px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
+                                        No
+                                    </th>
                                     <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
                                         Variant / SKU
                                     </th>
@@ -347,7 +350,7 @@ export default function StockIndex({
                             <tbody className="divide-y divide-zinc-50">
                                 {variants.data.length === 0 && (
                                     <tr>
-                                        <td colSpan={7}>
+                                        <td colSpan={8}>
                                             <div className="flex flex-col items-center justify-center gap-3 py-20">
                                                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100">
                                                     <Package className="h-5 w-5 text-zinc-400" />
@@ -369,7 +372,7 @@ export default function StockIndex({
                                         </td>
                                     </tr>
                                 )}
-                                {variants.data.map((v) => {
+                                {variants.data.map((v, index) => {
                                     const sc =
                                         statusConfig[
                                             v.is_active ? 'active' : 'inactive'
@@ -385,6 +388,9 @@ export default function StockIndex({
                                             key={v.id}
                                             className="transition-colors hover:bg-zinc-50/70"
                                         >
+                                            <td className="px-4 py-3.5 text-xs font-medium text-zinc-400">
+                                                {(variants.from ?? 1) + index}
+                                            </td>
                                             <td className="px-4 py-3.5">
                                                 <Link
                                                     href={

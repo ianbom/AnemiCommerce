@@ -13,11 +13,8 @@ import {
     Search,
     ShoppingBag,
     Truck,
-    Upload,
-    XCircle,
 } from 'lucide-react';
 import { useState } from 'react';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -177,9 +174,6 @@ export default function OrdersIndex({
         e.preventDefault();
         applyFilter('search', search);
     };
-
-    const doAction = (url: string, method: 'post' | 'delete' = 'post') =>
-        router[method](url, {}, { preserveScroll: true });
 
     const stats = [
         {
@@ -458,23 +452,39 @@ export default function OrdersIndex({
                             <span className="px-0.5 text-[10px] font-semibold tracking-wider text-zinc-400 uppercase">
                                 Dates
                             </span>
-                            <div className="flex gap-2">
-                                <Input
-                                    type="date"
-                                    value={filters.date_from || ''}
-                                    onChange={(e) =>
-                                        applyFilter('date_from', e.target.value)
-                                    }
-                                    className="h-9 w-[130px] rounded-lg border-zinc-200 bg-white text-xs shadow-sm"
-                                />
-                                <Input
-                                    type="date"
-                                    value={filters.date_to || ''}
-                                    onChange={(e) =>
-                                        applyFilter('date_to', e.target.value)
-                                    }
-                                    className="h-9 w-[130px] rounded-lg border-zinc-200 bg-white text-xs shadow-sm"
-                                />
+                            <div className="flex flex-wrap gap-2">
+                                <label className="flex flex-col gap-1">
+                                    <span className="text-[10px] font-medium text-zinc-400">
+                                        From
+                                    </span>
+                                    <Input
+                                        type="date"
+                                        value={filters.date_from || ''}
+                                        onChange={(e) =>
+                                            applyFilter(
+                                                'date_from',
+                                                e.target.value,
+                                            )
+                                        }
+                                        className="h-10 min-w-[160px] cursor-pointer rounded-lg border-zinc-200 bg-white text-sm shadow-sm"
+                                    />
+                                </label>
+                                <label className="flex flex-col gap-1">
+                                    <span className="text-[10px] font-medium text-zinc-400">
+                                        To
+                                    </span>
+                                    <Input
+                                        type="date"
+                                        value={filters.date_to || ''}
+                                        onChange={(e) =>
+                                            applyFilter(
+                                                'date_to',
+                                                e.target.value,
+                                            )
+                                        }
+                                        className="h-10 min-w-[160px] cursor-pointer rounded-lg border-zinc-200 bg-white text-sm shadow-sm"
+                                    />
+                                </label>
                             </div>
                         </div>
 
@@ -503,6 +513,9 @@ export default function OrdersIndex({
                         <table className="w-full text-left text-sm">
                             <thead>
                                 <tr className="border-b border-zinc-100 bg-zinc-50/60">
+                                    <th className="w-14 px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
+                                        No
+                                    </th>
                                     <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
                                         Order
                                     </th>
@@ -530,7 +543,7 @@ export default function OrdersIndex({
                             <tbody className="divide-y divide-zinc-50">
                                 {orders.data.length === 0 && (
                                     <tr>
-                                        <td colSpan={8}>
+                                        <td colSpan={9}>
                                             <div className="flex flex-col items-center justify-center gap-3 py-20">
                                                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100">
                                                     <ShoppingBag className="h-5 w-5 text-zinc-400" />
@@ -552,7 +565,7 @@ export default function OrdersIndex({
                                         </td>
                                     </tr>
                                 )}
-                                {orders.data.map((o) => {
+                                {orders.data.map((o, index) => {
                                     const payConfig = getStatusConfig(
                                         o.payment_status,
                                     );
@@ -568,6 +581,9 @@ export default function OrdersIndex({
                                             key={o.id}
                                             className="transition-colors hover:bg-zinc-50/70"
                                         >
+                                            <td className="px-4 py-3.5 text-xs font-medium text-zinc-400">
+                                                {(orders.from ?? 1) + index}
+                                            </td>
                                             <td className="px-4 py-3.5">
                                                 <Link
                                                     href={

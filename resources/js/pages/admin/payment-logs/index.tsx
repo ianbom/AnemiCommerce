@@ -109,6 +109,9 @@ export default function PaymentLogsIndex({ logs, filters }: Props) {
                         <table className="w-full text-sm">
                             <thead>
                                 <tr className="border-b text-left text-muted-foreground">
+                                    <th className="w-14 pr-4 pb-3 font-medium">
+                                        No
+                                    </th>
                                     <th className="pr-4 pb-3 font-medium">
                                         Order
                                     </th>
@@ -130,11 +133,14 @@ export default function PaymentLogsIndex({ logs, filters }: Props) {
                                 </tr>
                             </thead>
                             <tbody className="divide-y">
-                                {logs.data.map((log) => (
+                                {logs.data.map((log, index) => (
                                     <tr
                                         key={log.id}
                                         className="hover:bg-muted/40"
                                     >
+                                        <td className="py-3 pr-4 text-xs font-medium text-muted-foreground">
+                                            {(logs.from ?? 1) + index}
+                                        </td>
                                         <td className="py-3 pr-4">
                                             {log.order_number ?? '-'}
                                         </td>

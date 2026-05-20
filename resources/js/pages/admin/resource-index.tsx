@@ -269,6 +269,9 @@ export default function ResourceIndex({
                         <table className="w-full min-w-[700px] text-left text-sm">
                             <thead>
                                 <tr className="border-b border-stone-100 bg-stone-50/40">
+                                    <th className="w-14 px-5 py-3.5 text-xs font-semibold tracking-wider text-stone-500 uppercase">
+                                        No
+                                    </th>
                                     {definition.columns.map((col) => (
                                         <th
                                             key={col}
@@ -287,7 +290,7 @@ export default function ResourceIndex({
                                     <tr>
                                         <td
                                             colSpan={
-                                                definition.columns.length + 1
+                                                definition.columns.length + 2
                                             }
                                             className="px-5 py-16 text-center"
                                         >
@@ -312,6 +315,9 @@ export default function ResourceIndex({
                                             key={String(row.id ?? idx)}
                                             className="group transition-colors duration-150 hover:bg-stone-50/80"
                                         >
+                                            <td className="px-5 py-4 text-xs font-medium text-stone-400">
+                                                {idx + 1}
+                                            </td>
                                             {definition.columns.map((col) => (
                                                 <td
                                                     key={col}

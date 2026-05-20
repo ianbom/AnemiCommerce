@@ -448,6 +448,9 @@ export default function PaymentsIndex({
                         <table className="w-full text-left text-sm">
                             <thead>
                                 <tr className="border-b border-zinc-100 bg-zinc-50/60">
+                                    <th className="w-14 px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
+                                        No
+                                    </th>
                                     <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
                                         Order
                                     </th>
@@ -472,7 +475,7 @@ export default function PaymentsIndex({
                             <tbody className="divide-y divide-zinc-50">
                                 {payments.data.length === 0 && (
                                     <tr>
-                                        <td colSpan={7}>
+                                        <td colSpan={8}>
                                             <div className="flex flex-col items-center justify-center gap-3 py-20">
                                                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100">
                                                     <Wallet className="h-5 w-5 text-zinc-400" />
@@ -495,7 +498,7 @@ export default function PaymentsIndex({
                                     </tr>
                                 )}
 
-                                {payments.data.map((payment) => {
+                                {payments.data.map((payment, index) => {
                                     const statusConfig = getStatusConfig(
                                         payment.transaction_status,
                                     );
@@ -508,6 +511,9 @@ export default function PaymentsIndex({
                                             key={payment.id}
                                             className="transition-colors hover:bg-zinc-50/70"
                                         >
+                                            <td className="px-4 py-3.5 text-xs font-medium text-zinc-400">
+                                                {(payments.from ?? 1) + index}
+                                            </td>
                                             <td className="px-4 py-3.5">
                                                 <div className="flex flex-col gap-1">
                                                     <Link

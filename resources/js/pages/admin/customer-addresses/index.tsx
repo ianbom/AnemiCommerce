@@ -262,6 +262,9 @@ export default function CustomerAddressesIndex({ addresses, filters }: Props) {
                         <table className="w-full text-left text-sm">
                             <thead>
                                 <tr className="border-b border-zinc-100 bg-zinc-50/60">
+                                    <th className="w-14 px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
+                                        No
+                                    </th>
                                     <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
                                         Customer
                                     </th>
@@ -283,7 +286,7 @@ export default function CustomerAddressesIndex({ addresses, filters }: Props) {
                             <tbody className="divide-y divide-zinc-50">
                                 {addresses.data.length === 0 && (
                                     <tr>
-                                        <td colSpan={6}>
+                                        <td colSpan={7}>
                                             <div className="flex flex-col items-center justify-center gap-3 py-20">
                                                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100">
                                                     <MapPin className="h-5 w-5 text-zinc-400" />
@@ -306,11 +309,14 @@ export default function CustomerAddressesIndex({ addresses, filters }: Props) {
                                     </tr>
                                 )}
 
-                                {addresses.data.map((address) => (
+                                {addresses.data.map((address, index) => (
                                     <tr
                                         key={address.id}
                                         className="transition-colors hover:bg-zinc-50/70"
                                     >
+                                        <td className="px-4 py-3.5 text-xs font-medium text-zinc-400">
+                                            {(addresses.from ?? 1) + index}
+                                        </td>
                                         <td className="px-4 py-3.5">
                                             <div className="flex flex-col gap-1">
                                                 <Link
@@ -354,10 +360,7 @@ export default function CustomerAddressesIndex({ addresses, filters }: Props) {
                                         </td>
                                         <td className="px-4 py-3.5">
                                             {address.is_default ? (
-                                                <StatusPill
-                                                    label="Default"
-                                                    tone="amber"
-                                                />
+                                                <StatusPill label="Default" />
                                             ) : (
                                                 <span className="text-xs text-zinc-300">
                                                     -
@@ -497,7 +500,7 @@ function StatsGrid({ stats }: { stats: Array<Record<string, any>> }) {
     );
 }
 
-function StatusPill({ label, tone }: { label: string; tone: 'amber' }) {
+function StatusPill({ label }: { label: string }) {
     return (
         <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-amber-100 bg-amber-50 px-2.5 py-1 text-[10px] font-semibold text-amber-700">
             <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />

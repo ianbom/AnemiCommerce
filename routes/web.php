@@ -75,7 +75,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/wishlist/products/{product}', [WishlistController::class, 'destroyProduct'])->name('wishlist.products.destroy');
     Route::delete('/wishlist/{wishlist}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
     Route::get('/notifications', [CustomerNotificationController::class, 'index'])->name('notifications');
-    Route::get('/notifications/{notification}', [CustomerNotificationController::class, 'show'])->name('notifications.show');
     Route::post('/notifications/read-all', [CustomerNotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
     Route::post('/notifications/{notification}/read', [CustomerNotificationController::class, 'markAsRead'])->name('notifications.read');
     Route::get('/biteship/areas', BiteshipAreaController::class)->name('biteship.areas');

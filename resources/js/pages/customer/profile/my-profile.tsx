@@ -2,7 +2,6 @@ import { Link, useForm, usePage } from '@inertiajs/react';
 import {
     User,
     MapPin,
-    Camera,
     Eye,
     EyeOff,
     Loader2,
@@ -49,6 +48,9 @@ export default function MyProfile() {
     const { defaultAddress, user } = usePage<PageProps>().props;
     const avatarInputRef = useRef<HTMLInputElement>(null);
     const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+    const [profileClientErrors, setProfileClientErrors] = useState<{
+        name?: string;
+    }>({});
     const isAdmin = user.role.toLowerCase() === 'admin';
 
     // --- Personal Info Form ---
@@ -66,6 +68,19 @@ export default function MyProfile() {
 
     const submitProfile = (e: React.FormEvent) => {
         e.preventDefault();
+
+        const nextErrors: { name?: string } = {};
+
+        if (profileForm.data.name.trim() === '') {
+            nextErrors.name = 'Nama lengkap wajib diisi.';
+        }
+
+        setProfileClientErrors(nextErrors);
+
+        if (Object.keys(nextErrors).length > 0) {
+            return;
+        }
+
         profileForm.transform((data) => ({
             ...data,
             _method: 'patch',
@@ -97,6 +112,11 @@ export default function MyProfile() {
     const [showPassword1, setShowPassword1] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
     const [showPassword3, setShowPassword3] = useState(false);
+    const [passwordClientErrors, setPasswordClientErrors] = useState<{
+        current_password?: string;
+        password?: string;
+        password_confirmation?: string;
+    }>({});
     const passwordForm = useForm({
         current_password: '',
         password: '',
@@ -105,6 +125,32 @@ export default function MyProfile() {
 
     const submitPassword = (e: React.FormEvent) => {
         e.preventDefault();
+
+        const nextErrors: {
+            current_password?: string;
+            password?: string;
+            password_confirmation?: string;
+        } = {};
+
+        if (passwordForm.data.current_password.trim() === '') {
+            nextErrors.current_password = 'Kata sandi saat ini wajib diisi.';
+        }
+
+        if (passwordForm.data.password.trim() === '') {
+            nextErrors.password = 'Kata sandi baru wajib diisi.';
+        }
+
+        if (passwordForm.data.password_confirmation.trim() === '') {
+            nextErrors.password_confirmation =
+                'Konfirmasi kata sandi wajib diisi.';
+        }
+
+        setPasswordClientErrors(nextErrors);
+
+        if (Object.keys(nextErrors).length > 0) {
+            return;
+        }
+
         passwordForm.put(SecurityController.update.url(), {
             preserveScroll: true,
             onSuccess: () => passwordForm.reset(),
@@ -125,6 +171,7 @@ export default function MyProfile() {
         avatarPreview ||
         user.avatar_url ||
         '/img/m-ghufanil-muta-ali-vAyDuvcjXcs-unsplash.webp';
+    const nameError = profileClientErrors.name ?? profileForm.errors.name;
 
     return (
         <ProfileLayout
@@ -141,20 +188,15 @@ export default function MyProfile() {
             {/* Profile Header */}
             <div className="animate-fade-in-up flex flex-col items-start justify-between border-b border-[#e7e2de] pb-8 md:flex-row md:items-center">
                 <div className="mb-6 flex items-center space-x-6 md:mb-0">
-                    <button
-                        type="button"
-                        onClick={() => avatarInputRef.current?.click()}
-                        className="group relative h-20 w-20 cursor-pointer overflow-hidden rounded-full border border-[#e7e2de] md:h-24 md:w-24"
+                    <div
+                        className="relative h-20 w-20 overflow-hidden rounded-full border border-[#e7e2de] md:h-24 md:w-24"
                     >
                         <img
                             src={avatarSrc}
                             alt={user.name}
                             className="h-full w-full object-cover"
                         />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                            <Camera className="text-white" size={24} />
-                        </div>
-                    </button>
+                    </div>
                     <div>
                         <h2 className="mb-1 font-serif text-xl text-[#151515] md:text-2xl">
                             {user.name}
@@ -210,18 +252,22 @@ export default function MyProfile() {
                             <input
                                 type="text"
                                 value={profileForm.data.name}
-                                onChange={(e) =>
-                                    profileForm.setData('name', e.target.value)
-                                }
+                                onChange={(e) => {
+                                    profileForm.setData('name', e.target.value);
+                                    setProfileClientErrors((current) => ({
+                                        ...current,
+                                        name: undefined,
+                                    }));
+                                }}
                                 className={`w-full border-b bg-transparent px-1 py-2.5 text-[13px] text-[#272727] transition-colors focus:outline-none ${
-                                    profileForm.errors.name
+                                    nameError
                                         ? 'border-red-400 focus:border-red-400'
                                         : 'border-[#e7e2de] focus:border-[#151515]'
                                 }`}
                             />
-                            {profileForm.errors.name && (
+                            {nameError && (
                                 <p className="mt-1 text-[10px] text-red-500">
-                                    {profileForm.errors.name}
+                                    {nameError}
                                 </p>
                             )}
                         </div>
@@ -355,13 +401,20 @@ export default function MyProfile() {
                                     setShowPassword1(!showPassword1)
                                 }
                                 value={passwordForm.data.current_password}
-                                onChange={(value) =>
+                                onChange={(value) => {
                                     passwordForm.setData(
                                         'current_password',
                                         value,
-                                    )
+                                    );
+                                    setPasswordClientErrors((current) => ({
+                                        ...current,
+                                        current_password: undefined,
+                                    }));
+                                }}
+                                error={
+                                    passwordClientErrors.current_password ??
+                                    passwordForm.errors.current_password
                                 }
-                                error={passwordForm.errors.current_password}
                                 autoComplete="current-password"
                             />
                             <PasswordField
@@ -371,13 +424,18 @@ export default function MyProfile() {
                                     setShowPassword2(!showPassword2)
                                 }
                                 value={passwordForm.data.password}
-                                onChange={(value) =>
-                                    passwordForm.setData('password', value)
+                                onChange={(value) => {
+                                    passwordForm.setData('password', value);
+                                    setPasswordClientErrors((current) => ({
+                                        ...current,
+                                        password: undefined,
+                                    }));
+                                }}
+                                error={
+                                    passwordClientErrors.password ??
+                                    passwordForm.errors.password
                                 }
-                                error={passwordForm.errors.password}
                                 autoComplete="new-password"
-                                hint="Gunakan minimal 8 karakter dengan kombinasi huruf dan angka."
-                                hintColor="text-[#EF4444]"
                             />
                             <PasswordField
                                 label="Konfirmasi Kata Sandi Baru"
@@ -386,13 +444,18 @@ export default function MyProfile() {
                                     setShowPassword3(!showPassword3)
                                 }
                                 value={passwordForm.data.password_confirmation}
-                                onChange={(value) =>
+                                onChange={(value) => {
                                     passwordForm.setData(
                                         'password_confirmation',
                                         value,
-                                    )
-                                }
+                                    );
+                                    setPasswordClientErrors((current) => ({
+                                        ...current,
+                                        password_confirmation: undefined,
+                                    }));
+                                }}
                                 error={
+                                    passwordClientErrors.password_confirmation ??
                                     passwordForm.errors.password_confirmation
                                 }
                                 autoComplete="new-password"

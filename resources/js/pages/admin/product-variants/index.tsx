@@ -16,16 +16,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -103,18 +94,6 @@ export default function ProductVariantsIndex({
     stats: totals,
 }: Props) {
     const [search, setSearch] = useState(filters.search ?? '');
-    const [selected, setSelected] = useState<number[]>([]);
-
-    const allSelected =
-        variants.data.length > 0 && selected.length === variants.data.length;
-
-    const toggleAll = () =>
-        setSelected(allSelected ? [] : variants.data.map((v) => v.id));
-
-    const toggleOne = (id: number) =>
-        setSelected((prev) =>
-            prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
-        );
 
     const indexUrl = product
         ? `/admin/products/${product.id}/variants`
@@ -355,11 +334,7 @@ export default function ProductVariantsIndex({
                             <thead className="border-b border-zinc-100 bg-zinc-50/50 text-xs text-zinc-500">
                                 <tr>
                                     <th className="px-5 py-3 font-medium">
-                                        <Checkbox
-                                            checked={allSelected}
-                                            onCheckedChange={toggleAll}
-                                            className="rounded border-zinc-300"
-                                        />
+                                        No
                                     </th>
                                     <th className="px-5 py-3 font-medium">
                                         Variant Info
@@ -395,22 +370,14 @@ export default function ProductVariantsIndex({
                                         </td>
                                     </tr>
                                 )}
-                                {variants.data.map((v) => {
+                                {variants.data.map((v, index) => {
                                     return (
                                         <tr
                                             key={v.id}
                                             className="group transition-colors hover:bg-zinc-50/50"
                                         >
-                                            <td className="px-5 py-3">
-                                                <Checkbox
-                                                    checked={selected.includes(
-                                                        v.id,
-                                                    )}
-                                                    onCheckedChange={() =>
-                                                        toggleOne(v.id)
-                                                    }
-                                                    className="rounded border-zinc-300 data-[state=checked]:bg-[#B98B63]"
-                                                />
+                                            <td className="px-5 py-3 text-xs font-medium text-zinc-400">
+                                                {(variants.from ?? 1) + index}
                                             </td>
                                             <td className="px-5 py-3">
                                                 <div className="flex items-center gap-3">

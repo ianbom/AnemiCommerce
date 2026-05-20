@@ -699,7 +699,7 @@ function ProductTile({
     const [isWishlisted, setIsWishlisted] = useState(product.is_wishlisted);
     const [isWishlistProcessing, setIsWishlistProcessing] = useState(false);
 
-    const toggleWishlist = (event: MouseEvent<HTMLButtonElement>) => {
+    const toggleWishlist = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         event.stopPropagation();
 
@@ -708,20 +708,35 @@ function ProductTile({
         }
 
         setIsWishlistProcessing(true);
+        const previous = isWishlisted;
+        setIsWishlisted(!previous);
 
-        const options = {
-            preserveScroll: true,
-            onSuccess: () => setIsWishlisted((current) => !current),
-            onFinish: () => setIsWishlistProcessing(false),
-        };
+        try {
+            const response = await fetch(
+                previous
+                    ? removeWishlistProduct.url(product.id)
+                    : addWishlistItem.url(product.id),
+                {
+                    method: previous ? 'DELETE' : 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN':
+                            document.querySelector<HTMLMetaElement>(
+                                'meta[name="csrf-token"]',
+                            )?.content ?? '',
+                    },
+                },
+            );
 
-        if (isWishlisted) {
-            router.delete(removeWishlistProduct.url(product.id), options);
-
-            return;
+            if (!response.ok) {
+                setIsWishlisted(previous);
+            }
+        } catch {
+            setIsWishlisted(previous);
+        } finally {
+            setIsWishlistProcessing(false);
         }
-
-        router.post(addWishlistItem.url(product.id), {}, options);
     };
 
     return (
