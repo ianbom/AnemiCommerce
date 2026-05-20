@@ -1,7 +1,7 @@
 import { Head, Link } from '@inertiajs/react';
-import { Clock, RotateCcw, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock, RotateCcw, Star } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import type { PointerEvent, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import ShopLayout from '@/layouts/shop-layout';
 import { detail, list } from '@/routes';
 
@@ -282,17 +282,8 @@ function NewCollectionsSection({
                     </Link>
 
                     <div className="order-4 max-w-[255px] text-[15px] leading-[1.55] text-[#333333] lg:absolute lg:top-[156px] lg:left-[816px]">
-                        <p>
-                            A stoical elegance, you might call it. Black
-                            asymmetric dresses blowing voluminously in the artic
-                            wind.
-                        </p>
-                        <p className="mt-3">
-                            Oversized hybrids of hoodie and padded outerwear;
-                            leather jackets that turn out to be made from
-                            Balenciaga’s new mycelium-derived leather-mimicking
-                            alternative. Tote bags mated with boots.
-                        </p>
+                        <p>{mainBanner?.subtitle ?? ''}</p>
+                        <p className="mt-3">{secondaryBanner?.subtitle ?? ''}</p>
                     </div>
 
                     <img
@@ -344,13 +335,11 @@ function HeroSlider({ heroBanners }: { heroBanners: BannerCard[] }) {
               ];
 
     const sliderRef = useRef<HTMLDivElement>(null);
-    const isDraggingRef = useRef(false);
-    const dragStartXRef = useRef(0);
-    const dragScrollLeftRef = useRef(0);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const goToSlide = (index: number) => {
         const slider = sliderRef.current;
+        const slideIndex = (index + slides.length) % slides.length;
 
         if (!slider) {
             return;
@@ -358,9 +347,9 @@ function HeroSlider({ heroBanners }: { heroBanners: BannerCard[] }) {
 
         slider.scrollTo({
             behavior: 'smooth',
-            left: slider.clientWidth * index,
+            left: slider.clientWidth * slideIndex,
         });
-        setCurrentIndex(index);
+        setCurrentIndex(slideIndex);
     };
 
     const updateCurrentSlide = () => {
@@ -370,44 +359,12 @@ function HeroSlider({ heroBanners }: { heroBanners: BannerCard[] }) {
             return;
         }
 
-        setCurrentIndex(Math.round(slider.scrollLeft / slider.clientWidth));
-    };
-
-    const startDrag = (event: PointerEvent<HTMLDivElement>) => {
-        const slider = sliderRef.current;
-
-        if (!slider) {
-            return;
-        }
-
-        isDraggingRef.current = true;
-        dragStartXRef.current = event.clientX;
-        dragScrollLeftRef.current = slider.scrollLeft;
-        slider.setPointerCapture(event.pointerId);
-    };
-
-    const moveDrag = (event: PointerEvent<HTMLDivElement>) => {
-        const slider = sliderRef.current;
-
-        if (!slider || !isDraggingRef.current) {
-            return;
-        }
-
-        event.preventDefault();
-        slider.scrollLeft =
-            dragScrollLeftRef.current - (event.clientX - dragStartXRef.current);
-    };
-
-    const endDrag = (event: PointerEvent<HTMLDivElement>) => {
-        const slider = sliderRef.current;
-
-        if (!slider || !isDraggingRef.current) {
-            return;
-        }
-
-        isDraggingRef.current = false;
-        slider.releasePointerCapture(event.pointerId);
-        updateCurrentSlide();
+        setCurrentIndex(
+            Math.min(
+                slides.length - 1,
+                Math.round(slider.scrollLeft / slider.clientWidth),
+            ),
+        );
     };
 
     useEffect(() => {
@@ -424,16 +381,12 @@ function HeroSlider({ heroBanners }: { heroBanners: BannerCard[] }) {
             <div
                 ref={sliderRef}
                 onScroll={updateCurrentSlide}
-                onPointerDown={startDrag}
-                onPointerMove={moveDrag}
-                onPointerUp={endDrag}
-                onPointerCancel={endDrag}
-                onPointerLeave={endDrag}
-                className="hide-scrollbar flex h-full cursor-grab snap-x snap-mandatory overflow-x-auto scroll-smooth select-none active:cursor-grabbing"
+                className="hide-scrollbar flex h-full snap-x snap-mandatory overflow-x-hidden scroll-smooth"
             >
                 {slides.map((slide, index) => (
-                    <div
+                    <Link
                         key={index}
+                        href={list.url()}
                         className="relative h-full min-w-full snap-start"
                     >
                         <picture className="block h-full w-full">
@@ -449,11 +402,10 @@ function HeroSlider({ heroBanners }: { heroBanners: BannerCard[] }) {
                             />
                         </picture>
                         <div className="absolute inset-0 bg-black/5" />
-                    </div>
+                    </Link>
                 ))}
             </div>
 
-            {/* Pagination Indicators */}
             <div className="absolute right-0 bottom-24 left-0 z-20 flex justify-center gap-3 md:bottom-8">
                 {slides.map((_, index) => (
                     <span
@@ -466,6 +418,25 @@ function HeroSlider({ heroBanners }: { heroBanners: BannerCard[] }) {
                         aria-hidden="true"
                     />
                 ))}
+            </div>
+
+            <div className="absolute right-4 bottom-20 left-4 z-30 flex items-center justify-between md:bottom-6 md:right-8 md:left-8">
+                <button
+                    type="button"
+                    onClick={() => goToSlide(currentIndex - 1)}
+                    className="flex h-7 w-7 items-center justify-center border border-white/25 bg-black/5 text-white/60 backdrop-blur-[2px] transition-colors hover:border-white/55 hover:bg-white/10 hover:text-white md:h-8 md:w-8"
+                    aria-label="Previous hero banner"
+                >
+                    <ChevronLeft size={16} strokeWidth={1.4} />
+                </button>
+                <button
+                    type="button"
+                    onClick={() => goToSlide(currentIndex + 1)}
+                    className="flex h-7 w-7 items-center justify-center border border-white/25 bg-black/5 text-white/60 backdrop-blur-[2px] transition-colors hover:border-white/55 hover:bg-white/10 hover:text-white md:h-8 md:w-8"
+                    aria-label="Next hero banner"
+                >
+                    <ChevronRight size={16} strokeWidth={1.4} />
+                </button>
             </div>
         </section>
     );

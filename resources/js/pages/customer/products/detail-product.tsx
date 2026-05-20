@@ -415,6 +415,11 @@ function DetailProductContent({
                             <h1 className="mb-3 text-xl font-semibold tracking-wide text-foreground">
                                 {product.title}
                             </h1>
+                            {product.short_description && (
+                                <p className="mb-4 text-[11px] leading-[1.8] font-medium tracking-wide text-secondary-foreground">
+                                    {product.short_description}
+                                </p>
+                            )}
                             <div className="flex items-center justify-between">
                                 <div className="flex flex-wrap items-center gap-2">
                                     <span className="text-sm font-semibold tracking-wide text-secondary-foreground">
@@ -450,7 +455,7 @@ function DetailProductContent({
                             </div>
                         </div>
 
-                        <div className="mb-8 flex cursor-pointer items-center justify-between rounded-md border border-border bg-secondary/70 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+                        <div className="mb-8 flex items-center justify-between rounded-md border border-border bg-secondary/70 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
                             <div className="flex items-center gap-3">
                                 <div className="rounded-full bg-primary/10 p-2 text-primary">
                                     <ShoppingBag size={18} strokeWidth={1.7} />
@@ -482,6 +487,13 @@ function DetailProductContent({
                                             product.image ??
                                             gallery[0]?.url ??
                                             fallbackImages[0];
+                                        const colorAvailable = variants.some(
+                                            (candidate) =>
+                                                candidate.color_name ===
+                                                    (variant.color_name ??
+                                                        '') &&
+                                                candidate.available_stock > 0,
+                                        );
                                         const isSelected =
                                             selectedColor ===
                                             (variant.color_name ?? '');
@@ -490,7 +502,12 @@ function DetailProductContent({
                                             <button
                                                 key={`${variant.color_name}-${variant.color_hex}`}
                                                 type="button"
+                                                disabled={!colorAvailable}
                                                 onClick={() => {
+                                                    if (!colorAvailable) {
+                                                        return;
+                                                    }
+
                                                     const nextVariant =
                                                         variants.find(
                                                             (candidate) =>
@@ -498,13 +515,17 @@ function DetailProductContent({
                                                                     (variant.color_name ??
                                                                         '') &&
                                                                 candidate.size ===
-                                                                    selectedSize,
+                                                                    selectedSize &&
+                                                                candidate.available_stock >
+                                                                    0,
                                                         ) ??
                                                         variants.find(
                                                             (candidate) =>
                                                                 candidate.color_name ===
-                                                                (variant.color_name ??
-                                                                    ''),
+                                                                    (variant.color_name ??
+                                                                        '') &&
+                                                                candidate.available_stock >
+                                                                    0,
                                                         ) ??
                                                         initialVariant;
 
@@ -513,7 +534,11 @@ function DetailProductContent({
                                                     );
                                                     setMainImage(variantImage);
                                                 }}
-                                                className="group flex cursor-pointer flex-col items-center transition-transform hover:-translate-y-1"
+                                                className={`group flex flex-col items-center transition-transform ${
+                                                    colorAvailable
+                                                        ? 'cursor-pointer hover:-translate-y-1'
+                                                        : 'cursor-not-allowed opacity-45'
+                                                }`}
                                             >
                                                 <span
                                                     className={`mb-2 h-[65px] w-[50px] overflow-hidden rounded-sm border p-0.5 transition-all ${
@@ -524,7 +549,11 @@ function DetailProductContent({
                                                 >
                                                     <img
                                                         src={variantImage}
-                                                        className="h-full w-full rounded-sm object-cover"
+                                                        className={`h-full w-full rounded-sm object-cover ${
+                                                            colorAvailable
+                                                                ? ''
+                                                                : 'grayscale'
+                                                        }`}
                                                         alt={
                                                             variant.color_name ??
                                                             product.title
@@ -542,6 +571,11 @@ function DetailProductContent({
                                                         variant.color_hex ??
                                                         'Warna'}
                                                 </span>
+                                                {!colorAvailable && (
+                                                    <span className="mt-1 text-[8px] font-semibold tracking-wider text-[#d83f3f] uppercase">
+                                                        Habis
+                                                    </span>
+                                                )}
                                             </button>
                                         );
                                     })}
@@ -570,39 +604,53 @@ function DetailProductContent({
                                     </button>
                                 </div>
                                 <div className="flex flex-wrap gap-3">
-                                    {sizes.map((size) => (
-                                        <button
-                                            key={size}
-                                            type="button"
-                                            onClick={() => {
-                                                const nextVariant =
-                                                    variants.find(
-                                                        (variant) =>
-                                                            variant.size ===
-                                                                size &&
-                                                            variant.color_name ===
-                                                                selectedColor,
-                                                    ) ??
-                                                    variants.find(
-                                                        (variant) =>
-                                                            variant.size ===
-                                                            size,
-                                                    ) ??
-                                                    initialVariant;
+                                    {sizes.map((size) => {
+                                        const sizeVariant =
+                                            variants.find(
+                                                (variant) =>
+                                                    variant.size === size &&
+                                                    variant.color_name ===
+                                                        selectedColor,
+                                            ) ??
+                                            variants.find(
+                                                (variant) =>
+                                                    variant.size === size,
+                                            );
+                                        const sizeAvailable =
+                                            (sizeVariant?.available_stock ??
+                                                0) > 0;
 
-                                                setSelectedVariantId(
-                                                    nextVariant?.id ?? null,
-                                                );
-                                            }}
-                                            className={`rounded-md border px-7 py-2.5 text-[11px] font-semibold tracking-wide transition-all ${
-                                                selectedSize === size
-                                                    ? 'border-primary text-primary shadow-sm hover:bg-secondary'
-                                                    : 'border-border text-muted-foreground hover:border-primary hover:text-primary'
-                                            }`}
-                                        >
-                                            {size}
-                                        </button>
-                                    ))}
+                                        return (
+                                            <button
+                                                key={size}
+                                                type="button"
+                                                disabled={!sizeAvailable}
+                                                onClick={() => {
+                                                    if (!sizeAvailable) {
+                                                        return;
+                                                    }
+
+                                                    setSelectedVariantId(
+                                                        sizeVariant?.id ?? null,
+                                                    );
+                                                }}
+                                                className={`rounded-md border px-7 py-2.5 text-[11px] font-semibold tracking-wide transition-all ${
+                                                    !sizeAvailable
+                                                        ? 'cursor-not-allowed border-border bg-muted/50 text-muted-foreground/45 line-through'
+                                                        : selectedSize === size
+                                                          ? 'border-primary text-primary shadow-sm hover:bg-secondary'
+                                                          : 'border-border text-muted-foreground hover:border-primary hover:text-primary'
+                                                }`}
+                                            >
+                                                {size}
+                                                {!sizeAvailable && (
+                                                    <span className="ml-2 text-[8px] font-semibold tracking-wider text-[#d83f3f] no-underline uppercase">
+                                                        Habis
+                                                    </span>
+                                                )}
+                                            </button>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         )}

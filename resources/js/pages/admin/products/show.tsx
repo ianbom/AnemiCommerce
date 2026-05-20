@@ -400,10 +400,6 @@ export default function ProductShow({ product }: Props) {
                                     }
                                 />
                                 <InfoRow
-                                    label="Material"
-                                    value={product.material || '-'}
-                                />
-                                <InfoRow
                                     label="Weight"
                                     value={
                                         product.weight
@@ -459,32 +455,24 @@ export default function ProductShow({ product }: Props) {
                             </Card>
                         )}
 
-                        {(product.care_instruction ||
-                            product.meta_title ||
-                            product.meta_description) && (
+                        {(product.material || product.care_instruction) && (
                             <Card>
                                 <CardHeader className="pb-3">
                                     <CardTitle className="text-base">
-                                        Care and materials
+                                        Care and Materials
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent className="grid gap-3 text-sm">
+                                    {product.material && (
+                                        <InfoRow
+                                            label="Material"
+                                            value={product.material}
+                                        />
+                                    )}
                                     {product.care_instruction && (
                                         <InfoRow
                                             label="Care Instruction"
                                             value={product.care_instruction}
-                                        />
-                                    )}
-                                    {product.meta_title && (
-                                        <InfoRow
-                                            label="Meta Title"
-                                            value={product.meta_title}
-                                        />
-                                    )}
-                                    {product.meta_description && (
-                                        <InfoRow
-                                            label="Meta Description"
-                                            value={product.meta_description}
                                         />
                                     )}
                                 </CardContent>

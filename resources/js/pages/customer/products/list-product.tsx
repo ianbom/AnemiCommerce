@@ -714,6 +714,7 @@ const ProductTile = memo(function ProductTile({
 }) {
     const [isWishlisted, setIsWishlisted] = useState(product.is_wishlisted);
     const [isWishlistProcessing, setIsWishlistProcessing] = useState(false);
+    const isSoldOut = product.available_stock <= 0;
 
     const toggleWishlist = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -770,9 +771,15 @@ const ProductTile = memo(function ProductTile({
                         alt={product.title}
                         loading="lazy"
                         decoding="async"
-                        className={`h-full w-full object-cover transition-all duration-700 ease-in-out ${product.hover_image ? 'group-hover:opacity-0' : 'group-hover:scale-[1.03]'}`}
+                        className={`h-full w-full object-cover transition-all duration-700 ease-in-out ${
+                            isSoldOut
+                                ? 'opacity-45 grayscale'
+                                : product.hover_image
+                                  ? 'group-hover:opacity-0'
+                                  : 'group-hover:scale-[1.03]'
+                        }`}
                     />
-                    {product.hover_image && (
+                    {product.hover_image && !isSoldOut && (
                         <img
                             src={product.hover_image}
                             alt={product.title}
@@ -783,11 +790,15 @@ const ProductTile = memo(function ProductTile({
                     )}
                     <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/5" />
 
-                    {product.badge && (
+                    {isSoldOut ? (
+                        <div className="absolute top-2 left-2 bg-[#d83f3f] px-2 py-1 text-[8px] font-semibold tracking-widest text-white uppercase shadow-sm">
+                            Habis
+                        </div>
+                    ) : product.badge ? (
                         <div className="absolute top-2 left-2 bg-[#d83f3f] px-2 py-1 text-[8px] font-medium tracking-widest text-white uppercase shadow-sm">
                             {product.badge}
                         </div>
-                    )}
+                    ) : null}
                     <button
                         type="button"
                         aria-label={
@@ -807,7 +818,11 @@ const ProductTile = memo(function ProductTile({
                     </button>
                 </div>
 
-                <div className="mb-2 flex min-h-3 items-center justify-between gap-3">
+                <div
+                    className={`mb-2 flex min-h-3 items-center justify-between gap-3 ${
+                        isSoldOut ? 'opacity-55' : ''
+                    }`}
+                >
                     {product.colors.length > 0 ? (
                         <div className="flex space-x-1.5">
                             {product.colors.slice(0, 5).map((color) => (
@@ -829,11 +844,19 @@ const ProductTile = memo(function ProductTile({
                     )}
                 </div>
 
-                <h3 className="mb-2 line-clamp-2 min-h-[2.75em] text-[12px] leading-snug font-medium text-[#272727] transition-colors group-hover:text-[#a55353]">
+                <h3
+                    className={`mb-2 line-clamp-2 min-h-[2.75em] text-[12px] leading-snug font-medium text-[#272727] transition-colors group-hover:text-[#a55353] ${
+                        isSoldOut ? 'opacity-55' : ''
+                    }`}
+                >
                     {product.title}
                 </h3>
 
-                <div className="mt-auto flex flex-wrap items-center gap-2 text-[12px] font-medium text-[#3d3d3d]">
+                <div
+                    className={`mt-auto flex flex-wrap items-center gap-2 text-[12px] font-medium text-[#3d3d3d] ${
+                        isSoldOut ? 'opacity-55' : ''
+                    }`}
+                >
                     <span>
                         {formatPrice(product.sale_price ?? product.price)}
                     </span>

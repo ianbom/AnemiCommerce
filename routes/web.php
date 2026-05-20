@@ -35,6 +35,7 @@ use App\Http\Controllers\Customer\ProductController as CustomerProductController
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Customer\WishlistController;
 use App\Http\Controllers\Settings\ProfileController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [CustomerHomeController::class, 'index'])->name('home');
@@ -55,7 +56,11 @@ Route::inertia('/terms-conditions', 'customer/policy/term-condition')->name('pol
 Route::inertia('/admin/order-detail', 'admin/orders/order-detail')->name('detail-order-admin');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+    Route::get('dashboard', function (Request $request) {
+        return redirect()->route(
+            $request->user()->role === 'admin' ? 'admin.dashboard' : 'my-profile'
+        );
+    })->name('dashboard');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
