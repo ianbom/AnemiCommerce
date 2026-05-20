@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Search, User, ShoppingBag, Heart, Menu } from 'lucide-react';
+import { Heart, ShoppingBag, User } from 'lucide-react';
 
 type NavbarCollection = {
     id: number;
@@ -10,13 +10,27 @@ type NavbarCollection = {
 type NavbarProps = {
     cartCount?: number;
     collections?: NavbarCollection[];
+    currentUrl?: string;
 };
 
 export default function Navbar({
     cartCount = 0,
     collections = [],
+    currentUrl = '/',
 }: NavbarProps) {
     const cartBadge = cartCount > 99 ? '99+' : String(cartCount);
+    const [pathname, queryString = ''] = currentUrl.split('?');
+    const params = new URLSearchParams(queryString);
+    const activeCollection = params.get('collection');
+    const isProductList = pathname === '/list';
+    const isAllProductActive = isProductList && !activeCollection;
+    const menuClass = (active: boolean) =>
+        [
+            'border-b pb-1 transition-colors',
+            active
+                ? 'border-[#151515]'
+                : 'border-transparent hover:border-[#151515]',
+        ].join(' ');
 
     return (
         <nav className="sticky top-0 z-50 border-b border-[#e7e2de] bg-white">
@@ -34,11 +48,11 @@ export default function Navbar({
                 </Link>
                 <div className="flex items-center gap-4 text-[#151515]">
                     <Link href={'/wishlist'}>
-                    <Heart
-                        strokeWidth={1.5}
-                        size={22}
-                        className="cursor-pointer"
-                    />
+                        <Heart
+                            strokeWidth={1.5}
+                            size={22}
+                            className="cursor-pointer"
+                        />
                     </Link>
                 </div>
             </div>
@@ -59,19 +73,25 @@ export default function Navbar({
                 <div className="flex items-center gap-9 text-[12px] font-medium tracking-[0.12em] text-[#151515] uppercase">
                     <Link
                         href="/list"
-                        className="border-b border-transparent pb-1 hover:border-[#151515]"
+                        className={menuClass(isAllProductActive)}
                     >
                         ALL PRODUCT
                     </Link>
-                    {collections.map((collection) => (
-                        <Link
-                            key={collection.id}
-                            href={`/list?collection=${encodeURIComponent(collection.slug)}`}
-                            className="border-b border-transparent pb-1 hover:border-[#151515]"
-                        >
-                            {collection.name.toUpperCase()}
-                        </Link>
-                    ))}
+                    {collections.map((collection) => {
+                        const isActive =
+                            isProductList &&
+                            activeCollection === collection.slug;
+
+                        return (
+                            <Link
+                                key={collection.id}
+                                href={`/list?collection=${encodeURIComponent(collection.slug)}`}
+                                className={menuClass(isActive)}
+                            >
+                                {collection.name.toUpperCase()}
+                            </Link>
+                        );
+                    })}
                 </div>
 
                 <div className="flex items-center gap-6 text-[#151515]">

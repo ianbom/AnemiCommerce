@@ -78,9 +78,7 @@ export default function Home({
     ctaBanner,
     collectionBanners,
     categories,
-    hajjSeries,
     wePresent,
-    recentAdditions,
     mostLoved,
 }: Props) {
     return (
@@ -130,7 +128,7 @@ export default function Home({
                                     src={
                                         category.image_url ??
                                         fallbackImages[
-                                        index % fallbackImages.length
+                                            index % fallbackImages.length
                                         ]
                                     }
                                     alt={category.name}
@@ -315,19 +313,35 @@ function NewCollectionsSection({
 }
 
 function HeroSlider({ heroBanners }: { heroBanners: BannerCard[] }) {
-    const images =
+    const slides =
         heroBanners && heroBanners.length > 0
-            ? heroBanners.map((banner) =>
-                bannerImage(
-                    banner,
-                    '/img/omar-elsharawy-gFHBofW3ncQ-unsplash.webp',
-                ),
-            )
+            ? heroBanners.map((banner) => ({
+                  desktop: bannerImage(
+                      banner,
+                      '/img/omar-elsharawy-gFHBofW3ncQ-unsplash.webp',
+                  ),
+                  mobile:
+                      banner?.image_mobile_url ??
+                      bannerImage(
+                          banner,
+                          '/img/omar-elsharawy-gFHBofW3ncQ-unsplash.webp',
+                      ),
+              }))
             : [
-                '/img/omar-elsharawy-gFHBofW3ncQ-unsplash.webp',
-                '/img/abdul-raheem-kannath-aNWfK46QWto-unsplash.webp',
-                '/img/ainur-iman-qcNmigFPTQM-unsplash.webp',
-            ];
+                  {
+                      desktop: '/img/omar-elsharawy-gFHBofW3ncQ-unsplash.webp',
+                      mobile: '/img/omar-elsharawy-gFHBofW3ncQ-unsplash.webp',
+                  },
+                  {
+                      desktop:
+                          '/img/abdul-raheem-kannath-aNWfK46QWto-unsplash.webp',
+                      mobile: '/img/abdul-raheem-kannath-aNWfK46QWto-unsplash.webp',
+                  },
+                  {
+                      desktop: '/img/ainur-iman-qcNmigFPTQM-unsplash.webp',
+                      mobile: '/img/ainur-iman-qcNmigFPTQM-unsplash.webp',
+                  },
+              ];
 
     const sliderRef = useRef<HTMLDivElement>(null);
     const isDraggingRef = useRef(false);
@@ -398,15 +412,15 @@ function HeroSlider({ heroBanners }: { heroBanners: BannerCard[] }) {
 
     useEffect(() => {
         const timer = setInterval(() => {
-            const nextIndex = (currentIndex + 1) % images.length;
+            const nextIndex = (currentIndex + 1) % slides.length;
             goToSlide(nextIndex);
         }, 5000);
 
         return () => clearInterval(timer);
-    }, [currentIndex, images.length]);
+    }, [currentIndex, slides.length]);
 
     return (
-        <section className="relative h-[62vh] w-full overflow-hidden bg-[#f7f7f7] md:h-[82vh]">
+        <section className="relative h-[calc(100svh-4rem)] w-full overflow-hidden bg-[#f7f7f7] md:h-[82vh]">
             <div
                 ref={sliderRef}
                 onScroll={updateCurrentSlide}
@@ -417,31 +431,38 @@ function HeroSlider({ heroBanners }: { heroBanners: BannerCard[] }) {
                 onPointerLeave={endDrag}
                 className="hide-scrollbar flex h-full cursor-grab snap-x snap-mandatory overflow-x-auto scroll-smooth select-none active:cursor-grabbing"
             >
-                {images.map((img, index) => (
+                {slides.map((slide, index) => (
                     <div
                         key={index}
                         className="relative h-full min-w-full snap-start"
                     >
-                        <img
-                            src={img}
-                            alt={`Hero Banner ${index + 1}`}
-                            draggable={false}
-                            className="h-full w-full object-cover"
-                        />
+                        <picture className="block h-full w-full">
+                            <source
+                                media="(max-width: 767px)"
+                                srcSet={slide.mobile}
+                            />
+                            <img
+                                src={slide.desktop}
+                                alt={`Hero Banner ${index + 1}`}
+                                draggable={false}
+                                className="h-full w-full object-cover"
+                            />
+                        </picture>
                         <div className="absolute inset-0 bg-black/5" />
                     </div>
                 ))}
             </div>
 
             {/* Pagination Indicators */}
-            <div className="absolute right-0 bottom-8 left-0 z-20 flex justify-center gap-3">
-                {images.map((_, index) => (
+            <div className="absolute right-0 bottom-24 left-0 z-20 flex justify-center gap-3 md:bottom-8">
+                {slides.map((_, index) => (
                     <span
                         key={index}
-                        className={`h-0.5 transition-all duration-300 ${index === currentIndex
-                            ? 'w-10 bg-white'
-                            : 'w-6 bg-white/45'
-                            }`}
+                        className={`h-0.5 transition-all duration-300 ${
+                            index === currentIndex
+                                ? 'w-10 bg-white'
+                                : 'w-6 bg-white/45'
+                        }`}
                         aria-hidden="true"
                     />
                 ))}
@@ -487,10 +508,11 @@ function FadeInOnScroll({
     return (
         <div
             ref={ref}
-            className={`${className} transition-all duration-700 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 ${visible
-                ? 'translate-y-0 opacity-100'
-                : 'translate-y-6 opacity-0'
-                }`}
+            className={`${className} transition-all duration-700 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 ${
+                visible
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-6 opacity-0'
+            }`}
             style={{ transitionDelay: `${delay}ms` }}
         >
             {children}
@@ -532,8 +554,9 @@ function ProductTile({
 }) {
     return (
         <FadeInOnScroll
-            className={`${centered ? 'min-w-[45%] sm:min-w-[30%]' : ''} ${wide ? 'min-w-[65%] sm:min-w-[45%]' : ''
-                } snap-start md:min-w-0`}
+            className={`${centered ? 'min-w-[45%] sm:min-w-[30%]' : ''} ${
+                wide ? 'min-w-[65%] sm:min-w-[45%]' : ''
+            } snap-start md:min-w-0`}
             delay={index * 60}
         >
             <Link
@@ -543,10 +566,11 @@ function ProductTile({
                 <div className="relative mb-3 aspect-[3/4] overflow-hidden bg-[#f7f7f7]">
                     {product.label && (
                         <span
-                            className={`absolute top-2 left-2 z-10 px-2 py-1 text-[8px] font-bold tracking-widest uppercase ${product.label.includes('%')
-                                ? 'bg-[#d83f3f] text-white'
-                                : 'bg-white/90 text-[#151515]'
-                                }`}
+                            className={`absolute top-2 left-2 z-10 px-2 py-1 text-[8px] font-bold tracking-widest uppercase ${
+                                product.label.includes('%')
+                                    ? 'bg-[#d83f3f] text-white'
+                                    : 'bg-white/90 text-[#151515]'
+                            }`}
                         >
                             {product.label}
                         </span>

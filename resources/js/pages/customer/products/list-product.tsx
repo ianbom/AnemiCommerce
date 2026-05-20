@@ -1,7 +1,7 @@
 import { Head, InfiniteScroll, Link, router } from '@inertiajs/react';
 import { ChevronDown, Heart, Search } from 'lucide-react';
 import type { FormEvent, MouseEvent, ReactNode } from 'react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
     destroyProduct as removeWishlistProduct,
     store as addWishlistItem,
@@ -62,6 +62,7 @@ type PaginatedProducts = {
 type FilterOption = {
     id?: number;
     name?: string | null;
+    description?: string | null;
     slug?: string;
     value?: string;
     label?: string;
@@ -151,6 +152,8 @@ export default function ListProduct({ products, filters, options }: Props) {
     );
     const [form, setForm] = useState<FilterState>(initialFilters);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const openFilter = useCallback(() => setIsFilterOpen(true), []);
+    const closeFilter = useCallback(() => setIsFilterOpen(false), []);
 
     useEffect(() => {
         if (form.search === (filters.search ?? '')) {
@@ -207,22 +210,27 @@ export default function ListProduct({ products, filters, options }: Props) {
         (collection) => collection.slug === filters.collection,
     );
     const pageTitle = selectedCollection?.name ?? 'Semua Produk';
+    const pageDescription =
+        selectedCollection?.description?.trim() ||
+        'Temukan pilihan modest wear terbaru dengan filter cepat, tampilan bersih, dan katalog yang lebih lapang.';
 
     return (
         <ShopLayout>
             <Head title={`${pageTitle} - Aurea Syari`} />
 
             <main className="mx-auto w-full max-w-[1560px] px-4 py-8 md:px-10 md:py-12">
-                {isFilterOpen && (
-                    <button
-                        type="button"
-                        aria-label="Tutup filter"
-                        onClick={() => setIsFilterOpen(false)}
-                        className="fixed inset-0 z-40 bg-black/30 backdrop-blur-[2px]"
-                    />
-                )}
+                <button
+                    type="button"
+                    aria-label="Tutup filter"
+                    onClick={closeFilter}
+                    className={`fixed inset-0 z-40 bg-black/30 transition-opacity duration-200 ease-out ${
+                        isFilterOpen
+                            ? 'opacity-100'
+                            : 'pointer-events-none opacity-0'
+                    }`}
+                />
                 <aside
-                    className={`fixed top-0 right-0 bottom-0 z-50 flex w-full max-w-md flex-col overflow-y-auto border-l border-border bg-white px-5 pt-5 pb-6 shadow-[-24px_0_80px_rgba(0,0,0,0.14)] transition-transform duration-300 ease-out md:px-7 ${
+                    className={`fixed top-0 right-0 bottom-0 z-50 flex w-full max-w-md transform-gpu flex-col overflow-y-auto border-l border-border bg-white px-5 pt-5 pb-6 shadow-[-24px_0_80px_rgba(0,0,0,0.14)] transition-transform duration-200 ease-out will-change-transform [contain:layout_paint] md:px-7 ${
                         isFilterOpen
                             ? 'translate-x-0'
                             : 'pointer-events-none translate-x-full'
@@ -239,7 +247,7 @@ export default function ListProduct({ products, filters, options }: Props) {
                         </div>
                         <button
                             type="button"
-                            onClick={() => setIsFilterOpen(false)}
+                            onClick={closeFilter}
                             className="border border-border px-4 py-2 text-[10px] font-semibold tracking-wider uppercase transition-colors hover:border-foreground"
                         >
                             Tutup
@@ -551,7 +559,7 @@ export default function ListProduct({ products, filters, options }: Props) {
                         </button>
                         <button
                             type="button"
-                            onClick={() => setIsFilterOpen(false)}
+                            onClick={closeFilter}
                             className="bg-primary py-3 text-[11px] font-semibold tracking-wider text-primary-foreground uppercase transition-colors hover:bg-[#9A6B45]"
                         >
                             Lihat Produk
@@ -570,15 +578,13 @@ export default function ListProduct({ products, filters, options }: Props) {
                                     {pageTitle}
                                 </h1>
                                 <p className="mt-4 max-w-lg text-sm leading-6 text-muted-foreground">
-                                    Temukan pilihan modest wear terbaru dengan
-                                    filter cepat, tampilan bersih, dan katalog
-                                    yang lebih lapang.
+                                    {pageDescription}
                                 </p>
                             </div>
                             <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
                                 <button
                                     type="button"
-                                    onClick={() => setIsFilterOpen(true)}
+                                    onClick={openFilter}
                                     className="group inline-flex min-w-48 items-center justify-between border border-[#B98B63] px-5 py-3 text-left transition-colors hover:bg-[#B98B63] hover:text-white"
                                 >
                                     <span>
@@ -596,28 +602,7 @@ export default function ListProduct({ products, filters, options }: Props) {
                     </section>
 
                     {products.data.length > 0 ? (
-                        <InfiniteScroll data="products" buffer={400}>
-                            {({ loading }) => (
-                                <>
-                                    <div className="grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-3 md:gap-x-5 md:gap-y-12 lg:grid-cols-4 xl:grid-cols-4">
-                                        {products.data.map((product, index) => (
-                                            <ProductTile
-                                                key={product.id}
-                                                product={product}
-                                                index={index}
-                                            />
-                                        ))}
-                                    </div>
-                                    {loading && (
-                                        <div className="mt-10 flex justify-center">
-                                            <span className="rounded-full border border-border px-5 py-2 text-[11px] font-semibold tracking-wider text-secondary-foreground uppercase">
-                                                Memuat produk...
-                                            </span>
-                                        </div>
-                                    )}
-                                </>
-                            )}
-                        </InfiniteScroll>
+                        <ProductGrid products={products.data} />
                     ) : (
                         <div className="flex min-h-[420px] flex-col items-center justify-center rounded-md px-6 text-center">
                             <p className="text-sm font-semibold text-foreground">
@@ -689,7 +674,38 @@ function FadeInOnScroll({
     );
 }
 
-function ProductTile({
+const ProductGrid = memo(function ProductGrid({
+    products,
+}: {
+    products: ProductCard[];
+}) {
+    return (
+        <InfiniteScroll data="products" buffer={400}>
+            {({ loading }) => (
+                <>
+                    <div className="grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-3 md:gap-x-5 md:gap-y-12 lg:grid-cols-4 xl:grid-cols-4">
+                        {products.map((product, index) => (
+                            <ProductTile
+                                key={product.id}
+                                product={product}
+                                index={index}
+                            />
+                        ))}
+                    </div>
+                    {loading && (
+                        <div className="mt-10 flex justify-center">
+                            <span className="rounded-full border border-border px-5 py-2 text-[11px] font-semibold tracking-wider text-secondary-foreground uppercase">
+                                Memuat produk...
+                            </span>
+                        </div>
+                    )}
+                </>
+            )}
+        </InfiniteScroll>
+    );
+});
+
+const ProductTile = memo(function ProductTile({
     product,
     index,
 }: {
@@ -836,7 +852,7 @@ function ProductTile({
             </Link>
         </FadeInOnScroll>
     );
-}
+});
 
 function FilterSection({
     title,

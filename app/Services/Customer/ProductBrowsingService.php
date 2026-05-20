@@ -331,7 +331,7 @@ class ProductBrowsingService
     {
         return [
             'categories' => Category::query()->where('is_active', true)->orderBy('name')->get(['id', 'name', 'slug']),
-            'collections' => Collection::query()->where('is_active', true)->orderBy('name')->get(['id', 'name', 'slug']),
+            'collections' => Collection::query()->where('is_active', true)->orderBy('name')->get(['id', 'name', 'slug', 'description']),
             'colors' => $this->colorOptions(),
             'sizes' => $this->sizeOptions(),
             'priceRanges' => [

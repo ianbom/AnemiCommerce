@@ -51,7 +51,11 @@ export default function ShopLayout({ children }: ShopLayoutProps) {
 
     return (
         <div className="flex min-h-screen flex-col overflow-x-hidden bg-white font-sans text-[#272727] selection:bg-[#B98B63] selection:text-white">
-            <Navbar cartCount={cartCount} collections={featuredCollections} />
+            <Navbar
+                cartCount={cartCount}
+                collections={featuredCollections}
+                currentUrl={url}
+            />
             <main className="mx-auto w-full max-w-md flex-grow bg-white pb-24 md:max-w-none md:pb-0">
                 {children}
             </main>
