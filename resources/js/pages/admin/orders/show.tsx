@@ -456,6 +456,13 @@ export default function OrderShow({ order }: Props) {
     );
     const customerPhone = order.customer_phone?.replace(/\D/g, '');
     const shipmentLabelUrl = getShipmentLabelUrl(order.shipment);
+    const canCreateShipment =
+        !order.shipment && order.payment_status === 'paid';
+    const scrollToCreateShipment = () => {
+        document
+            .getElementById('create-shipment')
+            ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
 
     return (
         <>
@@ -485,6 +492,11 @@ export default function OrderShow({ order }: Props) {
                             <ActionLink href={`mailto:${order.customer_email}`}>
                                 <MessageCircle size={14} /> Contact customer
                             </ActionLink>
+                            {canCreateShipment && (
+                                <ActionButton onClick={scrollToCreateShipment}>
+                                    <PackagePlus size={14} /> Create shipment
+                                </ActionButton>
+                            )}
                             <label
                                 className="sr-only"
                                 htmlFor="order-status-action"
@@ -664,8 +676,11 @@ export default function OrderShow({ order }: Props) {
                                 </Card>
                             </section>
 
-                            {!order.shipment &&
-                                order.payment_status === 'paid' && (
+                            {canCreateShipment && (
+                                <div
+                                    id="create-shipment"
+                                    className="scroll-mt-5"
+                                >
                                     <Card>
                                         <CardHeader
                                             icon={PackagePlus}
@@ -790,7 +805,8 @@ export default function OrderShow({ order }: Props) {
                                             </div>
                                         </form>
                                     </Card>
-                                )}
+                                </div>
+                            )}
 
                             <Card className="overflow-hidden">
                                 <CardHeader

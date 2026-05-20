@@ -183,8 +183,8 @@ export default function AdminDashboard({
         <>
             <Head title="Dasbor Admin" />
 
-            <main className="min-h-[100dvh] bg-white px-8 py-7 text-zinc-900">
-                <div className="mx-auto flex max-w-7xl flex-col gap-8">
+            <main className="min-h-[100dvh] bg-white px-4 py-5 text-zinc-900 sm:px-6 lg:px-8 lg:py-7">
+                <div className="mx-auto flex max-w-7xl flex-col gap-6 lg:gap-8">
                     <DashboardHeader filters={filters} />
                     <StatCards stats={dashboardStats(summary)} />
                     <StatusSummary
@@ -192,15 +192,15 @@ export default function AdminDashboard({
                         shippingSummary={shippingSummary}
                     />
 
-                    <div className="grid grid-cols-[minmax(0,1.7fr)_minmax(340px,0.8fr)] gap-10 border-t border-zinc-200 pt-8">
-                        <div className="flex min-w-0 flex-col gap-10">
+                    <div className="grid grid-cols-1 gap-6 border-t border-zinc-200 pt-6 lg:grid-cols-[minmax(0,1.7fr)_minmax(320px,0.8fr)] lg:gap-10 lg:pt-8">
+                        <div className="flex min-w-0 flex-col gap-6 lg:gap-10">
                             <SalesTrendCard data={salesChart} />
                             <RecentOrdersTable
                                 orders={recentOrders.slice(0, 5)}
                             />
                         </div>
 
-                        <aside className="flex min-w-0 flex-col gap-10 border-l border-zinc-200 pl-8">
+                        <aside className="flex min-w-0 flex-col gap-6 border-t border-zinc-200 pt-6 lg:gap-10 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8">
                             <OrdersNeedAttention orders={attentionOrders} />
                             <LowStockProductsCard
                                 products={lowStockVariants.slice(0, 4)}
@@ -252,13 +252,13 @@ function DashboardHeader({ filters }: { filters: DashboardFilters }) {
     ];
 
     return (
-        <header className="flex items-end justify-between gap-6">
-            <div>
+        <header className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div className="min-w-0">
                 <p className="mb-2 flex items-center gap-2 text-xs font-bold tracking-widest text-[#151515]/50 uppercase">
                     <Shirt className="size-4" strokeWidth={1.7} />
                     Modest Fashion Admin
                 </p>
-                <h1 className="font-serif text-4xl leading-tight text-zinc-900">
+                <h1 className="font-serif text-3xl leading-tight text-zinc-900 sm:text-4xl">
                     Dasbor
                 </h1>
                 <p className="mt-1 max-w-2xl text-sm leading-6 text-zinc-400">
@@ -266,19 +266,19 @@ function DashboardHeader({ filters }: { filters: DashboardFilters }) {
                 </p>
             </div>
 
-            <div className="flex flex-wrap items-end justify-end gap-3">
+            <div className="flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end lg:w-auto lg:justify-end">
                 <form
                     onSubmit={applyCustomRange}
-                    className="flex flex-wrap items-end justify-end gap-2"
+                    className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:items-end sm:justify-end"
                 >
-                    <div className="flex rounded-lg border border-zinc-200 bg-white p-1">
+                    <div className="grid grid-cols-5 rounded-lg border border-zinc-200 bg-white p-1 sm:flex">
                         {ranges.map((item) => (
                             <button
                                 key={item.value}
                                 type="button"
                                 onClick={() => applyRange(item.value)}
                                 className={[
-                                    'h-8 rounded-md px-3 text-xs font-semibold transition-colors',
+                                    'h-8 rounded-md px-2 text-xs font-semibold transition-colors sm:px-3',
                                     range === item.value
                                         ? 'bg-[#151515] text-white'
                                         : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900',
@@ -290,14 +290,14 @@ function DashboardHeader({ filters }: { filters: DashboardFilters }) {
                     </div>
 
                     {range === 'custom' && (
-                        <div className="flex items-end gap-2">
+                        <div className="grid grid-cols-1 gap-2 sm:flex sm:items-end">
                             <input
                                 type="date"
                                 value={dateFrom}
                                 onChange={(event) =>
                                     setDateFrom(event.target.value)
                                 }
-                                className="h-9 min-w-[150px] cursor-pointer rounded-lg border border-zinc-200 bg-white px-3 text-sm text-zinc-700 shadow-none outline-none focus:border-[#B98B63] focus:ring-2 focus:ring-[#B98B63]/20"
+                                className="h-9 w-full cursor-pointer rounded-lg border border-zinc-200 bg-white px-3 text-sm text-zinc-700 shadow-none outline-none focus:border-[#B98B63] focus:ring-2 focus:ring-[#B98B63]/20 sm:min-w-[150px]"
                             />
                             <input
                                 type="date"
@@ -305,12 +305,12 @@ function DashboardHeader({ filters }: { filters: DashboardFilters }) {
                                 onChange={(event) =>
                                     setDateTo(event.target.value)
                                 }
-                                className="h-9 min-w-[150px] cursor-pointer rounded-lg border border-zinc-200 bg-white px-3 text-sm text-zinc-700 shadow-none outline-none focus:border-[#B98B63] focus:ring-2 focus:ring-[#B98B63]/20"
+                                className="h-9 w-full cursor-pointer rounded-lg border border-zinc-200 bg-white px-3 text-sm text-zinc-700 shadow-none outline-none focus:border-[#B98B63] focus:ring-2 focus:ring-[#B98B63]/20 sm:min-w-[150px]"
                             />
                             <Button
                                 type="submit"
                                 variant="outline"
-                                className="h-9 rounded-lg border-zinc-200 bg-white px-4 text-zinc-600 shadow-none hover:bg-zinc-50 hover:text-zinc-800 active:scale-[0.98]"
+                                className="h-9 w-full rounded-lg border-zinc-200 bg-white px-4 text-zinc-600 shadow-none hover:bg-zinc-50 hover:text-zinc-800 active:scale-[0.98] sm:w-auto"
                             >
                                 <CalendarDays
                                     className="size-4"
@@ -323,7 +323,7 @@ function DashboardHeader({ filters }: { filters: DashboardFilters }) {
                 </form>
                 <Button
                     asChild
-                    className="h-9 rounded-lg bg-[#B98B63] px-4 text-white shadow-none hover:bg-[#9A6B45] active:scale-[0.98]"
+                    className="h-9 w-full rounded-lg bg-[#B98B63] px-4 text-white shadow-none hover:bg-[#9A6B45] active:scale-[0.98] sm:w-auto"
                 >
                     <Link href="/admin/orders">
                         View Orders
@@ -337,7 +337,7 @@ function DashboardHeader({ filters }: { filters: DashboardFilters }) {
 
 function StatCards({ stats }: { stats: ReturnType<typeof dashboardStats> }) {
     return (
-        <section className="grid grid-cols-4 divide-x divide-zinc-200 overflow-hidden rounded-2xl border border-zinc-200 bg-white">
+        <section className="grid grid-cols-1 divide-y divide-zinc-200 overflow-hidden rounded-2xl border border-zinc-200 bg-white sm:grid-cols-2 sm:divide-x sm:divide-y-0 xl:grid-cols-4">
             {stats.map((stat) => {
                 const Icon = stat.icon;
 
@@ -345,7 +345,7 @@ function StatCards({ stats }: { stats: ReturnType<typeof dashboardStats> }) {
                     <Link
                         key={stat.label}
                         href={stat.href}
-                        className="block px-5 py-5 transition-colors hover:bg-zinc-50/70"
+                        className="block px-4 py-4 transition-colors hover:bg-zinc-50/70 sm:px-5 sm:py-5"
                     >
                         <div className="flex items-start justify-between gap-4">
                             <div className="flex size-9 items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 text-zinc-500">
@@ -355,10 +355,10 @@ function StatCards({ stats }: { stats: ReturnType<typeof dashboardStats> }) {
                                 Today
                             </span>
                         </div>
-                        <p className="mt-5 text-sm font-semibold text-zinc-600">
+                        <p className="mt-4 text-sm font-semibold text-zinc-600 sm:mt-5">
                             {stat.label}
                         </p>
-                        <p className="mt-2 text-3xl font-bold tracking-tight text-zinc-900">
+                        <p className="mt-2 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl">
                             {stat.value}
                         </p>
                         <p className="mt-2 text-sm text-zinc-400">
@@ -379,7 +379,7 @@ function StatusSummary({
     shippingSummary: SummaryMetric[];
 }) {
     return (
-        <section className="grid grid-cols-2 gap-8 border-b border-zinc-200 pb-6">
+        <section className="grid grid-cols-1 gap-4 border-b border-zinc-200 pb-6 lg:grid-cols-2 lg:gap-8">
             <MiniSummaryCard
                 icon={Banknote}
                 items={paymentSummary}
@@ -404,19 +404,19 @@ function MiniSummaryCard({
     title: string;
 }) {
     return (
-        <article className="rounded-2xl border border-zinc-200 p-5">
+        <article className="rounded-2xl border border-zinc-200 p-4 sm:p-5">
             <div className="mb-4 flex items-center gap-3">
                 <div className="flex size-8 items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 text-zinc-500">
                     <Icon className="size-4" strokeWidth={1.7} />
                 </div>
                 <h2 className="text-sm font-semibold text-zinc-800">{title}</h2>
             </div>
-            <div className="grid grid-cols-4 divide-x divide-zinc-200 border-t border-zinc-200 pt-3">
+            <div className="grid grid-cols-2 gap-y-3 border-t border-zinc-200 pt-3 sm:grid-cols-4 sm:divide-x sm:divide-zinc-200">
                 {items.map((item) => (
                     <Link
                         key={item.label}
                         href={summaryHref(item.label)}
-                        className="block px-4 transition-colors first:pl-0 last:pr-0 hover:bg-zinc-50/70"
+                        className="block px-2 transition-colors first:pl-0 hover:bg-zinc-50/70 sm:px-4 sm:last:pr-0"
                     >
                         <p className="text-xs text-zinc-400">{item.label}</p>
                         <p className="mt-1 text-xl font-bold tracking-tight text-zinc-900">
@@ -431,13 +431,13 @@ function MiniSummaryCard({
 
 function SalesTrendCard({ data }: { data: ChartPoint[] }) {
     return (
-        <section className="rounded-2xl border border-zinc-200 p-5">
+        <section className="rounded-2xl border border-zinc-200 p-4 sm:p-5">
             <SectionHeader
                 subtitle="Revenue and orders from the last 7 days"
                 title="Sales Trend"
             />
 
-            <div className="mt-6 h-[310px] border-y border-zinc-200 bg-zinc-50/30 py-5">
+            <div className="mt-5 h-[240px] border-y border-zinc-200 bg-zinc-50/30 py-4 sm:h-[310px] sm:py-5">
                 <ResponsiveContainer height="100%" width="100%">
                     <BarChart
                         data={data}
@@ -451,17 +451,17 @@ function SalesTrendCard({ data }: { data: ChartPoint[] }) {
                         <XAxis
                             axisLine={false}
                             dataKey="date"
-                            tick={{ fill: '#a1a1aa', fontSize: 12 }}
+                            tick={{ fill: '#a1a1aa', fontSize: 11 }}
                             tickLine={false}
                         />
                         <YAxis
                             axisLine={false}
-                            tick={{ fill: '#a1a1aa', fontSize: 12 }}
+                            tick={{ fill: '#a1a1aa', fontSize: 11 }}
                             tickFormatter={(value) =>
                                 `Rp ${Number(value) / 1000000}m`
                             }
                             tickLine={false}
-                            width={76}
+                            width={58}
                         />
                         <Tooltip
                             contentStyle={{
@@ -491,7 +491,7 @@ function SalesTrendCard({ data }: { data: ChartPoint[] }) {
 
 function OrdersNeedAttention({ orders }: { orders: AttentionOrder[] }) {
     return (
-        <section className="rounded-2xl border border-zinc-200 p-5">
+        <section className="rounded-2xl border border-zinc-200 p-4 sm:p-5">
             <SectionHeader
                 icon={AlertTriangle}
                 subtitle="Admin actions with highest priority"
@@ -554,8 +554,8 @@ function OrdersNeedAttention({ orders }: { orders: AttentionOrder[] }) {
 
 function RecentOrdersTable({ orders }: { orders: RecentOrder[] }) {
     return (
-        <section className="rounded-2xl border border-zinc-200 p-5">
-            <div className="flex items-center justify-between gap-4">
+        <section className="rounded-2xl border border-zinc-200 p-4 sm:p-5">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <SectionHeader
                     subtitle="Latest activity from checkout"
                     title="Recent Orders"
@@ -563,100 +563,104 @@ function RecentOrdersTable({ orders }: { orders: RecentOrder[] }) {
                 <Button
                     asChild
                     variant="outline"
-                    className="h-9 rounded-lg border-zinc-200 bg-white px-4 text-zinc-600 shadow-none hover:bg-zinc-50"
+                    className="h-9 w-full rounded-lg border-zinc-200 bg-white px-4 text-zinc-600 shadow-none hover:bg-zinc-50 sm:w-auto"
                 >
                     <Link href="/admin/orders">Open Orders</Link>
                 </Button>
             </div>
 
-            <table className="mt-5 w-full border-y border-zinc-200 text-left text-sm">
-                <thead className="border-b border-zinc-200 bg-zinc-50/70 text-xs tracking-wider text-zinc-500 uppercase">
-                    <tr>
-                        {[
-                            'Order',
-                            'Customer',
-                            'Payment',
-                            'Order Status',
-                            'Shipping',
-                            'Total',
-                            'Date',
-                        ].map((heading) => (
-                            <th
-                                key={heading}
-                                className="py-4 pr-5 font-semibold first:pl-4"
-                            >
-                                {heading}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody className="divide-y divide-zinc-200">
-                    {orders.map((order, index) => (
-                        <tr
-                            key={`${order.order_number}-${index}`}
-                            className="transition-colors hover:bg-zinc-50/70"
-                        >
-                            <td className="py-4 pr-5 pl-4 font-semibold text-zinc-900">
-                                {order.id ? (
-                                    <Link
-                                        href={`/admin/orders/${order.id}`}
-                                        className="transition-colors hover:text-[#151515]"
-                                    >
-                                        {order.order_number}
-                                    </Link>
-                                ) : (
-                                    order.order_number
-                                )}
-                            </td>
-                            <td className="py-4 pr-5 text-zinc-600">
-                                {order.user_id ? (
-                                    <Link
-                                        href={`/admin/customers/${order.user_id}`}
-                                        className="transition-colors hover:text-[#151515]"
-                                    >
-                                        {order.customer_name}
-                                    </Link>
-                                ) : (
-                                    order.customer_name
-                                )}
-                            </td>
-                            <td className="py-4 pr-5">
-                                <StatusBadge label={order.payment_status} />
-                            </td>
-                            <td className="py-4 pr-5">
-                                <StatusBadge label={order.order_status} />
-                            </td>
-                            <td className="py-4 pr-5">
-                                <StatusBadge label={order.shipping_status} />
-                            </td>
-                            <td className="py-4 pr-5 font-semibold text-zinc-900">
-                                {formatCurrency(order.grand_total)}
-                            </td>
-                            <td className="py-4 text-zinc-400">
-                                {order.created_at ?? 'Today'}
-                            </td>
-                        </tr>
-                    ))}
-                    {orders.length === 0 && (
+            <div className="mt-5 overflow-x-auto rounded-xl border-y border-zinc-200">
+                <table className="w-full min-w-[760px] text-left text-sm">
+                    <thead className="border-b border-zinc-200 bg-zinc-50/70 text-xs tracking-wider text-zinc-500 uppercase">
                         <tr>
-                            <td
-                                className="px-4 py-8 text-center text-sm text-zinc-400"
-                                colSpan={7}
-                            >
-                                No recent orders found.
-                            </td>
+                            {[
+                                'Order',
+                                'Customer',
+                                'Payment',
+                                'Order Status',
+                                'Shipping',
+                                'Total',
+                                'Date',
+                            ].map((heading) => (
+                                <th
+                                    key={heading}
+                                    className="py-4 pr-5 font-semibold first:pl-4"
+                                >
+                                    {heading}
+                                </th>
+                            ))}
                         </tr>
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody className="divide-y divide-zinc-200">
+                        {orders.map((order, index) => (
+                            <tr
+                                key={`${order.order_number}-${index}`}
+                                className="transition-colors hover:bg-zinc-50/70"
+                            >
+                                <td className="py-4 pr-5 pl-4 font-semibold text-zinc-900">
+                                    {order.id ? (
+                                        <Link
+                                            href={`/admin/orders/${order.id}`}
+                                            className="transition-colors hover:text-[#151515]"
+                                        >
+                                            {order.order_number}
+                                        </Link>
+                                    ) : (
+                                        order.order_number
+                                    )}
+                                </td>
+                                <td className="py-4 pr-5 text-zinc-600">
+                                    {order.user_id ? (
+                                        <Link
+                                            href={`/admin/customers/${order.user_id}`}
+                                            className="transition-colors hover:text-[#151515]"
+                                        >
+                                            {order.customer_name}
+                                        </Link>
+                                    ) : (
+                                        order.customer_name
+                                    )}
+                                </td>
+                                <td className="py-4 pr-5">
+                                    <StatusBadge label={order.payment_status} />
+                                </td>
+                                <td className="py-4 pr-5">
+                                    <StatusBadge label={order.order_status} />
+                                </td>
+                                <td className="py-4 pr-5">
+                                    <StatusBadge
+                                        label={order.shipping_status}
+                                    />
+                                </td>
+                                <td className="py-4 pr-5 font-semibold text-zinc-900">
+                                    {formatCurrency(order.grand_total)}
+                                </td>
+                                <td className="py-4 text-zinc-400">
+                                    {order.created_at ?? 'Today'}
+                                </td>
+                            </tr>
+                        ))}
+                        {orders.length === 0 && (
+                            <tr>
+                                <td
+                                    className="px-4 py-8 text-center text-sm text-zinc-400"
+                                    colSpan={7}
+                                >
+                                    No recent orders found.
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
         </section>
     );
 }
 
 function LowStockProductsCard({ products }: { products: LowStockVariant[] }) {
     return (
-        <section className="rounded-2xl border border-zinc-200 p-5">
-            <div className="flex items-start justify-between gap-4">
+        <section className="rounded-2xl border border-zinc-200 p-4 sm:p-5">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <SectionHeader
                     icon={Box}
                     subtitle="Products that need restock soon"
@@ -665,7 +669,7 @@ function LowStockProductsCard({ products }: { products: LowStockVariant[] }) {
                 <Button
                     asChild
                     variant="outline"
-                    className="h-9 rounded-lg border-zinc-200 bg-white px-4 text-zinc-600 shadow-none hover:bg-zinc-50"
+                    className="h-9 w-full rounded-lg border-zinc-200 bg-white px-4 text-zinc-600 shadow-none hover:bg-zinc-50 sm:w-auto"
                 >
                     <Link href="/admin/stock">Manage Stock</Link>
                 </Button>
@@ -678,7 +682,7 @@ function LowStockProductsCard({ products }: { products: LowStockVariant[] }) {
                     return (
                         <article
                             key={`${product.product_name}-${index}`}
-                            className="-mx-3 flex items-center gap-4 px-3 py-4 transition-colors hover:bg-zinc-50/70"
+                            className="-mx-3 flex flex-col gap-3 px-3 py-4 transition-colors hover:bg-zinc-50/70 sm:flex-row sm:items-center sm:gap-4"
                         >
                             <div className="flex size-10 items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 text-zinc-500">
                                 <PackageCheck
@@ -710,7 +714,7 @@ function LowStockProductsCard({ products }: { products: LowStockVariant[] }) {
                                         .join(' · ') || 'Standard variant'}
                                 </p>
                             </div>
-                            <div className="text-right">
+                            <div className="w-full text-left sm:w-auto sm:text-right">
                                 {product.id ? (
                                     <Link
                                         href={`/admin/product-variants/${product.id}/stock-adjustment`}

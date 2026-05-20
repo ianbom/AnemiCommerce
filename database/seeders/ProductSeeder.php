@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
-use App\Models\Collection;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 use RuntimeException;
@@ -112,29 +110,11 @@ class ProductSeeder extends Seeder
             throw new RuntimeException("Gagal membaca data produk dari CSV, JSON, atau Excel");
         }
 
-        $categoryIds = Category::query()->pluck('id', 'slug');
-        $collectionIds = Collection::query()->pluck('id', 'slug');
         $currentSlugs = collect($products)->pluck('slug');
 
         foreach ($products as $product) {
-            $categoryId = $categoryIds->get($product['category_slug']);
-            if (! $categoryId) {
-                $category = Category::query()->firstOrCreate(['slug' => $product['category_slug']], ['name' => ucwords(str_replace('-', ' ', $product['category_slug']))]);
-                $categoryId = $category->id;
-                $categoryIds->put($product['category_slug'], $categoryId);
-            }
-            
-            $collectionId = $collectionIds->get($product['collection_slug']);
-            if (! $collectionId && $product['collection_slug']) {
-                $collection = Collection::query()->firstOrCreate(['slug' => $product['collection_slug']], ['name' => ucwords(str_replace('-', ' ', $product['collection_slug']))]);
-                $collectionId = $collection->id;
-                $collectionIds->put($product['collection_slug'], $collectionId);
-            } elseif (! $collectionId) {
-                $collectionId = null; // or create a default collection
-            }
-            
             $record = Product::query()->withTrashed()->updateOrCreate(['slug' => $product['slug']], [
-                'category_id' => $categoryId, 'collection_id' => $collectionId, 'name' => $product['name'], 'sku' => $product['sku'],
+                'category_id' => random_int(1, 4), 'collection_id' => random_int(1, 5), 'name' => $product['name'], 'sku' => $product['sku'],
                 'short_description' => $product['short_description'], 'description' => $product['description'], 'material' => $product['material'],
                 'care_instruction' => $product['care_instruction'], 'base_price' => $product['base_price'], 'sale_price' => $product['sale_price'],
                 'weight' => $product['weight'], 'length' => $product['length'], 'width' => $product['width'], 'height' => $product['height'],
