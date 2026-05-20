@@ -167,10 +167,7 @@ export default function MyProfile() {
         };
     }, [avatarPreview]);
 
-    const avatarSrc =
-        avatarPreview ||
-        user.avatar_url ||
-        '/img/m-ghufanil-muta-ali-vAyDuvcjXcs-unsplash.webp';
+    const avatarSrc = avatarPreview || user.avatar_url;
     const nameError = profileClientErrors.name ?? profileForm.errors.name;
 
     return (
@@ -189,13 +186,21 @@ export default function MyProfile() {
             <div className="animate-fade-in-up flex flex-col items-start justify-between border-b border-[#e7e2de] pb-8 md:flex-row md:items-center">
                 <div className="mb-6 flex items-center space-x-6 md:mb-0">
                     <div
-                        className="relative h-20 w-20 overflow-hidden rounded-full border border-[#e7e2de] md:h-24 md:w-24"
+                        className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border border-[#e7e2de] bg-white text-[#6f6f6f] md:h-24 md:w-24"
                     >
-                        <img
-                            src={avatarSrc}
-                            alt={user.name}
-                            className="h-full w-full object-cover"
-                        />
+                        {avatarSrc ? (
+                            <img
+                                src={avatarSrc}
+                                alt={user.name}
+                                className="h-full w-full object-cover"
+                            />
+                        ) : (
+                            <User
+                                size={36}
+                                strokeWidth={1.6}
+                                aria-hidden="true"
+                            />
+                        )}
                     </div>
                     <div>
                         <h2 className="mb-1 font-serif text-xl text-[#151515] md:text-2xl">
@@ -212,22 +217,22 @@ export default function MyProfile() {
                     </div>
                 </div>
 
-                <div className="text-left md:text-right">
-                    <p className="mb-1 text-[10px] font-bold tracking-[0.2em] text-[#e7e2de] uppercase">
-                        Peran akun
-                    </p>
-                    <p className="font-serif text-lg text-[#151515] capitalize">
-                        {user.role}
-                    </p>
-                    {isAdmin && (
+                {isAdmin && (
+                    <div className="text-left md:text-right">
+                        <p className="mb-1 text-[10px] font-bold tracking-[0.2em] text-[#e7e2de] uppercase">
+                            Peran akun
+                        </p>
+                        <p className="font-serif text-lg text-[#151515] capitalize">
+                            {user.role}
+                        </p>
                         <Link
                             href={adminDashboard()}
                             className="mt-3 inline-flex items-center justify-center rounded-md bg-[#151515] px-4 py-2 text-[11px] font-bold tracking-wider text-white transition-colors hover:bg-[#272727]"
                         >
                             Dashboard
                         </Link>
-                    )}
-                </div>
+                    </div>
+                )}
             </div>
 
             <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-2 md:gap-12">

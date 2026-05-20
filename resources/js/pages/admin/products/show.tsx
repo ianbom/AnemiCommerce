@@ -16,6 +16,7 @@ import {
     TrendingUp,
 } from 'lucide-react';
 import { useState } from 'react';
+import HTMLRender from '@/components/HTMLRender';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -449,11 +450,9 @@ export default function ProductShow({ product }: Props) {
                                         <p>{product.short_description}</p>
                                     )}
                                     {product.description && (
-                                        <div
-                                            dangerouslySetInnerHTML={{
-                                                __html: product.description,
-                                            }}
-                                            className="prose prose-sm max-w-none"
+                                        <HTMLRender
+                                            html={product.description}
+                                            className="text-sm text-muted-foreground"
                                         />
                                     )}
                                 </CardContent>
@@ -466,7 +465,7 @@ export default function ProductShow({ product }: Props) {
                             <Card>
                                 <CardHeader className="pb-3">
                                     <CardTitle className="text-base">
-                                        Care & SEO
+                                        Care and materials
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent className="grid gap-3 text-sm">

@@ -16,6 +16,7 @@ import {
     destroyProduct as removeWishlistProduct,
     store as addWishlistItem,
 } from '@/actions/App/Http/Controllers/Customer/WishlistController';
+import HTMLRender from '@/components/HTMLRender';
 import ShopLayout from '@/layouts/shop-layout';
 import { cart, detail, list } from '@/routes';
 
@@ -221,8 +222,7 @@ function DetailProductContent({
         selectedVariant !== undefined &&
         selectedCartQuantity + quantity > selectedAvailableStock;
     const isAvailable =
-        product.available_stock > 0 &&
-        selectedAvailableStock > 0;
+        product.available_stock > 0 && selectedAvailableStock > 0;
     const productDescription = product.description || product.short_description;
     const decreaseQuantity = () =>
         setQuantity((current) => Math.max(1, current - 1));
@@ -667,10 +667,7 @@ function DetailProductContent({
                                     </button>
                                     {cartForm.errors.product_variant_id && (
                                         <p className="mt-2 text-center text-[11px] font-medium text-destructive">
-                                            {
-                                                cartForm.errors
-                                                    .product_variant_id
-                                            }
+                                            {cartForm.errors.product_variant_id}
                                         </p>
                                     )}
                                 </form>
@@ -698,21 +695,17 @@ function DetailProductContent({
                         </div>
 
                         <div className="mb-8 space-y-5 border-t border-border pt-8 text-[11px] leading-[1.9] font-medium tracking-wide text-secondary-foreground">
-                            {productDescription ? (
-                                productDescription
-                                    .split(/\r?\n/)
-                                    .map((paragraph, index) => (
-                                        <p key={`${paragraph}-${index}`}>
-                                            {paragraph}
-                                        </p>
-                                    ))
-                            ) : (
-                                <p>
-                                    {product.title} is crafted for modest
-                                    everyday styling with refined details and
-                                    comfortable wear.
-                                </p>
-                            )}
+                            <HTMLRender
+                                html={productDescription}
+                                className="text-[11px] leading-[1.9] font-medium tracking-wide text-secondary-foreground [&_h1]:text-base [&_h2]:text-sm [&_strong]:text-foreground"
+                                emptyFallback={
+                                    <p>
+                                        {product.title} is crafted for modest
+                                        everyday styling with refined details
+                                        and comfortable wear.
+                                    </p>
+                                }
+                            />
 
                             <div className="space-y-1">
                                 {product.material && (

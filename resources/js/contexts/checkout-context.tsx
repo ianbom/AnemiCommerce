@@ -27,6 +27,7 @@ export type CheckoutItem = {
     price: number;
     quantity: number;
     weight: number;
+    available_stock: number;
     subtotal: number;
     is_available: boolean;
 };

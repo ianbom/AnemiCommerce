@@ -147,7 +147,7 @@ class CartService
             $availableStock = $variant ? max(0, $variant->stock - $variant->reserved_stock) : 0;
             $isAvailable = $product?->status === 'published'
                 && (bool) $variant?->is_active
-                && $availableStock > 0;
+                && $availableStock >= $item->quantity;
 
             return [
                 'id' => $item->id,

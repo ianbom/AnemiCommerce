@@ -1,9 +1,27 @@
 import { Head, Link, useForm } from '@inertiajs/react';
+import { EditorContent, useEditor } from '@tiptap/react';
+import type { Editor } from '@tiptap/react';
+import Highlight from '@tiptap/extension-highlight';
+import StarterKit from '@tiptap/starter-kit';
 import {
+    Bold,
+    Code2,
+    CornerDownLeft,
+    Eraser,
+    Heading1,
+    Heading2,
+    Highlighter,
     Image as ImageIcon,
+    Italic,
+    List,
+    ListOrdered,
     Pencil,
     Plus,
+    Quote,
+    Redo2,
+    Strikethrough,
     Trash2,
+    Undo2,
     X,
     Info,
     GripVertical,
@@ -17,7 +35,7 @@ import {
     TrendingUp,
     LayoutGrid,
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import type { FormEvent, MouseEvent } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -216,6 +234,236 @@ function FieldGroup({
             {hint && !error && (
                 <p className="text-[11px] text-zinc-400">{hint}</p>
             )}
+        </div>
+    );
+}
+
+function editorButtonClass(active = false, disabled = false) {
+    return [
+        'inline-flex h-8 min-w-8 items-center justify-center rounded-md border px-2 text-xs font-semibold transition-colors',
+        active
+            ? 'border-[#B98B63] bg-[#F8F0E5] text-[#9A6B45]'
+            : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900',
+        disabled ? 'cursor-not-allowed opacity-50' : '',
+    ].join(' ');
+}
+
+function ToolbarButton({
+    active = false,
+    children,
+    disabled,
+    label,
+    onClick,
+}: {
+    active?: boolean;
+    children: React.ReactNode;
+    disabled?: boolean;
+    label: string;
+    onClick: () => void;
+}) {
+    return (
+        <button
+            type="button"
+            aria-label={label}
+            title={label}
+            disabled={disabled}
+            onClick={onClick}
+            className={editorButtonClass(active, disabled)}
+        >
+            {children}
+        </button>
+    );
+}
+
+function RichTextEditor({
+    error,
+    onChange,
+    value,
+}: {
+    error?: string;
+    onChange: (value: string) => void;
+    value: string;
+}) {
+    const extensions = useMemo(
+        () => [
+            StarterKit.configure({
+                heading: {
+                    levels: [1, 2],
+                },
+            }),
+            Highlight.configure({
+                multicolor: true,
+            }),
+        ],
+        [],
+    );
+
+    const editor = useEditor({
+        extensions,
+        content: value,
+        editorProps: {
+            attributes: {
+                class: [
+                    'min-h-[180px] px-4 py-3 text-sm leading-6 text-zinc-800 outline-none',
+                    '[&_h1]:mb-3 [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-zinc-950',
+                    '[&_h2]:mb-2 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-zinc-900',
+                    '[&_p]:mb-2 [&_p:last-child]:mb-0',
+                    '[&_ul]:mb-3 [&_ul]:list-disc [&_ul]:pl-5',
+                    '[&_ol]:mb-3 [&_ol]:list-decimal [&_ol]:pl-5',
+                    '[&_blockquote]:border-l-4 [&_blockquote]:border-zinc-300 [&_blockquote]:pl-4 [&_blockquote]:text-zinc-600',
+                    '[&_pre]:overflow-x-auto [&_pre]:rounded-md [&_pre]:bg-zinc-950 [&_pre]:p-3 [&_pre]:text-xs [&_pre]:text-zinc-50',
+                    '[&_code]:rounded [&_code]:bg-zinc-100 [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-xs',
+                ].join(' '),
+            },
+        },
+        onUpdate: ({ editor }) => {
+            onChange(editor.isEmpty ? '' : editor.getHTML());
+        },
+    });
+
+    useEffect(() => {
+        if (!editor || editor.getHTML() === value) {
+            return;
+        }
+
+        editor.commands.setContent(value, { emitUpdate: false });
+    }, [editor, value]);
+
+    const disabled = !editor;
+    const buttonGroups = [
+        [
+            {
+                label: 'Bold',
+                active: editor?.isActive('bold') ?? false,
+                icon: <Bold className="h-4 w-4" />,
+                run: () => editor?.chain().focus().toggleBold().run(),
+            },
+            {
+                label: 'Italic',
+                active: editor?.isActive('italic') ?? false,
+                icon: <Italic className="h-4 w-4" />,
+                run: () => editor?.chain().focus().toggleItalic().run(),
+            },
+            {
+                label: 'Strikethrough',
+                active: editor?.isActive('strike') ?? false,
+                icon: <Strikethrough className="h-4 w-4" />,
+                run: () => editor?.chain().focus().toggleStrike().run(),
+            },
+            {
+                label: 'Highlight',
+                active: editor?.isActive('highlight') ?? false,
+                icon: <Highlighter className="h-4 w-4" />,
+                run: () =>
+                    editor
+                        ?.chain()
+                        .focus()
+                        .toggleHighlight({ color: '#fef08a' })
+                        .run(),
+            },
+        ],
+        [
+            {
+                label: 'Paragraph',
+                active: editor?.isActive('paragraph') ?? false,
+                icon: <span className="px-0.5">P</span>,
+                run: () => editor?.chain().focus().setParagraph().run(),
+            },
+            {
+                label: 'Heading 1',
+                active: editor?.isActive('heading', { level: 1 }) ?? false,
+                icon: <Heading1 className="h-4 w-4" />,
+                run: () =>
+                    editor?.chain().focus().toggleHeading({ level: 1 }).run(),
+            },
+            {
+                label: 'Heading 2',
+                active: editor?.isActive('heading', { level: 2 }) ?? false,
+                icon: <Heading2 className="h-4 w-4" />,
+                run: () =>
+                    editor?.chain().focus().toggleHeading({ level: 2 }).run(),
+            },
+        ],
+        [
+            {
+                label: 'Bullet points',
+                active: editor?.isActive('bulletList') ?? false,
+                icon: <List className="h-4 w-4" />,
+                run: () => editor?.chain().focus().toggleBulletList().run(),
+            },
+            {
+                label: 'Numbered points',
+                active: editor?.isActive('orderedList') ?? false,
+                icon: <ListOrdered className="h-4 w-4" />,
+                run: () => editor?.chain().focus().toggleOrderedList().run(),
+            },
+            {
+                label: 'Quote',
+                active: editor?.isActive('blockquote') ?? false,
+                icon: <Quote className="h-4 w-4" />,
+                run: () => editor?.chain().focus().toggleBlockquote().run(),
+            },
+            {
+                label: 'Code block',
+                active: editor?.isActive('codeBlock') ?? false,
+                icon: <Code2 className="h-4 w-4" />,
+                run: () => editor?.chain().focus().toggleCodeBlock().run(),
+            },
+        ],
+        [
+            {
+                label: 'Enter line break',
+                active: false,
+                icon: <CornerDownLeft className="h-4 w-4" />,
+                run: () => editor?.chain().focus().setHardBreak().run(),
+            },
+            {
+                label: 'Undo',
+                active: false,
+                icon: <Undo2 className="h-4 w-4" />,
+                run: () => editor?.chain().focus().undo().run(),
+            },
+            {
+                label: 'Redo',
+                active: false,
+                icon: <Redo2 className="h-4 w-4" />,
+                run: () => editor?.chain().focus().redo().run(),
+            },
+            {
+                label: 'Clear formatting',
+                active: false,
+                icon: <Eraser className="h-4 w-4" />,
+                run: () =>
+                    editor?.chain().focus().unsetAllMarks().clearNodes().run(),
+            },
+        ],
+    ];
+
+    return (
+        <div
+            className={`overflow-hidden rounded-lg border bg-white shadow-sm transition-colors ${error ? 'border-red-300' : 'border-zinc-200 focus-within:border-[#151515]'}`}
+        >
+            <div className="flex flex-wrap gap-1 border-b border-zinc-100 bg-zinc-50 p-2">
+                {buttonGroups.map((group, groupIndex) => (
+                    <div
+                        key={groupIndex}
+                        className="flex flex-wrap gap-1 border-r border-zinc-200 pr-1 last:border-r-0 last:pr-0"
+                    >
+                        {group.map((button) => (
+                            <ToolbarButton
+                                key={button.label}
+                                label={button.label}
+                                active={button.active}
+                                disabled={disabled}
+                                onClick={button.run}
+                            >
+                                {button.icon}
+                            </ToolbarButton>
+                        ))}
+                    </div>
+                ))}
+            </div>
+            <EditorContent editor={editor} />
         </div>
     );
 }
@@ -624,16 +872,15 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             required
                                             error={errors.description}
                                         >
-                                            <Textarea
+                                            <RichTextEditor
                                                 value={data.description}
-                                                onChange={(e) =>
+                                                onChange={(value) =>
                                                     setData(
                                                         'description',
-                                                        e.target.value,
+                                                        value,
                                                     )
                                                 }
-                                                placeholder="Detailed product description..."
-                                                className="min-h-[120px] resize-y border-zinc-200 text-sm focus:border-[#151515] focus:ring-[#151515]"
+                                                error={errors.description}
                                             />
                                         </FieldGroup>
                                     </div>

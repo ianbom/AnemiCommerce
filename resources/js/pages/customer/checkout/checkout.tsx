@@ -2,6 +2,7 @@ import { Head, Link } from '@inertiajs/react';
 import { Box, Check, Lock, ShieldCheck, Ticket, Truck } from 'lucide-react';
 import type { Icon, LatLngBoundsExpression, Map as LeafletMap } from 'leaflet';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { CheckoutProvider, useCheckout } from '@/contexts/checkout-context';
 import type {
     CheckoutAddress,
@@ -165,6 +166,8 @@ function CheckoutScreen() {
         storeCoordinates && destinationCoordinates
             ? distanceMeters(storeCoordinates, destinationCoordinates)
             : null;
+    const unavailableItems = cartItems.filter((item) => !item.is_available);
+    const hasUnavailableItems = unavailableItems.length > 0;
 
     useEffect(() => {
         if (selectedAddressId && shippingRates.length === 0) {
@@ -175,6 +178,14 @@ function CheckoutScreen() {
     }, [loadShippingRates, selectedAddressId, shippingRates.length]);
 
     const submitOrder = async () => {
+        if (hasUnavailableItems) {
+            toast.error(
+                'Barang telah habis dan tidak bisa checkout. Perbarui keranjang sebelum membayar.',
+            );
+
+            return;
+        }
+
         const redirectUrl = await placeOrder(notes, agreed);
 
         if (redirectUrl) {
@@ -508,8 +519,10 @@ function CheckoutScreen() {
                                                 </p>
                                                 {!item.is_available && (
                                                     <p className="mt-1 text-[10px] font-bold text-[#B24B4B]">
-                                                        Stok berubah. Update
-                                                        cart.
+                                                        {item.available_stock <=
+                                                        0
+                                                            ? 'Stok habis. Tidak bisa checkout.'
+                                                            : `Stok tidak cukup. Tidak bisa checkout. Stok tersedia hanya ${item.available_stock}.`}
                                                     </p>
                                                 )}
                                             </div>
@@ -542,6 +555,12 @@ function CheckoutScreen() {
                                     value={-summary.discount}
                                     danger
                                 />
+                                {hasUnavailableItems && (
+                                    <div className="mt-4 rounded-xl border border-[#E7C9C9] bg-[#FFF6F6] px-4 py-3 text-[12px] font-semibold text-[#B24B4B]">
+                                        Ada item yang stoknya tidak tersedia.
+                                        Perbarui keranjang sebelum checkout.
+                                    </div>
+                                )}
                                 <div className="mt-4 border-t border-[#e7e2de] pt-4">
                                     <div className="flex items-end justify-between">
                                         <span className="text-[13px] font-semibold text-[#272727]">
@@ -559,9 +578,7 @@ function CheckoutScreen() {
                                         placingOrder ||
                                         !selectedShippingRate ||
                                         !agreed ||
-                                        cartItems.some(
-                                            (item) => !item.is_available,
-                                        )
+                                        hasUnavailableItems
                                     }
                                     className="mt-6 flex w-full items-center justify-center rounded-lg bg-[#B98B63] py-4 text-[13px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg hover:shadow-[#B98B63]/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
                                 >

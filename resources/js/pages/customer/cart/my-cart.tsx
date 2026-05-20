@@ -9,6 +9,7 @@ import {
     Trash2,
 } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import { toast } from 'sonner';
 import {
     removeCartItem,
     updateCartItemQuantity,
@@ -94,6 +95,35 @@ export default function MyCart({
     const errorMessage =
         errors.quantity || errors.cart_item || errors.product_variant_id;
     const checkoutHref = useMemo(() => checkout.url(), []);
+    const stockIssueItems = useMemo(
+        () => cartItems.filter((item) => !item.is_available),
+        [cartItems],
+    );
+    const hasStockIssues = stockIssueItems.length > 0;
+
+    const stockIssueMessage = (item: CartItem) => {
+        if (item.available_stock <= 0) {
+            return 'Produk sudah habis. Tidak bisa checkout.';
+        }
+
+        if (item.available_stock < item.quantity) {
+            return `Stok tidak mencukupi. Stok tersedia hanya ${item.available_stock}. Tidak bisa checkout.`;
+        }
+
+        return 'Produk tidak tersedia. Tidak bisa checkout.';
+    };
+
+    const continueToCheckout = () => {
+        if (hasStockIssues) {
+            toast.error(
+                'Stok barang telah habis/tidak mencukupi. Perbarui keranjang sebelum checkout.',
+            );
+
+            return;
+        }
+
+        router.visit(checkoutHref);
+    };
 
     const updateQuantity = (item: CartItem, nextQuantity: number) => {
         if (
@@ -168,6 +198,13 @@ export default function MyCart({
                             {errorMessage && (
                                 <div className="mt-4 rounded-xl border border-[#E7C9C9] bg-[#FFF6F6] px-4 py-3 text-[12px] font-medium text-[#B24B4B]">
                                     {errorMessage}
+                                </div>
+                            )}
+                            {hasStockIssues && (
+                                <div className="mt-4 rounded-xl border border-[#E7C9C9] bg-[#FFF6F6] px-4 py-3 text-[12px] font-medium text-[#B24B4B]">
+                                    Beberapa item stoknya habis atau tidak
+                                    mencukupi. Perbarui keranjang sebelum
+                                    checkout.
                                 </div>
                             )}
                         </div>
@@ -291,11 +328,17 @@ export default function MyCart({
                                                                         </span>
                                                                     )}
                                                                 </div>
+                                                                <p className="mt-1.5 text-[10px] font-semibold text-[#6f6f6f] sm:text-[11px]">
+                                                                    Stok:{' '}
+                                                                    {
+                                                                        item.available_stock
+                                                                    }
+                                                                </p>
                                                                 {!item.is_available && (
                                                                     <p className="mt-1.5 text-[10px] font-semibold text-[#B24B4B] sm:text-[11px]">
-                                                                        Varian
-                                                                        tidak
-                                                                        tersedia
+                                                                        {stockIssueMessage(
+                                                                            item,
+                                                                        )}
                                                                     </p>
                                                                 )}
                                                             </div>
@@ -451,12 +494,18 @@ export default function MyCart({
                                     </div>
 
                                     <div className="space-y-4">
-                                        <Link
-                                            href={checkoutHref}
+                                        {hasStockIssues && (
+                                            <div className="rounded-xl border border-[#E7C9C9] bg-[#FFF6F6] px-4 py-3 text-[12px] font-medium text-[#B24B4B]">
+                                                Stok tidak tersedia
+                                            </div>
+                                        )}
+                                        <button
+                                            type="button"
+                                            onClick={continueToCheckout}
                                             className="block w-full rounded-lg bg-[#B98B63] py-4 text-center text-[13px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg hover:shadow-[#B98B63]/20 active:scale-[0.98]"
                                         >
                                             Lanjut ke Checkout
-                                        </Link>
+                                        </button>
                                         <div className="text-center">
                                             <Link
                                                 href={list.url()}
