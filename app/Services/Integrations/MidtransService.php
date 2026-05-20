@@ -41,6 +41,9 @@ class MidtransService
                 'unit' => 'minutes',
                 'duration' => (int) ($this->settings->first(['payment_expiry_duration'], '1440') ?: 1440),
             ],
+            'callbacks' => [
+                'finish' => $this->finishRedirectUrl(),
+            ],
         ]);
 
         if (! $response->successful()) {
@@ -166,6 +169,11 @@ class MidtransService
         return $environment === 'production'
             ? 'https://api.midtrans.com'
             : 'https://api.sandbox.midtrans.com';
+    }
+
+    private function finishRedirectUrl(): string
+    {
+        return route('payments.midtrans.finish');
     }
 
     private function serverKey(): string

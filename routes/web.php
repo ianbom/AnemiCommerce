@@ -27,6 +27,7 @@ use App\Http\Controllers\Customer\BiteshipAreaController;
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\CheckoutController;
 use App\Http\Controllers\Customer\HomeController as CustomerHomeController;
+use App\Http\Controllers\Customer\MidtransFinishController;
 use App\Http\Controllers\Customer\MidtransWebhookController;
 use App\Http\Controllers\Customer\NotificationController as CustomerNotificationController;
 use App\Http\Controllers\Customer\OrderController as CustomerOrderController;
@@ -68,6 +69,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/my-order', [CustomerOrderController::class, 'index'])->name('my-order');
     Route::get('/my-order/{order}', [CustomerOrderController::class, 'show'])->name('order.detail');
     Route::post('/my-order/{order}/cancel', [CustomerOrderController::class, 'cancel'])->name('order.cancel');
+    Route::get('/payments/midtrans/finish', MidtransFinishController::class)->name('payments.midtrans.finish');
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('my-wishlist');
     Route::post('/wishlist/{product}', [WishlistController::class, 'store'])->name('wishlist.store');
     Route::delete('/wishlist/products/{product}', [WishlistController::class, 'destroyProduct'])->name('wishlist.products.destroy');
