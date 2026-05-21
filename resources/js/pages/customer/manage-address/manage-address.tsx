@@ -148,10 +148,13 @@ type BiteshipArea = {
     administrative_division_level_2_name: string | null;
     administrative_division_level_3_name: string | null;
     administrative_division_level_4_name: string | null;
-    postal_code: string | null;
+    postal_code: number | string | null;
     latitude: number | string | null;
     longitude: number | string | null;
 };
+
+const areaSearchText = (area: BiteshipArea): string =>
+    asText(area.postal_code ?? area.name ?? area.id);
 
 const formatCoordinate = (value: number): string => value.toFixed(7);
 
@@ -247,6 +250,8 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
     };
 
     const chooseArea = (area: BiteshipArea) => {
+        const postalCode = asText(area.postal_code ?? form.data.postal_code);
+
         form.setData({
             ...form.data,
             biteship_area_id: area.id,
@@ -255,15 +260,15 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
             city: area.administrative_division_level_2_name ?? form.data.city,
             district:
                 area.administrative_division_level_3_name ?? form.data.district,
-            postal_code: area.postal_code ?? form.data.postal_code,
+            postal_code: postalCode,
         });
-        setAreaQuery(area.postal_code ?? area.name ?? area.id);
+        setAreaQuery(areaSearchText(area));
         setAreaResults([]);
         setAreaError('');
     };
 
-    const searchArea = async (query = areaQuery, autoSelect = false) => {
-        const normalizedQuery = query.trim();
+    const searchArea = async (query = areaQuery) => {
+        const normalizedQuery = asText(query).trim();
 
         if (normalizedQuery.length < 3) {
             return;
@@ -290,17 +295,6 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
 
             const areas = payload.areas ?? [];
             setAreaResults(areas);
-
-            if (autoSelect) {
-                const exactPostalMatches = areas.filter(
-                    (area: BiteshipArea) =>
-                        area.postal_code === normalizedQuery,
-                );
-
-                if (exactPostalMatches.length === 1) {
-                    chooseArea(exactPostalMatches[0]);
-                }
-            }
         } catch {
             setAreaError('Gagal terhubung ke Biteship.');
             setAreaResults([]);
@@ -317,7 +311,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
         }
 
         const timeout = window.setTimeout(() => {
-            void searchArea(query, true);
+            void searchArea(query);
         }, 500);
 
         return () => window.clearTimeout(timeout);
@@ -666,7 +660,7 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                             <button
                                                 type="button"
                                                 onClick={() =>
-                                                    searchArea(areaQuery, true)
+                                                    searchArea(areaQuery)
                                                 }
                                                 disabled={
                                                     areaLoading ||
