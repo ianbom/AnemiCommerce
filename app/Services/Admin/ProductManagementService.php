@@ -34,7 +34,13 @@ class ProductManagementService
             'is_featured' => $request->string('is_featured')->toString(),
             'is_new_arrival' => $request->string('is_new_arrival')->toString(),
             'is_best_seller' => $request->string('is_best_seller')->toString(),
+            'sort' => $request->string('sort')->toString(),
+            'direction' => $request->string('direction')->toString(),
         ];
+        $sort = in_array($filters['sort'], ['product', 'price', 'created'], true) ? $filters['sort'] : 'created';
+        $direction = $filters['direction'] === 'asc' ? 'asc' : 'desc';
+        $filters['sort'] = $sort;
+        $filters['direction'] = $direction;
 
         return [
             'products' => Product::query()
@@ -53,7 +59,10 @@ class ProductManagementService
                 ->when($filters['stock_status'] === 'in_stock', fn ($query) => $query->whereHas('variants', fn ($query) => $query->where('stock', '>', 5)))
                 ->when($filters['stock_status'] === 'low_stock', fn ($query) => $query->whereHas('variants', fn ($query) => $query->whereBetween('stock', [1, 5])))
                 ->when($filters['stock_status'] === 'sold_out', fn ($query) => $query->whereDoesntHave('variants', fn ($query) => $query->where('stock', '>', 0)))
-                ->latest()
+                ->when($sort === 'product', fn ($query) => $query->orderBy('name', $direction))
+                ->when($sort === 'price', fn ($query) => $query->orderByRaw('COALESCE(sale_price, base_price) '.$direction))
+                ->when($sort === 'created', fn ($query) => $query->orderBy('created_at', $direction))
+                ->orderByDesc('id')
                 ->paginate($this->perPage($request))
                 ->withQueryString()
                 ->through(fn (Product $product): array => $this->row($product)),

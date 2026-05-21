@@ -522,11 +522,22 @@ export default function ProductForm({ mode, product, options }: Props) {
     const [variantDraftPreview, setVariantDraftPreview] = useState<
         string | null
     >(null);
+    const [variantPreviews, setVariantPreviews] = useState<(string | null)[]>(
+        () =>
+            (product?.variants ?? []).map(
+                (variant) => variant.image_url || null,
+            ),
+    );
 
     // Revoke old blob URLs on unmount to avoid memory leaks
     useEffect(() => {
         return () => {
             previews.forEach((url) => {
+                if (url && url.startsWith('blob:')) {
+                    URL.revokeObjectURL(url);
+                }
+            });
+            variantPreviews.forEach((url) => {
                 if (url && url.startsWith('blob:')) {
                     URL.revokeObjectURL(url);
                 }
@@ -559,12 +570,18 @@ export default function ProductForm({ mode, product, options }: Props) {
         const draft =
             index === null ? blankVariant() : { ...data.variants[index] };
         setVariantDraft(draft);
-        setVariantDraftPreview(draft.image_url || null);
+        setVariantDraftPreview(
+            index === null ? null : (variantPreviews[index] ?? null),
+        );
         setVariantModalOpen(true);
     };
 
     const closeVariantModal = () => {
-        if (variantDraftPreview?.startsWith('blob:')) {
+        const isSavedPreview = variantPreviews.some(
+            (preview) => preview === variantDraftPreview,
+        );
+
+        if (variantDraftPreview?.startsWith('blob:') && !isSavedPreview) {
             URL.revokeObjectURL(variantDraftPreview);
         }
 
@@ -579,10 +596,23 @@ export default function ProductForm({ mode, product, options }: Props) {
 
         if (editingVariantIndex === null) {
             setData('variants', [...data.variants, draft]);
+            setVariantPreviews([...variantPreviews, variantDraftPreview]);
         } else {
             const next = [...data.variants];
             next[editingVariantIndex] = draft;
             setData('variants', next);
+            const previousPreview = variantPreviews[editingVariantIndex];
+
+            if (
+                previousPreview?.startsWith('blob:') &&
+                previousPreview !== variantDraftPreview
+            ) {
+                URL.revokeObjectURL(previousPreview);
+            }
+
+            const nextPreviews = [...variantPreviews];
+            nextPreviews[editingVariantIndex] = variantDraftPreview;
+            setVariantPreviews(nextPreviews);
         }
 
         setVariantModalOpen(false);
@@ -619,6 +649,8 @@ export default function ProductForm({ mode, product, options }: Props) {
     // Preview: use blob URL if new file selected, else fall back to stored image_url
     const getPreview = (index: number): string | null =>
         previews[index] ?? data.images[index]?.image_url ?? null;
+    const getVariantPreview = (index: number): string | null =>
+        variantPreviews[index] ?? data.variants[index]?.image_url ?? null;
     const primaryIndex = data.images.findIndex((i) => i.is_primary);
     const primaryPreview = getPreview(primaryIndex >= 0 ? primaryIndex : 0);
 
@@ -1449,10 +1481,14 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                                     </span>
                                                                 </td>
                                                                 <td className="px-3 py-2 text-center">
-                                                                    {variant.image_url ? (
+                                                                    {getVariantPreview(
+                                                                        index,
+                                                                    ) ? (
                                                                         <img
                                                                             src={
-                                                                                variant.image_url
+                                                                                getVariantPreview(
+                                                                                    index,
+                                                                                )!
                                                                             }
                                                                             alt={
                                                                                 variant.sku
@@ -1513,7 +1549,22 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                                         </button>
                                                                         <button
                                                                             type="button"
-                                                                            onClick={() =>
+                                                                            onClick={() => {
+                                                                                const preview =
+                                                                                    variantPreviews[
+                                                                                        index
+                                                                                    ];
+
+                                                                                if (
+                                                                                    preview?.startsWith(
+                                                                                        'blob:',
+                                                                                    )
+                                                                                ) {
+                                                                                    URL.revokeObjectURL(
+                                                                                        preview,
+                                                                                    );
+                                                                                }
+
                                                                                 setData(
                                                                                     'variants',
                                                                                     data.variants.filter(
@@ -1524,8 +1575,18 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                                                             i !==
                                                                                             index,
                                                                                     ),
-                                                                                )
-                                                                            }
+                                                                                );
+                                                                                setVariantPreviews(
+                                                                                    variantPreviews.filter(
+                                                                                        (
+                                                                                            _,
+                                                                                            i,
+                                                                                        ) =>
+                                                                                            i !==
+                                                                                            index,
+                                                                                    ),
+                                                                                );
+                                                                            }}
                                                                             className="flex h-6 w-6 items-center justify-center rounded text-zinc-300 transition-all hover:bg-red-50 hover:text-red-500"
                                                                         >
                                                                             <Trash2 className="h-3.5 w-3.5" />
@@ -2293,11 +2354,18 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             onChange={(e) => {
                                                 const file =
                                                     e.target.files?.[0] ?? null;
+                                                const isSavedPreview =
+                                                    variantPreviews.some(
+                                                        (preview) =>
+                                                            preview ===
+                                                            variantDraftPreview,
+                                                    );
 
                                                 if (
                                                     variantDraftPreview?.startsWith(
                                                         'blob:',
-                                                    )
+                                                    ) &&
+                                                    !isSavedPreview
                                                 ) {
                                                     URL.revokeObjectURL(
                                                         variantDraftPreview,
@@ -2323,10 +2391,18 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             <button
                                                 type="button"
                                                 onClick={() => {
+                                                    const isSavedPreview =
+                                                        variantPreviews.some(
+                                                            (preview) =>
+                                                                preview ===
+                                                                variantDraftPreview,
+                                                        );
+
                                                     if (
                                                         variantDraftPreview?.startsWith(
                                                             'blob:',
-                                                        )
+                                                        ) &&
+                                                        !isSavedPreview
                                                     ) {
                                                         URL.revokeObjectURL(
                                                             variantDraftPreview,

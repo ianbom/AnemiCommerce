@@ -1,6 +1,9 @@
 import { Head, Link, router } from '@inertiajs/react';
 import {
     Archive,
+    ArrowDown,
+    ArrowUp,
+    ArrowUpDown,
     Ban,
     ChevronLeft,
     ChevronRight,
@@ -81,7 +84,11 @@ interface Filters {
     is_featured: string;
     is_new_arrival: string;
     is_best_seller: string;
+    sort: string;
+    direction: string;
 }
+
+type SortKey = 'product' | 'price' | 'created';
 
 interface Props {
     products: PaginatedProducts;
@@ -176,6 +183,19 @@ export default function ProductsIndex({
             { ...filters, [key]: value, page: 1 },
             { preserveState: true, replace: true },
         );
+
+    const applySort = (key: SortKey) => {
+        const nextDirection =
+            filters.sort === key && filters.direction === 'asc'
+                ? 'desc'
+                : 'asc';
+
+        router.get(
+            '/admin/products',
+            { ...filters, sort: key, direction: nextDirection, page: 1 },
+            { preserveState: true, replace: true },
+        );
+    };
 
     const resetFilters = () =>
         router.get('/admin/products', {}, { preserveState: false });
@@ -552,9 +572,13 @@ export default function ProductsIndex({
                                     <th className="w-14 px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
                                         No
                                     </th>
-                                    <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
-                                        Product
-                                    </th>
+                                    <SortableTh
+                                        label="Product"
+                                        sortKey="product"
+                                        activeSort={filters.sort}
+                                        direction={filters.direction}
+                                        onSort={applySort}
+                                    />
                                     <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
                                         SKU
                                     </th>
@@ -564,9 +588,13 @@ export default function ProductsIndex({
                                     <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
                                         Collection
                                     </th>
-                                    <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
-                                        Price
-                                    </th>
+                                    <SortableTh
+                                        label="Price"
+                                        sortKey="price"
+                                        activeSort={filters.sort}
+                                        direction={filters.direction}
+                                        onSort={applySort}
+                                    />
                                     <th className="px-4 py-3 text-center text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
                                         Variants
                                     </th>
@@ -579,9 +607,13 @@ export default function ProductsIndex({
                                     <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
                                         Tag
                                     </th>
-                                    <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
-                                        Created
-                                    </th>
+                                    <SortableTh
+                                        label="Created"
+                                        sortKey="created"
+                                        activeSort={filters.sort}
+                                        direction={filters.direction}
+                                        onSort={applySort}
+                                    />
                                     <th className="w-10 px-4 py-3"></th>
                                 </tr>
                             </thead>
@@ -995,6 +1027,45 @@ export default function ProductsIndex({
                 </div>
             </div>
         </>
+    );
+}
+
+function SortableTh({
+    label,
+    sortKey,
+    activeSort,
+    direction,
+    onSort,
+}: {
+    label: string;
+    sortKey: SortKey;
+    activeSort: string;
+    direction: string;
+    onSort: (key: SortKey) => void;
+}) {
+    const active = activeSort === sortKey;
+    const Icon = active
+        ? direction === 'asc'
+            ? ArrowUp
+            : ArrowDown
+        : ArrowUpDown;
+
+    return (
+        <th className="px-4 py-3 text-left">
+            <button
+                type="button"
+                onClick={() => onSort(sortKey)}
+                className={[
+                    'inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-wider uppercase transition-colors',
+                    active
+                        ? 'text-zinc-800'
+                        : 'text-zinc-400 hover:text-zinc-700',
+                ].join(' ')}
+            >
+                {label}
+                <Icon className="h-3.5 w-3.5" />
+            </button>
+        </th>
     );
 }
 

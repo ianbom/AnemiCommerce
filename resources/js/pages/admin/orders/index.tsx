@@ -1,5 +1,8 @@
 import { Head, Link, router } from '@inertiajs/react';
 import {
+    ArrowDown,
+    ArrowUp,
+    ArrowUpDown,
     Ban,
     CheckCircle2,
     ChevronLeft,
@@ -67,7 +70,11 @@ interface Filters {
     voucher_code: string;
     date_from: string;
     date_to: string;
+    sort: string;
+    direction: string;
 }
+
+type SortKey = 'date' | 'customer';
 
 interface Props {
     orders: PaginatedOrders;
@@ -166,6 +173,19 @@ export default function OrdersIndex({
             { ...filters, [key]: value, page: 1 },
             { preserveState: true, replace: true },
         );
+
+    const applySort = (key: SortKey) => {
+        const nextDirection =
+            filters.sort === key && filters.direction === 'asc'
+                ? 'desc'
+                : 'asc';
+
+        router.get(
+            '/admin/orders',
+            { ...filters, sort: key, direction: nextDirection, page: 1 },
+            { preserveState: true, replace: true },
+        );
+    };
 
     const resetFilters = () =>
         router.get('/admin/orders', {}, { preserveState: false });
@@ -519,9 +539,13 @@ export default function OrdersIndex({
                                     <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
                                         Order
                                     </th>
-                                    <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
-                                        Customer
-                                    </th>
+                                    <SortableTh
+                                        label="Customer"
+                                        sortKey="customer"
+                                        activeSort={filters.sort}
+                                        direction={filters.direction}
+                                        onSort={applySort}
+                                    />
                                     <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
                                         Total
                                     </th>
@@ -534,9 +558,13 @@ export default function OrdersIndex({
                                     <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
                                         Shipping
                                     </th>
-                                    <th className="px-4 py-3 text-[11px] font-semibold tracking-wider text-zinc-400 uppercase">
-                                        Date
-                                    </th>
+                                    <SortableTh
+                                        label="Date"
+                                        sortKey="date"
+                                        activeSort={filters.sort}
+                                        direction={filters.direction}
+                                        onSort={applySort}
+                                    />
                                     <th className="w-10 px-4 py-3"></th>
                                 </tr>
                             </thead>
@@ -795,6 +823,45 @@ export default function OrdersIndex({
                 </div>
             </div>
         </>
+    );
+}
+
+function SortableTh({
+    label,
+    sortKey,
+    activeSort,
+    direction,
+    onSort,
+}: {
+    label: string;
+    sortKey: SortKey;
+    activeSort: string;
+    direction: string;
+    onSort: (key: SortKey) => void;
+}) {
+    const active = activeSort === sortKey;
+    const Icon = active
+        ? direction === 'asc'
+            ? ArrowUp
+            : ArrowDown
+        : ArrowUpDown;
+
+    return (
+        <th className="px-4 py-3 text-left">
+            <button
+                type="button"
+                onClick={() => onSort(sortKey)}
+                className={[
+                    'inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-wider uppercase transition-colors',
+                    active
+                        ? 'text-zinc-800'
+                        : 'text-zinc-400 hover:text-zinc-700',
+                ].join(' ')}
+            >
+                {label}
+                <Icon className="h-3.5 w-3.5" />
+            </button>
+        </th>
     );
 }
 

@@ -4,7 +4,7 @@ import {
     ArrowLeft,
     Box,
     CheckCircle2,
-    Copy,
+    Eye,
     Image as ImageIcon,
     Info,
     Layers,
@@ -31,6 +31,7 @@ import {
     formatPrice,
     PageHeader,
 } from '@/pages/admin/catalog/shared';
+import { detail } from '@/routes';
 
 type ProductImage = {
     id: number;
@@ -210,16 +211,14 @@ export default function ProductShow({ product }: Props) {
                                     <Archive className="size-3.5" /> Archive
                                 </Button>
                             )}
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() =>
-                                    doAction(
-                                        `/admin/products/${product.id}/duplicate`,
-                                    )
-                                }
-                            >
-                                <Copy className="size-3.5" /> Duplicate
+                            <Button asChild variant="outline" size="sm">
+                                <Link
+                                    href={detail.url({
+                                        query: { product: product.slug },
+                                    })}
+                                >
+                                    <Eye className="size-3.5" /> Lihat
+                                </Link>
                             </Button>
                             <Button
                                 variant="outline"
@@ -294,7 +293,7 @@ export default function ProductShow({ product }: Props) {
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="p-0">
-                                <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-50">
+                                <div className="relative aspect-[3/4] w-full overflow-hidden bg-zinc-50">
                                     {activeImage?.image_url ? (
                                         <img
                                             src={activeImage.image_url}
@@ -324,7 +323,7 @@ export default function ProductShow({ product }: Props) {
                                                     setActiveImage(img)
                                                 }
                                                 className={[
-                                                    'relative size-[60px] shrink-0 overflow-hidden rounded-lg border-2 transition-all',
+                                                    'relative h-20 w-14 shrink-0 overflow-hidden rounded-lg border-2 transition-all',
                                                     activeImage?.id === img.id
                                                         ? 'border-zinc-800 shadow-sm'
                                                         : 'border-transparent hover:border-zinc-300',

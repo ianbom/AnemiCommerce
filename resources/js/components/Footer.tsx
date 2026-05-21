@@ -13,8 +13,8 @@ import React from 'react';
 
 export default function Footer() {
     return (
-        <footer className="border-t border-[#9A6B45] bg-[#B98B63] pt-14 pb-8 text-white md:pt-20 [&_*]:!text-white [&_h3]:!text-white [&_p]:!text-white/80 [&_span]:!text-white/80 [&_a]:!text-white/80 [&_a:hover]:!text-white">
-            {/* Top Section: Newsletter & Brand */}
+        <footer className="border-t border-[#9A6B45] bg-[#B98B63] pt-14 pb-8 text-white md:pt-20 [&_*]:!text-white [&_a]:!text-white/80 [&_a:hover]:!text-white [&_h3]:!text-white [&_p]:!text-white/80 [&_span]:!text-white/80">
+            {/* Top Section: Brand & CTA */}
             <div className="mx-auto mb-16 max-w-[1500px] px-6 md:px-10">
                 <div className="grid grid-cols-1 items-center gap-12 border-b border-[#9A6B45] pb-12 lg:grid-cols-2">
                     <div className="flex flex-col">
@@ -35,23 +35,24 @@ export default function Footer() {
                         </p>
                     </div>
 
-                    <div className="flex flex-col lg:items-end">
+                    <div className="flex flex-col gap-6 lg:items-end">
                         <h3 className="mb-4 text-xs font-semibold tracking-[0.2em] text-white uppercase">
-                            Berlangganan
+                            Tetap Terhubung
                         </h3>
-                        <p className="mb-5 max-w-md text-sm leading-6 text-white/80 lg:text-right">
-                            Untuk menerima pembaruan, akses ke penawaran
-                            eksklusif dan lebih.
+                        <p className="max-w-md text-sm leading-6 text-white/80 lg:text-right">
+                            Jelajahi koleksi terbaru Anemi dan temukan pilihan
+                            modest fashion yang siap melengkapi hari-harimu.
                         </p>
-                        <div className="group flex w-full max-w-md border-b border-white/40 pb-2 transition-colors focus-within:border-white">
-                            <input
-                                type="email"
-                                placeholder="Masukkan alamat email"
-                                className="flex-1 bg-transparent text-xs tracking-wider text-white placeholder-white/60 outline-none md:text-sm"
-                            />
-                            <button className="flex items-center gap-2 text-xs font-semibold tracking-widest text-white uppercase transition-colors hover:text-white/80">
-                                Berlangganan <ArrowRight size={14} />
-                            </button>
+                        <div className="flex w-full max-w-md flex-col gap-3 sm:flex-row lg:justify-end">
+                            <Link
+                                href="/list"
+                                className="group inline-flex items-center justify-center gap-3 rounded-full border border-white/60 bg-[#9A6B45] px-5 py-2.5 text-xs font-semibold tracking-[0.16em] !text-white uppercase shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] transition-all duration-300 hover:border-white hover:bg-[#7D5638] hover:!text-white"
+                            >
+                                Lihat Koleksi
+                                <span className="flex size-7 items-center justify-center rounded-full bg-white/20 !text-white transition-colors duration-300 group-hover:bg-white/30 group-hover:!text-white">
+                                    <ArrowRight size={14} />
+                                </span>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -243,8 +244,7 @@ export default function Footer() {
                 {/* Bottom Section */}
                 <div className="flex flex-col items-center justify-between border-t border-white/30 pt-8 text-[10px] tracking-[0.15em] text-white/70 md:flex-row">
                     <p className="mb-4 md:mb-0">
-                        © {new Date().getFullYear()} Anemi. All Rights
-                        Reserved.
+                        © {new Date().getFullYear()} Anemi. All Rights Reserved.
                     </p>
 
                     <div className="flex items-center space-x-6">

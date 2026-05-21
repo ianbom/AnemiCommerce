@@ -27,7 +27,13 @@ class OrderManagementService
             'voucher_code' => $request->string('voucher_code')->toString(),
             'date_from' => $request->string('date_from')->toString(),
             'date_to' => $request->string('date_to')->toString(),
+            'sort' => $request->string('sort')->toString(),
+            'direction' => $request->string('direction')->toString(),
         ];
+        $sort = in_array($filters['sort'], ['date', 'customer'], true) ? $filters['sort'] : 'date';
+        $direction = $filters['direction'] === 'asc' ? 'asc' : 'desc';
+        $filters['sort'] = $sort;
+        $filters['direction'] = $direction;
 
         return [
             'orders' => Order::query()
@@ -44,7 +50,9 @@ class OrderManagementService
                 ->when($filters['date_from'] !== '', fn ($query) => $query->whereDate('created_at', '>=', $filters['date_from']))
                 ->when($filters['date_to'] !== '', fn ($query) => $query->whereDate('created_at', '<=', $filters['date_to']))
                 ->when($filters['courier'] !== '', fn ($query) => $query->whereHas('shipment', fn ($query) => $query->where('courier_company', $filters['courier'])))
-                ->latest()
+                ->when($sort === 'date', fn ($query) => $query->orderBy('created_at', $direction))
+                ->when($sort === 'customer', fn ($query) => $query->orderBy('customer_name', $direction))
+                ->orderByDesc('id')
                 ->paginate($this->perPage($request))
                 ->withQueryString()
                 ->through(fn (Order $order): array => $this->row($order)),

@@ -30,6 +30,26 @@ type Props = {
     placements: string[];
 };
 
+const formatDateTime = (value: string | null) => {
+    if (!value) {
+        return '-';
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return value;
+    }
+
+    return date.toLocaleString('id-ID', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    });
+};
+
 export default function BannersIndex({ banners, filters, placements }: Props) {
     const { data, setData, get, processing } = useForm({
         search: filters.search ?? '',
@@ -166,9 +186,27 @@ export default function BannersIndex({ banners, filters, placements }: Props) {
                                             {banner.sort_order}
                                         </td>
                                         <td className="py-3 pr-4">
-                                            <div>{banner.starts_at ?? '-'}</div>
-                                            <div className="text-xs text-muted-foreground">
-                                                to {banner.ends_at ?? '-'}
+                                            <div className="flex flex-col gap-1">
+                                                <div className="text-xs">
+                                                    <span className="text-muted-foreground">
+                                                        Mulai:{' '}
+                                                    </span>
+                                                    <span className="font-medium">
+                                                        {formatDateTime(
+                                                            banner.starts_at,
+                                                        )}
+                                                    </span>
+                                                </div>
+                                                <div className="text-xs">
+                                                    <span className="text-muted-foreground">
+                                                        Selesai:{' '}
+                                                    </span>
+                                                    <span className="font-medium">
+                                                        {formatDateTime(
+                                                            banner.ends_at,
+                                                        )}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </td>
                                         <td className="py-3 pr-4">
