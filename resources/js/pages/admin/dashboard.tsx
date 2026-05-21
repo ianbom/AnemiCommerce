@@ -183,8 +183,8 @@ export default function AdminDashboard({
         <>
             <Head title="Dasbor Admin" />
 
-            <main className="min-h-[100dvh] bg-white px-4 py-5 text-zinc-900 sm:px-6 lg:px-8 lg:py-7">
-                <div className="mx-auto flex max-w-7xl flex-col gap-6 lg:gap-8">
+            <main className="flex min-h-[100dvh] flex-1 flex-col bg-white p-4 text-zinc-900 md:p-6">
+                <div className="flex w-full min-w-0 flex-col gap-6 lg:gap-8">
                     <DashboardHeader filters={filters} />
                     <StatCards stats={dashboardStats(summary)} />
                     <StatusSummary
