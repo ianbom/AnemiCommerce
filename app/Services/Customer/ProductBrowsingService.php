@@ -31,9 +31,9 @@ class ProductBrowsingService
             'collectionBanners' => $collectionBanners->map(fn ($banner) => $this->bannerCard($banner))->toArray(),
             'categories' => Category::query()->where('is_active', true)->orderBy('name')->get(['name', 'slug', 'image_url']),
             'hajjSeries' => $this->productsForSection('hajj', 3),
-            'wePresent' => $this->productsForSection('sale', 5),
+            'wePresent' => $this->productsForSection('new_arrival', 5),
             'recentAdditions' => $this->productsForSection('new', 6),
-            'mostLoved' => $this->productsForSection('loved', 4),
+            'mostLoved' => $this->productsForSection('best_seller', 4),
             'journalPosts' => $this->journalPosts(),
         ];
     }
@@ -125,14 +125,16 @@ class ProductBrowsingService
                 ->orderByDesc('is_new_arrival')
                 ->latest(),
             'sale' => $query->whereNotNull('sale_price')->latest(),
+            'new_arrival' => $query->where('is_new_arrival', true)->latest(),
             'new' => $query->where('is_new_arrival', true)->latest(),
+            'best_seller' => $query->where('is_best_seller', true)->latest(),
             'loved' => $query->where(fn ($query) => $query->where('is_best_seller', true)->orWhere('is_featured', true))->orderByDesc('is_best_seller')->latest(),
             default => $query->latest(),
         };
 
         $products = $query->get();
 
-        if ($products->count() < $limit) {
+        if ($products->count() < $limit && ! in_array($section, ['new_arrival', 'best_seller'], true)) {
             $fallback = Product::query()
                 ->with($this->productRelations())
                 ->where('status', 'published')

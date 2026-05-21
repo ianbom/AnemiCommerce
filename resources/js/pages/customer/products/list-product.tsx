@@ -1,4 +1,4 @@
-import { Head, InfiniteScroll, Link, router } from '@inertiajs/react';
+import { Head, InfiniteScroll, Link, router, usePage } from '@inertiajs/react';
 import { ChevronDown, Heart, Search } from 'lucide-react';
 import type { FormEvent, MouseEvent, ReactNode } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -7,7 +7,7 @@ import {
     store as addWishlistItem,
 } from '@/actions/App/Http/Controllers/Customer/WishlistController';
 import ShopLayout from '@/layouts/shop-layout';
-import { detail, list } from '@/routes';
+import { detail, list, login } from '@/routes';
 
 type FilterState = {
     search: string;
@@ -84,6 +84,12 @@ type Props = {
     };
 };
 
+type SharedProps = {
+    auth: {
+        user: unknown | null;
+    };
+};
+
 const defaultFilters: FilterState = {
     search: '',
     category: '',
@@ -143,6 +149,8 @@ const cleanQuery = (filters: FilterState) =>
     );
 
 export default function ListProduct({ products, filters, options }: Props) {
+    const { auth } = usePage<SharedProps>().props;
+    const isAuthenticated = Boolean(auth.user);
     const initialFilters = useMemo<FilterState>(
         () => ({
             ...filters,
@@ -602,7 +610,10 @@ export default function ListProduct({ products, filters, options }: Props) {
                     </section>
 
                     {products.data.length > 0 ? (
-                        <ProductGrid products={products.data} />
+                        <ProductGrid
+                            products={products.data}
+                            isAuthenticated={isAuthenticated}
+                        />
                     ) : (
                         <div className="flex min-h-[420px] flex-col items-center justify-center rounded-md px-6 text-center">
                             <p className="text-sm font-semibold text-foreground">
@@ -676,8 +687,10 @@ function FadeInOnScroll({
 
 const ProductGrid = memo(function ProductGrid({
     products,
+    isAuthenticated,
 }: {
     products: ProductCard[];
+    isAuthenticated: boolean;
 }) {
     return (
         <InfiniteScroll data="products" buffer={400}>
@@ -689,6 +702,7 @@ const ProductGrid = memo(function ProductGrid({
                                 key={product.id}
                                 product={product}
                                 index={index}
+                                isAuthenticated={isAuthenticated}
                             />
                         ))}
                     </div>
@@ -708,9 +722,11 @@ const ProductGrid = memo(function ProductGrid({
 const ProductTile = memo(function ProductTile({
     product,
     index,
+    isAuthenticated,
 }: {
     product: ProductCard;
     index: number;
+    isAuthenticated: boolean;
 }) {
     const [isWishlisted, setIsWishlisted] = useState(product.is_wishlisted);
     const [isWishlistProcessing, setIsWishlistProcessing] = useState(false);
@@ -721,6 +737,12 @@ const ProductTile = memo(function ProductTile({
         event.stopPropagation();
 
         if (isWishlistProcessing) {
+            return;
+        }
+
+        if (!isAuthenticated) {
+            router.visit(login.url());
+
             return;
         }
 

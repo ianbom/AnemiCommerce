@@ -226,7 +226,10 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
                             <Link href={homeHref} prefetch>
-                                Dasbor Admin
+                                <AppLogo className="h-9 brightness-100 invert-0 group-data-[collapsible=icon]:h-8" />
+                                <span className="font-semibold group-data-[collapsible=icon]:hidden">
+                                    Dasbor Admin
+                                </span>
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>

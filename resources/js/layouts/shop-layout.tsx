@@ -11,6 +11,9 @@ interface ShopLayoutProps {
 }
 
 type SharedShopProps = {
+    auth: {
+        user: unknown | null;
+    };
     shop?: {
         cart_count?: number;
         featured_collections?: Array<{
@@ -25,6 +28,7 @@ export default function ShopLayout({ children }: ShopLayoutProps) {
     const { url, props } = usePage<SharedShopProps>();
     const cartCount = props.shop?.cart_count ?? 0;
     const featuredCollections = props.shop?.featured_collections ?? [];
+    const isAuthenticated = Boolean(props.auth.user);
 
     const navItems = [
         { icon: Home, label: 'Home', href: '/', active: url === '/' },
@@ -55,14 +59,13 @@ export default function ShopLayout({ children }: ShopLayoutProps) {
                 cartCount={cartCount}
                 collections={featuredCollections}
                 currentUrl={url}
+                isAuthenticated={isAuthenticated}
             />
             <main className="mx-auto w-full max-w-md flex-grow bg-white pb-24 md:max-w-none md:pb-0">
                 {children}
             </main>
             <Toaster />
-            <div className="hidden md:block">
-                <Footer />
-            </div>
+            <Footer />
 
             {/* Mobile Bottom Navigation */}
             <nav className="pb-safe fixed bottom-0 left-1/2 z-50 w-full max-w-md -translate-x-1/2 border-t border-[#e7e2de] bg-white/98 px-6 py-2 backdrop-blur-xl md:hidden">

@@ -222,14 +222,8 @@ function CtaSection({ ctaBanner }: { ctaBanner: BannerCard }) {
                                 {ctaBanner?.subtitle ?? 'New Collection'}
                             </p>
                             <h2 className="text-3xl leading-tight font-light tracking-[0.08em] text-white uppercase md:text-5xl">
-                                {/* {ctaBanner?.title ?? 'Discover Your Style'} */}
-                                Temukan Style Anda
+                                {ctaBanner?.title ?? 'Discover Your Style'}
                             </h2>
-                            <p className="mt-4 max-w-[430px] text-sm leading-6 text-white/80 md:text-base">
-                                Temukan pilihan busana muslim elegan dengan
-                                detail nyaman, siluet modern, dan sentuhan
-                                eksklusif untuk setiap momen spesialmu.
-                            </p>
                             <Link
                                 href={ctaBanner?.button_url ?? list.url()}
                                 className="mt-7 inline-flex border border-white px-8 py-3 text-[10px] font-semibold tracking-[0.18em] text-white uppercase backdrop-blur-sm transition-colors hover:bg-white hover:text-black md:text-[11px]"

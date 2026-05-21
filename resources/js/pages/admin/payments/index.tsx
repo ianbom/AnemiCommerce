@@ -14,7 +14,7 @@ import {
     Wallet,
     XCircle,
 } from 'lucide-react';
-import type { FormEvent, ReactNode } from 'react';
+import type { FormEvent, MouseEvent, ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -123,6 +123,10 @@ const formatDate = (value: string | null) => {
         month: 'short',
         year: 'numeric',
     });
+};
+
+const openDatePicker = (event: MouseEvent<HTMLInputElement>) => {
+    event.currentTarget.showPicker?.();
 };
 
 export default function PaymentsIndex({
@@ -369,23 +373,41 @@ export default function PaymentsIndex({
                             <span className="px-0.5 text-[10px] font-semibold tracking-wider text-zinc-400 uppercase">
                                 Dates
                             </span>
-                            <div className="flex gap-2">
-                                <Input
-                                    type="date"
-                                    value={data.date_from}
-                                    onChange={(event) =>
-                                        setData('date_from', event.target.value)
-                                    }
-                                    className="h-9 w-[130px] rounded-lg border-zinc-200 bg-white text-xs shadow-sm"
-                                />
-                                <Input
-                                    type="date"
-                                    value={data.date_to}
-                                    onChange={(event) =>
-                                        setData('date_to', event.target.value)
-                                    }
-                                    className="h-9 w-[130px] rounded-lg border-zinc-200 bg-white text-xs shadow-sm"
-                                />
+                            <div className="flex flex-wrap gap-2">
+                                <label className="flex flex-col gap-1">
+                                    <span className="text-[10px] font-medium text-zinc-400">
+                                        From
+                                    </span>
+                                    <Input
+                                        type="date"
+                                        value={data.date_from}
+                                        onClick={openDatePicker}
+                                        onChange={(event) =>
+                                            setData(
+                                                'date_from',
+                                                event.target.value,
+                                            )
+                                        }
+                                        className="h-10 min-w-[160px] cursor-pointer rounded-lg border-zinc-200 bg-white text-sm shadow-sm"
+                                    />
+                                </label>
+                                <label className="flex flex-col gap-1">
+                                    <span className="text-[10px] font-medium text-zinc-400">
+                                        To
+                                    </span>
+                                    <Input
+                                        type="date"
+                                        value={data.date_to}
+                                        onClick={openDatePicker}
+                                        onChange={(event) =>
+                                            setData(
+                                                'date_to',
+                                                event.target.value,
+                                            )
+                                        }
+                                        className="h-10 min-w-[160px] cursor-pointer rounded-lg border-zinc-200 bg-white text-sm shadow-sm"
+                                    />
+                                </label>
                             </div>
                         </div>
 

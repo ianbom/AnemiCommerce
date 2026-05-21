@@ -28,7 +28,13 @@ class WishlistController extends Controller
 
     public function store(Request $request, Product $product, WishlistService $wishlistService): RedirectResponse|HttpResponse
     {
-        $wishlistService->addProduct($product, $request->user());
+        $user = $request->user();
+
+        if (! $user) {
+            return redirect()->route('login');
+        }
+
+        $wishlistService->addProduct($product, $user);
 
         if ($request->wantsJson()) {
             return response()->noContent();

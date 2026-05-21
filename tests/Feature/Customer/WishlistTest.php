@@ -9,6 +9,17 @@ use Inertia\Testing\AssertableInertia as Assert;
 
 uses(RefreshDatabase::class);
 
+it('redirects guests to login before storing wishlist products', function () {
+    $product = createWishlistProduct(['status' => 'published']);
+
+    $this->post(route('wishlist.store', $product))
+        ->assertRedirect(route('login'));
+
+    $this->assertDatabaseMissing('wishlists', [
+        'product_id' => $product->id,
+    ]);
+});
+
 it('adds a wishlist product through json without redirecting the product list', function () {
     $user = User::factory()->create();
     $product = createWishlistProduct(['status' => 'published']);

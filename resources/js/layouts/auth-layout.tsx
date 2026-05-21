@@ -14,7 +14,7 @@ export default function AuthLayout({
             <div className="flex flex-col gap-4 p-6 md:p-10">
                 <div className="flex justify-center gap-2 md:justify-center">
                     <Link href={home()} className="flex items-center gap-3">
-                        <AppLogo className="h-18 brightness-100 invert-0" />
+                        <AppLogo className="h-18 my-8 brightness-100 invert-0" />
                     </Link>
                 </div>
 
