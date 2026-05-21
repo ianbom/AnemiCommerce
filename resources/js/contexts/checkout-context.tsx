@@ -104,6 +104,7 @@ type CheckoutContextValue = {
 };
 
 const CheckoutContext = createContext<CheckoutContextValue | null>(null);
+const checkoutStockAlertKey = 'checkout.stock_alert';
 
 function checkoutIdempotencyKey() {
     const storageKey = 'checkout.idempotency_key';
@@ -347,7 +348,16 @@ export function CheckoutProvider({
 
                 return payload.redirect_url ?? null;
             } catch (error) {
-                setErrors(error as Record<string, string>);
+                const errors = error as Record<string, string>;
+                setErrors(errors);
+
+                if (errors.cart) {
+                    window.sessionStorage.setItem(
+                        checkoutStockAlertKey,
+                        errors.cart,
+                    );
+                    window.location.reload();
+                }
 
                 return null;
             } finally {

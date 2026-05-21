@@ -27,11 +27,6 @@ class CheckoutController extends Controller
                 ->with('warning', 'Keranjang kosong. Tambahkan produk terlebih dahulu.');
         }
 
-        if ($cartAvailability['has_unavailable_items']) {
-            return redirect()->route('cart')
-                ->with('warning', 'Ada produk yang habis atau stoknya tidak mencukupi. Perbarui keranjang sebelum checkout.');
-        }
-
         if (! CustomerAddress::query()->where('user_id', $user->id)->exists()) {
             return redirect()->route('manage-address', ['redirect_to' => route('checkout', absolute: false)])
                 ->with('warning', 'Tambahkan alamat pengiriman terlebih dahulu.');

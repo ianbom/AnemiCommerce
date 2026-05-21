@@ -54,7 +54,7 @@ it('redirects checkout to cart when cart is empty', function () {
         ->assertSessionHas('warning');
 });
 
-it('redirects checkout to cart when stock is insufficient', function () {
+it('renders checkout with unavailable item when stock is insufficient', function () {
     $user = User::factory()->create();
     [$product, $variant] = createCartStockProduct(stock: 2, reservedStock: 1);
 
@@ -63,8 +63,12 @@ it('redirects checkout to cart when stock is insufficient', function () {
 
     $this->actingAs($user)
         ->get(route('checkout'))
-        ->assertRedirect(route('cart'))
-        ->assertSessionHas('warning');
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('customer/checkout/checkout')
+            ->where('cartItems.0.quantity', 3)
+            ->where('cartItems.0.available_stock', 1)
+            ->where('cartItems.0.is_available', false));
 });
 
 it('renders checkout when cart stock is valid and address exists', function () {

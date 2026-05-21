@@ -494,11 +494,6 @@ export default function MyCart({
                                     </div>
 
                                     <div className="space-y-4">
-                                        {hasStockIssues && (
-                                            <div className="rounded-xl border border-[#E7C9C9] bg-[#FFF6F6] px-4 py-3 text-[12px] font-medium text-[#B24B4B]">
-                                                Stok tidak tersedia
-                                            </div>
-                                        )}
                                         <button
                                             type="button"
                                             onClick={continueToCheckout}

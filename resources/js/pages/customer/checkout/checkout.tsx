@@ -68,6 +68,20 @@ const formatDistance = (meters: number) =>
               maximumFractionDigits: 0,
           }).format(meters)} m`;
 
+const checkoutStockAlertKey = 'checkout.stock_alert';
+
+const stockIssueMessage = (item: CheckoutItem) => {
+    if (item.available_stock <= 0) {
+        return 'Produk sudah habis. Tidak bisa checkout.';
+    }
+
+    if (item.available_stock < item.quantity) {
+        return `Stok tidak mencukupi. Tersedia ${item.available_stock}, di keranjang ${item.quantity}.`;
+    }
+
+    return 'Produk tidak tersedia. Tidak bisa checkout.';
+};
+
 const validCoordinates = (latitude: number, longitude: number): boolean =>
     Number.isFinite(latitude) &&
     Number.isFinite(longitude) &&
@@ -177,11 +191,24 @@ function CheckoutScreen() {
         }
     }, [loadShippingRates, selectedAddressId, shippingRates.length]);
 
+    useEffect(() => {
+        const message = window.sessionStorage.getItem(checkoutStockAlertKey);
+
+        if (!message) {
+            return;
+        }
+
+        window.sessionStorage.removeItem(checkoutStockAlertKey);
+        toast.error(message);
+    }, []);
+
     const submitOrder = async () => {
         if (hasUnavailableItems) {
-            toast.error(
-                'Barang telah habis dan tidak bisa checkout. Perbarui keranjang sebelum membayar.',
+            window.sessionStorage.setItem(
+                checkoutStockAlertKey,
+                'Produk sudah habis atau stok tidak mencukupi. Perbarui keranjang sebelum membayar.',
             );
+            window.location.reload();
 
             return;
         }
@@ -519,10 +546,9 @@ function CheckoutScreen() {
                                                 </p>
                                                 {!item.is_available && (
                                                     <p className="mt-1 text-[10px] font-bold text-[#B24B4B]">
-                                                        {item.available_stock <=
-                                                        0
-                                                            ? 'Stok habis. Tidak bisa checkout.'
-                                                            : `Stok tidak cukup. Tidak bisa checkout. Stok tersedia hanya ${item.available_stock}.`}
+                                                        {stockIssueMessage(
+                                                            item,
+                                                        )}
                                                     </p>
                                                 )}
                                             </div>
@@ -577,8 +603,7 @@ function CheckoutScreen() {
                                     disabled={
                                         placingOrder ||
                                         !selectedShippingRate ||
-                                        !agreed ||
-                                        hasUnavailableItems
+                                        !agreed
                                     }
                                     className="mt-6 flex w-full items-center justify-center rounded-lg bg-[#B98B63] py-4 text-[13px] font-bold tracking-wider text-white transition-all hover:bg-[#9A6B45] hover:shadow-lg hover:shadow-[#B98B63]/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
                                 >
