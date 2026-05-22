@@ -1,6 +1,9 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 test('profile page is displayed', function () {
     $user = User::factory()->create();
@@ -13,7 +16,7 @@ test('profile page is displayed', function () {
 });
 
 test('profile information can be updated', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => 'admin']);
 
     $response = $this
         ->actingAs($user)
@@ -34,7 +37,7 @@ test('profile information can be updated', function () {
 });
 
 test('email verification status is unchanged when the email address is unchanged', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => 'admin']);
 
     $response = $this
         ->actingAs($user)
@@ -48,6 +51,31 @@ test('email verification status is unchanged when the email address is unchanged
         ->assertRedirect(route('profile.edit'));
 
     expect($user->refresh()->email_verified_at)->not->toBeNull();
+});
+
+test('profile phone must contain digits only', function () {
+    $user = User::factory()->create(['role' => 'admin']);
+
+    $this
+        ->actingAs($user)
+        ->patch(route('profile.update'), [
+            'name' => 'Test User',
+            'email' => $user->email,
+            'phone' => '0812-abc-3456',
+        ])
+        ->assertSessionHasErrors('phone');
+
+    $this
+        ->actingAs($user)
+        ->patch(route('profile.update'), [
+            'name' => 'Test User',
+            'email' => $user->email,
+            'phone' => '08123456',
+        ])
+        ->assertSessionHasNoErrors()
+        ->assertRedirect(route('profile.edit'));
+
+    expect($user->refresh()->phone)->toBe('08123456');
 });
 
 test('user can delete their account', function () {
@@ -64,7 +92,7 @@ test('user can delete their account', function () {
         ->assertRedirect(route('home'));
 
     $this->assertGuest();
-    expect($user->fresh())->toBeNull();
+    $this->assertSoftDeleted($user);
 });
 
 test('correct password must be provided to delete account', function () {

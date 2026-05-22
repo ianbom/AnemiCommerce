@@ -50,6 +50,7 @@ export default function MyProfile() {
     const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
     const [profileClientErrors, setProfileClientErrors] = useState<{
         name?: string;
+        phone?: string;
     }>({});
     const isAdmin = user.role.toLowerCase() === 'admin';
 
@@ -69,10 +70,17 @@ export default function MyProfile() {
     const submitProfile = (e: React.FormEvent) => {
         e.preventDefault();
 
-        const nextErrors: { name?: string } = {};
+        const nextErrors: { name?: string; phone?: string } = {};
 
         if (profileForm.data.name.trim() === '') {
             nextErrors.name = 'Nama lengkap wajib diisi.';
+        }
+
+        if (
+            profileForm.data.phone.trim() !== '' &&
+            !/^[0-9]+$/.test(profileForm.data.phone)
+        ) {
+            nextErrors.phone = 'Nomor telepon hanya boleh berisi angka.';
         }
 
         setProfileClientErrors(nextErrors);
@@ -169,6 +177,7 @@ export default function MyProfile() {
 
     const avatarSrc = avatarPreview || user.avatar_url;
     const nameError = profileClientErrors.name ?? profileForm.errors.name;
+    const phoneError = profileClientErrors.phone ?? profileForm.errors.phone;
 
     return (
         <ProfileLayout
@@ -308,20 +317,29 @@ export default function MyProfile() {
                             </label>
                             <input
                                 type="tel"
+                                inputMode="numeric"
+                                pattern="[0-9]*"
                                 value={profileForm.data.phone}
-                                onChange={(e) =>
-                                    profileForm.setData('phone', e.target.value)
-                                }
-                                placeholder="contoh 0812 3456 789"
+                                onChange={(e) => {
+                                    profileForm.setData(
+                                        'phone',
+                                        e.target.value.replace(/\D/g, ''),
+                                    );
+                                    setProfileClientErrors((current) => ({
+                                        ...current,
+                                        phone: undefined,
+                                    }));
+                                }}
+                                placeholder="contoh 08123456789"
                                 className={`w-full border-b bg-transparent px-1 py-2.5 text-[13px] text-[#272727] transition-colors focus:outline-none ${
-                                    profileForm.errors.phone
+                                    phoneError
                                         ? 'border-red-400 focus:border-red-400'
                                         : 'border-[#e7e2de] focus:border-[#151515]'
                                 }`}
                             />
-                            {profileForm.errors.phone && (
+                            {phoneError && (
                                 <p className="mt-1 text-[10px] text-red-500">
-                                    {profileForm.errors.phone}
+                                    {phoneError}
                                 </p>
                             )}
                         </div>

@@ -58,7 +58,7 @@ trait ProfileValidationRules
      */
     protected function phoneRules(): array
     {
-        return ['nullable', 'string', 'max:30'];
+        return ['nullable', 'string', 'max:30', 'regex:/^[0-9]+$/'];
     }
 
     /**

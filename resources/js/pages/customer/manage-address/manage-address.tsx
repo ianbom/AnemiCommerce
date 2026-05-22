@@ -1,4 +1,10 @@
 import { router, useForm } from '@inertiajs/react';
+import type {
+    Icon,
+    LatLng,
+    LeafletMouseEvent,
+    Map as LeafletMap,
+} from 'leaflet';
 import {
     AlertCircle,
     Edit2,
@@ -12,12 +18,6 @@ import {
 import type { FormEvent } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
-import type {
-    Icon,
-    LatLng,
-    LeafletMouseEvent,
-    Map as LeafletMap,
-} from 'leaflet';
 import type {
     MapContainer,
     Marker,
@@ -93,6 +93,9 @@ const EMPTY_FORM: AddressFormData = {
 const asText = (value: number | string | null | undefined): string =>
     value === null || value === undefined ? '' : String(value);
 
+const digitsOnly = (value: number | string | null | undefined): string =>
+    asText(value).replace(/\D/g, '');
+
 const formDataFromAddress = (address?: Address): AddressFormData => {
     if (!address) {
         return { ...EMPTY_FORM };
@@ -101,13 +104,13 @@ const formDataFromAddress = (address?: Address): AddressFormData => {
     return {
         label: address.label ?? '',
         recipient_name: address.recipient_name,
-        recipient_phone: address.recipient_phone,
+        recipient_phone: digitsOnly(address.recipient_phone),
         full_address: address.full_address,
         province: address.province,
         city: address.city,
         district: address.district,
         subdistrict: address.subdistrict ?? '',
-        postal_code: address.postal_code,
+        postal_code: digitsOnly(address.postal_code),
         biteship_area_id: address.biteship_area_id ?? '',
         latitude: asText(address.latitude),
         longitude: asText(address.longitude),
@@ -120,6 +123,8 @@ const normalizePayload = (data: AddressFormData) => {
     return {
         ...data,
         label: data.label.trim() === '' ? null : data.label.trim(),
+        recipient_phone: digitsOnly(data.recipient_phone),
+        postal_code: digitsOnly(data.postal_code),
         subdistrict:
             data.subdistrict.trim() === '' ? null : data.subdistrict.trim(),
         note: data.note.trim() === '' ? null : data.note.trim(),
@@ -250,7 +255,9 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
     };
 
     const chooseArea = (area: BiteshipArea) => {
-        const postalCode = asText(area.postal_code ?? form.data.postal_code);
+        const postalCode = digitsOnly(
+            area.postal_code ?? form.data.postal_code,
+        );
 
         form.setData({
             ...form.data,
@@ -262,13 +269,13 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                 area.administrative_division_level_3_name ?? form.data.district,
             postal_code: postalCode,
         });
-        setAreaQuery(areaSearchText(area));
+        setAreaQuery(digitsOnly(areaSearchText(area)));
         setAreaResults([]);
         setAreaError('');
     };
 
     const searchArea = async (query = areaQuery) => {
-        const normalizedQuery = asText(query).trim();
+        const normalizedQuery = digitsOnly(query).trim();
 
         if (normalizedQuery.length < 3) {
             return;
@@ -635,10 +642,12 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                             onChange={(value) =>
                                                 form.setData(
                                                     'recipient_phone',
-                                                    value,
+                                                    digitsOnly(value),
                                                 )
                                             }
                                             error={form.errors.recipient_phone}
+                                            inputMode="numeric"
+                                            pattern="[0-9]*"
                                         />
                                     </div>
                                     <div>
@@ -651,9 +660,13 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                                 value={areaQuery}
                                                 onChange={(event) =>
                                                     setAreaQuery(
-                                                        event.target.value,
+                                                        digitsOnly(
+                                                            event.target.value,
+                                                        ),
                                                     )
                                                 }
+                                                inputMode="numeric"
+                                                pattern="[0-9]*"
                                                 placeholder="Masukkan kode pos"
                                                 className="w-full rounded-md border border-[#e7e2de] bg-white px-4 py-2.5 text-[13px] text-[#272727] transition-all focus:border-[#9A6B45] focus:ring-1 focus:ring-[#9A6B45] focus:outline-none"
                                             />
@@ -747,6 +760,8 @@ export default function ManageAddress({ addresses, redirectTo = '' }: Props) {
                                             value={form.data.postal_code}
                                             onChange={() => undefined}
                                             error={form.errors.postal_code}
+                                            inputMode="numeric"
+                                            pattern="[0-9]*"
                                             readOnly
                                         />
                                     </div>
@@ -843,6 +858,8 @@ type FieldProps = {
     error?: string;
     placeholder?: string;
     readOnly?: boolean;
+    inputMode?: 'text' | 'numeric';
+    pattern?: string;
 };
 
 type LocationPickerProps = {
@@ -1048,6 +1065,8 @@ function InputBlock({
     placeholder,
     error,
     readOnly = false,
+    inputMode = 'text',
+    pattern,
 }: FieldProps) {
     return (
         <div>
@@ -1060,6 +1079,8 @@ function InputBlock({
                 onChange={(event) => onChange(event.target.value)}
                 placeholder={placeholder}
                 readOnly={readOnly}
+                inputMode={inputMode}
+                pattern={pattern}
                 className={`w-full rounded-md border border-[#e7e2de] px-4 py-2.5 text-[13px] text-[#272727] transition-all focus:border-[#9A6B45] focus:ring-1 focus:ring-[#9A6B45] focus:outline-none ${
                     readOnly ? 'bg-[#ffffff] text-[#6f6f6f]' : 'bg-white'
                 }`}

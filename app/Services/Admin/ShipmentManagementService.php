@@ -2,25 +2,28 @@
 
 namespace App\Services\Admin;
 
-use App\Models\Order;
-use App\Models\Shipment;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Enums\ShippingStatus;
+use App\Mail\ShipmentCreatedMail;
+use App\Models\Order;
+use App\Models\Shipment;
 use App\Services\Integrations\BiteshipService;
 use App\Services\Notifications\NotificationService;
 use App\Services\Settings\SiteSettingService;
+use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class ShipmentManagementService
 {
-    use StoresUploadedFiles;
     use ResolvesAdminPagination;
+    use StoresUploadedFiles;
 
     public function __construct(
         private readonly NotificationService $notifications,
@@ -153,7 +156,7 @@ class ShipmentManagementService
             throw $exception;
         }
 
-        return DB::transaction(function () use ($order, $shipment, $payload, $labelUrl, $biteshipOrder): Shipment {
+        $shipment = DB::transaction(function () use ($order, $shipment, $payload, $labelUrl, $biteshipOrder): Shipment {
             $shipment = Shipment::query()->whereKey($shipment->id)->lockForUpdate()->firstOrFail();
             $identifiers = $this->biteship->orderIdentifiers($biteshipOrder);
 
@@ -194,6 +197,10 @@ class ShipmentManagementService
 
             return $shipment;
         });
+
+        $this->sendShipmentCreatedEmail($shipment);
+
+        return $shipment;
     }
 
     public function updateStatus(Shipment $shipment, Request $request): void
@@ -470,7 +477,30 @@ class ShipmentManagementService
         };
     }
 
-    private function providerHappenedAt(array $payload): ?\Carbon\CarbonImmutable
+    private function sendShipmentCreatedEmail(Shipment $shipment): void
+    {
+        $shipment->loadMissing(['order.user', 'order.address', 'order.items']);
+
+        $order = $shipment->order;
+        $email = $order?->customer_email ?: $order?->user?->email;
+
+        if (! filled($email)) {
+            return;
+        }
+
+        try {
+            Mail::to($email, $order?->customer_name)->send(new ShipmentCreatedMail($shipment));
+        } catch (\Throwable $exception) {
+            Log::warning('shipment_created_mail_failed', [
+                'shipment_id' => $shipment->id,
+                'order_id' => $order?->id,
+                'email' => $email,
+                'message' => $exception->getMessage(),
+            ]);
+        }
+    }
+
+    private function providerHappenedAt(array $payload): ?CarbonImmutable
     {
         $value = Arr::get($payload, 'updated_at')
             ?? Arr::get($payload, 'created_at')
@@ -484,7 +514,7 @@ class ShipmentManagementService
         }
 
         try {
-            return \Carbon\CarbonImmutable::parse($value);
+            return CarbonImmutable::parse($value);
         } catch (\Throwable) {
             return null;
         }
