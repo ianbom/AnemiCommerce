@@ -1,7 +1,7 @@
 import { Head, Link, useForm } from '@inertiajs/react';
 import { ImageIcon, Save, Upload, X } from 'lucide-react';
 import type { FormEvent } from 'react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import {
@@ -38,6 +38,152 @@ type Props = {
     selectedProductId: number | null;
 };
 
+type VariantFormData = {
+    _method: 'POST' | 'PUT';
+    product_id: string | number;
+    sku: string;
+    color_name: string;
+    color_hex: string;
+    size: string;
+    additional_price: string | number;
+    stock: string | number;
+    reserved_stock: string | number;
+    image: File | null;
+    is_active: boolean;
+};
+
+type ValidationErrors = Record<string, string>;
+
+const MAX_IMAGE_BYTES = 4096 * 1024;
+const COLOR_HEX_PATTERN = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+
+function isEmpty(value: unknown): boolean {
+    return value === '' || value === null || value === undefined;
+}
+
+function numericValue(value: unknown): number | null {
+    if (isEmpty(value)) {
+        return null;
+    }
+
+    const number = Number(value);
+
+    return Number.isFinite(number) ? number : Number.NaN;
+}
+
+function validateText(
+    errors: ValidationErrors,
+    key: string,
+    value: string,
+    label: string,
+    max: number,
+    required = false,
+) {
+    if (value === '') {
+        if (required) {
+            errors[key] = `${label} wajib diisi.`;
+        }
+
+        return;
+    }
+
+    if (value.length > max) {
+        errors[key] = `${label} maksimal ${max} karakter.`;
+    }
+}
+
+function validateNumber(
+    errors: ValidationErrors,
+    key: string,
+    value: unknown,
+    label: string,
+    required = false,
+    integer = false,
+) {
+    const number = numericValue(value);
+
+    if (number === null) {
+        if (required) {
+            errors[key] = `${label} wajib diisi.`;
+        }
+
+        return;
+    }
+
+    if (Number.isNaN(number)) {
+        errors[key] = `${label} harus berupa angka.`;
+    } else if (integer && !Number.isInteger(number)) {
+        errors[key] = `${label} harus berupa bilangan bulat.`;
+    } else if (number < 0) {
+        errors[key] = `${label} tidak boleh kurang dari 0.`;
+    }
+}
+
+function validateVariant(
+    data: VariantFormData,
+    products: Product[],
+): ValidationErrors {
+    const errors: ValidationErrors = {};
+    const productId = numericValue(data.product_id);
+
+    if (productId === null) {
+        errors.product_id = 'Produk wajib dipilih.';
+    } else if (
+        Number.isNaN(productId) ||
+        !Number.isInteger(productId) ||
+        !products.some((product) => product.id === productId)
+    ) {
+        errors.product_id = 'Produk tidak valid.';
+    }
+
+    validateText(errors, 'sku', data.sku, 'SKU', 100, true);
+    validateText(errors, 'color_name', data.color_name, 'Nama warna', 100);
+    validateText(errors, 'size', data.size, 'Ukuran', 50);
+    validateNumber(
+        errors,
+        'additional_price',
+        data.additional_price,
+        'Harga tambahan',
+    );
+    validateNumber(errors, 'stock', data.stock, 'Stok', true, true);
+    validateNumber(
+        errors,
+        'reserved_stock',
+        data.reserved_stock,
+        'Reserved stock',
+        true,
+        true,
+    );
+
+    if (data.color_hex !== '' && !COLOR_HEX_PATTERN.test(data.color_hex)) {
+        errors.color_hex = 'Color hex harus berformat #RGB atau #RRGGBB.';
+    }
+
+    const stock = numericValue(data.stock);
+    const reservedStock = numericValue(data.reserved_stock);
+
+    if (
+        stock !== null &&
+        reservedStock !== null &&
+        !Number.isNaN(stock) &&
+        !Number.isNaN(reservedStock) &&
+        reservedStock > stock
+    ) {
+        errors.reserved_stock =
+            'Reserved stock tidak boleh lebih besar dari stock.';
+    }
+
+    if (data.image) {
+        if (!data.image.type.startsWith('image/')) {
+            errors.image = 'File harus berupa gambar.';
+        } else if (data.image.size > MAX_IMAGE_BYTES) {
+            errors.image = 'Ukuran gambar maksimal 4096 KB.';
+        }
+    }
+
+    return errors;
+}
+
 export default function ProductVariantForm({
     mode,
     variant,
@@ -50,32 +196,76 @@ export default function ProductVariantForm({
         variant?.image_url ?? null,
     );
 
-    const { data, setData, post, processing, errors } = useForm({
-        _method: isEdit ? 'PUT' : 'POST',
-        product_id: variant?.product_id ?? selectedProductId ?? '',
-        sku: variant?.sku ?? '',
-        color_name: variant?.color_name ?? '',
-        color_hex: variant?.color_hex ?? '',
-        size: variant?.size ?? '',
-        additional_price: variant?.additional_price ?? 0,
-        stock: variant?.stock ?? 0,
-        reserved_stock: variant?.reserved_stock ?? 0,
-        image: null as File | null,
-        is_active: variant?.is_active ?? true,
-    });
+    const { data, setData, post, processing, errors } =
+        useForm<VariantFormData>({
+            _method: isEdit ? 'PUT' : 'POST',
+            product_id: variant?.product_id ?? selectedProductId ?? '',
+            sku: variant?.sku ?? '',
+            color_name: variant?.color_name ?? '',
+            color_hex: variant?.color_hex ?? '',
+            size: variant?.size ?? '',
+            additional_price: variant?.additional_price ?? 0,
+            stock: variant?.stock ?? 0,
+            reserved_stock: variant?.reserved_stock ?? 0,
+            image: null as File | null,
+            is_active: variant?.is_active ?? true,
+        });
+    const [touched, setTouched] = useState<Set<string>>(() => new Set());
+    const [submitAttempted, setSubmitAttempted] = useState(false);
+    const [fileInputKey, setFileInputKey] = useState(0);
+    const validationErrors = validateVariant(data, products);
+
+    const touch = (key: string) => {
+        setTouched((current) => new Set(current).add(key));
+    };
+
+    const fieldError = (key: string) => {
+        const serverError = (errors as Record<string, string | undefined>)[key];
+
+        if (serverError) {
+            return serverError;
+        }
+
+        return submitAttempted || touched.has(key)
+            ? validationErrors[key]
+            : undefined;
+    };
+
+    const visibleErrors = Array.from(
+        new Set([
+            ...Object.values(errors),
+            ...(submitAttempted ? Object.values(validationErrors) : []),
+        ]),
+    ).filter((error): error is string => Boolean(error));
+
+    useEffect(() => {
+        return () => {
+            if (preview?.startsWith('blob:')) {
+                URL.revokeObjectURL(preview);
+            }
+        };
+    }, [preview]);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0] ?? null;
+        touch('image');
         setData('image', file);
 
-        if (file) {
+        if (
+            file &&
+            !validateVariant({ ...data, image: file }, products).image
+        ) {
             setPreview(URL.createObjectURL(file));
+        } else {
+            setPreview(variant?.image_url ?? null);
         }
     };
 
     const clearImage = () => {
         setData('image', null);
         setPreview(null);
+        touch('image');
+        setFileInputKey((current) => current + 1);
 
         if (fileInputRef.current) {
             fileInputRef.current.value = '';
@@ -84,6 +274,18 @@ export default function ProductVariantForm({
 
     const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setSubmitAttempted(true);
+
+        if (Object.keys(validationErrors).length > 0) {
+            requestAnimationFrame(() =>
+                document
+                    .getElementById('variant-validation-summary')
+                    ?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
+            );
+
+            return;
+        }
+
         const url = isEdit
             ? `/admin/product-variants/${variant.id}`
             : '/admin/product-variants';
@@ -108,12 +310,41 @@ export default function ProductVariantForm({
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <form onSubmit={submit} className="flex flex-col gap-5">
+                        <form
+                            onSubmit={submit}
+                            onBlurCapture={(event) => {
+                                const key = (
+                                    event.target as unknown as HTMLInputElement
+                                ).name;
+
+                                if (key) {
+                                    touch(key);
+                                }
+                            }}
+                            className="flex flex-col gap-5"
+                        >
+                            {visibleErrors.length > 0 && (
+                                <div
+                                    id="variant-validation-summary"
+                                    role="alert"
+                                    className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700"
+                                >
+                                    <p className="text-sm font-semibold">
+                                        Periksa data varian sebelum disimpan.
+                                    </p>
+                                    <ul className="mt-2 list-inside list-disc space-y-1 text-xs">
+                                        {visibleErrors.map((error) => (
+                                            <li key={error}>{error}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                             <div className="grid gap-5 md:grid-cols-2">
                                 <div className="grid gap-2">
                                     <Label htmlFor="product_id">Product</Label>
                                     <select
                                         id="product_id"
+                                        name="product_id"
                                         value={data.product_id}
                                         onChange={(event) =>
                                             setData(
@@ -133,19 +364,22 @@ export default function ProductVariantForm({
                                             </option>
                                         ))}
                                     </select>
-                                    <InputError message={errors.product_id} />
+                                    <InputError
+                                        message={fieldError('product_id')}
+                                    />
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="sku">SKU</Label>
                                     <Input
                                         id="sku"
+                                        name="sku"
                                         value={data.sku}
                                         placeholder="e.g. GMS-001-BLK-M"
                                         onChange={(event) =>
                                             setData('sku', event.target.value)
                                         }
                                     />
-                                    <InputError message={errors.sku} />
+                                    <InputError message={fieldError('sku')} />
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="color_name">
@@ -153,6 +387,7 @@ export default function ProductVariantForm({
                                     </Label>
                                     <Input
                                         id="color_name"
+                                        name="color_name"
                                         value={data.color_name}
                                         placeholder="e.g. Black, Ivory, Sage"
                                         onChange={(event) =>
@@ -162,12 +397,16 @@ export default function ProductVariantForm({
                                             )
                                         }
                                     />
+                                    <InputError
+                                        message={fieldError('color_name')}
+                                    />
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="color_hex">Color Hex</Label>
                                     <div className="flex items-center gap-2">
                                         <Input
                                             id="color_hex"
+                                            name="color_hex"
                                             type="color"
                                             value={data.color_hex || '#000000'}
                                             onChange={(event) =>
@@ -179,24 +418,34 @@ export default function ProductVariantForm({
                                             className="h-9 w-14 p-1"
                                         />
                                         <Input
-                                            value={data.color_hex || '#000000'}
+                                            name="color_hex"
+                                            value={data.color_hex}
                                             placeholder="#000000"
-                                            readOnly
+                                            onChange={(event) =>
+                                                setData(
+                                                    'color_hex',
+                                                    event.target.value,
+                                                )
+                                            }
                                             className="font-mono text-xs"
                                         />
                                     </div>
-                                    <InputError message={errors.color_hex} />
+                                    <InputError
+                                        message={fieldError('color_hex')}
+                                    />
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="size">Size</Label>
                                     <Input
                                         id="size"
+                                        name="size"
                                         value={data.size}
                                         placeholder="e.g. S, M, L, XL"
                                         onChange={(event) =>
                                             setData('size', event.target.value)
                                         }
                                     />
+                                    <InputError message={fieldError('size')} />
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="additional_price">
@@ -204,6 +453,7 @@ export default function ProductVariantForm({
                                     </Label>
                                     <Input
                                         id="additional_price"
+                                        name="additional_price"
                                         type="number"
                                         min="0"
                                         value={data.additional_price}
@@ -215,23 +465,24 @@ export default function ProductVariantForm({
                                             )
                                         }
                                     />
+                                    <InputError
+                                        message={fieldError('additional_price')}
+                                    />
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="stock">Stock</Label>
                                     <Input
                                         id="stock"
+                                        name="stock"
                                         type="number"
                                         min="0"
                                         value={data.stock}
                                         placeholder="0"
                                         onChange={(event) =>
-                                            setData(
-                                                'stock',
-                                                Number(event.target.value),
-                                            )
+                                            setData('stock', event.target.value)
                                         }
                                     />
-                                    <InputError message={errors.stock} />
+                                    <InputError message={fieldError('stock')} />
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="reserved_stock">
@@ -239,6 +490,7 @@ export default function ProductVariantForm({
                                     </Label>
                                     <Input
                                         id="reserved_stock"
+                                        name="reserved_stock"
                                         type="number"
                                         min="0"
                                         value={data.reserved_stock}
@@ -246,12 +498,12 @@ export default function ProductVariantForm({
                                         onChange={(event) =>
                                             setData(
                                                 'reserved_stock',
-                                                Number(event.target.value),
+                                                event.target.value,
                                             )
                                         }
                                     />
                                     <InputError
-                                        message={errors.reserved_stock}
+                                        message={fieldError('reserved_stock')}
                                     />
                                 </div>
                             </div>
@@ -295,23 +547,26 @@ export default function ProductVariantForm({
                                             drop gambar
                                         </p>
                                         <p className="text-xs text-muted-foreground/60">
-                                            JPG, PNG, WEBP — maks. 2 MB
+                                            JPG, PNG, WEBP — maks. 4 MB
                                         </p>
                                         <input
+                                            key={fileInputKey}
                                             ref={fileInputRef}
                                             type="file"
+                                            name="image"
                                             accept="image/*"
                                             className="hidden"
                                             onChange={handleFileChange}
                                         />
                                     </div>
                                 </div>
-                                <InputError message={errors.image} />
+                                <InputError message={fieldError('image')} />
                             </div>
 
                             <label className="flex items-start gap-3 rounded-lg border p-4 text-sm">
                                 <input
                                     type="checkbox"
+                                    name="is_active"
                                     checked={data.is_active}
                                     onChange={(event) =>
                                         setData(

@@ -1,7 +1,6 @@
 import { Head, Link, useForm } from '@inertiajs/react';
-import { EditorContent, useEditor } from '@tiptap/react';
-import type { Editor } from '@tiptap/react';
 import Highlight from '@tiptap/extension-highlight';
+import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import {
     Bold,
@@ -110,6 +109,332 @@ type Props = {
         statuses: string[];
     };
 };
+
+type ValidationErrors = Record<string, string>;
+
+const MAX_IMAGE_BYTES = 4096 * 1024;
+
+function isEmpty(value: unknown): boolean {
+    return value === '' || value === null || value === undefined;
+}
+
+function validateText(
+    errors: ValidationErrors,
+    key: string,
+    value: unknown,
+    label: string,
+    max: number,
+    required = false,
+) {
+    if (isEmpty(value)) {
+        if (required) {
+            errors[key] = `${label} wajib diisi.`;
+        }
+
+        return;
+    }
+
+    if (typeof value !== 'string') {
+        errors[key] = `${label} harus berupa teks.`;
+    } else if (value.length > max) {
+        errors[key] = `${label} maksimal ${max} karakter.`;
+    }
+}
+
+function numericValue(value: unknown): number | null {
+    if (isEmpty(value)) {
+        return null;
+    }
+
+    const number = Number(value);
+
+    return Number.isFinite(number) ? number : Number.NaN;
+}
+
+function validateNumber(
+    errors: ValidationErrors,
+    key: string,
+    value: unknown,
+    label: string,
+    required = false,
+    integer = false,
+) {
+    const number = numericValue(value);
+
+    if (number === null) {
+        if (required) {
+            errors[key] = `${label} wajib diisi.`;
+        }
+
+        return;
+    }
+
+    if (Number.isNaN(number)) {
+        errors[key] = `${label} harus berupa angka.`;
+    } else if (integer && !Number.isInteger(number)) {
+        errors[key] = `${label} harus berupa bilangan bulat.`;
+    } else if (number < 0) {
+        errors[key] = `${label} tidak boleh kurang dari 0.`;
+    }
+}
+
+function validateImageFile(
+    errors: ValidationErrors,
+    key: string,
+    file: File | null,
+) {
+    if (!file) {
+        return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+        errors[key] = 'File harus berupa gambar.';
+    } else if (file.size > MAX_IMAGE_BYTES) {
+        errors[key] = 'Ukuran gambar maksimal 4096 KB.';
+    }
+}
+
+function validateVariantRow(
+    variant: ProductVariantRow,
+    prefix: string,
+): ValidationErrors {
+    const errors: ValidationErrors = {};
+
+    if (variant.id !== undefined) {
+        validateNumber(
+            errors,
+            `${prefix}.id`,
+            variant.id,
+            'ID varian',
+            false,
+            true,
+        );
+    }
+
+    validateText(errors, `${prefix}.sku`, variant.sku, 'SKU varian', 100);
+    validateText(
+        errors,
+        `${prefix}.color_name`,
+        variant.color_name,
+        'Nama warna',
+        100,
+    );
+    validateText(errors, `${prefix}.size`, variant.size, 'Ukuran', 50);
+    validateNumber(
+        errors,
+        `${prefix}.additional_price`,
+        variant.additional_price,
+        'Harga tambahan',
+    );
+    validateNumber(
+        errors,
+        `${prefix}.stock`,
+        variant.stock,
+        'Stok',
+        false,
+        true,
+    );
+    validateNumber(
+        errors,
+        `${prefix}.reserved_stock`,
+        variant.reserved_stock,
+        'Reserved stock',
+        false,
+        true,
+    );
+    validateText(
+        errors,
+        `${prefix}.image_url`,
+        variant.image_url,
+        'URL gambar varian',
+        255,
+    );
+
+    if (variant.image_url?.toLowerCase().startsWith('blob:')) {
+        errors[`${prefix}.image_url`] =
+            'URL gambar varian tidak boleh berupa blob lokal.';
+    }
+
+    validateImageFile(errors, `${prefix}.image`, variant.image);
+
+    const stock = numericValue(variant.stock);
+    const reservedStock = numericValue(variant.reserved_stock);
+
+    if (
+        variant.sku.trim() !== '' &&
+        stock !== null &&
+        reservedStock !== null &&
+        !Number.isNaN(stock) &&
+        !Number.isNaN(reservedStock) &&
+        reservedStock > stock
+    ) {
+        errors[`${prefix}.reserved_stock`] =
+            'Reserved stock tidak boleh lebih besar dari stock.';
+    }
+
+    return errors;
+}
+
+function validateProduct(
+    data: ProductFormData,
+    options: Props['options'],
+): ValidationErrors {
+    const errors: ValidationErrors = {};
+
+    for (const [key, value, choices, label] of [
+        ['category_id', data.category_id, options.categories, 'Kategori'],
+        ['collection_id', data.collection_id, options.collections, 'Koleksi'],
+    ] as const) {
+        if (isEmpty(value)) {
+            continue;
+        }
+
+        const id = Number(value);
+
+        if (
+            !Number.isInteger(id) ||
+            !choices.some((choice) => choice.id === id)
+        ) {
+            errors[key] = `${label} tidak valid.`;
+        }
+    }
+
+    validateText(errors, 'name', data.name, 'Nama produk', 180, true);
+    validateText(errors, 'slug', data.slug, 'Slug', 200, true);
+    validateText(errors, 'sku', data.sku, 'SKU produk', 100);
+    validateText(
+        errors,
+        'short_description',
+        data.short_description,
+        'Deskripsi singkat',
+        1000,
+    );
+    validateText(errors, 'description', data.description, 'Deskripsi', 5000);
+    validateText(errors, 'material', data.material, 'Material', 150);
+    validateText(
+        errors,
+        'care_instruction',
+        data.care_instruction,
+        'Instruksi perawatan',
+        2000,
+    );
+    validateNumber(errors, 'base_price', data.base_price, 'Harga dasar', true);
+    validateNumber(errors, 'sale_price', data.sale_price, 'Harga diskon');
+    validateNumber(errors, 'weight', data.weight, 'Berat', true, true);
+    validateNumber(errors, 'length', data.length, 'Panjang', false, true);
+    validateNumber(errors, 'width', data.width, 'Lebar', false, true);
+    validateNumber(errors, 'height', data.height, 'Tinggi', false, true);
+    validateText(errors, 'meta_title', data.meta_title, 'Meta title', 255);
+    validateText(
+        errors,
+        'meta_description',
+        data.meta_description,
+        'Meta description',
+        500,
+    );
+
+    if (!['draft', 'published', 'archived'].includes(data.status)) {
+        errors.status = 'Status produk tidak valid.';
+    }
+
+    const basePrice = numericValue(data.base_price);
+    const salePrice = numericValue(data.sale_price);
+
+    if (
+        basePrice !== null &&
+        salePrice !== null &&
+        !Number.isNaN(basePrice) &&
+        !Number.isNaN(salePrice) &&
+        salePrice > basePrice
+    ) {
+        errors.sale_price = 'Harga diskon tidak boleh melebihi harga dasar.';
+    }
+
+    data.images.forEach((image, index) => {
+        const prefix = `images.${index}`;
+
+        if (image.id !== undefined) {
+            validateNumber(
+                errors,
+                `${prefix}.id`,
+                image.id,
+                'ID gambar',
+                false,
+                true,
+            );
+        }
+
+        validateText(
+            errors,
+            `${prefix}.image_url`,
+            image.image_url,
+            'URL gambar',
+            255,
+        );
+
+        if (image.image_url?.toLowerCase().startsWith('blob:')) {
+            errors[`${prefix}.image_url`] =
+                'URL gambar tidak boleh berupa blob lokal.';
+        }
+
+        validateImageFile(errors, `${prefix}.image`, image.image);
+        validateText(
+            errors,
+            `${prefix}.alt_text`,
+            image.alt_text,
+            'Teks alternatif gambar',
+            255,
+        );
+        validateNumber(
+            errors,
+            `${prefix}.sort_order`,
+            image.sort_order,
+            'Urutan gambar',
+            false,
+            true,
+        );
+    });
+    data.variants.forEach((variant, index) =>
+        Object.assign(errors, validateVariantRow(variant, `variants.${index}`)),
+    );
+
+    if (data.status === 'published') {
+        const weight = numericValue(data.weight);
+
+        if (weight === null || Number.isNaN(weight) || weight < 1) {
+            errors.weight = 'Weight minimal 1 gram untuk produk published.';
+        }
+
+        const usableImages = data.images.filter(
+            (image) =>
+                image.image !== null ||
+                (image.image_url !== null &&
+                    image.image_url.trim() !== '' &&
+                    !image.image_url.toLowerCase().startsWith('blob:')),
+        );
+
+        if (usableImages.length === 0) {
+            errors.images = 'Produk published minimal memiliki satu gambar.';
+        } else if (!usableImages.some((image) => image.is_primary)) {
+            errors.images = 'Produk published membutuhkan satu gambar utama.';
+        }
+
+        const variantsWithSku = data.variants.filter(
+            (variant) => variant.sku.trim() !== '',
+        );
+
+        if (
+            !variantsWithSku.some(
+                (variant) => variant.is_active && Number(variant.stock) > 0,
+            )
+        ) {
+            errors.variants =
+                'Produk published membutuhkan satu varian aktif dengan stok tersedia.';
+        }
+    }
+
+    return errors;
+}
 
 function slugify(value: string) {
     return value
@@ -504,8 +829,65 @@ export default function ProductForm({ mode, product, options }: Props) {
                 : [],
         });
 
-    const fieldError = (key: string) =>
-        (errors as Record<string, string | undefined>)[key];
+    const [touched, setTouched] = useState<Set<string>>(() => new Set());
+    const [submitAttempted, setSubmitAttempted] = useState(false);
+    const [variantDraftTouched, setVariantDraftTouched] = useState<Set<string>>(
+        () => new Set(),
+    );
+    const [variantDraftAttempted, setVariantDraftAttempted] = useState(false);
+    const validationErrors = useMemo(
+        () => validateProduct(data, options),
+        [data, options],
+    );
+    const touch = (key: string) => {
+        setTouched((current) => new Set(current).add(key));
+    };
+    const touchVariantDraft = (key: string) => {
+        setVariantDraftTouched((current) => new Set(current).add(key));
+    };
+    const fieldError = (key: string) => {
+        const serverError = (errors as Record<string, string | undefined>)[key];
+
+        if (serverError) {
+            return serverError;
+        }
+
+        return submitAttempted || touched.has(key)
+            ? validationErrors[key]
+            : undefined;
+    };
+    const nestedError = (prefix: string) => {
+        const serverError = Object.entries(
+            errors as Record<string, string | undefined>,
+        ).find(([key, value]) => key.startsWith(prefix) && value)?.[1];
+
+        if (serverError) {
+            return serverError;
+        }
+
+        if (
+            !submitAttempted &&
+            !Array.from(touched).some((key) => key.startsWith(prefix))
+        ) {
+            return undefined;
+        }
+
+        return Object.entries(validationErrors).find(([key]) =>
+            key.startsWith(prefix),
+        )?.[1];
+    };
+    const variantDraftError = (key: string) =>
+        variantDraftAttempted || variantDraftTouched.has(key)
+            ? variantDraftErrors[key]
+            : undefined;
+    const imageError = fieldError('images') ?? nestedError('images.');
+    const variantsError = fieldError('variants') ?? nestedError('variants.');
+    const visibleErrors = Array.from(
+        new Set([
+            ...Object.values(errors),
+            ...(submitAttempted ? Object.values(validationErrors) : []),
+        ]),
+    ).filter((error): error is string => Boolean(error));
 
     // Local blob previews — never sent to server, never stored in image_url
     const [previews, setPreviews] = useState<(string | null)[]>(() =>
@@ -522,6 +904,7 @@ export default function ProductForm({ mode, product, options }: Props) {
     const [variantDraftPreview, setVariantDraftPreview] = useState<
         string | null
     >(null);
+    const variantDraftErrors = validateVariantRow(variantDraft, 'variantDraft');
     const [variantPreviews, setVariantPreviews] = useState<(string | null)[]>(
         () =>
             (product?.variants ?? []).map(
@@ -553,6 +936,8 @@ export default function ProductForm({ mode, product, options }: Props) {
         const next = [...data.images];
         next[index] = { ...next[index], [field]: value };
         setData('images', next);
+        touch(`images.${index}.${field}`);
+        touch('images');
     };
 
     const updateVariant = (
@@ -563,6 +948,8 @@ export default function ProductForm({ mode, product, options }: Props) {
         const next = [...data.variants];
         next[index] = { ...next[index], [field]: value };
         setData('variants', next);
+        touch(`variants.${index}.${field}`);
+        touch('variants');
     };
 
     const openVariantModal = (index: number | null = null) => {
@@ -573,6 +960,8 @@ export default function ProductForm({ mode, product, options }: Props) {
         setVariantDraftPreview(
             index === null ? null : (variantPreviews[index] ?? null),
         );
+        setVariantDraftTouched(new Set());
+        setVariantDraftAttempted(false);
         setVariantModalOpen(true);
     };
 
@@ -589,9 +978,17 @@ export default function ProductForm({ mode, product, options }: Props) {
         setEditingVariantIndex(null);
         setVariantDraft(blankVariant());
         setVariantDraftPreview(null);
+        setVariantDraftTouched(new Set());
+        setVariantDraftAttempted(false);
     };
 
     const saveVariantDraft = () => {
+        setVariantDraftAttempted(true);
+
+        if (Object.keys(variantDraftErrors).length > 0) {
+            return;
+        }
+
         const draft = { ...variantDraft };
 
         if (editingVariantIndex === null) {
@@ -615,10 +1012,13 @@ export default function ProductForm({ mode, product, options }: Props) {
             setVariantPreviews(nextPreviews);
         }
 
+        touch('variants');
         setVariantModalOpen(false);
         setEditingVariantIndex(null);
         setVariantDraft(blankVariant());
         setVariantDraftPreview(null);
+        setVariantDraftTouched(new Set());
+        setVariantDraftAttempted(false);
     };
 
     const setPrimaryImage = (index: number) => {
@@ -629,10 +1029,22 @@ export default function ProductForm({ mode, product, options }: Props) {
                 is_primary: imageIndex === index,
             })),
         );
+        touch('images');
     };
 
     const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setSubmitAttempted(true);
+
+        if (Object.keys(validationErrors).length > 0) {
+            requestAnimationFrame(() =>
+                document
+                    .getElementById('product-validation-summary')
+                    ?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
+            );
+
+            return;
+        }
 
         if (isEdit) {
             transform((data) => ({ ...data, _method: 'put' }));
@@ -717,8 +1129,35 @@ export default function ProductForm({ mode, product, options }: Props) {
                     </div>
                 </div>
 
-                <form onSubmit={submit}>
+                <form
+                    onSubmit={submit}
+                    onBlurCapture={(event) => {
+                        const key = (
+                            event.target as unknown as HTMLInputElement
+                        ).name;
+
+                        if (key) {
+                            touch(key);
+                        }
+                    }}
+                >
                     <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 lg:px-8">
+                        {visibleErrors.length > 0 && (
+                            <div
+                                id="product-validation-summary"
+                                role="alert"
+                                className="mb-5 rounded-lg border border-red-200 bg-red-50 p-4 text-red-700"
+                            >
+                                <p className="text-sm font-semibold">
+                                    Periksa data produk sebelum disimpan.
+                                </p>
+                                <ul className="mt-2 list-inside list-disc space-y-1 text-xs">
+                                    {visibleErrors.map((error) => (
+                                        <li key={error}>{error}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
                         <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[1fr_320px]">
                             {/* ── Main Column ── */}
                             <div className="flex flex-col gap-5">
@@ -735,9 +1174,10 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             <FieldGroup
                                                 label="Product Name"
                                                 required
-                                                error={errors.name}
+                                                error={fieldError('name')}
                                             >
                                                 <Input
+                                                    name="name"
                                                     value={data.name}
                                                     onChange={(e) => {
                                                         setData(
@@ -761,11 +1201,11 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             </FieldGroup>
                                             <FieldGroup
                                                 label="SKU"
-                                                required
-                                                error={errors.sku}
+                                                error={fieldError('sku')}
                                                 hint="Unique product identifier"
                                             >
                                                 <Input
+                                                    name="sku"
                                                     value={data.sku}
                                                     onChange={(e) =>
                                                         setData(
@@ -782,11 +1222,12 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         <FieldGroup
                                             label="URL Slug"
                                             required
-                                            error={errors.slug}
+                                            error={fieldError('slug')}
                                             hint="Used in the product URL — lowercase letters, numbers, hyphens only"
                                         >
                                             <div className="flex gap-2">
                                                 <Input
+                                                    name="slug"
                                                     value={data.slug}
                                                     onChange={(e) =>
                                                         setData(
@@ -819,9 +1260,12 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         <FieldRow cols={2}>
                                             <FieldGroup
                                                 label="Category"
-                                                error={errors.category_id}
+                                                error={fieldError(
+                                                    'category_id',
+                                                )}
                                             >
                                                 <select
+                                                    name="category_id"
                                                     value={data.category_id}
                                                     onChange={(e) =>
                                                         setData(
@@ -848,9 +1292,12 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             </FieldGroup>
                                             <FieldGroup
                                                 label="Collection"
-                                                error={errors.collection_id}
+                                                error={fieldError(
+                                                    'collection_id',
+                                                )}
                                             >
                                                 <select
+                                                    name="collection_id"
                                                     value={data.collection_id}
                                                     onChange={(e) =>
                                                         setData(
@@ -879,14 +1326,16 @@ export default function ProductForm({ mode, product, options }: Props) {
 
                                         <FieldGroup
                                             label="Short Description"
-                                            required
-                                            error={errors.short_description}
+                                            error={fieldError(
+                                                'short_description',
+                                            )}
                                             charCount={
                                                 data.short_description?.length
                                             }
                                             maxChar={160}
                                         >
                                             <Input
+                                                name="short_description"
                                                 value={data.short_description}
                                                 onChange={(e) =>
                                                     setData(
@@ -901,18 +1350,20 @@ export default function ProductForm({ mode, product, options }: Props) {
 
                                         <FieldGroup
                                             label="Description"
-                                            required
-                                            error={errors.description}
+                                            error={fieldError('description')}
                                         >
                                             <RichTextEditor
                                                 value={data.description}
-                                                onChange={(value) =>
+                                                onChange={(value) => {
                                                     setData(
                                                         'description',
                                                         value,
-                                                    )
-                                                }
-                                                error={errors.description}
+                                                    );
+                                                    touch('description');
+                                                }}
+                                                error={fieldError(
+                                                    'description',
+                                                )}
                                             />
                                         </FieldGroup>
                                     </div>
@@ -929,11 +1380,11 @@ export default function ProductForm({ mode, product, options }: Props) {
                                     <FieldRow cols={2}>
                                         <FieldGroup
                                             label="Material"
-                                            required
-                                            error={errors.material}
+                                            error={fieldError('material')}
                                             hint="e.g. 100% Premium Voile, Linen"
                                         >
                                             <Textarea
+                                                name="material"
                                                 value={data.material}
                                                 onChange={(e) =>
                                                     setData(
@@ -947,11 +1398,13 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         </FieldGroup>
                                         <FieldGroup
                                             label="Care Instruction"
-                                            required
-                                            error={errors.care_instruction}
+                                            error={fieldError(
+                                                'care_instruction',
+                                            )}
                                             hint="e.g. Hand wash cold, do not bleach"
                                         >
                                             <Textarea
+                                                name="care_instruction"
                                                 value={data.care_instruction}
                                                 onChange={(e) =>
                                                     setData(
@@ -979,9 +1432,10 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             <FieldGroup
                                                 label="Base Price (IDR)"
                                                 required
-                                                error={errors.base_price}
+                                                error={fieldError('base_price')}
                                             >
                                                 <Input
+                                                    name="base_price"
                                                     type="number"
                                                     min="0"
                                                     value={data.base_price}
@@ -997,10 +1451,11 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             </FieldGroup>
                                             <FieldGroup
                                                 label="Sale Price (IDR)"
-                                                error={errors.sale_price}
+                                                error={fieldError('sale_price')}
                                                 hint="Must be lower than or equal to base price"
                                             >
                                                 <Input
+                                                    name="sale_price"
                                                     type="number"
                                                     min="0"
                                                     value={data.sale_price}
@@ -1105,9 +1560,10 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         <FieldGroup
                                             label="Weight (g)"
                                             required
-                                            error={errors.weight}
+                                            error={fieldError('weight')}
                                         >
                                             <Input
+                                                name="weight"
                                                 type="number"
                                                 min="0"
                                                 value={data.weight}
@@ -1123,10 +1579,10 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         </FieldGroup>
                                         <FieldGroup
                                             label="Length (cm)"
-                                            required
-                                            error={errors.length}
+                                            error={fieldError('length')}
                                         >
                                             <Input
+                                                name="length"
                                                 type="number"
                                                 min="0"
                                                 value={data.length}
@@ -1142,10 +1598,10 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         </FieldGroup>
                                         <FieldGroup
                                             label="Width (cm)"
-                                            required
-                                            error={errors.width}
+                                            error={fieldError('width')}
                                         >
                                             <Input
+                                                name="width"
                                                 type="number"
                                                 min="0"
                                                 value={data.width}
@@ -1161,10 +1617,10 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         </FieldGroup>
                                         <FieldGroup
                                             label="Height (cm)"
-                                            required
-                                            error={errors.height}
+                                            error={fieldError('height')}
                                         >
                                             <Input
+                                                name="height"
                                                 type="number"
                                                 min="0"
                                                 value={data.height}
@@ -1220,6 +1676,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                         </div>
                                                     )}
                                                     <input
+                                                        name={`images.${index}.image`}
                                                         type="file"
                                                         accept="image/*"
                                                         className="absolute inset-0 cursor-pointer opacity-0"
@@ -1390,10 +1847,10 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             </span>
                                         </button>
                                     </div>
-                                    {fieldError('images') && (
+                                    {imageError && (
                                         <p className="mt-3 flex items-center gap-1 text-[11px] text-red-500">
                                             <AlertTriangle className="h-3 w-3" />
-                                            {fieldError('images')}
+                                            {imageError}
                                         </p>
                                     )}
                                 </SectionCard>
@@ -1635,10 +2092,10 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             </span>
                                         </div>
                                     </div>
-                                    {fieldError('variants') && (
+                                    {variantsError && (
                                         <p className="mt-2 flex items-center gap-1 text-[11px] text-red-500">
                                             <AlertTriangle className="h-3 w-3" />
-                                            {fieldError('variants')}
+                                            {variantsError}
                                         </p>
                                     )}
                                 </SectionCard>
@@ -1667,7 +2124,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         <div className="space-y-4">
                                             <FieldGroup
                                                 label="Meta Title"
-                                                error={errors.meta_title}
+                                                error={fieldError('meta_title')}
                                                 hint="Recommended: 50–60 characters"
                                                 charCount={
                                                     data.meta_title?.length
@@ -1675,6 +2132,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                 maxChar={60}
                                             >
                                                 <Input
+                                                    name="meta_title"
                                                     value={data.meta_title}
                                                     onChange={(e) =>
                                                         setData(
@@ -1691,13 +2149,13 @@ export default function ProductForm({ mode, product, options }: Props) {
                                             </FieldGroup>
                                             <FieldGroup
                                                 label="Meta Description"
-                                                error={errors.meta_description}
+                                                error={fieldError('meta_description')}
                                                 hint="Recommended: 120–160 characters"
                                                 charCount={
                                                     data.meta_description
                                                         ?.length
                                                 }
-                                                maxChar={160}
+                                                maxChar={1000}
                                             >
                                                 <Textarea
                                                     value={
@@ -1846,13 +2304,18 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                 </span>
                                             </Label>
                                             <select
+                                                name="status"
                                                 value={data.status}
-                                                onChange={(e) =>
+                                                onChange={(e) => {
                                                     setData(
                                                         'status',
                                                         e.target.value,
-                                                    )
-                                                }
+                                                    );
+                                                    touch('status');
+                                                    touch('weight');
+                                                    touch('images');
+                                                    touch('variants');
+                                                }}
                                                 className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-900 shadow-sm focus:border-[#151515] focus:ring-1 focus:ring-[#151515] focus:outline-none"
                                             >
                                                 {options.statuses.map((s) => (
@@ -1864,9 +2327,9 @@ export default function ProductForm({ mode, product, options }: Props) {
                                                     </option>
                                                 ))}
                                             </select>
-                                            {errors.status && (
+                                            {fieldError('status') && (
                                                 <p className="text-[11px] text-red-500">
-                                                    {errors.status}
+                                                    {fieldError('status')}
                                                 </p>
                                             )}
                                         </div>
@@ -2207,10 +2670,26 @@ export default function ProductForm({ mode, product, options }: Props) {
                             </button>
                         </div>
 
-                        <div className="space-y-4 px-6 py-5">
+                        <div
+                            className="space-y-4 px-6 py-5"
+                            onBlurCapture={(event) => {
+                                const key = (event.target as HTMLInputElement)
+                                    .name;
+
+                                if (key) {
+                                    touchVariantDraft(key);
+                                }
+                            }}
+                        >
                             <FieldRow cols={2}>
-                                <FieldGroup label="Variant SKU" required>
+                                <FieldGroup
+                                    label="Variant SKU"
+                                    error={variantDraftError(
+                                        'variantDraft.sku',
+                                    )}
+                                >
                                     <Input
+                                        name="variantDraft.sku"
                                         value={variantDraft.sku}
                                         onChange={(e) =>
                                             setVariantDraft({
@@ -2222,8 +2701,14 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         className="h-9 border-zinc-200 font-mono text-sm focus:border-[#151515] focus:ring-[#151515]"
                                     />
                                 </FieldGroup>
-                                <FieldGroup label="Size">
+                                <FieldGroup
+                                    label="Size"
+                                    error={variantDraftError(
+                                        'variantDraft.size',
+                                    )}
+                                >
                                     <Input
+                                        name="variantDraft.size"
                                         value={variantDraft.size}
                                         onChange={(e) =>
                                             setVariantDraft({
@@ -2238,8 +2723,14 @@ export default function ProductForm({ mode, product, options }: Props) {
                             </FieldRow>
 
                             <FieldRow cols={2}>
-                                <FieldGroup label="Color Name">
+                                <FieldGroup
+                                    label="Color Name"
+                                    error={variantDraftError(
+                                        'variantDraft.color_name',
+                                    )}
+                                >
                                     <Input
+                                        name="variantDraft.color_name"
                                         value={variantDraft.color_name}
                                         onChange={(e) =>
                                             setVariantDraft({
@@ -2286,8 +2777,14 @@ export default function ProductForm({ mode, product, options }: Props) {
                             </FieldRow>
 
                             <FieldRow cols={3}>
-                                <FieldGroup label="Price Addition">
+                                <FieldGroup
+                                    label="Price Addition"
+                                    error={variantDraftError(
+                                        'variantDraft.additional_price',
+                                    )}
+                                >
                                     <Input
+                                        name="variantDraft.additional_price"
                                         type="number"
                                         min="0"
                                         value={variantDraft.additional_price}
@@ -2301,8 +2798,14 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         className="h-9 border-zinc-200 font-mono text-sm focus:border-[#151515] focus:ring-[#151515]"
                                     />
                                 </FieldGroup>
-                                <FieldGroup label="Stock">
+                                <FieldGroup
+                                    label="Stock"
+                                    error={variantDraftError(
+                                        'variantDraft.stock',
+                                    )}
+                                >
                                     <Input
+                                        name="variantDraft.stock"
                                         type="number"
                                         min="0"
                                         value={variantDraft.stock}
@@ -2315,8 +2818,14 @@ export default function ProductForm({ mode, product, options }: Props) {
                                         className="h-9 border-zinc-200 font-mono text-sm focus:border-[#151515] focus:ring-[#151515]"
                                     />
                                 </FieldGroup>
-                                <FieldGroup label="Reserved">
+                                <FieldGroup
+                                    label="Reserved"
+                                    error={variantDraftError(
+                                        'variantDraft.reserved_stock',
+                                    )}
+                                >
                                     <Input
+                                        name="variantDraft.reserved_stock"
                                         type="number"
                                         min="0"
                                         value={variantDraft.reserved_stock}
@@ -2334,6 +2843,10 @@ export default function ProductForm({ mode, product, options }: Props) {
                             <FieldGroup
                                 label="Variant Image"
                                 hint="Stored in Laravel public storage. JPG, PNG, WEBP up to 4MB."
+                                error={
+                                    variantDraftError('variantDraft.image') ??
+                                    variantDraftError('variantDraft.image_url')
+                                }
                             >
                                 <div className="flex items-center gap-4 rounded-lg border border-zinc-200 bg-zinc-50 p-3">
                                     <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-zinc-200 bg-white">
@@ -2349,11 +2862,15 @@ export default function ProductForm({ mode, product, options }: Props) {
                                     </div>
                                     <div className="flex-1 space-y-2">
                                         <Input
+                                            name="variantDraft.image"
                                             type="file"
                                             accept="image/*"
                                             onChange={(e) => {
                                                 const file =
                                                     e.target.files?.[0] ?? null;
+                                                touchVariantDraft(
+                                                    'variantDraft.image',
+                                                );
                                                 const isSavedPreview =
                                                     variantPreviews.some(
                                                         (preview) =>
