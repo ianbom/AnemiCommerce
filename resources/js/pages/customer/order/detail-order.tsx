@@ -43,6 +43,8 @@ type OrderItem = {
     subtotal: number;
     weight: number | null;
     product_image_url: string | null;
+    is_preorder: boolean;
+    preorder_available_at: string | null;
 };
 
 type Address = {
@@ -814,6 +816,14 @@ export default function DetailOrder({ order }: Props) {
                                             >
                                                 {item.product_name}
                                             </Link>
+                                            {item.is_preorder && (
+                                                <p className="mt-1 text-[11px] font-semibold text-[#9A6B45]">
+                                                    Pre-order
+                                                    {item.preorder_available_at
+                                                        ? ` — estimasi ${new Intl.DateTimeFormat('id-ID', { dateStyle: 'medium' }).format(new Date(`${item.preorder_available_at}T00:00:00`))}`
+                                                        : ''}
+                                                </p>
+                                            )}
                                             <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-0.5 text-[11px] text-[#9a8575]">
                                                 {item.color_name && (
                                                     <span>

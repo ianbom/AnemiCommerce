@@ -179,6 +179,8 @@ class OrderManagementService
                 'subtotal' => $item->subtotal,
                 'weight' => $item->weight,
                 'product_image_url' => $item->product_image_url,
+                'is_preorder' => $item->is_preorder,
+                'preorder_available_at' => $item->preorder_available_at?->format('Y-m-d'),
             ])->values(),
             'address' => $order->address,
             'payment' => $order->payment,

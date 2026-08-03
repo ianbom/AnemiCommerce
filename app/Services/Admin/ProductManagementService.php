@@ -193,7 +193,10 @@ class ProductManagementService
                 'status', 'is_featured', 'is_new_arrival', 'is_best_seller', 'meta_title', 'meta_description',
             ]),
             'images' => $product->images->map->only(['id', 'image_url', 'alt_text', 'sort_order', 'is_primary'])->values(),
-            'variants' => $product->variants->map->only(['id', 'sku', 'color_name', 'color_hex', 'size', 'additional_price', 'stock', 'reserved_stock', 'image_url', 'is_active'])->values(),
+            'variants' => $product->variants->map(fn (ProductVariant $variant): array => [
+                ...$variant->only(['id', 'sku', 'color_name', 'color_hex', 'size', 'additional_price', 'stock', 'reserved_stock', 'image_url', 'is_active', 'is_preorder']),
+                'preorder_available_at' => $variant->preorder_available_at?->format('Y-m-d'),
+            ])->values(),
         ];
     }
 
@@ -243,6 +246,8 @@ class ProductManagementService
                     ? Storage::url($uploadedImage->storeAs($folder, $this->makeVariantFilename($variant['sku'], $index, $uploadedImage->getClientOriginalExtension()), 'public'))
                     : ($variant['image_url'] ?? null),
                 'is_active' => (bool) ($variant['is_active'] ?? false),
+                'is_preorder' => (bool) ($variant['is_preorder'] ?? false),
+                'preorder_available_at' => $variant['preorder_available_at'] ?? null,
             ];
 
             if (! empty($variant['id'])) {

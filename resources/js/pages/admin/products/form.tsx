@@ -65,6 +65,8 @@ type ProductVariantPayload = {
     reserved_stock: string | number;
     image_url: string;
     is_active: boolean;
+    is_preorder: boolean;
+    preorder_available_at: string;
 };
 type ProductVariantRow = ProductVariantPayload & {
     image: File | null;
@@ -257,6 +259,17 @@ function validateVariantRow(
 
     validateImageFile(errors, `${prefix}.image`, variant.image);
 
+    if (variant.is_preorder && variant.preorder_available_at === '') {
+        errors[`${prefix}.preorder_available_at`] =
+            'Tanggal tersedia wajib diisi untuk pre-order.';
+    } else if (
+        variant.is_preorder &&
+        variant.preorder_available_at < new Date().toISOString().slice(0, 10)
+    ) {
+        errors[`${prefix}.preorder_available_at`] =
+            'Tanggal tersedia tidak boleh di masa lalu.';
+    }
+
     const stock = numericValue(variant.stock);
     const reservedStock = numericValue(variant.reserved_stock);
 
@@ -425,11 +438,13 @@ function validateProduct(
 
         if (
             !variantsWithSku.some(
-                (variant) => variant.is_active && Number(variant.stock) > 0,
+                (variant) =>
+                    variant.is_active &&
+                    (variant.is_preorder || Number(variant.stock) > 0),
             )
         ) {
             errors.variants =
-                'Produk published membutuhkan satu varian aktif dengan stok tersedia.';
+                'Produk published membutuhkan satu varian aktif dengan stok tersedia atau pre-order.';
         }
     }
 
@@ -463,6 +478,8 @@ const blankVariant = (): ProductVariantRow => ({
     image_url: '',
     image: null,
     is_active: true,
+    is_preorder: false,
+    preorder_available_at: '',
 });
 
 function SectionCard({
@@ -824,6 +841,8 @@ export default function ProductForm({ mode, product, options }: Props) {
             variants: product?.variants?.length
                 ? product.variants.map((variant) => ({
                       ...variant,
+                      preorder_available_at:
+                          variant.preorder_available_at ?? '',
                       image: null,
                   }))
                 : [],
@@ -2958,6 +2977,56 @@ export default function ProductForm({ mode, product, options }: Props) {
                                     }
                                     className="scale-90 data-[state=checked]:bg-[#B98B63]"
                                 />
+                            </div>
+
+                            <div className="space-y-3 rounded-lg border border-zinc-100 bg-zinc-50 px-4 py-3">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <Label className="cursor-pointer text-xs font-medium text-zinc-700">
+                                            Pre-order
+                                        </Label>
+                                        <p className="mt-1 text-[11px] text-zinc-500">
+                                            Bisa dipesan tanpa mengurangi stok.
+                                        </p>
+                                    </div>
+                                    <Switch
+                                        checked={variantDraft.is_preorder}
+                                        onCheckedChange={(value) =>
+                                            setVariantDraft({
+                                                ...variantDraft,
+                                                is_preorder: value,
+                                            })
+                                        }
+                                        className="scale-90 data-[state=checked]:bg-[#B98B63]"
+                                    />
+                                </div>
+                                {variantDraft.is_preorder && (
+                                    <FieldGroup
+                                        label="Estimasi Tersedia"
+                                        error={variantDraftError(
+                                            'variantDraft.preorder_available_at',
+                                        )}
+                                    >
+                                        <Input
+                                            name="variantDraft.preorder_available_at"
+                                            type="date"
+                                            min={new Date()
+                                                .toISOString()
+                                                .slice(0, 10)}
+                                            value={
+                                                variantDraft.preorder_available_at
+                                            }
+                                            onChange={(event) =>
+                                                setVariantDraft({
+                                                    ...variantDraft,
+                                                    preorder_available_at:
+                                                        event.target.value,
+                                                })
+                                            }
+                                            className="h-9 border-zinc-200 text-sm focus:border-[#151515] focus:ring-[#151515]"
+                                        />
+                                    </FieldGroup>
+                                )}
                             </div>
                         </div>
 

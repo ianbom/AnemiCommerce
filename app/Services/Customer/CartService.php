@@ -47,13 +47,24 @@ class CartService
             $product = $variant->product;
             $availableStock = max(0, $variant->stock - $variant->reserved_stock);
 
-            if (! $product || $product->status !== 'published' || ! $variant->is_active || $availableStock < 1) {
+            if (! $product || $product->status !== 'published' || ! $variant->is_active || (! $variant->is_preorder && $availableStock < 1)) {
                 throw ValidationException::withMessages([
                     'product_variant_id' => 'Varian produk ini belum tersedia untuk dibeli.',
                 ]);
             }
 
             $cart = $this->getOrCreateCart($user);
+            $hasMixedFulfillment = CartItem::query()
+                ->where('cart_id', $cart->id)
+                ->where('product_variant_id', '!=', $variant->id)
+                ->whereHas('variant', fn ($query) => $query->where('is_preorder', '!=', $variant->is_preorder))
+                ->exists();
+
+            if ($hasMixedFulfillment) {
+                throw ValidationException::withMessages([
+                    'product_variant_id' => 'Pre-order dan barang ready stock harus checkout terpisah.',
+                ]);
+            }
             $cartItem = CartItem::query()
                 ->where('cart_id', $cart->id)
                 ->where('product_variant_id', $variant->id)
@@ -61,7 +72,7 @@ class CartService
                 ->first();
             $nextQuantity = ($cartItem?->quantity ?? 0) + $quantity;
 
-            if ($nextQuantity > $availableStock) {
+            if (! $variant->is_preorder && $nextQuantity > $availableStock) {
                 throw ValidationException::withMessages([
                     'quantity' => "Stok tersedia hanya {$availableStock}.",
                 ]);
@@ -96,13 +107,13 @@ class CartService
             $product = $variant->product;
             $availableStock = max(0, $variant->stock - $variant->reserved_stock);
 
-            if (! $product || $product->status !== 'published' || ! $variant->is_active || $availableStock < 1) {
+            if (! $product || $product->status !== 'published' || ! $variant->is_active || (! $variant->is_preorder && $availableStock < 1)) {
                 throw ValidationException::withMessages([
                     'quantity' => 'Produk ini sudah tidak tersedia untuk diperbarui di keranjang.',
                 ]);
             }
 
-            if ($quantity > $availableStock) {
+            if (! $variant->is_preorder && $quantity > $availableStock) {
                 throw ValidationException::withMessages([
                     'quantity' => "Stok tersedia hanya {$availableStock}.",
                 ]);
@@ -131,7 +142,7 @@ class CartService
                     ->with([
                         'product:id,name,slug,status,sale_price,base_price',
                         'product.primaryImage:id,product_id,image_url,alt_text',
-                        'variant:id,product_id,sku,color_name,color_hex,size,stock,reserved_stock,additional_price,image_url,is_active',
+                        'variant:id,product_id,sku,color_name,color_hex,size,stock,reserved_stock,additional_price,image_url,is_active,is_preorder,preorder_available_at',
                     ])
                     ->latest('id'),
             ])
@@ -147,7 +158,7 @@ class CartService
             $availableStock = $variant ? max(0, $variant->stock - $variant->reserved_stock) : 0;
             $isAvailable = $product?->status === 'published'
                 && (bool) $variant?->is_active
-                && $availableStock >= $item->quantity;
+                && ((bool) $variant?->is_preorder || $availableStock >= $item->quantity);
 
             return [
                 'id' => $item->id,
@@ -161,6 +172,8 @@ class CartService
                 'price' => (float) $item->price_snapshot,
                 'quantity' => $item->quantity,
                 'available_stock' => $availableStock,
+                'is_preorder' => (bool) $variant?->is_preorder,
+                'preorder_available_at' => $variant?->preorder_available_at?->format('Y-m-d'),
                 'is_available' => $isAvailable,
                 'variant' => [
                     'id' => $variant?->id,

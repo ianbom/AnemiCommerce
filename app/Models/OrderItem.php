@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'width',
     'height',
     'product_image_url',
+    'is_preorder',
+    'preorder_available_at',
 ])]
 class OrderItem extends Model
 {
@@ -45,12 +47,14 @@ class OrderItem extends Model
     {
         return [
             'height' => 'integer',
+            'is_preorder' => 'boolean',
             'length' => 'integer',
             'price' => 'decimal:2',
             'quantity' => 'integer',
             'subtotal' => 'decimal:2',
             'weight' => 'integer',
             'width' => 'integer',
+            'preorder_available_at' => 'date:Y-m-d',
         ];
     }
 }

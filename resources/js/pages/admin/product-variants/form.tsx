@@ -29,6 +29,8 @@ type Variant = {
     reserved_stock: number;
     image_url: string | null;
     is_active: boolean;
+    is_preorder: boolean;
+    preorder_available_at: string | null;
 };
 
 type Props = {
@@ -50,6 +52,8 @@ type VariantFormData = {
     reserved_stock: string | number;
     image: File | null;
     is_active: boolean;
+    is_preorder: boolean;
+    preorder_available_at: string;
 };
 
 type ValidationErrors = Record<string, string>;
@@ -181,6 +185,17 @@ function validateVariant(
         }
     }
 
+    if (data.is_preorder && data.preorder_available_at === '') {
+        errors.preorder_available_at =
+            'Tanggal tersedia wajib diisi untuk pre-order.';
+    } else if (
+        data.is_preorder &&
+        data.preorder_available_at < new Date().toISOString().slice(0, 10)
+    ) {
+        errors.preorder_available_at =
+            'Tanggal tersedia tidak boleh di masa lalu.';
+    }
+
     return errors;
 }
 
@@ -209,6 +224,8 @@ export default function ProductVariantForm({
             reserved_stock: variant?.reserved_stock ?? 0,
             image: null as File | null,
             is_active: variant?.is_active ?? true,
+            is_preorder: variant?.is_preorder ?? false,
+            preorder_available_at: variant?.preorder_available_at ?? '',
         });
     const [touched, setTouched] = useState<Set<string>>(() => new Set());
     const [submitAttempted, setSubmitAttempted] = useState(false);
@@ -586,6 +603,59 @@ export default function ProductVariantForm({
                                     </span>
                                 </span>
                             </label>
+
+                            <div className="grid gap-3 rounded-lg border p-4">
+                                <label className="flex items-start gap-3 text-sm">
+                                    <input
+                                        type="checkbox"
+                                        name="is_preorder"
+                                        checked={data.is_preorder}
+                                        onChange={(event) =>
+                                            setData(
+                                                'is_preorder',
+                                                event.target.checked,
+                                            )
+                                        }
+                                        className="mt-1"
+                                    />
+                                    <span>
+                                        <span className="block font-medium">
+                                            Pre-order
+                                        </span>
+                                        <span className="text-muted-foreground">
+                                            Customer dapat memesan tanpa
+                                            mengurangi stok.
+                                        </span>
+                                    </span>
+                                </label>
+                                {data.is_preorder && (
+                                    <div className="grid gap-2 sm:max-w-xs">
+                                        <Label htmlFor="preorder_available_at">
+                                            Estimasi tersedia
+                                        </Label>
+                                        <Input
+                                            id="preorder_available_at"
+                                            name="preorder_available_at"
+                                            type="date"
+                                            min={new Date()
+                                                .toISOString()
+                                                .slice(0, 10)}
+                                            value={data.preorder_available_at}
+                                            onChange={(event) =>
+                                                setData(
+                                                    'preorder_available_at',
+                                                    event.target.value,
+                                                )
+                                            }
+                                        />
+                                        <InputError
+                                            message={fieldError(
+                                                'preorder_available_at',
+                                            )}
+                                        />
+                                    </div>
+                                )}
+                            </div>
 
                             <div className="flex justify-end gap-3 border-t pt-5">
                                 <Button asChild type="button" variant="outline">

@@ -30,6 +30,8 @@ export type CheckoutItem = {
     available_stock: number;
     subtotal: number;
     is_available: boolean;
+    is_preorder: boolean;
+    preorder_available_at: string | null;
 };
 
 export type CheckoutAddress = {

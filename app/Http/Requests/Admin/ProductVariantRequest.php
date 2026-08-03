@@ -30,6 +30,8 @@ class ProductVariantRequest extends FormRequest
             'reserved_stock' => ['required', 'integer', 'min:0', 'lte:stock'],
             'image' => ['nullable', 'file', 'image', 'max:4096'],
             'is_active' => ['sometimes', 'boolean'],
+            'is_preorder' => ['sometimes', 'boolean'],
+            'preorder_available_at' => ['nullable', 'date', 'required_if:is_preorder,1', 'after_or_equal:today'],
         ];
     }
 }

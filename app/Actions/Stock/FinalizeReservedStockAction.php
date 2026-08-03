@@ -18,7 +18,7 @@ class FinalizeReservedStockAction
         }
 
         foreach ($order->items as $item) {
-            if (! $item->product_variant_id) {
+            if (! $item->product_variant_id || $item->is_preorder) {
                 continue;
             }
 

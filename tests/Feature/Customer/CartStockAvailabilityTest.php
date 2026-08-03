@@ -6,8 +6,10 @@ use App\Models\CustomerAddress;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\User;
+use App\Services\Customer\CartService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Inertia\Testing\AssertableInertia as Assert;
 
 uses(RefreshDatabase::class);
@@ -86,6 +88,51 @@ it('renders checkout when cart stock is valid and address exists', function () {
             ->where('cartItems.0.quantity', 1)
             ->where('cartItems.0.available_stock', 1)
             ->where('cartItems.0.is_available', true));
+});
+
+it('allows pre-order items with zero stock without reserving stock', function () {
+    $user = User::factory()->create();
+    [$product, $variant] = createCartStockProduct(stock: 0, reservedStock: 0);
+    $variant->update([
+        'is_preorder' => true,
+        'preorder_available_at' => now()->addWeek()->toDateString(),
+    ]);
+
+    app(CartService::class)->addProductVariantToCart($variant, $user, 5);
+
+    $this->actingAs($user)
+        ->get(route('cart'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('cartItems.0.quantity', 5)
+            ->where('cartItems.0.is_preorder', true)
+            ->where('cartItems.0.is_available', true));
+
+    expect($variant->fresh())
+        ->stock->toBe(0)
+        ->reserved_stock->toBe(0);
+});
+
+it('rejects mixing pre-order and ready-stock items in a cart', function () {
+    $user = User::factory()->create();
+    [$product, $preorder] = createCartStockProduct(stock: 0, reservedStock: 0);
+    $preorder->update([
+        'is_preorder' => true,
+        'preorder_available_at' => now()->addWeek()->toDateString(),
+    ]);
+    $readyStock = ProductVariant::query()->create([
+        'product_id' => $product->id,
+        'sku' => 'READY-STOCK-'.Str::upper(Str::random(8)),
+        'stock' => 5,
+        'reserved_stock' => 0,
+        'is_active' => true,
+    ]);
+
+    $cart = app(CartService::class);
+    $cart->addProductVariantToCart($preorder, $user);
+
+    expect(fn () => $cart->addProductVariantToCart($readyStock, $user))
+        ->toThrow(ValidationException::class, 'Pre-order dan barang ready stock harus checkout terpisah.');
 });
 
 /**

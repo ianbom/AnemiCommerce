@@ -30,6 +30,8 @@ type CartItem = {
     quantity: number;
     available_stock: number;
     is_available: boolean;
+    is_preorder: boolean;
+    preorder_available_at: string | null;
     variant: {
         id: number | null;
         sku: string | null;
@@ -130,7 +132,8 @@ export default function MyCart({
             processingItemId !== null ||
             nextQuantity < 1 ||
             nextQuantity === item.quantity ||
-            nextQuantity > Math.max(1, item.available_stock)
+            (!item.is_preorder &&
+                nextQuantity > Math.max(1, item.available_stock))
         ) {
             return;
         }
@@ -229,8 +232,12 @@ export default function MyCart({
                                         : undefined;
                                     const canIncrease =
                                         item.is_available &&
-                                        item.quantity <
-                                            Math.max(1, item.available_stock);
+                                        (item.is_preorder ||
+                                            item.quantity <
+                                                Math.max(
+                                                    1,
+                                                    item.available_stock,
+                                                ));
 
                                     return (
                                         <div
@@ -328,12 +335,21 @@ export default function MyCart({
                                                                         </span>
                                                                     )}
                                                                 </div>
-                                                                <p className="mt-1.5 text-[10px] font-semibold text-[#6f6f6f] sm:text-[11px]">
-                                                                    Stok:{' '}
-                                                                    {
-                                                                        item.available_stock
-                                                                    }
-                                                                </p>
+                                                                {item.is_preorder ? (
+                                                                    <p className="mt-1.5 text-[10px] font-semibold text-[#9A6B45] sm:text-[11px]">
+                                                                        Pre-order
+                                                                        {item.preorder_available_at
+                                                                            ? ` — estimasi ${new Intl.DateTimeFormat('id-ID', { dateStyle: 'medium' }).format(new Date(`${item.preorder_available_at}T00:00:00`))}`
+                                                                            : ''}
+                                                                    </p>
+                                                                ) : (
+                                                                    <p className="mt-1.5 text-[10px] font-semibold text-[#6f6f6f] sm:text-[11px]">
+                                                                        Stok:{' '}
+                                                                        {
+                                                                            item.available_stock
+                                                                        }
+                                                                    </p>
+                                                                )}
                                                                 {!item.is_available && (
                                                                     <p className="mt-1.5 text-[10px] font-semibold text-[#B24B4B] sm:text-[11px]">
                                                                         {stockIssueMessage(

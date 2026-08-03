@@ -32,6 +32,8 @@ type Variant = {
     available_stock: number;
     cart_quantity: number;
     image_url: string | null;
+    is_preorder: boolean;
+    preorder_available_at: string | null;
 };
 
 type ProductCard = {
@@ -121,8 +123,10 @@ function DetailProductContent({
     const variants = useMemo(
         () =>
             [...product.variants].sort((left, right) => {
-                const leftAvailable = left.available_stock > 0 ? 1 : 0;
-                const rightAvailable = right.available_stock > 0 ? 1 : 0;
+                const leftAvailable =
+                    left.available_stock > 0 || left.is_preorder ? 1 : 0;
+                const rightAvailable =
+                    right.available_stock > 0 || right.is_preorder ? 1 : 0;
 
                 if (leftAvailable !== rightAvailable) {
                     return rightAvailable - leftAvailable;
@@ -163,8 +167,9 @@ function DetailProductContent({
     );
     const initialVariant = useMemo(
         () =>
-            variants.find((variant) => variant.available_stock > 0) ??
-            variants[0],
+            variants.find(
+                (variant) => variant.available_stock > 0 || variant.is_preorder,
+            ) ?? variants[0],
         [variants],
     );
     const [mainImage, setMainImage] = useState(
@@ -217,12 +222,13 @@ function DetailProductContent({
         0,
         selectedAvailableStock - selectedCartQuantity,
     );
-    const maxQuantity = Math.max(1, selectedAvailableStock);
+    const isPreorder = selectedVariant?.is_preorder ?? false;
+    const maxQuantity = isPreorder ? 999 : Math.max(1, selectedAvailableStock);
     const cartStockExceeded =
         selectedVariant !== undefined &&
+        !isPreorder &&
         selectedCartQuantity + quantity > selectedAvailableStock;
-    const isAvailable =
-        product.available_stock > 0 && selectedAvailableStock > 0;
+    const isAvailable = isPreorder || selectedAvailableStock > 0;
     const productDescription = product.description || product.short_description;
     const decreaseQuantity = () =>
         setQuantity((current) => Math.max(1, current - 1));
@@ -397,7 +403,11 @@ function DetailProductContent({
                     >
                         <div className="mb-5 flex flex-wrap gap-2">
                             <span className="rounded-sm border border-border bg-secondary px-2 py-1 text-[10px] font-semibold tracking-wider text-secondary-foreground uppercase">
-                                {isAvailable ? 'Tersedia' : 'Habis'}
+                                {isPreorder
+                                    ? 'Pre-order'
+                                    : isAvailable
+                                      ? 'Tersedia'
+                                      : 'Habis'}
                             </span>
                             {product.badge && (
                                 <span className="rounded-sm bg-primary px-2 py-1 text-[10px] font-semibold tracking-wider text-primary-foreground uppercase">
@@ -492,7 +502,9 @@ function DetailProductContent({
                                                 candidate.color_name ===
                                                     (variant.color_name ??
                                                         '') &&
-                                                candidate.available_stock > 0,
+                                                (candidate.available_stock >
+                                                    0 ||
+                                                    candidate.is_preorder),
                                         );
                                         const isSelected =
                                             selectedColor ===
@@ -516,16 +528,18 @@ function DetailProductContent({
                                                                         '') &&
                                                                 candidate.size ===
                                                                     selectedSize &&
-                                                                candidate.available_stock >
-                                                                    0,
+                                                                (candidate.available_stock >
+                                                                    0 ||
+                                                                    candidate.is_preorder),
                                                         ) ??
                                                         variants.find(
                                                             (candidate) =>
                                                                 candidate.color_name ===
                                                                     (variant.color_name ??
                                                                         '') &&
-                                                                candidate.available_stock >
-                                                                    0,
+                                                                (candidate.available_stock >
+                                                                    0 ||
+                                                                    candidate.is_preorder),
                                                         ) ??
                                                         initialVariant;
 
@@ -618,7 +632,8 @@ function DetailProductContent({
                                             );
                                         const sizeAvailable =
                                             (sizeVariant?.available_stock ??
-                                                0) > 0;
+                                                0) > 0 ||
+                                            sizeVariant?.is_preorder === true;
 
                                         return (
                                             <button
@@ -630,9 +645,11 @@ function DetailProductContent({
                                                         return;
                                                     }
 
-                                                    setSelectedVariantId(
-                                                        sizeVariant?.id ?? null,
-                                                    );
+                                                    if (sizeVariant) {
+                                                        setSelectedVariantId(
+                                                            sizeVariant.id,
+                                                        );
+                                                    }
                                                 }}
                                                 className={`rounded-md border px-7 py-2.5 text-[11px] font-semibold tracking-wide transition-all ${
                                                     !sizeAvailable
@@ -644,7 +661,7 @@ function DetailProductContent({
                                             >
                                                 {size}
                                                 {!sizeAvailable && (
-                                                    <span className="ml-2 text-[8px] font-semibold tracking-wider text-[#d83f3f] no-underline uppercase">
+                                                    <span className="ml-2 text-[8px] font-semibold tracking-wider text-[#d83f3f] uppercase no-underline">
                                                         Habis
                                                     </span>
                                                 )}
@@ -656,6 +673,21 @@ function DetailProductContent({
                         )}
 
                         <div className="mb-10">
+                            {isPreorder && (
+                                <p className="mb-4 rounded-md border border-[#B98B63]/30 bg-[#B98B63]/10 px-3 py-2 text-[11px] font-medium text-[#7C5637]">
+                                    Pre-order. Estimasi tersedia:{' '}
+                                    {selectedVariant?.preorder_available_at
+                                        ? new Intl.DateTimeFormat('id-ID', {
+                                              dateStyle: 'long',
+                                          }).format(
+                                              new Date(
+                                                  `${selectedVariant.preorder_available_at}T00:00:00`,
+                                              ),
+                                          )
+                                        : 'akan diinformasikan'}
+                                    .
+                                </p>
+                            )}
                             <div className="mb-6 flex w-max items-center rounded-md border border-border bg-card shadow-sm">
                                 <button
                                     type="button"
@@ -711,7 +743,9 @@ function DetailProductContent({
                                     >
                                         {cartForm.processing
                                             ? 'Menambahkan...'
-                                            : 'Add to cart'}
+                                            : isPreorder
+                                              ? 'Pre-order'
+                                              : 'Add to cart'}
                                     </button>
                                     {cartForm.errors.product_variant_id && (
                                         <p className="mt-2 text-center text-[11px] font-medium text-destructive">
@@ -737,7 +771,9 @@ function DetailProductContent({
                                 >
                                     {cartForm.processing
                                         ? 'Menambahkan...'
-                                        : 'Buy it now'}
+                                        : isPreorder
+                                          ? 'Pesan sekarang'
+                                          : 'Buy it now'}
                                 </button>
                             </div>
                         </div>

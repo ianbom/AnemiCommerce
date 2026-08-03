@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
     'reserved_stock',
     'image_url',
     'is_active',
+    'is_preorder',
+    'preorder_available_at',
 ])]
 class ProductVariant extends Model
 {
@@ -49,6 +51,8 @@ class ProductVariant extends Model
         return [
             'additional_price' => 'decimal:2',
             'is_active' => 'boolean',
+            'is_preorder' => 'boolean',
+            'preorder_available_at' => 'date:Y-m-d',
             'reserved_stock' => 'integer',
             'stock' => 'integer',
         ];

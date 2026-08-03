@@ -544,6 +544,14 @@ function CheckoutScreen() {
                                                     Berat:{' '}
                                                     {formatWeight(item.weight)}
                                                 </p>
+                                                {item.is_preorder && (
+                                                    <p className="mt-1 text-[10px] font-bold text-[#9A6B45]">
+                                                        Pre-order
+                                                        {item.preorder_available_at
+                                                            ? ` — estimasi ${new Intl.DateTimeFormat('id-ID', { dateStyle: 'medium' }).format(new Date(`${item.preorder_available_at}T00:00:00`))}`
+                                                            : ''}
+                                                    </p>
+                                                )}
                                                 {!item.is_available && (
                                                     <p className="mt-1 text-[10px] font-bold text-[#B24B4B]">
                                                         {stockIssueMessage(

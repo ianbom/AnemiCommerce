@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\DB;
 
 class ProductVariantService
 {
-    use StoresUploadedFiles;
     use ResolvesAdminPagination;
+    use StoresUploadedFiles;
 
     public function __construct(private readonly StockLogService $stockLogs) {}
 
@@ -96,8 +96,9 @@ class ProductVariantService
         $variant->load('product:id,name');
 
         return [
-            ...$variant->only(['id', 'product_id', 'sku', 'color_name', 'color_hex', 'size', 'additional_price', 'stock', 'reserved_stock', 'image_url', 'is_active']),
+            ...$variant->only(['id', 'product_id', 'sku', 'color_name', 'color_hex', 'size', 'additional_price', 'stock', 'reserved_stock', 'image_url', 'is_active', 'is_preorder', 'preorder_available_at']),
             'product' => $variant->product?->name,
+            'preorder_available_at' => $variant->preorder_available_at?->format('Y-m-d'),
         ];
     }
 
@@ -117,6 +118,8 @@ class ProductVariantService
             'available_stock' => $variant->stock - $variant->reserved_stock,
             'image_url' => $variant->image_url,
             'is_active' => $variant->is_active,
+            'is_preorder' => $variant->is_preorder,
+            'preorder_available_at' => $variant->preorder_available_at?->format('Y-m-d'),
             'order_items_count' => $variant->order_items_count,
             'created_at' => $variant->created_at?->toFormattedDateString(),
         ];
@@ -126,6 +129,7 @@ class ProductVariantService
     {
         $validated = $request->validated();
         $validated['is_active'] = $request->boolean('is_active', $defaultActive);
+        $validated['is_preorder'] = $request->boolean('is_preorder');
         unset($validated['image']);
 
         if ($request->hasFile('image')) {

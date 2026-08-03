@@ -63,6 +63,8 @@ type OrderItem = {
     product_image_url: string | null;
     weight?: number;
     dimensions?: string;
+    is_preorder: boolean;
+    preorder_available_at: string | null;
 };
 
 type Order = {
@@ -878,6 +880,14 @@ export default function OrderShow({ order }: Props) {
                                                                         item.product_name
                                                                     }
                                                                 </p>
+                                                                {item.is_preorder && (
+                                                                    <p className="mt-1 text-xs font-medium text-amber-700">
+                                                                        Pre-order
+                                                                        {item.preorder_available_at
+                                                                            ? ` — estimasi ${formatDate(item.preorder_available_at)}`
+                                                                            : ''}
+                                                                    </p>
+                                                                )}
                                                                 {item.dimensions && (
                                                                     <p className="mt-1 text-xs text-zinc-500">
                                                                         {

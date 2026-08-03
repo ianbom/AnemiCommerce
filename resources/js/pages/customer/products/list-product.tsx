@@ -41,6 +41,7 @@ type ProductCard = {
     }>;
     sizes: string[];
     available_stock: number;
+    has_preorder: boolean;
     is_wishlisted: boolean;
 };
 
@@ -730,7 +731,8 @@ const ProductTile = memo(function ProductTile({
 }) {
     const [isWishlisted, setIsWishlisted] = useState(product.is_wishlisted);
     const [isWishlistProcessing, setIsWishlistProcessing] = useState(false);
-    const isSoldOut = product.available_stock <= 0;
+    const isPreorder = product.available_stock <= 0 && product.has_preorder;
+    const isSoldOut = product.available_stock <= 0 && !product.has_preorder;
 
     const toggleWishlist = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -812,7 +814,11 @@ const ProductTile = memo(function ProductTile({
                     )}
                     <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/5" />
 
-                    {isSoldOut ? (
+                    {isPreorder ? (
+                        <div className="absolute top-2 left-2 bg-[#9A6B45] px-2 py-1 text-[8px] font-semibold tracking-widest text-white uppercase shadow-sm">
+                            Pre-order
+                        </div>
+                    ) : isSoldOut ? (
                         <div className="absolute top-2 left-2 bg-[#d83f3f] px-2 py-1 text-[8px] font-semibold tracking-widest text-white uppercase shadow-sm">
                             Habis
                         </div>

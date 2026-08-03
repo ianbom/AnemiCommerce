@@ -189,6 +189,10 @@ class CheckoutService
                 throw ValidationException::withMessages(['cart' => 'Keranjang kosong.']);
             }
 
+            if ($items->pluck('variant.is_preorder')->filter()->count() > 0 && $items->pluck('variant.is_preorder')->contains(false)) {
+                throw ValidationException::withMessages(['cart' => 'Pre-order dan barang ready stock harus checkout terpisah.']);
+            }
+
             $subtotal = 0.0;
             foreach ($items as $item) {
                 $variant = ProductVariant::query()
@@ -199,7 +203,7 @@ class CheckoutService
                 $product = $variant?->product;
                 $available = $variant ? max(0, $variant->stock - $variant->reserved_stock) : 0;
 
-                if (! $variant || ! $product || $product->status !== 'published' || ! $variant->is_active || $available < $item->quantity) {
+                if (! $variant || ! $product || $product->status !== 'published' || ! $variant->is_active || (! $variant->is_preorder && $available < $item->quantity)) {
                     throw ValidationException::withMessages(['cart' => "Stok {$product?->name} tidak mencukupi."]);
                 }
 
@@ -287,8 +291,12 @@ class CheckoutService
                     'width' => $product->width,
                     'height' => $product->height,
                     'product_image_url' => $variant->image_url ?? $product->primaryImage?->image_url,
+                    'is_preorder' => $variant->is_preorder,
+                    'preorder_available_at' => $variant->preorder_available_at,
                 ]);
-                $variant->increment('reserved_stock', $item->quantity);
+                if (! $variant->is_preorder) {
+                    $variant->increment('reserved_stock', $item->quantity);
+                }
             }
 
             $order->shipment()->create([
@@ -372,7 +380,9 @@ class CheckoutService
                     'quantity' => $item->quantity,
                     'weight' => max(1, (int) ($product?->weight ?? 1)) * $item->quantity,
                     'available_stock' => $availableStock,
-                    'is_available' => $product?->status === 'published' && (bool) $variant?->is_active && $availableStock >= $item->quantity,
+                    'is_preorder' => (bool) $variant?->is_preorder,
+                    'preorder_available_at' => $variant?->preorder_available_at?->format('Y-m-d'),
+                    'is_available' => $product?->status === 'published' && (bool) $variant?->is_active && ((bool) $variant?->is_preorder || $availableStock >= $item->quantity),
                     'subtotal' => (float) $item->price_snapshot * $item->quantity,
                 ];
             });

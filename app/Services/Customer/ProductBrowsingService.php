@@ -3,10 +3,10 @@
 namespace App\Services\Customer;
 
 use App\Models\Banner;
+use App\Models\CartItem;
 use App\Models\Category;
 use App\Models\Collection;
 use App\Models\Page;
-use App\Models\CartItem;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -62,8 +62,8 @@ class ProductBrowsingService
             ->when($filters['type'] === 'new_arrival', fn ($query) => $query->where('is_new_arrival', true))
             ->when($filters['type'] === 'best_seller', fn ($query) => $query->where('is_best_seller', true))
             ->when($filters['type'] === 'discount', fn ($query) => $query->whereNotNull('sale_price'))
-            ->when($filters['availability'] === 'in_stock', fn ($query) => $query->whereHas('variants', fn ($query) => $query->where('is_active', true)->whereColumn('stock', '>', 'reserved_stock')))
-            ->when($filters['availability'] === 'out_of_stock', fn ($query) => $query->whereDoesntHave('variants', fn ($query) => $query->where('is_active', true)->whereColumn('stock', '>', 'reserved_stock')))
+            ->when($filters['availability'] === 'in_stock', fn ($query) => $query->whereHas('variants', fn ($query) => $query->where('is_active', true)->where(fn ($query) => $query->where('is_preorder', true)->orWhereColumn('stock', '>', 'reserved_stock'))))
+            ->when($filters['availability'] === 'out_of_stock', fn ($query) => $query->whereDoesntHave('variants', fn ($query) => $query->where('is_active', true)->where(fn ($query) => $query->where('is_preorder', true)->orWhereColumn('stock', '>', 'reserved_stock'))))
             ->when($filters['price'] === 'under_410', fn ($query) => $query->whereRaw('coalesce(sale_price, base_price) < ?', [410000]))
             ->when($filters['price'] === '410_830', fn ($query) => $query->whereRaw('coalesce(sale_price, base_price) between ? and ?', [410000, 830000]))
             ->when($filters['price'] === '830_1200', fn ($query) => $query->whereRaw('coalesce(sale_price, base_price) between ? and ?', [830000, 1200000]))
@@ -182,9 +182,9 @@ class ProductBrowsingService
             'primaryImage:id,product_id,image_url,alt_text',
             'images:id,product_id,image_url,alt_text,sort_order',
             'variants' => fn ($query) => $query
-                ->select('id', 'product_id', 'sku', 'color_name', 'color_hex', 'size', 'stock', 'reserved_stock', 'additional_price', 'image_url', 'is_active')
+                ->select('id', 'product_id', 'sku', 'color_name', 'color_hex', 'size', 'stock', 'reserved_stock', 'additional_price', 'image_url', 'is_active', 'is_preorder', 'preorder_available_at')
                 ->where('is_active', true)
-                ->orderByRaw('(stock - reserved_stock) > 0 desc')
+                ->orderByRaw('((stock - reserved_stock) > 0 OR is_preorder = 1) desc')
                 ->orderBy('color_name')
                 ->orderBy('size'),
         ];
@@ -227,6 +227,7 @@ class ProductBrowsingService
                 ]),
             'sizes' => $variants->pluck('size')->filter()->unique()->values(),
             'available_stock' => $variants->sum(fn ($variant) => max(0, $variant->stock - $variant->reserved_stock)),
+            'has_preorder' => $variants->contains('is_preorder', true),
             'is_wishlisted' => (bool) ($product->is_wishlisted ?? false),
         ];
     }
@@ -276,6 +277,8 @@ class ProductBrowsingService
                     'available_stock' => max(0, $variant->stock - $variant->reserved_stock),
                     'cart_quantity' => (int) ($cartQuantities[$variant->id] ?? 0),
                     'image_url' => $variant->image_url,
+                    'is_preorder' => $variant->is_preorder,
+                    'preorder_available_at' => $variant->preorder_available_at?->format('Y-m-d'),
                 ])
                 ->values(),
         ];

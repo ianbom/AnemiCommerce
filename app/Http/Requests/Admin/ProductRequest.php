@@ -69,6 +69,8 @@ class ProductRequest extends FormRequest
             'variants.*.image_url' => ['nullable', 'string', 'max:255', 'not_regex:/^blob:/i'],
             'variants.*.image' => ['nullable', 'file', 'image', 'max:4096'],
             'variants.*.is_active' => ['sometimes', 'boolean'],
+            'variants.*.is_preorder' => ['sometimes', 'boolean'],
+            'variants.*.preorder_available_at' => ['nullable', 'date', 'required_if:variants.*.is_preorder,1', 'after_or_equal:today'],
         ];
     }
 
@@ -107,7 +109,7 @@ class ProductRequest extends FormRequest
                     }
                 });
 
-                if (! $variants->contains(fn (array $variant): bool => (bool) ($variant['is_active'] ?? false) && (int) ($variant['stock'] ?? 0) > 0)) {
+                if (! $variants->contains(fn (array $variant): bool => (bool) ($variant['is_active'] ?? false) && ((bool) ($variant['is_preorder'] ?? false) || (int) ($variant['stock'] ?? 0) > 0))) {
                     $validator->errors()->add('variants', 'Produk published membutuhkan satu varian aktif dengan stok tersedia.');
                 }
             },
