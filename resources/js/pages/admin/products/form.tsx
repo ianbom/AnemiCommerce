@@ -2660,15 +2660,15 @@ export default function ProductForm({ mode, product, options }: Props) {
 
             {variantModalOpen && (
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
+                    className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 p-4 backdrop-blur-sm sm:items-center sm:py-8"
                     onMouseDown={(event: MouseEvent<HTMLDivElement>) => {
                         if (event.target === event.currentTarget) {
                             closeVariantModal();
                         }
                     }}
                 >
-                    <div className="w-full max-w-xl overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-2xl">
-                        <div className="flex items-start justify-between gap-4 border-b border-zinc-100 px-6 py-4">
+                    <div className="flex max-h-[calc(100dvh-2rem)] w-full max-w-xl flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-2xl sm:max-h-[calc(100dvh-4rem)]">
+                        <div className="flex shrink-0 items-start justify-between gap-4 border-b border-zinc-100 px-6 py-4">
                             <div>
                                 <h2 className="text-sm font-semibold text-zinc-900">
                                     {editingVariantIndex === null
@@ -2690,7 +2690,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                         </div>
 
                         <div
-                            className="space-y-4 px-6 py-5"
+                            className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-6 py-5"
                             onBlurCapture={(event) => {
                                 const key = (event.target as HTMLInputElement)
                                     .name;
@@ -3030,7 +3030,7 @@ export default function ProductForm({ mode, product, options }: Props) {
                             </div>
                         </div>
 
-                        <div className="flex items-center justify-end gap-2 border-t border-zinc-100 bg-zinc-50 px-6 py-4">
+                        <div className="flex shrink-0 items-center justify-end gap-2 border-t border-zinc-100 bg-zinc-50 px-6 py-4">
                             <Button
                                 type="button"
                                 variant="outline"
