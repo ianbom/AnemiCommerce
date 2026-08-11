@@ -96,9 +96,11 @@ class ProductVariantService
         $variant->load('product:id,name');
 
         return [
-            ...$variant->only(['id', 'product_id', 'sku', 'color_name', 'color_hex', 'size', 'additional_price', 'stock', 'reserved_stock', 'image_url', 'is_active', 'is_preorder', 'preorder_available_at']),
+            ...$variant->only(['id', 'product_id', 'sku', 'color_name', 'color_hex', 'size', 'additional_price', 'stock', 'reserved_stock', 'image_url', 'is_active', 'is_preorder']),
             'product' => $variant->product?->name,
-            'preorder_available_at' => $variant->preorder_available_at?->format('Y-m-d'),
+            'preorder_lead_days' => $variant->preorder_available_at
+                ? max(1, (int) today()->diffInDays($variant->preorder_available_at, false))
+                : null,
         ];
     }
 
@@ -130,7 +132,10 @@ class ProductVariantService
         $validated = $request->validated();
         $validated['is_active'] = $request->boolean('is_active', $defaultActive);
         $validated['is_preorder'] = $request->boolean('is_preorder');
-        unset($validated['image']);
+        $validated['preorder_available_at'] = $validated['is_preorder']
+            ? today()->addDays((int) ($validated['preorder_lead_days'] ?? 0))->toDateString()
+            : null;
+        unset($validated['image'], $validated['preorder_lead_days']);
 
         if ($request->hasFile('image')) {
             $this->deletePublicFile($variant?->image_url);

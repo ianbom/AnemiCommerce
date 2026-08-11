@@ -33,7 +33,7 @@ type Variant = {
     cart_quantity: number;
     image_url: string | null;
     is_preorder: boolean;
-    preorder_available_at: string | null;
+    preorder_lead_days: number | null;
 };
 
 type ProductCard = {
@@ -675,17 +675,9 @@ function DetailProductContent({
                         <div className="mb-10">
                             {isPreorder && (
                                 <p className="mb-4 rounded-md border border-[#B98B63]/30 bg-[#B98B63]/10 px-3 py-2 text-[11px] font-medium text-[#7C5637]">
-                                    Pre-order. Estimasi tersedia:{' '}
-                                    {selectedVariant?.preorder_available_at
-                                        ? new Intl.DateTimeFormat('id-ID', {
-                                              dateStyle: 'long',
-                                          }).format(
-                                              new Date(
-                                                  `${selectedVariant.preorder_available_at}T00:00:00`,
-                                              ),
-                                          )
-                                        : 'akan diinformasikan'}
-                                    .
+                                    Produk akan tersedia dalam{' '}
+                                    {selectedVariant?.preorder_lead_days ?? 1}{' '}
+                                    hari lagi.
                                 </p>
                             )}
                             <div className="mb-6 flex w-max items-center rounded-md border border-border bg-card shadow-sm">

@@ -195,7 +195,9 @@ class ProductManagementService
             'images' => $product->images->map->only(['id', 'image_url', 'alt_text', 'sort_order', 'is_primary'])->values(),
             'variants' => $product->variants->map(fn (ProductVariant $variant): array => [
                 ...$variant->only(['id', 'sku', 'color_name', 'color_hex', 'size', 'additional_price', 'stock', 'reserved_stock', 'image_url', 'is_active', 'is_preorder']),
-                'preorder_available_at' => $variant->preorder_available_at?->format('Y-m-d'),
+                'preorder_lead_days' => $variant->preorder_available_at
+                    ? max(1, (int) today()->diffInDays($variant->preorder_available_at, false))
+                    : null,
             ])->values(),
         ];
     }
@@ -247,7 +249,9 @@ class ProductManagementService
                     : ($variant['image_url'] ?? null),
                 'is_active' => (bool) ($variant['is_active'] ?? false),
                 'is_preorder' => (bool) ($variant['is_preorder'] ?? false),
-                'preorder_available_at' => $variant['preorder_available_at'] ?? null,
+                'preorder_available_at' => (bool) ($variant['is_preorder'] ?? false)
+                    ? today()->addDays((int) ($variant['preorder_lead_days'] ?? 0))->toDateString()
+                    : null,
             ];
 
             if (! empty($variant['id'])) {

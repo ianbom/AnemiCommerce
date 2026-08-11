@@ -279,6 +279,9 @@ class ProductBrowsingService
                     'image_url' => $variant->image_url,
                     'is_preorder' => $variant->is_preorder,
                     'preorder_available_at' => $variant->preorder_available_at?->format('Y-m-d'),
+                    'preorder_lead_days' => $variant->preorder_available_at
+                        ? max(0, (int) today()->diffInDays($variant->preorder_available_at, false))
+                        : null,
                 ])
                 ->values(),
         ];

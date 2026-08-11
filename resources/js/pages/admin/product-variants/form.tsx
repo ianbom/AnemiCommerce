@@ -30,7 +30,7 @@ type Variant = {
     image_url: string | null;
     is_active: boolean;
     is_preorder: boolean;
-    preorder_available_at: string | null;
+    preorder_lead_days: number | null;
 };
 
 type Props = {
@@ -53,7 +53,7 @@ type VariantFormData = {
     image: File | null;
     is_active: boolean;
     is_preorder: boolean;
-    preorder_available_at: string;
+    preorder_lead_days: string | number;
 };
 
 type ValidationErrors = Record<string, string>;
@@ -185,15 +185,19 @@ function validateVariant(
         }
     }
 
-    if (data.is_preorder && data.preorder_available_at === '') {
-        errors.preorder_available_at =
-            'Tanggal tersedia wajib diisi untuk pre-order.';
-    } else if (
-        data.is_preorder &&
-        data.preorder_available_at < new Date().toISOString().slice(0, 10)
-    ) {
-        errors.preorder_available_at =
-            'Tanggal tersedia tidak boleh di masa lalu.';
+    if (data.is_preorder) {
+        validateNumber(
+            errors,
+            'preorder_lead_days',
+            data.preorder_lead_days,
+            'Jumlah hari pre-order',
+            true,
+            true,
+        );
+
+        if (numericValue(data.preorder_lead_days) === 0) {
+            errors.preorder_lead_days = 'Jumlah hari pre-order minimal 1 hari.';
+        }
     }
 
     return errors;
@@ -225,7 +229,7 @@ export default function ProductVariantForm({
             image: null as File | null,
             is_active: variant?.is_active ?? true,
             is_preorder: variant?.is_preorder ?? false,
-            preorder_available_at: variant?.preorder_available_at ?? '',
+            preorder_lead_days: variant?.preorder_lead_days ?? '',
         });
     const [touched, setTouched] = useState<Set<string>>(() => new Set());
     const [submitAttempted, setSubmitAttempted] = useState(false);
@@ -630,27 +634,29 @@ export default function ProductVariantForm({
                                 </label>
                                 {data.is_preorder && (
                                     <div className="grid gap-2 sm:max-w-xs">
-                                        <Label htmlFor="preorder_available_at">
-                                            Estimasi tersedia
+                                        <Label htmlFor="preorder_lead_days">
+                                            Tersedia dalam berapa hari?
                                         </Label>
                                         <Input
-                                            id="preorder_available_at"
-                                            name="preorder_available_at"
-                                            type="date"
-                                            min={new Date()
-                                                .toISOString()
-                                                .slice(0, 10)}
-                                            value={data.preorder_available_at}
+                                            id="preorder_lead_days"
+                                            name="preorder_lead_days"
+                                            type="number"
+                                            min="1"
+                                            step="1"
+                                            value={data.preorder_lead_days}
                                             onChange={(event) =>
                                                 setData(
-                                                    'preorder_available_at',
+                                                    'preorder_lead_days',
                                                     event.target.value,
                                                 )
                                             }
                                         />
+                                        <p className="text-xs text-muted-foreground">
+                                            Contoh: 7 hari dari hari ini.
+                                        </p>
                                         <InputError
                                             message={fieldError(
-                                                'preorder_available_at',
+                                                'preorder_lead_days',
                                             )}
                                         />
                                     </div>

@@ -31,7 +31,21 @@ class ProductVariantRequest extends FormRequest
             'image' => ['nullable', 'file', 'image', 'max:4096'],
             'is_active' => ['sometimes', 'boolean'],
             'is_preorder' => ['sometimes', 'boolean'],
-            'preorder_available_at' => ['nullable', 'date', 'required_if:is_preorder,1', 'after_or_equal:today'],
+            'preorder_lead_days' => ['nullable', 'integer', 'min:1', 'required_if:is_preorder,1'],
+        ];
+    }
+
+    /**
+     * @return array<int, callable>
+     */
+    public function after(): array
+    {
+        return [
+            function ($validator): void {
+                if ($this->boolean('is_preorder') && blank($this->input('preorder_lead_days'))) {
+                    $validator->errors()->add('preorder_lead_days', 'Jumlah hari pre-order wajib diisi.');
+                }
+            },
         ];
     }
 }

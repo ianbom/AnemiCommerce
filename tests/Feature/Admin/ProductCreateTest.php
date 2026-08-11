@@ -7,13 +7,18 @@ use App\Models\ProductVariant;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Inertia\Testing\AssertableInertia as Assert;
 
 uses(RefreshDatabase::class);
 
+afterEach(fn () => Date::setTestNow());
+
 it('creates a product with images, variants, and stock logs from the admin form payload', function () {
     Storage::fake('public');
+    Date::setTestNow('2026-08-11 10:00:00');
 
     $admin = User::factory()->create([
         'role' => 'admin',
@@ -105,7 +110,9 @@ it('creates a product with images, variants, and stock logs from the admin form 
         ->size->toBe('M')
         ->stock->toBe(12)
         ->reserved_stock->toBe(2)
-        ->is_active->toBeTrue();
+        ->is_active->toBeTrue()
+        ->is_preorder->toBeTrue()
+        ->preorder_available_at->format('Y-m-d')->toBe('2026-08-18');
 
     expect((float) $variant->additional_price)->toBe(15000.00);
     expect($variant->image_url)->toStartWith('/storage/product/gamis-syari-pita/variants/');
@@ -134,6 +141,12 @@ it('creates a product with images, variants, and stock logs from the admin form 
         'reference_type' => 'manual_adjustment',
         'note' => 'Initial variant stock.',
     ]);
+
+    $this->actingAs($admin)
+        ->get(route('admin.products.edit', $product))
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('product.variants.0.preorder_lead_days', 7)
+            ->missing('product.variants.0.preorder_available_at'));
 });
 
 /**
@@ -184,7 +197,47 @@ function productPayload(Category $category, Collection $collection): array
                 'image_url' => null,
                 'image' => UploadedFile::fake()->image('variant-black.jpg', 800, 1067),
                 'is_active' => true,
+                'is_preorder' => true,
+                'preorder_lead_days' => 7,
             ],
         ],
     ];
 }
+
+it('rejects invalid preorder lead days in the product form', function (mixed $leadDays, bool $missing) {
+    Storage::fake('public');
+
+    $admin = User::factory()->create(['role' => 'admin', 'is_active' => true]);
+    $category = Category::query()->create([
+        'name' => 'Gamis',
+        'slug' => 'gamis-validation-'.$leadDays,
+        'description' => 'Gamis category',
+        'is_active' => true,
+    ]);
+    $collection = Collection::query()->create([
+        'name' => 'Validation Collection '.$leadDays,
+        'slug' => 'validation-collection-'.$leadDays,
+        'description' => 'Validation collection',
+        'is_featured' => false,
+        'is_active' => true,
+    ]);
+    $payload = productPayload($category, $collection);
+    $payload['slug'] = 'gamis-validation-'.$leadDays;
+    $payload['sku'] = 'GMS-VALIDATION-'.$leadDays;
+    $payload['variants'][0]['sku'] = 'GMS-VALIDATION-'.$leadDays.'-BLK-M';
+
+    if ($missing) {
+        unset($payload['variants'][0]['preorder_lead_days']);
+    } else {
+        $payload['variants'][0]['preorder_lead_days'] = $leadDays;
+    }
+
+    $this->actingAs($admin)
+        ->post(route('admin.products.store'), $payload)
+        ->assertSessionHasErrors('variants.0.preorder_lead_days');
+})->with([
+    'missing' => [null, true],
+    'zero' => [0, false],
+    'negative' => [-1, false],
+    'decimal' => [1.5, false],
+]);

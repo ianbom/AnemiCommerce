@@ -70,7 +70,7 @@ class ProductRequest extends FormRequest
             'variants.*.image' => ['nullable', 'file', 'image', 'max:4096'],
             'variants.*.is_active' => ['sometimes', 'boolean'],
             'variants.*.is_preorder' => ['sometimes', 'boolean'],
-            'variants.*.preorder_available_at' => ['nullable', 'date', 'required_if:variants.*.is_preorder,1', 'after_or_equal:today'],
+            'variants.*.preorder_lead_days' => ['nullable', 'integer', 'min:1', 'required_if:variants.*.is_preorder,1'],
         ];
     }
 
@@ -106,6 +106,10 @@ class ProductRequest extends FormRequest
                 $variants->each(function (array $variant, int $index) use ($validator): void {
                     if ((int) ($variant['reserved_stock'] ?? 0) > (int) ($variant['stock'] ?? 0)) {
                         $validator->errors()->add("variants.{$index}.reserved_stock", 'Reserved stock tidak boleh lebih besar dari stock.');
+                    }
+
+                    if ((bool) ($variant['is_preorder'] ?? false) && blank($variant['preorder_lead_days'] ?? null)) {
+                        $validator->errors()->add("variants.{$index}.preorder_lead_days", 'Jumlah hari pre-order wajib diisi.');
                     }
                 });
 

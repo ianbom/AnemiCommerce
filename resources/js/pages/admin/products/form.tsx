@@ -66,7 +66,7 @@ type ProductVariantPayload = {
     image_url: string;
     is_active: boolean;
     is_preorder: boolean;
-    preorder_available_at: string;
+    preorder_lead_days: string | number;
 };
 type ProductVariantRow = ProductVariantPayload & {
     image: File | null;
@@ -259,15 +259,20 @@ function validateVariantRow(
 
     validateImageFile(errors, `${prefix}.image`, variant.image);
 
-    if (variant.is_preorder && variant.preorder_available_at === '') {
-        errors[`${prefix}.preorder_available_at`] =
-            'Tanggal tersedia wajib diisi untuk pre-order.';
-    } else if (
-        variant.is_preorder &&
-        variant.preorder_available_at < new Date().toISOString().slice(0, 10)
-    ) {
-        errors[`${prefix}.preorder_available_at`] =
-            'Tanggal tersedia tidak boleh di masa lalu.';
+    if (variant.is_preorder) {
+        validateNumber(
+            errors,
+            `${prefix}.preorder_lead_days`,
+            variant.preorder_lead_days,
+            'Jumlah hari pre-order',
+            true,
+            true,
+        );
+
+        if (numericValue(variant.preorder_lead_days) === 0) {
+            errors[`${prefix}.preorder_lead_days`] =
+                'Jumlah hari pre-order minimal 1 hari.';
+        }
     }
 
     const stock = numericValue(variant.stock);
@@ -479,7 +484,7 @@ const blankVariant = (): ProductVariantRow => ({
     image: null,
     is_active: true,
     is_preorder: false,
-    preorder_available_at: '',
+    preorder_lead_days: '',
 });
 
 function SectionCard({
@@ -841,8 +846,7 @@ export default function ProductForm({ mode, product, options }: Props) {
             variants: product?.variants?.length
                 ? product.variants.map((variant) => ({
                       ...variant,
-                      preorder_available_at:
-                          variant.preorder_available_at ?? '',
+                      preorder_lead_days: variant.preorder_lead_days ?? '',
                       image: null,
                   }))
                 : [],
@@ -3002,29 +3006,31 @@ export default function ProductForm({ mode, product, options }: Props) {
                                 </div>
                                 {variantDraft.is_preorder && (
                                     <FieldGroup
-                                        label="Estimasi Tersedia"
+                                        label="Tersedia Dalam Berapa Hari?"
                                         error={variantDraftError(
-                                            'variantDraft.preorder_available_at',
+                                            'variantDraft.preorder_lead_days',
                                         )}
                                     >
                                         <Input
-                                            name="variantDraft.preorder_available_at"
-                                            type="date"
-                                            min={new Date()
-                                                .toISOString()
-                                                .slice(0, 10)}
+                                            name="variantDraft.preorder_lead_days"
+                                            type="number"
+                                            min="1"
+                                            step="1"
                                             value={
-                                                variantDraft.preorder_available_at
+                                                variantDraft.preorder_lead_days
                                             }
                                             onChange={(event) =>
                                                 setVariantDraft({
                                                     ...variantDraft,
-                                                    preorder_available_at:
+                                                    preorder_lead_days:
                                                         event.target.value,
                                                 })
                                             }
                                             className="h-9 border-zinc-200 text-sm focus:border-[#151515] focus:ring-[#151515]"
                                         />
+                                        <p className="mt-1 text-[11px] text-zinc-500">
+                                            Contoh: 7 hari dari hari ini.
+                                        </p>
                                     </FieldGroup>
                                 )}
                             </div>
